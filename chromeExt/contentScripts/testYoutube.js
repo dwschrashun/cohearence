@@ -10,56 +10,50 @@
 // 	console.log(elem.children());
 // })
 
-$('.watch-info-tag-list').filter(function () {
-  var $this = $(this);
-  var $h4 = $this.siblings('h4');
-  return $h4.text().trim() === 'Category';
-}).find('li a').text()
-
-$('.watch-info-tag-list').each(function(idx, elem) {
-	var child = $(this)[0].children[0].children[0];
-	if (child && child.textContent === 'Music') {
+function checkCategory () {
+	var category = $('.watch-info-tag-list').filter(function () {
+		var $this = $(this);
+	  	var $h4 = $this.siblings('h4');
+	  	return $h4.text().trim() === 'Category';
+	}).find('li a').text();
+	if (category === "Music") {
 		return sendSong();
 	}
-})
-// var child = $('.watch-meta-item').children()[0]
-// // console.log(child);
-// 	if (child && child.text().trim() === 'Music') {
-// 		//only send if they've listened to for certain time
-// 		sendSong();
-// 	}
+}
 
 
 
 function findTitleAndArtist() {
 
-	$('.watch-meta-item').each(function(idx, elem) {
-		var child = $(this)[0].children[0];
-		console.log(child);
-		if (child && child.textContent.trim() === 'Music') {
-			//return text content of first child of second child of watch-meta-item
-			var foundText = $(this)[0].children[1].children[0].textContent;
-			var songTitle = foundText.split("\"");
-			console.log(songTitle);
-		}
-
-		// .children()[0].text();
-		// console.log(child);
-	})
+	var titleAndArtist = $('.watch-meta-item').filter(function() {
+		var $this = $(this);
+		var $h4 = $this.children('h4');
+		return $h4.text().trim() === "Music";
+	}).find("ul li").text().split("\"");
+	var songTitle = titleAndArtist[1];
+	//var artist = titleAndArtist.substring(titleAndArtist.indexOf("by" + 3)).split("(")[0];
+	var byArtist = titleAndArtist[2].split("(")[0];
+	var artist = byArtist.substring(3).trim();
+	return [songTitle, artist];
 }
 
-findTitleAndArtist();
+
 
 function sendSong() {
 	console.log('sending');
+	var titleAndArtist = findTitleAndArtist();	
 	var songObj = {
-    href: location.href,
-    title: $("#eow-title").text().trim(),
-    category: 'Music',
-    duration: $('.ytp-time-duration').text()
+	    href: location.href,
+	    videoTitle: $("#eow-title").text().trim(),
+	    category: 'Music',
+	    duration: $('.ytp-time-duration').text(),
+	    songTitle: titleAndArtist[0],
+	    artist: titleAndArtist[1]
 	};
 	console.log('the object', songObj);
 	chrome.runtime.sendMessage(songObj, function (response) {
-	    console.log('response from router:', response);
+	    // console.log('response from router:', response);
 	});
 }
+
+checkCategory();
