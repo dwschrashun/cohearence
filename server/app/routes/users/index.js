@@ -18,6 +18,11 @@ router.get('/:userId', function (req, res) {
 	res.json(_.omit(req.foundUser.toJSON(), ['salt', 'password']));
 });
 
+router.post('/:userId/addSong', function(req, res, next){
+	console.log(req.body);
+	res.status(200).send();
+});
+
 router.param('userId', function (req, res, next, userId) {
 	User.findById(userId)
 	.then(function (user) {

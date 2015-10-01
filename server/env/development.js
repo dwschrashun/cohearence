@@ -2,9 +2,9 @@ module.exports = {
   "DATABASE_URI": "mongodb://localhost:27017/scrobbler",
   "SESSION_SECRET": "Optimus Prime is my real dad",
   "TWITTER": {
-    "consumerKey": "INSERT_TWITTER_CONSUMER_KEY_HERE",
-    "consumerSecret": "INSERT_TWITTER_CONSUMER_SECRET_HERE",
-    "callbackUrl": "INSERT_TWITTER_CALLBACK_HERE"
+    "consumerKey": "bbcH8898n2h5jzELoTZbJO90D",
+    "consumerSecret": "0XOb5OMKWKjrdjgl75A4LuDdfiyr5S00c5wAfZlZpKuUZPPCd1",
+    "callbackUrl": "http://127.0.0.1:1337/auth/twitter/callback"
   },
   "FACEBOOK": {
     "clientID": "INSERT_FACEBOOK_CLIENTID_HERE",
@@ -12,8 +12,8 @@ module.exports = {
     "callbackURL": "INSERT_FACEBOOK_CALLBACK_HERE"
   },
   "GOOGLE": {
-    "clientID": "INSERT_GOOGLE_CLIENTID_HERE",
-    "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
-    "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
+    "clientID": "20757556090-hk3pvocfvd4ev4jvodg55k11454647k9.apps.googleusercontent.com",
+    "clientSecret": "sK1Mj8R1XqTLdcgCpFnZnpFM",
+    "callbackURL": "http://127.0.0.1:1337/auth/google/callback"
   }
 };
