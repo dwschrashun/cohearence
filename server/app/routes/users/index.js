@@ -13,3 +13,16 @@ router.get("/", function (req, res, next) {
 		res.json(users);
 	});
 });
+
+router.get('/:userId', function (req, res) {
+	res.json(_.omit(req.foundUser.toJSON(), ['salt', 'password']));
+});
+
+router.param('userId', function (req, res, next, userId) {
+	User.findById(userId)
+	.then(function (user) {
+		req.foundUser = user;
+		next();
+	})
+	.then(null, next);
+});
