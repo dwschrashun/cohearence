@@ -23,7 +23,6 @@ var schema = new mongoose.Schema({
     echoNestId: {
     	type: String
     },
-
 });
 
-mongoose.model('Playlist', schema);
+mongoose.model('Song', schema);
