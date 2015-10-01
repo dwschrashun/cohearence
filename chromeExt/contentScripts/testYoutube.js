@@ -10,6 +10,11 @@
 // 	console.log(elem.children());
 // })
 
+$('.watch-info-tag-list').filter(function () {
+  var $this = $(this);
+  var $h4 = $this.siblings('h4');
+  return $h4.text().trim() === 'Category';
+}).find('li a').text()
 
 $('.watch-info-tag-list').each(function(idx, elem) {
 	var child = $(this)[0].children[0].children[0];
