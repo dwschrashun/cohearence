@@ -21,28 +21,27 @@ function checkCategory () {
 	}
 }
 
-
-
 function findTitleAndArtist() {
-
 	var titleAndArtist = $('.watch-meta-item').filter(function() {
 		var $this = $(this);
 		var $h4 = $this.children('h4');
 		return $h4.text().trim() === "Music";
 	}).find("ul li").text().split("\"");
-	var songTitle = titleAndArtist[1];
-	//var artist = titleAndArtist.substring(titleAndArtist.indexOf("by" + 3)).split("(")[0];
-	var byArtist = titleAndArtist[2].split("(")[0];
-	var artist = byArtist.substring(3).trim();
-	return [songTitle, artist];
+	if (titleAndArtist.length >= 2) {
+		var songTitle = titleAndArtist[1];
+		//var artist = titleAndArtist.substring(titleAndArtist.indexOf("by" + 3)).split("(")[0];
+		var byArtist = titleAndArtist[2].split("(")[0];
+		var artist = byArtist.substring(3).trim();
+		return [songTitle, artist];
+	}
+	return ['', ''];
 }
 
-
-
 function sendSong() {
-	console.log('sending');
+	// console.log('sending');
 	var titleAndArtist = findTitleAndArtist();
 	var songObj = {
+		message: 'youtubeSong',
 	    url: location.href,
 	    videoTitle: $("#eow-title").text().trim(),
 	    category: 'Music',
@@ -50,10 +49,9 @@ function sendSong() {
 	    songTitle: titleAndArtist[0],
 	    artist: titleAndArtist[1]
 	};
-	console.log('the object', songObj);
+	// console.log('the object', songObj);
 	chrome.runtime.sendMessage(songObj, function (response) {
 	    // console.log('response from router:', response);
-
 	});
 }
 
