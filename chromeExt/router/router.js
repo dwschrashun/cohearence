@@ -35,8 +35,9 @@ function sendSong (songObj) {
 var previousUrl;
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
-    console.log("NEW SONG DETECTED", details);
+    // console.log("previousUrl, new url:", previousUrl, details.url);
     if (previousUrl) {
+    	// console.log("sending");
 	    chrome.runtime.sendMessage("newSongLoaded", function (response) {
 		    console.log("response in newSongLoaded emitter", response);
 		});
