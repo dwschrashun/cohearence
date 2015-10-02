@@ -32,17 +32,15 @@ router.get('/:userId/library', function (req, res, next) {
 });
 
 router.put('/:userId/library', function (req, res, next) {
-	console.log(req.body);
-	res.json(req.body);
 	// Make API call to echoNest to get songId
-	// echo("song/search").get({
-	// 	artist: "led zeppelin",
-	// 	title: "stairway to heaven"
-	// }, function (err, json) {
-	// 	if (json.response.status.message === "Success") {
-	// 		res.json(json);
-	// 	}
-	// });
+	echo("song/search").get({
+		artist: "led zeppelin",
+		title: "stairway to heaven"
+	}, function (err, json) {
+		if (json.response.status.message === "Success") {
+			res.json(json);
+		}
+	});
 	// Check if song exists in Song model
 		// If exists get _id
 			// check if song is in user library - increment plays with a new Date()
