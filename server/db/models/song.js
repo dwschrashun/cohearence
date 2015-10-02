@@ -16,7 +16,7 @@ var schema = new mongoose.Schema({
     	title: {
     		type: String
     	},
-    	length: {
+    	duration: {
     		type: String
     	}
     },
@@ -24,5 +24,7 @@ var schema = new mongoose.Schema({
     	type: String
     },
 });
+
+
 
 mongoose.model('Song', schema);

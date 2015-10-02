@@ -36,32 +36,34 @@ router.get('/:userId/library', function (req, res, next) {
 router.put('/:userId/library', function (req, res, next) {
 	// Make API call to echoNest to get songId
 
-	// res.json("hello world".score("ow"));
-	// var input = {
-	// 	artist: "led zeppelin",
-	// 	title: "stairway to headdddven"
-	// };
-
-
-
 	echo("song/search").get({artist: req.body.artist, title: req.body.title}, function (err, json) {
+		var songToAdd;
 		if (err) res.json(err);
+
 		if (json.response.status.message === "Success") {
 
-			var bestMatch;
-
-			bestMatch = _.max(json.response.songs, function(song){
+			songToAdd = _.max(json.response.songs, function(song){
 				return song.title.score(req.body.title);
 			});
-
-
-			if (bestMatch < 0) {
-				//if we couldn't find it in echonest, just store the url
-				//and send them back their original request.
-				bestMatch = req.body;
-			}
-			res.json(bestMatch);
 		}
+		if (songToAdd < 0 || !songToAdd) {
+			//if we couldn't find it in echonest, just store the url
+			//and send them back their original request.
+			songToAdd = req.body;
+		} else {
+			songToAdd = {
+				title: songToAdd.title,
+				artist: songToAdd.artist_name,
+				youtube: {
+					url: req.body.url,
+					title: req.body.videoTitle,
+					duration: req.body.duration,
+				},
+				echoNestId: songToAdd.id
+			};
+		}
+		req.foundUser.addToLibrary(songToAdd);
+		res.json(songToAdd);
 	});
 	// Check if song exists in Song model
 		// If exists get _id
