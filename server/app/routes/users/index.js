@@ -11,7 +11,7 @@ var echo = echojs({
   key: "BC5YTSWIE5Q9YWVGF"
 });
 
-router.get("/", function (req, res, next) {
+router.get("/", function (req, res) {
 	User.find()
 	.then(function (users) {
 		users = users.map(function (user) {
@@ -35,22 +35,18 @@ router.get('/:userId/library', function (req, res, next) {
 
 router.put('/:userId/library', function (req, res, next) {
 	// Make API call to echoNest to get songId
-
 	echo("song/search").get({artist: req.body.artist, title: req.body.title}, function (err, json) {
-		var songToAdd;
 		if (err) res.json(err);
+		var songToAdd;
 
-		if (json.response.status.message === "Success") {
-
+		if (json.response.status.message === "Success") { //if echonest found matches
 			songToAdd = _.max(json.response.songs, function(song){
-				return song.title.score(req.body.title);
+				return song.title.score(req.body.title); //find the most likely match from those results
 			});
 		}
-		if (songToAdd < 0 || !songToAdd) {
-			//if we couldn't find it in echonest, just store the url
-			//and send them back their original request.
-			songToAdd = req.body;
-		} else {
+		if (songToAdd < 0 || !songToAdd) { //if we couldn't find it in echonest, just save the
+			songToAdd = req.body;			//request as it came
+		} else { 							//if we did find it, format it like this:
 			songToAdd = {
 				title: songToAdd.title,
 				artist: songToAdd.artist_name,
@@ -62,28 +58,36 @@ router.put('/:userId/library', function (req, res, next) {
 				echoNestId: songToAdd.id
 			};
 		}
-		req.foundUser.addToLibrary(songToAdd);
-		res.json(songToAdd);
-	});
 	// Check if song exists in Song model
-		// If exists get _id
-			// check if song is in user library - increment plays with a new Date()
-			// else push song in user library with new date
-		// Else create song
-			// insert song into user library
-	// User.populate(req.foundUser, 'musicLibrary.song')
-	// 	.then(function (populatedUser) {
-	// 		var index = _.findIndex(req.foundUser.musicLibrary, function(el) {
-	// 			return el.song.youtube.url === req.body.href;
-	// 		});
-	// 		if (index !== -1) {
-	// 			req.foundUser.musicLibrary[index].plays.push(new Date());
-	// 		} else {
-	// 			// req.foundUser.musicLibrary.push({})
-	// 		}
-	// 	})
-	// 	.then(null, next);
-	// req.foundUser.musicLibrary.push();
+		Song.findOne({echoNestId: songToAdd.echoNestId})
+		.then(function(foundSong){
+			if (foundSong) { // If exists get _id
+				console.log('found the song in our library', foundSong);
+				User.populate(req.foundUser, 'musicLibrary.song')
+				.then(function (populatedUser) {
+					console.log("populated user: ",populatedUser);
+					var index = _.findIndex(req.foundUser.musicLibrary, function(el) {
+						return el.song.youtube.url === req.body.href;
+					});
+					if (index !== -1) {
+						console.log('user has the song, will increase play count');
+						req.foundUser.musicLibrary[index].plays.push(new Date());
+					} else { // else push song into user library
+						console.log('user does not have the song, will add it for them');
+						req.foundUser.addToLibrary(songToAdd);
+					}
+				}).then(null, next);
+			}
+			else { // if we don't have the song in our library, create it and add it to the user
+				console.log('didnt find the song in our library, gonna create the song and add it to user');
+				Song.create(songToAdd)
+				.then(function(newSong){
+					req.foundUser.addToLibrary(newSong);
+				});
+			}
+		}); //end of Song.findOne.then
+		res.json(req.foundUser.musicLibrary);
+	}); //end of echo callback
 });
 
 router.param('userId', function (req, res, next, userId) {
