@@ -37,13 +37,23 @@ var previousUrl;
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
     // console.log("previousUrl, new url:", previousUrl, details.url);
     if (previousUrl) {
-    	// console.log("sending");
-	    chrome.runtime.sendMessage("newSongLoaded", function (response) {
-		    console.log("response in newSongLoaded emitter", response);
-		});
-		previousUrl = undefined;
+    	chrome.tabs.query({currentWindow: true, active: true}, function(tabArray) {
+  			var port = chrome.tabs.connect(tabArray[0].id, {name: "ytConnect"});
+    		console.log("sending");
+  			port.postMessage({message: "newSongLoaded"});
+			previousUrl = undefined;
+   		});
 	}
 	else {
 		previousUrl = details.url;
 	}
+
+
+
+	  //   chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+	  //   	console.log("in tabs", tabs);
+		 //    chrome.tabs.sendMessage(tabs[0].id, {message: "newSongLoaded"}, {}, function (response) {
+			//     console.log("response in newSongLoaded emitter", response);
+			// });
+	  //   });
 });
