@@ -15,5 +15,10 @@ module.exports = {
     "clientID": "INSERT_GOOGLE_CLIENTID_HERE",
     "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
     "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
+  },
+  "ECHONEST_KEY": {
+    "apiKey": "BC5YTSWIE5Q9YWVGF",
+    "consumerKey": "661ff9f0ed233a9d9015a0529e3f72a9",
+    "consumerSecret": "fFp9af0wQR64ZTyZZ5szbA"
   }
 };
