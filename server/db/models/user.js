@@ -51,12 +51,9 @@ schema.method('correctPassword', function (candidatePassword) {
 	return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-schema.method('addToLibrary', function(songToAdd){
-	console.log("Song to ad in user.addtoLibrary: " , songToAdd);
-	this.musicLibrary.push({song: songToAdd, plays: new Date()});
-	this.save().then(function(savedUser){
-		console.log("updated music library:" , savedUser);
-	});
+schema.method('addToLibrary', function(newSong){
+	console.log(newSong);
+	this.musicLibrary.push({song: newSong, plays: new Date()});
 });
 
 mongoose.model('User', schema);

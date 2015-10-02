@@ -65,30 +65,63 @@ router.put('/:userId/library', function (req, res, next) {
 				console.log('found the song in our library', foundSong);
 				User.populate(req.foundUser, 'musicLibrary.song')
 				.then(function (populatedUser) {
-					console.log("populated user: ",populatedUser);
-					var index = _.findIndex(req.foundUser.musicLibrary, function(el) {
-						return el.song.youtube.url === req.body.href;
-					});
-					if (index !== -1) {
+					console.log("Music Library: ", populatedUser.musicLibrary);
+					var index = checkMatch(populatedUser, songToAdd);
+					if (index) {
 						console.log('user has the song, will increase play count');
 						req.foundUser.musicLibrary[index].plays.push(new Date());
-					} else { // else push song into user library
+					} else {
 						console.log('user does not have the song, will add it for them');
 						req.foundUser.addToLibrary(songToAdd);
 					}
-				}).then(null, next);
+				});
 			}
 			else { // if we don't have the song in our library, create it and add it to the user
-				console.log('didnt find the song in our library, gonna create the song and add it to user');
+				console.log('didnt find the song in our library, gonna create it and add it to user');
 				Song.create(songToAdd)
 				.then(function(newSong){
+					console.log('newSong: ', newSong);
 					req.foundUser.addToLibrary(newSong);
 				});
 			}
-		}); //end of Song.findOne.then
-		res.json(req.foundUser.musicLibrary);
+		})
+		.then(function(){
+			console.log('saving user');
+			return req.foundUser.save();
+		})
+		.then(function(savedUser){
+			console.log("UPDATED USER LIBRARY: ", savedUser);
+			res.json(savedUser.musicLibrary);
+		})
+		.then(null, next); //end of Song.findOne
 	}); //end of echo callback
 });
+
+function checkMatch(popUser, song){
+	var index;
+	popUser.musicLibrary.forEach(function(songObj, i){
+		if (songObj.song.echoNestId === song.echoNestId){
+			console.log('MATCH');
+			index = i;
+		} else{
+			console.log('no match');
+		}
+	});
+	return index;
+}
+// var index = _.findIndex(req.foundUser.musicLibrary, function(el) {
+// 	console.log("EL",el);
+// 	return el.song.echoNestId === songToAdd.id;
+// });
+// if (index !== -1) {
+// 	console.log('user has the song, will increase play count');
+// 	req.foundUser.musicLibrary[index].plays.push(new Date());
+// } else { // else push song into user library
+// 	console.log('user does not have the song, will add it for them');
+// 	req.foundUser.addToLibrary(songToAdd);
+// }
+
+
 
 router.param('userId', function (req, res, next, userId) {
 	User.findById(userId)
