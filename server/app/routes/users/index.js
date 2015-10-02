@@ -4,9 +4,11 @@ var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Song = mongoose.model('Song');
+
+require("string_score");
 var echojs = require('echojs');
 var echo = echojs({
-  key: process.env.ECHONEST_KEY
+  key: "BC5YTSWIE5Q9YWVGF"
 });
 
 router.get("/", function (req, res, next) {
@@ -33,12 +35,32 @@ router.get('/:userId/library', function (req, res, next) {
 
 router.put('/:userId/library', function (req, res, next) {
 	// Make API call to echoNest to get songId
-	echo("song/search").get({
-		artist: "led zeppelin",
-		title: "stairway to heaven"
-	}, function (err, json) {
+
+	// res.json("hello world".score("ow"));
+	// var input = {
+	// 	artist: "led zeppelin",
+	// 	title: "stairway to headdddven"
+	// };
+
+
+
+	echo("song/search").get({artist: req.body.artist, title: req.body.title}, function (err, json) {
+		if (err) res.json(err);
 		if (json.response.status.message === "Success") {
-			res.json(json);
+
+			var bestMatch;
+
+			bestMatch = _.max(json.response.songs, function(song){
+				return song.title.score(req.body.title);
+			});
+
+
+			if (bestMatch < 0) {
+				//if we couldn't find it in echonest, just store the url
+				//and send them back their original request.
+				bestMatch = req.body;
+			}
+			res.json(bestMatch);
 		}
 	});
 	// Check if song exists in Song model
@@ -62,7 +84,7 @@ router.put('/:userId/library', function (req, res, next) {
 	// req.foundUser.musicLibrary.push();
 });
 
-router.param('userId', function (req, res, next, userId) {	
+router.param('userId', function (req, res, next, userId) {
 	User.findById(userId)
 	.then(function (user) {
 		req.foundUser = user;
