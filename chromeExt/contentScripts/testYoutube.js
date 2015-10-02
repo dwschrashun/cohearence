@@ -41,9 +41,9 @@ function findTitleAndArtist() {
 
 function sendSong() {
 	console.log('sending');
-	var titleAndArtist = findTitleAndArtist();	
+	var titleAndArtist = findTitleAndArtist();
 	var songObj = {
-	    href: location.href,
+	    url: location.href,
 	    videoTitle: $("#eow-title").text().trim(),
 	    category: 'Music',
 	    duration: $('.ytp-time-duration').text(),
@@ -53,7 +53,11 @@ function sendSong() {
 	console.log('the object', songObj);
 	chrome.runtime.sendMessage(songObj, function (response) {
 	    // console.log('response from router:', response);
+
 	});
 }
 
 checkCategory();
+
+// var headTitle = $('head > title').textContent;
+// console.log(headTitle);
