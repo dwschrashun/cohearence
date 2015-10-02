@@ -28,3 +28,21 @@ function sendSong (songObj) {
 	});
 }
 
+// chrome.webNavigation.onCompleted.addListener(function (details) {
+//     console.log("On completed", details);
+// });
+
+var previousUrl;
+
+chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
+    console.log("NEW SONG DETECTED", details);
+    if (previousUrl) {
+	    chrome.runtime.sendMessage("newSongLoaded", function (response) {
+		    console.log("response in newSongLoaded emitter", response);
+		});
+		previousUrl = undefined;
+	}
+	else {
+		previousUrl = details.url;
+	}
+});

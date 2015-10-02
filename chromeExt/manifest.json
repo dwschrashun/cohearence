@@ -12,6 +12,7 @@
     },
     "permissions": [
         "activeTab",
+        "webNavigation",
         "https://ajax.googleapis.com/",
         "http://localhost:1337/"
     ],
