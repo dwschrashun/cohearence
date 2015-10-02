@@ -12,6 +12,7 @@ function sendSong (songObj) {
 	    url: "http://localhost:1337/api/users/",
 	    method: "GET"
 	}).done(function (users) {
+		// console.log("here");
 	    userId = users[0]._id;
 		$.ajax({
 			url: "http://localhost:1337/api/users/" + userId + "/library",
@@ -19,7 +20,7 @@ function sendSong (songObj) {
 			data: songObj,
 			dataType: "json"
 		}).done(function (response) {
-			console.log("response from server", response);
+			console.log("End of the line: response from server", response);
 		}).fail(function (error) {
 			console.log(error);
 		});
@@ -32,28 +33,25 @@ function sendSong (songObj) {
 //     console.log("On completed", details);
 // });
 
-var previousUrl;
+var previousUrl = true;
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
-    // console.log("previousUrl, new url:", previousUrl, details.url);
+    console.log("state updated: previousUrl, new url:", previousUrl, details.url);
     if (previousUrl) {
-    	chrome.tabs.query({currentWindow: true, active: true}, function(tabArray) {
-  			var port = chrome.tabs.connect(tabArray[0].id, {name: "ytConnect"});
-    		console.log("sending");
-  			port.postMessage({message: "newSongLoaded"});
-			previousUrl = undefined;
-   		});
+   //  	chrome.tabs.query({currentWindow: true, active: true}, function(tabArray) {
+  	// 		var port = chrome.tabs.connect(tabArray[0].id, {name: "ytConnect"});
+   //  		console.log("sending");
+  	// 		port.postMessage({message: "newSongLoaded"});
+   // 		});
+	    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+	    	console.log("in tabs", tabs);
+		    chrome.tabs.sendMessage(tabs[0].id, {message: "newSongLoaded"}, {}, function (response) {
+				previousUrl = undefined;
+			    //console.log("response in newSongLoaded emitter", response);
+			});
+	    });
 	}
 	else {
 		previousUrl = details.url;
 	}
-
-
-
-	  //   chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-	  //   	console.log("in tabs", tabs);
-		 //    chrome.tabs.sendMessage(tabs[0].id, {message: "newSongLoaded"}, {}, function (response) {
-			//     console.log("response in newSongLoaded emitter", response);
-			// });
-	  //   });
 });
