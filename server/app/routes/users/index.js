@@ -1,8 +1,9 @@
 var router = require('express').Router();
 module.exports = router;
 var _ = require('lodash');
-
-var User = require('mongoose').model('User');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Song = mongoose.model('Song');
 
 router.get("/", function (req, res, next) {
 	User.find()
@@ -18,7 +19,38 @@ router.get('/:userId', function (req, res) {
 	res.json(_.omit(req.foundUser.toJSON(), ['salt', 'password']));
 });
 
-router.param('userId', function (req, res, next, userId) {
+router.get('/:userId/library', function (req, res, next) {
+	User.populate(req.foundUser, 'musicLibrary.song')
+		.then(function (populatedUser) {
+			res.json(populatedUser);
+		})
+		.then(null, next);
+});
+
+router.put('/:userId/library', function (req, res, next) {
+	// Make API call to echoNest to get songId
+	// Check if song exists in Song model
+		// If exists get _id
+			// check if song is in user library - increment plays with a new Date()
+			// else push song in user library with new date
+		// Else create song
+			// insert song into user library
+	User.populate(req.foundUser, 'musicLibrary.song')
+		.then(function (populatedUser) {
+			var index = _.findIndex(req.foundUser.musicLibrary, function(el) {
+				return el.song.youtube.url === req.body.href;
+			});
+			if (index !== -1) {
+				req.foundUser.musicLibrary[index].plays.push(new Date());
+			} else {
+				// req.foundUser.musicLibrary.push({})
+			}
+		})
+		.then(null, next);
+	req.foundUser.musicLibrary.push();
+});
+
+router.param('userId', function (req, res, next, userId) {	
 	User.findById(userId)
 	.then(function (user) {
 		req.foundUser = user;
