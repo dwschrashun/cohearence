@@ -52,8 +52,7 @@ schema.method('correctPassword', function (candidatePassword) {
 });
 
 schema.method('addToLibrary', function(newSong){
-	console.log(newSong);
-	this.musicLibrary.push({song: newSong, plays: new Date()});
+	this.musicLibrary.push({song: newSong, plays: [new Date()]});
 });
 
 mongoose.model('User', schema);
