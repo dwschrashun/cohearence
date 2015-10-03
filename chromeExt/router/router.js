@@ -3,6 +3,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 		sendSong(request);
 		sendResponse({response: "hey we got your song at the router"});
 	}
+	if (request.message === 'soundCloudSong') {
+		sendSong(request);
+		sendResponse({response: "hey we got your song at the router"});
+	}
 	return true;
 });
 

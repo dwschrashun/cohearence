@@ -43,6 +43,7 @@ router.put('/:userId/library', function (req, res, next) {
 	// });
 
 	//for testing
+	console.log('got to the server route');
 	res.json(req.body);
 
 	// Check if song exists in Song model
