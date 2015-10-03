@@ -1,5 +1,3 @@
-
-
 function checkCategory () {
 	//console.log("checking category");
 	var category = $('.watch-info-tag-list').filter(function () {

@@ -1,31 +1,44 @@
 {
     "manifest_version": 2,
     "name": "blueberry scrobbler",
-    "description": "This extension shows a Google Image search result for the current page",
+    "description": "Gets all your music",
     "version": "1.0",
     "browser_action": {
         "default_icon": "icon.png",
         "default_popup": "popup/index.html"
     },
     "background": {
-    	"scripts": ["thirdparty/jquery-2.1.4.js", "router/router.js"]
+        "scripts": [
+            "thirdparty/jquery-2.1.4.js",
+            "router/router.js",
+            "authentication/chrome_ex_oauthsimple.js",
+            "authentication/chrome_ex_oauth.js",
+            "authentication/onload.js",
+            "authentication/authentication.js"
+        ]
     },
     "permissions": [
         "activeTab",
         "tabs",
         "webNavigation",
+        "identity",
         "https://ajax.googleapis.com/",
-        "http://localhost:1337/"
+        "http://localhost:1337/",
+        "https://www.google.com/accounts/OAuthGetRequestToken",
+        "https://www.google.com/accounts/OAuthAuthorizeToken",
+        "https://www.google.com/accounts/OAuthGetAccessToken"
     ],
-    "content_scripts": [
-    {
-    	"matches": ["http://www.pandora.com/*"],
-    	"js": ["contentScripts/test.js"],
-    	"run_at":  "document_end"
-    },
-    {
-    	"matches": ["https://www.youtube.com/watch?v=*"],
-    	"js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"],
-    	"run_at":  "document_end"
-    }]
+    "content_scripts": [{
+        "matches": ["http://www.pandora.com/*"],
+        "js": ["contentScripts/test.js"],
+        "run_at": "document_end"
+    }, {
+        "matches": ["https://www.youtube.com/watch?v=*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"],
+        "run_at": "document_end"
+    }, {
+        "matches": ["https://soundcloud.com/*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/soundCloud.js"]
+    }],
+    "content_security_policy": "script-src 'self'; object-src 'self'"
 }
