@@ -16,7 +16,6 @@ module.exports = function (app) {
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
-
         UserModel.findOne({ 'google.id': profile.id }).exec()
             .then(function (user) {
 
@@ -41,7 +40,10 @@ module.exports = function (app) {
 
     passport.use(new GoogleStrategy(googleCredentials, verifyCallback));
 
-    app.get('/auth/google', passport.authenticate('google', {
+    app.get('/auth/google', function(req,res,next){
+      console.log('got here');
+      next();
+    } ,passport.authenticate('google', {
         scope: [
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email'
@@ -51,6 +53,7 @@ module.exports = function (app) {
     app.get('/auth/google/callback',
         passport.authenticate('google', { failureRedirect: '/login' }),
         function (req, res) {
+          console.log('went to auth/google/callback');
             res.redirect('/');
         });
 
