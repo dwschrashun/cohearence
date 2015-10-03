@@ -56,7 +56,7 @@ router.put('/:userId/library', function (req, res, next) {
 		}
 		//if we did find it, format it like this:
 		else {
-      console.log('found in the DB!');
+      		//console.log('found in the DB!');
 			songToAdd = {
 				title: songToAdd.title,
 				artist: songToAdd.artist_name,
@@ -70,13 +70,40 @@ router.put('/:userId/library', function (req, res, next) {
 		}
 	// Check if song exists in Song model
 		if (songToAdd.echoNestId){
-      console.log('reformatted  ===== ', songToAdd);
-			Song.checkSongAgainstCollection(songToAdd, req, next)
-			//hits .then only if new song was created, otherwise it returned next()
-			.then(function(newSong){ //it's a song
-				if (!newSong) return next();
-				req.foundUser.addToLibrary(newSong);
-				return req.foundUser.save();
+      		// console.log('reformatted  ===== ', songToAdd);
+      		var isNew;
+			Song.checkSongAgainstCollection(songToAdd)
+			.then(function(song){
+				//hits .then only if new song was created, otherwise it returned next()
+				if (song === "not found") {
+					var isNew = true;
+					return Song.create(songToAdd);
+				}
+				else {
+					return song;
+				}
+			})
+			.then(null, function (err){
+				console.log("ERROR HERHEHEH", err);
+			})
+			.then(function (song) {
+				if (!isNew) {
+					//console.log("there", req.foundUser);
+					return User.populateMusicLibrary(req.foundUser)
+						.then(function(populatedUser){
+							//check to see if song is in user's library
+							req.song = song;
+							checkMatchThenAddOrUpdate(populatedUser, req.song);
+							return populatedUser.save();
+						})
+						.then(null, function (err){
+							console.log("ERROR", err);
+						});
+				}
+				else {
+					req.foundUser.addToLibraryOrUpdate(song);
+					return req.foundUser.save();
+				}
 			})
 			.then(function(savedUser){
 				res.status(201).json(savedUser.musicLibrary);
@@ -91,7 +118,7 @@ router.put('/:userId/library', function (req, res, next) {
 router.put('/:userId/library', function(req,res,next){
 	User.populateMusicLibrary(req.foundUser)
 	.then(function(populatedUser){
-		checkMatchAndAdd(populatedUser, req.foundSong);
+		checkMatchThenAddOrUpdate(populatedUser, req.foundSong);
 		return populatedUser.save();
 	}).then(function(savedUser){
 		res.json(savedUser.musicLibrary);
@@ -109,7 +136,7 @@ router.param('userId', function (req, res, next, userId) {
 });
 
 //functions
-function checkMatchAndAdd(popUser, songToAdd){
+function checkMatchThenAddOrUpdate(popUser, songToAdd){
 	var index = popUser.findMatchIndex(songToAdd);
-	return popUser.addToLibrary(songToAdd, index);
+	return popUser.addToLibraryOrUpdate(songToAdd, index);
 }

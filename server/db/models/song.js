@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var Promise = require("bluebird");
 
 var schema = new mongoose.Schema({
 	title: {
@@ -27,24 +28,27 @@ var schema = new mongoose.Schema({
 });
 
 
-schema.statics.checkSongAgainstCollection = function(song, req, next) {
+schema.statics.checkSongAgainstCollection = function(song) {
 	//if it has an echoNestId, find it in Song collection
-			console.log('song === ',song);
-	this.findOne({
+	return this.findOne({
 		echoNestId: song.echoNestId
 	})
 	.then(foundSong => {
 		//if song is found in collection, set request's foundSong to the songToAdd
 		if (foundSong) {
-			req.foundSong = song;
-			return next();
+			return foundSong;
 		}
 		//if song wasn't found, create it
 		else {
-			return this.create(song)
+			return "not found";
 		}
-	})
-}
+	}).then(null, function (err) {
+		console.log("ERROR In CSAC:", err);
+	});
+	// return new Promise(function (resolve) {
+	// 	return resolve(true);
+	// });
+};
 
 
 mongoose.model('Song', schema);

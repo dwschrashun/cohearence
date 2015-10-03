@@ -3,6 +3,8 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 require("string_score");
+var deepPopulate = require("mongoose-deep-populate")(mongoose);
+var Promise = require("bluebird");
 
 var schema = new mongoose.Schema({
 	email: {
@@ -24,6 +26,8 @@ var schema = new mongoose.Schema({
 		type: [{song: {type: mongoose.Schema.Types.ObjectId, ref: 'Song'}, plays: [{type: Date}]}], default: [],
 	}
 });
+
+schema.plugin(deepPopulate);
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
@@ -53,7 +57,9 @@ schema.method('correctPassword', function (candidatePassword) {
 	return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-schema.method('addToLibrary', function(newSong, index){
+//adds song to user's library if song is not found in user's library
+//if song is found in user's library, add a new timestamp
+schema.method('addToLibraryOrUpdate', function(newSong, index){
 	if (index !== -1) {
 		this.musicLibrary[index].plays.push(new Date());
 	} else {
@@ -62,8 +68,18 @@ schema.method('addToLibrary', function(newSong, index){
 });
 
 schema.statics.populateMusicLibrary = function(user) {
-	return this.populate(user, 'musicLibrary.song').exec()
-}
+	var self = this;
+	return new Promise (function (resolve, reject) {
+		self.deepPopulate(user, 'musicLibrary.song', function (err, populated) {
+			if (err) {
+				console.log("DP ERROR", err);
+				return reject(err);
+			}
+			//console.log("populated", populated);
+			return resolve(populated);
+		});
+	});
+};
 
 schema.methods.findMatchIndex = function(songToAdd) {
 	//find index of song that matches songToAdd in user's music library
@@ -77,7 +93,7 @@ schema.methods.findMatchIndex = function(songToAdd) {
 			return theScore >= .75;
 		}
 	});
-}
+};
 
 
 
