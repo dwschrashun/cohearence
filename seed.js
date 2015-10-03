@@ -23,6 +23,8 @@ var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 
+
+
 var seedUsers = function () {
 
     var users = [
@@ -41,7 +43,13 @@ var seedUsers = function () {
 };
 
 connectToDb.then(function () {
-    User.findAsync({}).then(function (users) {
+    User.remove({}, function(err, removed) {
+        if (err) console.error(err);
+    })
+    .then(function() {
+        return User.findAsync({})
+    })
+    .then(function (users) {
         if (users.length === 0) {
             return seedUsers();
         } else {

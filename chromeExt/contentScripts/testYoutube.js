@@ -1,5 +1,3 @@
-
-
 function checkCategory () {
 	//console.log("checking category");
 	var category = $('.watch-info-tag-list').filter(function () {
@@ -29,7 +27,7 @@ function findTitleAndArtist() {
 
 function sendSong() {
 	//console.log('sending song');
-	var titleAndArtist = findTitleAndArtist();	
+	var titleAndArtist = findTitleAndArtist();
 	var songObj = {
 		message: "youtubeSong",
 	    href: location.href,

@@ -3,19 +3,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 		sendSong(request);
 		sendResponse({response: "hey we got your song at the router"});
 	}
+	if (request.message === 'soundCloudSong') {
+		sendSong(request);
+		sendResponse({response: "hey we got your song at the router"});
+	}
 	return true;
 });
 
 function sendSong (songObj) {
-	var userId;
-	$.ajax({
-	    url: "http://localhost:1337/api/users/",
-	    method: "GET"
-	}).done(function (users) {
-		// console.log("here");
-	    userId = users[0]._id;
+	chrome.storage.sync.get("user", function(userObj) {
+		console.log('this is the ajax user', userObj);
+		if (!userObj) return;
 		$.ajax({
-			url: "http://localhost:1337/api/users/" + userId + "/library",
+			url: "http://localhost:1337/api/users/" + userObj.user._id + "/library",
 			method: 'PUT',
 			data: songObj,
 			dataType: "json"
@@ -24,9 +24,7 @@ function sendSong (songObj) {
 		}).fail(function (error) {
 			console.log(error);
 		});
-	}).fail(function (error) {
-	    console.log("Error getting users", error);
-	});
+	})
 }
 
 // chrome.webNavigation.onCompleted.addListener(function (details) {
