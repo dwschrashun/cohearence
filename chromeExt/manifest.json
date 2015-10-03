@@ -8,7 +8,8 @@
         "default_popup": "popup/index.html"
     },
     "background": {
-        "scripts": ["thirdparty/jquery-2.1.4.js",
+        "scripts": [
+            "thirdparty/jquery-2.1.4.js",
             "router/router.js",
             "authentication/chrome_ex_oauthsimple.js",
             "authentication/chrome_ex_oauth.js",
@@ -38,5 +39,6 @@
     }, {
         "matches": ["https://soundcloud.com/*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/soundCloud.js"]
-    }]
+    }],
+    "content_security_policy": "script-src 'self'; object-src 'self'"
 }

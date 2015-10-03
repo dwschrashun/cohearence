@@ -1,45 +1,45 @@
-window.app = angular.module('ScrobblerPopUp', ['ui.router']);
+var app = angular.module('ScrobblerPopUp', ['ui.router']);
 
-app.config(function ($urlRouterProvider, $locationProvider) {
-    // This turns off hashbang urls (/#about) and changes it to something normal (/about)
-    // $locationProvider.html5Mode(true);
-    // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
-    $urlRouterProvider.otherwise('/');
-});
+// app.config(function ($urlRouterProvider, $locationProvider) {
+//     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
+//     // $locationProvider.html5Mode(true);
+//     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
+//     $urlRouterProvider.otherwise('/');
+// });
 
-app.config(function ($stateProvider) {
-	$stateProvider.state("login", {
-		url: "/",
-		templateUrl: "/popup/popup.html",
-		controller: function ($scope, LoginFactory, $state) {
-			$scope.login = {};
-		    $scope.error = null;
-		    $scope.sendLogin = function (loginInfo) {
-		        $scope.error = null;
-			    LoginFactory.login(loginInfo).then(function () {
-			            $state.go('home');
-			       	}).catch(function () {
-			            $scope.error = 'Invalid login credentials.';
-		        });
+// app.config(function ($stateProvider) {
+//     $stateProvider.state("login", {
+//         url: "/",
+//         templateUrl: "popup/popup.html"
+//     })
+// });
 
-			};
-		}
-	});
+app.controller('LoginCtrl', function ($scope, LoginFactory, $state) {
+    $scope.login = {};
+    $scope.error = null;
+    $scope.sendLogin = function (loginInfo) {
+        $scope.error = null;
+        LoginFactory.login(loginInfo).then(function () {
+            $state.go('home');
+        }).catch(function () {
+            $scope.error = 'Invalid login credentials.';
+        });
+    };
 });
 
 app.factory("LoginFactory", function ($http) {
-
-	function login (credentials) {
+    function login(credentials) {
+        console.log('sending the post route...');
         return $http.post('http://localhost:1337/login', credentials)
-        .then(onSuccessfulLogin)
-        .catch(function () {
-        	console.log("bad login");
-            //return $q.reject({ message: 'Invalid login credentials.' });
-        });
-	}
+            .then(onSuccessfulLogin)
+            .catch(function () {
+                console.log("bad login");
+                //return $q.reject({ message: 'Invalid login credentials.' });
+            });
+    }
 
     function onSuccessfulLogin(response) {
-    	console.log("Successful Login!", response.data);
+        console.log("Successful Login!", response.data);
         var data = response.data;
         // Session.create(data.id, data.user);
         // $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
@@ -47,11 +47,9 @@ app.factory("LoginFactory", function ($http) {
     }
 
     return {
-    	login: login,
-    	onSuccessfulLogin: onSuccessfulLogin
-    }
-
-
+        login: login,
+        onSuccessfulLogin: onSuccessfulLogin
+    };
 });
 
 // // This app.run is for controlling access to specific states.
