@@ -19,38 +19,21 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state) {
     $scope.error = null;
     $scope.sendLogin = function (loginInfo) {
         $scope.error = null;
-        LoginFactory.login(loginInfo).then(function () {
-            $state.go('home');
+        LoginFactory.login(loginInfo).then(function (user) {
+            chrome.storage.sync.set({user: user}, function() {
+                console.log('user saved!', user);
+                chrome.storage.sync.get("user", function(user) {
+                    console.log("user after storagearea.get", user);
+                })
+            })
+            //replace $state.go('home') with something else
         }).catch(function () {
             $scope.error = 'Invalid login credentials.';
         });
     };
 });
 
-app.factory("LoginFactory", function ($http) {
-    function login(credentials) {
-        console.log('sending the post route...');
-        return $http.post('http://localhost:1337/login', credentials)
-            .then(onSuccessfulLogin)
-            .catch(function () {
-                console.log("bad login");
-                //return $q.reject({ message: 'Invalid login credentials.' });
-            });
-    }
 
-    function onSuccessfulLogin(response) {
-        console.log("Successful Login!", response.data);
-        var data = response.data;
-        // Session.create(data.id, data.user);
-        // $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-        return data.user;
-    }
-
-    return {
-        login: login,
-        onSuccessfulLogin: onSuccessfulLogin
-    };
-});
 
 // // This app.run is for controlling access to specific states.
 // app.run(function ($rootScope, AuthService, $state) {

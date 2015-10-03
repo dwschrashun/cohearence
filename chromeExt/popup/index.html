@@ -6,13 +6,14 @@
     <script src="/thirdparty/angular/angular.js"></script>
     <script src="/thirdparty/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="/popup/index.js"></script>
+    <script src="/popup/login.factory.js"></script>
 </head>
 
 <body>
     <div id="main" ui-view></div>
     <form id="login-form" name="loginForm" ng-submit="sendLogin(login)" ng-controller="LoginCtrl">
         <alert type="danger" ng-if="error">
-            {{ error }}
+            <!-- {{ error }} -->
         </alert>
         <div class="form-group">
             <label for="email">Email address</label>
