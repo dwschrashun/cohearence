@@ -21,7 +21,7 @@ var schema = new mongoose.Schema({
 		id: String
 	},
 	musicLibrary: {
-		type: [{song: {type: mongoose.Schema.Types.ObjectId, ref: 'Song'}, plays: [{type: Date}]}]
+		type: [{song: {type: mongoose.Schema.Types.ObjectId, ref: 'Song'}, plays: [{type: Date}]}], default: [],
 	}
 });
 
