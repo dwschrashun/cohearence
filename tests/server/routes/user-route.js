@@ -95,7 +95,7 @@ describe('User route', function () {
         });
       });
 
-      it(`gets a user's library`, function(done){
+      it("gets a user's library", function(done){
         guest.get(`/api/users/${user1._id}/library`)
         .expect(200)
         .end(function(err, response){
