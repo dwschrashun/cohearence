@@ -27,7 +27,7 @@ var schema = new mongoose.Schema({
 });
 
 
-schema.statics.checkSource = song {
+schema.statics.checkSource = function(song) {
 
 }
 

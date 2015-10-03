@@ -39,22 +39,27 @@ router.put('/:userId/library', function (req, res, next) {
 		if (err) res.json(err);
 		var songToAdd;
 
-		if (json.response.status.message === "Success") { //if echonest found matches
+		//if echonest found matches, find the highest string match from the response
+		if (json.response.status.message === "Success") {
 			songToAdd = _.max(json.response.songs, function(song){
-				return song.title.score(req.body.title); //find the most likely match from those results
+				return song.title.score(req.body.title);
 			});
 		}
-		if (songToAdd < 0 || !songToAdd) { //if we couldn't find it in echonest, just save the
-			songToAdd = req.body;			//request as it came
-		} else { 							//if we did find it, format it like this:
+
+		//if echonest didn't find a match, save the original request as the song
+		if (songToAdd < 0 || !songToAdd) {
+			songToAdd = req.body;
+		}
+		//if we did find it, format it like this:
+		else {
 			songToAdd = {
 				title: songToAdd.title,
 				artist: songToAdd.artist_name,
-				youtube: [{
+				youtube: {
 					url: req.body.url,
 					title: req.body.videoTitle,
 					duration: req.body.duration,
-				}],
+				},
 				echoNestId: songToAdd.id
 			};
 		}
