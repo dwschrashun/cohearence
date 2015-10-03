@@ -52,6 +52,7 @@ router.put('/:userId/library', function (req, res, next) {
 		}
 		//if we did find it, format it like this:
 		else {
+      console.log('found in the DB!');
 			songToAdd = {
 				title: songToAdd.title,
 				artist: songToAdd.artist_name,
@@ -65,18 +66,16 @@ router.put('/:userId/library', function (req, res, next) {
 		}
 	// Check if song exists in Song model
 		if (songToAdd.echoNestId){
-			Song.checkSongAgainstCollection(songtoAdd, req, next)
+      console.log('reformatted  ===== ', songToAdd);
+			Song.checkSongAgainstCollection(songToAdd, req, next)
 			//hits .then only if new song was created, otherwise it returned next()
 			.then(function(newSong){ //it's a song
 				if (!newSong) return next();
-				console.log('NEWSONG : ', newSong);
 				req.foundUser.addToLibrary(newSong);
 				return req.foundUser.save();
 			})
 			.then(function(savedUser){
-				if (!savedUser) return next();
-				console.log("UPDATED USER LIBRARY: ", savedUser);
-				res.json(savedUser.musicLibrary);
+				res.status(201).json(savedUser.musicLibrary);
 			})
 			.then(null, next); //end of Song.findOne
 		} else {
@@ -88,11 +87,9 @@ router.put('/:userId/library', function (req, res, next) {
 router.put('/:userId/library', function(req,res,next){
 	User.populateMusicLibrary(req.foundUser)
 	.then(function(populatedUser){
-		console.log("Music Library: ", populatedUser.musicLibrary);
 		checkMatchAndAdd(populatedUser, req.foundSong);
 		return populatedUser.save();
 	}).then(function(savedUser){
-		console.log("Saved User: ", savedUser.musicLibrary);
 		res.json(savedUser.musicLibrary);
 	});
 });

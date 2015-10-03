@@ -29,10 +29,11 @@ var schema = new mongoose.Schema({
 
 schema.statics.checkSongAgainstCollection = function(song, req, next) {
 	//if it has an echoNestId, find it in Song collection
-	Song.findOne({
+			console.log('song === ',song);
+	this.findOne({
 		echoNestId: song.echoNestId
 	})
-	.then(function(foundSong) {
+	.then(foundSong => {
 		//if song is found in collection, set request's foundSong to the songToAdd
 		if (foundSong) {
 			req.foundSong = song;
@@ -40,7 +41,7 @@ schema.statics.checkSongAgainstCollection = function(song, req, next) {
 		}
 		//if song wasn't found, create it
 		else {
-			return Song.create(song)
+			return this.create(song)
 		}
 	})
 }
