@@ -35,16 +35,20 @@ router.get('/:userId/library', function (req, res, next) {
 
 router.put('/:userId/library', function (req, res, next) {
 	// Make API call to echoNest to get songId
+	return res.json(req.body);
 	echo("song/search").get({artist: req.body.artist, title: req.body.title}, function (err, json) {
-		if (err) res.json(err);
-		var songToAdd;
+		// if (err) res.json(err);
+		// var songToAdd;
 
-		//if echonest found matches, find the highest string match from the response
-		if (json.response.status.message === "Success") {
-			songToAdd = _.max(json.response.songs, function(song){
-				return song.title.score(req.body.title);
-			});
-		}
+		// //if echonest found matches, find the highest string match from the response
+		// if (json.response.status.message === "Success") {
+		// 	songToAdd = _.max(json.response.songs, function(song){
+		// 		return song.title.score(req.body.title);
+		// 	});
+		// }
+		//for testing
+		console.log('got to the server route');
+		return res.json(req.body);
 
 		//if echonest didn't find a match, save the original request as the song
 		if (songToAdd < 0 || !songToAdd) {
