@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "Getting started example",
+    "name": "blueberry scrobbler",
     "description": "This extension shows a Google Image search result for the current page",
     "version": "1.0",
     "browser_action": {
@@ -8,11 +8,14 @@
         "default_popup": "popup/popup.html"
     },
     "background": {
-    	"scripts": ["router/router.js"]
+    	"scripts": ["thirdparty/jquery-2.1.4.js", "router/router.js"]
     },
     "permissions": [
         "activeTab",
-        "https://ajax.googleapis.com/"
+        "tabs",
+        "webNavigation",
+        "https://ajax.googleapis.com/",
+        "http://localhost:1337/"
     ],
     "content_scripts": [
     {
@@ -22,7 +25,7 @@
     },
     {
     	"matches": ["https://www.youtube.com/watch?v=*"],
-    	"js": ["contentScripts/testYoutube.js"],
+    	"js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"],
     	"run_at":  "document_end"
     }]
 }

@@ -15,5 +15,10 @@ module.exports = {
     "clientID": "20757556090-hk3pvocfvd4ev4jvodg55k11454647k9.apps.googleusercontent.com",
     "clientSecret": "sK1Mj8R1XqTLdcgCpFnZnpFM",
     "callbackURL": "http://127.0.0.1:1337/auth/google/callback"
+  },
+  "ECHONEST_KEY": {
+    "apiKey": "BC5YTSWIE5Q9YWVGF",
+    "consumerKey": "661ff9f0ed233a9d9015a0529e3f72a9",
+    "consumerSecret": "fFp9af0wQR64ZTyZZ5szbA"
   }
 };
