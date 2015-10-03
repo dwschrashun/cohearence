@@ -59,5 +59,5 @@ function sendSong() {
 
 checkCategory();
 
-// var headTitle = $('head > title').textContent;
-// console.log(headTitle);
+var headTitle = $('head > title').textContent;
+console.log(headTitle);

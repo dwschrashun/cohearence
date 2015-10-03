@@ -52,7 +52,6 @@ schema.method('correctPassword', function (candidatePassword) {
 });
 
 schema.method('addToLibrary', function(songToAdd){
-
 	console.log("Song to ad: " , songToAdd);
 });
 
