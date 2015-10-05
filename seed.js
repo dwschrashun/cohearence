@@ -66,20 +66,16 @@ var seedSongs = function () {
 
 connectToDb.then(function () {
     User.remove({})
-    .then(function(err, removed) {
-        if (err) console.error("Error on user remove:", err);
-    }).then(function () {
+    .then(function () {
         return seedUsers();
     }).then(function () {
         return Song.remove({});
-    }).then(function(err, removed) {
-        if (err) console.error("Error on song remove:", err);
     }).then(function (){
         return seedSongs();
     }).then(function () {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
-    }).catch(function (err) {
+    }).then(null, function (err) {
         console.error(err);
         process.kill(1);
     });
