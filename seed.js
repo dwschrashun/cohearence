@@ -22,6 +22,7 @@ var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
+var Song = Promise.promisifyAll(mongoose.model('Song'));
 
 
 
@@ -42,20 +43,39 @@ var seedUsers = function () {
 
 };
 
-connectToDb.then(function () {
-    User.remove({}, function(err, removed) {
-        if (err) console.error(err);
-    })
-    .then(function() {
-        return User.findAsync({})
-    })
-    .then(function (users) {
-        if (users.length === 0) {
-            return seedUsers();
-        } else {
-            console.log(chalk.magenta('Seems to already be user data, exiting!'));
-            process.kill(0);
+var seedSongs = function () {
+
+    var songs = [
+        {
+            title: 'Jigsaw Falling Into Place',
+            youtube: {
+                url: "https://www.youtube.com/watch?v=R8C2sirFYgI"
+            }
+        },
+        {
+            title: 'Born to Run',
+            youtube: {
+                url: "https://www.youtube.com/watch?v=IxuThNgl3YA"
+            }
         }
+    ];
+
+    return Song.createAsync(songs);
+
+};
+
+connectToDb.then(function () {
+    User.remove({})
+    .then(function(err, removed) {
+        if (err) console.error(err);
+    }).then(function () {
+        return seedUsers();
+    }).then(function () {
+        Song.remove({});
+    }).then(function(err, removed) {
+        if (err) console.error(err);
+    }).then(function (){
+        return seedSongs();
     }).then(function () {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);

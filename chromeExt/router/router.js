@@ -1,3 +1,24 @@
+var user;
+
+window.onload = function() {
+	chrome.storage.sync.get("user", function (user) {
+		if (user._id) {
+			$.ajax({
+				url: "http://localhost:1337/api/users/" + user._id,
+				method: 'GET',
+				dataType: "json"
+			}).done(function (response) {
+				console.log("user from database", response);
+				chrome.storage.sync.set({user: response}, function (savedUser) {
+					console.log("new saved user", savedUser);
+				});
+			}).fail(function (error) {
+				console.log(error);
+			});
+		}
+	});
+};
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 	if (request.message === 'youtubeSong') {
 		sendSong(request);
@@ -24,7 +45,7 @@ function sendSong (songObj) {
 		}).fail(function (error) {
 			console.log(error);
 		});
-	})
+	});
 }
 
 // chrome.webNavigation.onCompleted.addListener(function (details) {
