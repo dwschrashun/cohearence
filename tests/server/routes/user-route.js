@@ -10,6 +10,8 @@ var supertest = require('supertest');
 var app = require('../../../server/app');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
+var _ = require('lodash');
+
 chai.should();
 chai.use(sinonChai);
 
@@ -36,8 +38,15 @@ describe('User route', function () {
         {
           title: 'Stairway to Heaven',
           artist: 'Led Zeppelin',
-          youtube: {url:'2'}
-        }
+          youtube: {url:'2'},
+		  echoNestId: 'SODFHPG12B0B80B0A4'
+		},
+		{
+			title: 'Clint Eastwood', //this song will be in our library but not the users
+			artist: 'Gorillaz',
+			youtube: {url: '7'},
+			echoNestId: 'SOHXAFX13AF726A4C1'
+		}
       ])
       .then(function(songs){
         [song1, song2] = songs;
@@ -107,28 +116,141 @@ describe('User route', function () {
           done();
         });
       });
-
-
     });
 
-    describe('put ', function(){
+//here is the big one boys
+	describe('put ', function(){
 
-      var newSong = {
-        title: 'Wonderwall',
-        artist: 'Oasis',
-        youtube: {url:'3'}
-      }
 
-      it('returns a changed library when adding a new song', function(done){
-        guest.put(`/api/users/${user1._id}/library`)
-        .send(newSong)
-        .expect(201)
-        .end(function(err, response){
-          if (err) return done(err);
-          expect(response.body.length).to.equal(3);
-          done();
-        })
-      })
-    })
+		//a song that is not in our main library or the users library
+		var newSong = {
+			title: 'Wonderwall',
+			artist: 'Oasis',
+			youtube: {url:'3'}
+		};
 
-  });
+		it('returns a changed library when adding a new song', function(done){
+			guest.put(`/api/users/${user1._id}/library`)
+			.send(newSong)
+			.expect(201)
+			.end(function(err, response){
+				if (err) return done(err);
+				expect(response.body.length).to.equal(3);
+				var test = _.findIndex(response.body, element => element.song.title === 'Wonderwall');
+				expect(test).to.be.above(-1);
+				Song.find({title: "Wonderwall"}) //also expect it to be in our general library
+				.then(function(foundSong){
+					expect(foundSong).to.exist;
+					done();
+				});
+			});
+		});
+
+		//a song that the user does not have but is in our library
+		var librarySong = {
+			title: 'Clint Eastwood',
+			artist: 'Gorillaz',
+			youtube: {url: '7'}
+		}
+		it('adds to the user a song from our library if its already there', function(done){
+			guest.put(`/api/users/${user1._id}/library`)
+			.send(librarySong)
+			.expect(201)
+			.end(function(err, response){
+				if (err) return done(err);
+				expect(response.body.length).to.equal(3);
+				var test = _.findIndex(response.body, element => element.song.title === 'Clint Eastwood');
+				expect(test).to.be.above(-1);
+				Song.find({title: "Clint Eastwood"}) //also expect it to be in our general library
+				.then(function(foundSong){
+					console.log("FOUND SONG: ",foundSong);
+					expect(foundSong).to.exist;
+					done();
+				});
+			});
+		});
+
+		//a song that the user already has in his library
+		var oldSong = {
+			title: 'Stairway to Heaven',
+			artist: 'Led Zeppelin',
+			youtube: {url:'2'}
+		};
+
+		it('returns an updated play count when adding a song already in their library', function(done){
+			guest.put(`/api/users/${user1._id}/library`)
+			.send(oldSong)
+			.expect(201)
+			.end(function(err, response){
+				if (err) return done(err);
+				expect(response.body.length).to.equal(2);
+				expect(response.body[response.body.length-1].plays.length).to.equal(2);
+				done();
+			});
+		});
+
+		var oldSoundCloudSong = {
+			title: 'Stairway to Heaven', //AS IF
+			artist: 'Led Zeppelin',
+			soundcloud: {url: '10'}
+		};
+
+		it('returns an updated play count when adding a song already in their library, even from another source', function(done){
+			guest.put(`/api/users/${user1._id}/library`)
+			.send(oldSoundCloudSong)
+			.expect(201)
+			.end(function(err, response){
+				if (err) return done(err);
+				expect(response.body.length).to.equal(2);
+				expect(response.body[response.body.length-1].plays.length).to.equal(2);
+				done();
+			});
+		});
+
+		//test for misspelled song names
+		var misspelledOldSong = {
+			title: 'stairway to heaven',
+			artist: 'Led Zepelin',
+			youtube: {url: '4'}
+		}
+
+		it('recognizes misspelled song names in the library', function(done){
+			guest.put(`/api/users/${user1._id}/library`)
+			.send(misspelledOldSong)
+			.expect(201)
+			.end(function(err, response){
+				if (err) return done(err);
+				expect(response.body.length).to.equal(2);
+				expect(response.body[response.body.length-1].plays.length).to.equal(2);
+				done();
+			});
+		});
+
+		//test for misspelled song names
+		var misspelledNewSong = {
+			title: 'getting jiggy with it',
+			artist: 'Will Smith',
+			youtube: {url: '4'}
+		}
+
+		xit('recognizes misspelled song names not in the library', function(done){
+			guest.put(`/api/users/${user1._id}/library`)
+			.send(misspelledNewSong)
+			.expect(201)
+			.end(function(err, response){
+				if (err) return done(err);
+				expect(response.body.length).to.equal(2);
+				expect(response.body[response.body.length-1].plays.length).to.equal(2);
+				done();
+			});
+		});
+
+
+		//test for songs that are not findable in echonest
+		var obscureSong = {
+			title: 'High',
+			artist: 'Tom Misch',
+			youtube: {url: '5'}
+		}
+	});
+});
