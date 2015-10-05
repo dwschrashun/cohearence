@@ -51,6 +51,5 @@ var lastSong;
 
 $(document).ready(function () {
     console.log('window loaded');
-    // playButton();
     onPlayerChange();
 });

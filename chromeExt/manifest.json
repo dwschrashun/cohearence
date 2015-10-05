@@ -42,6 +42,9 @@
     }, {
         "matches": ["https://soundcloud.com/*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/soundCloud.js"]
+    }, {
+        "matches": ["https://play.spotify.com/*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/spotify.js"]
     }],
     "content_security_policy": "script-src 'self'; object-src 'self'"
 }

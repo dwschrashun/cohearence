@@ -33,7 +33,7 @@ schema.statics.checkSongAgainstCollection = function(song) {
 	return this.findOne({
 		echoNestId: song.echoNestId
 	})
-	.then(foundSong => {
+	.then(function (foundSong) {
 		//if song is found in collection, set request's foundSong to the songToAdd
 		if (foundSong) {
 			return foundSong;
