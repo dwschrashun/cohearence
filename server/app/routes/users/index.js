@@ -35,20 +35,16 @@ router.get('/:userId/library', function (req, res, next) {
 
 router.put('/:userId/library', function (req, res, next) {
 	// Make API call to echoNest to get songId
-	return res.json(req.body);
+	// return res.json(req.body);
 	echo("song/search").get({artist: req.body.artist, title: req.body.title}, function (err, json) {
-		// if (err) res.json(err);
-		// var songToAdd;
-
+		if (err) res.json(err);
+		var songToAdd;
 		// //if echonest found matches, find the highest string match from the response
-		// if (json.response.status.message === "Success") {
-		// 	songToAdd = _.max(json.response.songs, function(song){
-		// 		return song.title.score(req.body.title);
-		// 	});
-		// }
-		//for testing
-		console.log('got to the server route');
-		return res.json(req.body);
+		if (json.response.status.message === "Success") {
+			songToAdd = _.max(json.response.songs, function(song){
+				return song.title.score(req.body.title);
+			});
+		}
 
 		//if echonest didn't find a match, save the original request as the song
 		if (songToAdd < 0 || !songToAdd) {
@@ -56,7 +52,6 @@ router.put('/:userId/library', function (req, res, next) {
 		}
 		//if we did find it, format it like this:
 		else {
-      		//console.log('found in the DB!');
 			songToAdd = {
 				title: songToAdd.title,
 				artist: songToAdd.artist_name,
@@ -67,16 +62,19 @@ router.put('/:userId/library', function (req, res, next) {
 				},
 				echoNestId: songToAdd.id
 			};
+			console.log('SongToAdd: ', songToAdd);
+
 		}
 	// Check if song exists in Song model
 		if (songToAdd.echoNestId){
-      		// console.log('reformatted  ===== ', songToAdd);
       		var isNew;
 			Song.checkSongAgainstCollection(songToAdd)
 			.then(function(song){
+
 				//hits .then only if new song was created, otherwise it returned next()
 				if (song === "not found") {
 					var isNew = true;
+					console.log('is new! add to main db');
 					return Song.create(songToAdd);
 				}
 				else {
@@ -88,7 +86,7 @@ router.put('/:userId/library', function (req, res, next) {
 			})
 			.then(function (song) {
 				if (!isNew) {
-					//console.log("there", req.foundUser);
+					console.log('ok cool we got the song');
 					return User.populateMusicLibrary(req.foundUser)
 						.then(function(populatedUser){
 							//check to see if song is in user's library
@@ -115,15 +113,15 @@ router.put('/:userId/library', function (req, res, next) {
 	}); //end of echo callback
 });
 
-router.put('/:userId/library', function(req,res,next){
-	User.populateMusicLibrary(req.foundUser)
-	.then(function(populatedUser){
-		checkMatchThenAddOrUpdate(populatedUser, req.foundSong);
-		return populatedUser.save();
-	}).then(function(savedUser){
-		res.json(savedUser.musicLibrary);
-	});
-});
+// router.put('/:userId/library', function(req,res,next){
+// 	User.populateMusicLibrary(req.foundUser)
+// 	.then(function(populatedUser){
+// 		checkMatchThenAddOrUpdate(populatedUser, req.foundSong);
+// 		return populatedUser.save();
+// 	}).then(function(savedUser){
+// 		res.status(201).json(savedUser.musicLibrary);
+// 	});
+// });
 
 
 router.param('userId', function (req, res, next, userId) {

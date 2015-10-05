@@ -30,10 +30,12 @@ var schema = new mongoose.Schema({
 
 schema.statics.checkSongAgainstCollection = function(song) {
 	//if it has an echoNestId, find it in Song collection
+	console.log("MATCHING ON: ",song.echoNestId);
 	return this.findOne({
 		echoNestId: song.echoNestId
 	})
 	.then(function (foundSong) {
+		console.log("in checkSongAgainstCollection");
 		//if song is found in collection, set request's foundSong to the songToAdd
 		if (foundSong) {
 			return foundSong;
