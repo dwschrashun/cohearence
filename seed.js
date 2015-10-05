@@ -67,13 +67,13 @@ var seedSongs = function () {
 connectToDb.then(function () {
     User.remove({})
     .then(function(err, removed) {
-        if (err) console.error(err);
+        if (err) console.error("Error on user remove:", err);
     }).then(function () {
         return seedUsers();
     }).then(function () {
-        Song.remove({});
+        return Song.remove({});
     }).then(function(err, removed) {
-        if (err) console.error(err);
+        if (err) console.error("Error on song remove:", err);
     }).then(function (){
         return seedSongs();
     }).then(function () {
