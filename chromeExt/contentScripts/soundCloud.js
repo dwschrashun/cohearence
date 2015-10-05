@@ -16,17 +16,6 @@ function getSongInfo() {
     return songObj;
 }
 
-// for home page play buttons
-// function playButton() {
-//     var playBtn = $('.heroPlayButton');
-//     playBtn.on('click', function (e) {
-//         if (e.target.title === 'Pause') {
-//             console.log('hey');
-//             getSongInfo();
-//         }
-//     });
-// }
-
 function onPlayerChange() {
     var player = $(".playControls__soundBadge");
     player.bind("DOMSubtreeModified", function () {
