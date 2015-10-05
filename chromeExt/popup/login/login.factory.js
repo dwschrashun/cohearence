@@ -23,7 +23,15 @@ app.factory("LoginFactory", function ($http) {
         //     console.log(!!frontEndUser);
         //     return !!frontendUser;
         // })
-        // return $http.get(`/api/users/${`)
+        var user = new Promise(function(resolve) {
+            chrome.storage.sync.get('user', function(user) {
+                if (user.user) return resolve(user.user);
+            })
+        })
+        return user;
+        // chrome.storage.sync.get('user', function(user) {
+        //     return user.user;
+        // })
     }
 
     return {

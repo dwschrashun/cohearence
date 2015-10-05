@@ -2,6 +2,7 @@
         <alert type="danger" ng-if="error">
             <!-- {{ error }} -->
         </alert>
+        <pre>{{ theUser | json }}</pre>
         <div class="form-group">
             <label for="email">Email address</label>
             <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Enter email">
