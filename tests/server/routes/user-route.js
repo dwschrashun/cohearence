@@ -280,14 +280,14 @@ describe('User route', function () {
 // route 1: check against our library
 
 // - check echonest
-// 	- if in echo nest 
+// 	- if in echo nest
 // 		- return song from our database
-// 	- if a match exists in our database on artist and title 
+// 	- if a match exists in our database on artist and title
 // 		- return song from our database
 // 	- if not in our library
 // 		- add to our library
 // 		- add "new" flag to request
-		
+
 
 // route 2: check against user's library
 // 	- if song is new
@@ -299,12 +299,9 @@ describe('User route', function () {
 // 		- else call next ()
 
 // route 3: update user
-// 	- if song is new 
+// 	- if song is new
 // 		- add to user's library
 // 	- if in user's library
 // 		- add to user's library
 // 	- if not in user's library
 // 		- push new timestamp
-
-
-

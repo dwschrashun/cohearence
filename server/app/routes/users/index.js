@@ -55,8 +55,8 @@ function checkLibrary(artist, title){
 				var newSong = _.max(allSongs, function(eachSong){
 					var tS = eachSong.title.score(title);
 					var aS = eachSong.artist.score(artist);
-					if (aS == 0 || tS == 0) return;
-					return (tS + aS) ;
+					if (aS === 0 || tS === 0) return;
+					return (tS + aS);
 				});
 				if (newSong <= 0 || !newSong) {
 					return resolve("not found");
@@ -122,7 +122,8 @@ router.put('/:userId/library', function (req, res, next) {
 		savedUser.deepPopulate('musicLibrary.song', function(err, user){
 			if (err) {
 				console.log("DP ERROR", err);
-				return reject(err);
+				// return reject(err);
+				return;
 			}
 			res.status(201).json(user.musicLibrary);
 		});
