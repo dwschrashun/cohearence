@@ -36,8 +36,8 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
                 console.log('user saved!', user);
                 chrome.storage.sync.get("user", function(user) {
                     console.log("user after storagearea.get", user);
-                })
-            })
+                });
+            });
             //replace $state.go('home') with something else
             $state.go('player');
         }).catch(function () {

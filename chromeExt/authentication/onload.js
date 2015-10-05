@@ -2,6 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-window.onload = function() {
-  ChromeExOAuth.initCallbackPage();
-}
+// var user;
+
+// window.onload = function() {
+// 	chrome.storage.sync.get("user", function (user) {
+// 		console.log("Cookie user", user);
+// 		user = user;
+// 	});
+//  	//ChromeExOAuth.initCallbackPage();
+// }
