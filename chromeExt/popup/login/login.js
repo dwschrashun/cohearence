@@ -27,12 +27,21 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state) {
                 })
             })
             //replace $state.go('home') with something else
+            $state.go('player');
         }).catch(function () {
             $scope.error = 'Invalid login credentials.';
         });
     };
 });
 
+app.run(function(LoginFactory, $state) {
+
+    if (LoginFactory.isLoggedIn()) {
+        $state.go('player');
+    } else {
+        $state.go('login');
+    }
+})
 
 
 // // This app.run is for controlling access to specific states.

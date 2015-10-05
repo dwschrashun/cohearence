@@ -14,8 +14,19 @@ app.factory("LoginFactory", function ($http) {
         return data.user;
     }
 
+    function isLoggedIn() {
+        chrome.storage.sync.get('user', function(frontendUser) {
+            // return $http.get(`/api/user/${frontendUser.user._id}`)
+            // .then(function(backendUser) {
+            //     return !!backendUser;
+            // })
+            return !!frontendUser;
+        })
+    }
+
     return {
-        login: login,
-        onSuccessfulLogin: onSuccessfulLogin
+        login,
+        onSuccessfulLogin,
+        isLoggedIn
     };
 });
