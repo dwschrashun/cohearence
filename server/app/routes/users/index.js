@@ -28,6 +28,7 @@ router.get('/:userId', function (req, res) {
 router.get('/:userId/library', function (req, res, next) {
 	User.populate(req.foundUser, 'musicLibrary.song')
 		.then(function (populatedUser) {
+			console.log('the popul8d usr lolz', populatedUser);
 			res.json(populatedUser);
 		})
 		.then(null, next);
