@@ -136,7 +136,9 @@ describe('User route', function () {
 			.end(function(err, response){
 				if (err) return done(err);
 				expect(response.body.length).to.equal(3);
-				var test = _.findIndex(response.body, element => element.song.title === 'Wonderwall');
+				var test = _.findIndex(response.body, function(element){
+					return element.song.title === 'Wonderwall';
+				});
 				expect(test).to.be.above(-1);
 				Song.find({title: "Wonderwall"}) //also expect it to be in our general library
 				.then(function(foundSong){
@@ -163,7 +165,6 @@ describe('User route', function () {
 				expect(test).to.be.above(-1);
 				Song.find({title: "Clint Eastwood"}) //also expect it to be in our general library
 				.then(function(foundSong){
-					console.log("FOUND SONG: ",foundSong);
 					expect(foundSong).to.exist;
 					done();
 				});
@@ -207,6 +208,26 @@ describe('User route', function () {
 			});
 		});
 
+		var nonEchoNestSong = {
+			title: 'King of the South',
+			artist: 'Big Krit',
+			youtube: {url: '4'}
+		}
+
+		it('still catches duplicates when they dont have an echonest id', function(done){
+			guest.put(`/api/users/${user1._id}/library`)
+			.send(nonEchoNestSong)
+			.expect(201)
+			.end(function(err, response){
+				if (err) return done(err);
+				expect(response.body.length).to.equal(2);
+				var test = _.findIndex(response.body, element => element.song.title === 'King of the South');
+				expect(test).to.be.above(-1);
+				expect(response.body[test].plays.length).to.equal(2);
+				done();
+			});
+		});
+
 		//test for misspelled song names
 		var misspelledOldSong = {
 			title: 'stairway to heaven',
@@ -221,7 +242,9 @@ describe('User route', function () {
 			.end(function(err, response){
 				if (err) return done(err);
 				expect(response.body.length).to.equal(2);
-				expect(response.body[response.body.length-1].plays.length).to.equal(2);
+				var test = _.findIndex(response.body, element => element.song.title === 'Stairway to Heaven');
+				expect(test).to.be.above(-1);
+				expect(response.body[test].plays.length).to.equal(2);
 				done();
 			});
 		});
@@ -233,25 +256,21 @@ describe('User route', function () {
 			youtube: {url: '4'}
 		}
 
-		xit('recognizes misspelled song names not in the library', function(done){
+		it('recognizes misspelled song names not in the library', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(misspelledNewSong)
 			.expect(201)
 			.end(function(err, response){
 				if (err) return done(err);
-				expect(response.body.length).to.equal(2);
-				expect(response.body[response.body.length-1].plays.length).to.equal(2);
+				expect(response.body.length).to.equal(3);
+				var test = _.findIndex(response.body, element => element.song.title === 'getting jiggy with it');
+				expect(test).to.be.above(-1);
+				expect(response.body[test].plays.length).to.equal(1);
 				done();
 			});
 		});
 
-
-		//test for songs that are not findable in echonest
-		var obscureSong = {
-			title: 'High',
-			artist: 'Tom Misch',
-			youtube: {url: '5'}
-		}
+		//test for obscure songs in user library but not in echonest
 	});
 });
 
