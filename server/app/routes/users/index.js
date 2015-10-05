@@ -4,10 +4,8 @@ var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Song = mongoose.model('Song');
-// var Promise = require('bluebird');
 require("string_score");
 var echojs = require('echojs');
-// Promise.promisifyAll(echojs);
 var echo = echojs({
   key: "BC5YTSWIE5Q9YWVGF"
 });
