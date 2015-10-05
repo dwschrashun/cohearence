@@ -1,4 +1,3 @@
-var app = angular.module('ScrobblerPopUp', ['ui.router']);
 
 // app.config(function ($urlRouterProvider, $locationProvider) {
 //     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
@@ -7,14 +6,26 @@ var app = angular.module('ScrobblerPopUp', ['ui.router']);
 //     $urlRouterProvider.otherwise('/');
 // });
 
-// app.config(function ($stateProvider) {
-//     $stateProvider.state("login", {
-//         url: "/",
-//         templateUrl: "popup/popup.html"
-//     })
-// });
+app.config(function ($stateProvider) {
+    $stateProvider.state("login", {
+        url: "/",
+        templateUrl: "popup/login/login.html",
+        controller: 'LoginCtrl'
+    })
+});
 
 app.controller('LoginCtrl', function ($scope, LoginFactory, $state) {
+
+    $scope.getLoggedInUser = function() {
+        chrome.storage.sync.get("user", function(user) {
+            setTimeout(function() {
+
+            console.log(user.user);
+            }, 5000)
+        })
+        // if (LoginFactory.isLoggedIn()) $state.go('player');
+    };
+
     $scope.login = {};
     $scope.error = null;
     $scope.sendLogin = function (loginInfo) {
@@ -34,14 +45,7 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state) {
     };
 });
 
-app.run(function(LoginFactory, $state) {
 
-    if (LoginFactory.isLoggedIn()) {
-        $state.go('player');
-    } else {
-        $state.go('login');
-    }
-})
 
 
 // // This app.run is for controlling access to specific states.

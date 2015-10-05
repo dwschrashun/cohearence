@@ -15,13 +15,15 @@ app.factory("LoginFactory", function ($http) {
     }
 
     function isLoggedIn() {
-        chrome.storage.sync.get('user', function(frontendUser) {
-            // return $http.get(`/api/user/${frontendUser.user._id}`)
-            // .then(function(backendUser) {
-            //     return !!backendUser;
-            // })
-            return !!frontendUser;
-        })
+        // chrome.storage.sync.get('user', function(frontendUser) {
+        //     // return $http.get(`/api/user/${frontendUser.user._id}`)
+        //     // .then(function(backendUser) {
+        //     //     return !!backendUser;
+        //     // })
+        //     console.log(!!frontEndUser);
+        //     return !!frontendUser;
+        // })
+        // return $http.get(`/api/users/${`)
     }
 
     return {
