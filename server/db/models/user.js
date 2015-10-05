@@ -75,7 +75,6 @@ schema.statics.populateMusicLibrary = function(user) {
 				console.log("DP ERROR", err);
 				return reject(err);
 			}
-			//console.log("populated", populated);
 			return resolve(populated);
 		});
 	});
