@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <title>SDK playground - Streaming</title>
+   <script src="thirdparty/soundcloudJsAPK.js"></script>
+   <script src="thirdparty/jquery-2.1.4.js"></script>
+   <style media="screen">
+   body {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       font-family: sans-serif;
+   }
+
+   input {
+       font-size: 20px;
+   }
+
+   #info {
+       display: none;
+   }
+
+   input,
+   p {
+       width: 90%;
+       margin-bottom: 10px;
+       margin-top: 0;
+   }
+
+   @media (min-width: 500px) {
+       input,
+       p {
+           width: 500px;
+       }
+   }
+   </style>
+</head>
+
+<body>
+   <video controls='true' type="audio/mpeg" autoplay  style="display: none" >
+   </video>
+   <form id="searchForm">
+       <input type="text" id="url" placeholder="A track's URL" autofocus />
+   </form>
+   <div id="info">
+       <span id="title"></span>
+       <button id="play">play</button>
+       <button id="pause">pause</button>
+   </div>
+   //
+   <script type="text/javascript">
+   SC.initialize({
+       client_id: '68b135c934141190c88c1fb340c4c10a'
+   });
+   var inputField = document.getElementById('url');
+   var title = document.getElementById('title');
+   var info = document.getElementById('info');
+   var currentPlayer;
+   var streamTrack = function(track) {
+       return SC.stream('/tracks/' + track.id).then(function(player) {
+		   console.log(track);
+
+		   currentPlayer = $('video')[0];
+           title.innerText = track.title;
+           info.style.display = 'inline-block';
+           $.ajax({
+               method: 'get',
+               url: track.stream_url + "s?client_id=68b135c934141190c88c1fb340c4c10a"
+           }).done(function (response) {
+               console.log(response.http_mp3_128_url);
+               $('video').attr('src', response.http_mp3_128_url);
+           });
+       }).catch(function() {
+           console.log(arguments);
+       });
+   };
+   var search = function(event) {
+       event.preventDefault();
+       SC.resolve(inputField.value).then(streamTrack);
+   };
+   document.getElementById('searchForm').addEventListener('submit', search);
+   document.getElementById('pause').addEventListener('click', function() {
+       if (currentPlayer) {
+           currentPlayer.pause();
+       }
+   });
+   document.getElementById('play').addEventListener('click', function() {
+       if (currentPlayer) {
+           console.log('playing...', currentPlayer);
+           currentPlayer.play();
+       }
+   });
+
+   </script>
+</body>
+
+</html>
