@@ -256,7 +256,7 @@ describe('User route', function () {
 			youtube: {url: '4'}
 		}
 
-		it('recognizes obscure songs and misspelled song names not in the library', function(done){
+		it('recognizes misspelled song names not in the library', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(misspelledNewSong)
 			.expect(201)
