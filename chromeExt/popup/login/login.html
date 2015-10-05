@@ -2,18 +2,18 @@
         <alert type="danger" ng-if="error">
             <!-- {{ error }} -->
         </alert>
-        <pre>{{ theUser | json }}</pre>
-        <div class="form-group">
+        <!-- <pre>{{ theUser | json }}</pre> -->
+        <md-input-container>
             <label for="email">Email address</label>
             <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Enter email">
-        </div>
-        <div class="form-group">
+        </md-input-container>
+        <md-input-container>
             <label for="login-password">Password</label>
             <input type="password" ng-model="login.password" class="form-control" id="login-password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        </md-input-container>
+        <md-button class="md-raised md-primary" type="submit" class="btn btn-default">Submit</md-button>
         <div class='oauth'>
-            <a href="/auth/facebook" class='btn-facebook btn' target="_self"><i class="fa fa-facebook-official fa-lg"> Sign in with Facebook</i></a>
+            <a href="/auth/facebook" class='btn-facebook btn' target="_self"><i class="fa fa-facebook-official fa-lg">Sign in with Facebook</i></a>
             <a href="/auth/google" class='btn-google btn' target="_self"><i class="fa fa-google-plus fa-lg"> Sign in with Google +</i></a>
             <a href="/auth/twitter" class='btn-twitter btn' target="_self"><i class="fa fa-twitter fa-lg"> Sign in with Twitter</i></a>
         </div>

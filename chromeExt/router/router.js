@@ -2,7 +2,7 @@ window.onload = function () {
     chrome.storage.sync.get("user", function (user) {
         if (user.user) {
             $.ajax({
-                url: "http://localhost:1337/api/users/" + user.user._id,
+                url: 'http://localhost:1337/api/users/' + user.user._id,
                 method: 'GET',
                 dataType: "json"
             }).done(function (response) {
