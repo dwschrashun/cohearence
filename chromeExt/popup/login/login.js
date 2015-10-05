@@ -10,25 +10,26 @@ app.config(function ($stateProvider) {
     $stateProvider.state("login", {
         url: "/",
         templateUrl: "popup/login/login.html",
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        resolve: {
+            theUser: function(LoginFactory) {
+                return LoginFactory.isLoggedIn();
+            }
+        }
     })
 });
 
-app.controller('LoginCtrl', function ($scope, LoginFactory, $state) {
-
+app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
+    console.log('theUser in LoginCtrl', theUser);
     $scope.getLoggedInUser = function() {
-        chrome.storage.sync.get("user", function(user) {
-            setTimeout(function() {
-
-            console.log(user.user);
-            }, 5000)
-        })
-        // if (LoginFactory.isLoggedIn()) $state.go('player');
+        if (theUser) $state.go('player');
     };
+    $scope.getLoggedInUser();
 
     $scope.login = {};
     $scope.error = null;
     $scope.sendLogin = function (loginInfo) {
+        alert('apples');
         $scope.error = null;
         LoginFactory.login(loginInfo).then(function (user) {
             chrome.storage.sync.set({user: user}, function() {

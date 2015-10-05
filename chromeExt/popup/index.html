@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="ScrobblerPopUp" ng-csp>
+<html>
 
 <head>
     <title>Blueberry Scrobbler</title>
@@ -7,11 +7,11 @@
     <script src="/thirdparty/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="/popup/app.js"></script>
     <script src="/popup/login/login.factory.js"></script>
-    <script src="/login/login.js"></script>
-    <script src="/player/player.js"></script>
+    <script src="/popup/login/login.js"></script>
+    <script src="/popup/player/player.js"></script>
 </head>
 
-<body>
+<body ng-app="ScrobblerPopUp" ng-csp="">
     <div id="main" ui-view></div>
 </body>
 
