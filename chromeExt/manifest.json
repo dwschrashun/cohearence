@@ -31,25 +31,23 @@
         "<all_urls>",
         "storage"
     ],
-    "content_scripts": [
-        {
-            "matches": ["http://www.pandora.com/*"],
-            "js": ["contentScripts/test.js"],
-            "run_at": "document_end"
-        },
-        {
-            "matches": ["https://www.youtube.com/watch?v=*"],
-            "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"],
-            "run_at": "document_end"
-        },
-        {
-            "matches": ["https://soundcloud.com/*"],
-            "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/soundCloud.js"]
-        },
-        {
-            "matches": ["https://bandcamp.com/*", "https://*.bandcamp.com/*", "http://*.bandcamp.com/*"],
-            "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/bandcamp.js"]
-        }
-    ],
+    "content_scripts": [{
+        "matches": ["http://www.pandora.com/*"],
+        "js": ["contentScripts/test.js"],
+        "run_at": "document_end"
+    }, {
+        "matches": ["https://www.youtube.com/watch?v=*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"],
+        "run_at": "document_end"
+    }, {
+        "matches": ["https://soundcloud.com/*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/soundCloud.js"]
+    }, {
+        "matches": ["https://play.spotify.com/*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/spotify.js"]
+    }, {
+        "matches": ["https://bandcamp.com/*", "https://*.bandcamp.com/*", "http://*.bandcamp.com/*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/bandcamp.js"]
+    }],
     "content_security_policy": "script-src 'self'; object-src 'self'"
 }
