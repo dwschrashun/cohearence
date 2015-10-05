@@ -81,18 +81,19 @@ schema.statics.populateMusicLibrary = function(user) {
 	});
 };
 
-schema.methods.findMatchIndex = function(songToAdd) {
-	//find index of song that matches songToAdd in user's music library
-	//if songToAdd doesn't have echoNestId, find the song that
-	//matches at least .75
-	return _.findIndex(this.musicLibrary, function(el) {
-		if (songToAdd.echoNestId) {
-			return el.song.echoNestId === songToAdd.echoNestId;
-		} else {
-			theScore = el.song.title.score(songToAdd.title);
-			return theScore >= .75;
-		}
-	});
+schema.methods.findMatchIndex = function(song) {
+    //find index of song that matches song in user's music library
+    //if song doesn't have echoNestId, find the song that
+    //matches at least .75
+    return _.findIndex(this.musicLibrary, function(el) {
+        if (song.echoNestId) {
+            return el.song.echoNestId === song.echoNestId;
+        } else {
+            var nameScore = el.song.title.score(song.title);
+			var artistScore = el.song.artist.score(song.artist);
+            return (nameScore >= .75 && artistScore >= .75);
+        }
+    });
 };
 
 

@@ -152,7 +152,7 @@ describe('User route', function () {
 			artist: 'Gorillaz',
 			youtube: {url: '7'}
 		}
-		it('adds to the user a song from our library if its already there', function(done){
+		xit('adds to the user a song from our library if its already there', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(librarySong)
 			.expect(201)
@@ -177,7 +177,7 @@ describe('User route', function () {
 			youtube: {url:'2'}
 		};
 
-		it('returns an updated play count when adding a song already in their library', function(done){
+		xit('returns an updated play count when adding a song already in their library', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(oldSong)
 			.expect(201)
@@ -195,9 +195,28 @@ describe('User route', function () {
 			soundcloud: {url: '10'}
 		};
 
-		it('returns an updated play count when adding a song already in their library, even from another source', function(done){
+		xit('returns an updated play count when adding a song already in their library, even from another source', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(oldSoundCloudSong)
+			.expect(201)
+			.end(function(err, response){
+				if (err) return done(err);
+				expect(response.body.length).to.equal(2);
+				expect(response.body[response.body.length-1].plays.length).to.equal(2);
+				done();
+			});
+		});
+
+		//test for misspelled song names
+		var nonEchoNestSong = {
+			title: 'King of the South',
+			artist: 'Big Krit',
+			youtube: {url: '4'}
+		}
+
+		xit('still catches duplicates when they dont have an echonest id', function(done){
+			guest.put(`/api/users/${user1._id}/library`)
+			.send(nonEchoNestSong)
 			.expect(201)
 			.end(function(err, response){
 				if (err) return done(err);
@@ -214,7 +233,7 @@ describe('User route', function () {
 			youtube: {url: '4'}
 		}
 
-		it('recognizes misspelled song names in the library', function(done){
+		xit('recognizes misspelled song names in the library', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(misspelledOldSong)
 			.expect(201)

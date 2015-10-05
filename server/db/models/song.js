@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var Promise = require("bluebird");
+var _ = require('lodash');
 
 var schema = new mongoose.Schema({
 	title: {
@@ -28,40 +29,27 @@ var schema = new mongoose.Schema({
 });
 
 
-schema.statics.checkSongAgainstCollection = function(song) {
-	//if it has an echoNestId, find it in Song collection
-	console.log("MATCHING ON: ",song.echoNestId);
-	return this.findOne({
-		echoNestId: song.echoNestId
-	})
-	.then(function (foundSong) {
-		console.log("in checkSongAgainstCollection");
-		//if song is found in collection, set request's foundSong to the songToAdd
-		if (foundSong) {
-			return foundSong;
-		}
-		//if song wasn't found, create it
-		else {
-			return "not found";
-			// return this.find()
-			// .then(function(allSongs){
-			// 	var newSong = _.max(allSongs, function(eachSong){
-			// 		return eachSong.title.score(song.title) + eachSong.artist.score(song.artist);
-			// 	});
-			//
-			// 	if (newSong < 0 || !newSong) {
-			// 		console.log('didnt find a match in our library');
-			// 		// songToAdd = req.body;
-			// 	}
-			// })
-		}
-	}).then(null, function (err) {
-		console.log("ERROR In CSAC:", err);
-	});
-	// return new Promise(function (resolve) {
-	// 	return resolve(true);
-	// });
-};
+// schema.statics.checkSongAgainstCollection = function(song) {
+// 	//if it has an echoNestId, find it in Song collection
+// 	if (song.echoNestId){
+// 		console.log("MATCHING ON: ",song.echoNestId);
+// 		return this.findOne({
+// 			echoNestId: song.echoNestId
+// 		})
+// 		.then(function (foundSong) {
+// 			//if song is found in collection, set request's foundSong to the songToAdd
+// 			if (foundSong) {
+// 				return foundSong;
+// 			}
+// 			//if song wasn't found, create it
+// 			else {
+// 				return "not found";
+// 			}
+// 		}).then(null, function (err) {
+// 			console.log("ERROR In CSAC:", err);
+// 		});
+// 	}
+// };
 
 // schema.static.checkAgainstColectionByTitle = function(song){
 // 	console.log('Matching on title');

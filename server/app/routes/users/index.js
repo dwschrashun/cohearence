@@ -4,9 +4,10 @@ var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Song = mongoose.model('Song');
-
+// var Promise = require('bluebird');
 require("string_score");
 var echojs = require('echojs');
+// Promise.promisifyAll(echojs);
 var echo = echojs({
   key: "BC5YTSWIE5Q9YWVGF"
 });
@@ -28,88 +29,154 @@ router.get('/:userId', function (req, res) {
 router.get('/:userId/library', function (req, res, next) {
 	User.populate(req.foundUser, 'musicLibrary.song')
 		.then(function (populatedUser) {
+			console.log('POPULATED USER:', populatedUser);
 			res.json(populatedUser);
 		})
 		.then(null, next);
 });
 
-router.put('/:userId/library', function (req, res, next) {
-	// Make API call to echoNest to get songId
-	echo("song/search").get({artist: req.body.artist, title: req.body.title}, function (err, json) {
-		if (err) res.json(err);
+function checkLibrary(artist, title){
+	return Promise.resolve(echo("song/search").get({artist: artist, title: title}, function (err, json) {
+		if (err) console.log("EROR: ",err);
+		console.log('checking library');
 		var songToAdd;
-		console.log('no error');
-		// //if echonest found matches, find the highest string match from the response
 		if (json.response.status.message === "Success") {
 			songToAdd = _.max(json.response.songs, function(song){
-				return song.title.score(req.body.title);
+				return song.title.score(title);
+			});
+			console.log('success!!')
+			return Song.findOne({echoNestId: songToAdd.echoNestId})
+			.then(function(foundSong){
+				console.log(foundSong);
+				return foundSong;
+			});
+		} else {
+			return Song.find({})
+			.then(function(allSongs){
+				console.log('gettin da max');
+				var newSong = _.max(allSongs, function(eachSong){
+					return eachSong.title.score(title) + eachSong.artist.score(artist);
+				});
+				if (newSong < 0 || !newSong) {
+					return;
+				} else {
+					console.log('GOT THE MATCH: ', newSong);
+					return newSong;
+				}
 			});
 		}
+	}));
+}
 
-		//if echonest didn't find a match, save the original request as the song
-		if (songToAdd < 0 || !songToAdd) {
-			console.log('didnt find a match in echonest');
-			songToAdd = req.body;
+//#1
+router.put('/:userId/library', function (req, res, next) {
+	checkLibrary(req.body.artist, req.body.title)
+	.then(function(song){
+		console.log('SONG: ', song);
+		if (song){
+			req.song = song;
 		}
-		//if we did find it, format it like this:
-		else {
-			songToAdd = {
-				title: songToAdd.title,
-				artist: songToAdd.artist_name,
-				youtube: {
-					url: req.body.url,
-					title: req.body.videoTitle,
-					duration: req.body.duration,
-				},
-				echoNestId: songToAdd.id
-			};
-		}
-	// Check if song exists in Song model
-		if (songToAdd.echoNestId){
-      		var isNew;
-			Song.checkSongAgainstCollection(songToAdd)
-			.then(function(song){
-
-				//hits .then only if new song was created, otherwise it returned next()
-				if (song === "not found") {
-					var isNew = true;
-					return Song.create(songToAdd);
-				}
-				else {
-					return song;
-				}
-			})
-			.then(null, function (err){
-				console.log("ERROR HERHEHEH", err);
-			})
-			.then(function (song) {
-				if (!isNew) {
-					console.log('ok cool we got the song');
-					return User.populateMusicLibrary(req.foundUser)
-						.then(function(populatedUser){
-							//check to see if song is in user's library
-							req.song = song;
-							checkMatchThenAddOrUpdate(populatedUser, req.song);
-							return populatedUser.save();
-						})
-						.then(null, function (err){
-							console.log("ERROR", err);
-						});
-				}
-				else {
-					req.foundUser.addToLibraryOrUpdate(song);
-					return req.foundUser.save();
-				}
-			})
-			.then(function(savedUser){
-				res.status(201).json(savedUser.musicLibrary);
-			})
-			.then(null, next); //end of Song.findOne
-		} else {
-			next();
-		}
-	}); //end of echo callback
+		next();
+	});
 });
+
+
+//#2
+router.put('/:userId/library', function (req, res, next) {
+	if (!req.song) {
+		req.index = -1;
+		next();
+	}
+
+	return User.populateMusicLibrary(req.foundUser)
+		.then(function(populatedUser){
+			req.index = populatedUser.findMatchIndex(req.song);
+			next();
+		})
+		.then(null, function (err){
+			console.log("ERROR", err);
+			next(err);
+		});
+});
+
+//#3
+router.put('/:userId/library', function (req, res, next) {
+	req.foundUser.addToLibraryOrUpdate(req.song, req.index);
+});
+
+
+//
+// 	// Make API call to echoNest to get songId
+// 	echo("song/search").get({artist: req.body.artist, title: req.body.title}, function (err, json) {
+// 		if (err) res.json(err);
+// 		var songToAdd;
+// 		console.log('no error');
+// 		// //if echonest found matches, find the highest string match from the response
+// 		if (json.response.status.message === "Success") {
+// 			songToAdd = _.max(json.response.songs, function(song){
+// 				return song.title.score(req.body.title);
+// 			});
+// 		}
+//
+// 		//if echonest didn't find a match, save the original request as the song
+// 		if (songToAdd < 0 || !songToAdd) {
+// 			console.log('didnt find a match in echonest');
+// 			songToAdd = req.body;
+// 		}
+// 		//if we did find it, format it like this:
+// 		else {
+// 			songToAdd = {
+// 				title: songToAdd.title,
+// 				artist: songToAdd.artist_name,
+// 				youtube: {
+// 					url: req.body.url,
+// 					title: req.body.videoTitle,
+// 					duration: req.body.duration,
+// 				},
+// 				echoNestId: songToAdd.id
+// 			};
+// 		}
+// 	// Check if song exists in Song model
+//   		var isNew;
+// 		Song.checkSongAgainstCollection(songToAdd)
+// 		.then(function(song){
+// 			//hits .then only if new song was created, otherwise it returned next()
+// 			if (song === "not found") {
+// 				var isNew = true;
+// 				return Song.create(songToAdd);
+// 			}
+// 			else {
+// 				return song;
+// 			}
+// 		})
+// 		.then(null, function (err){
+// 			console.log("ERROR HERHEHEH", err);
+// 		})
+// 		.then(function (song) {
+// 			if (!isNew) {
+// 				console.log('ok cool we got the song');
+// 				return User.populateMusicLibrary(req.foundUser)
+// 					.then(function(populatedUser){
+// 						//check to see if song is in user's library
+// 						req.song = song;
+// 						checkMatchThenAddOrUpdate(populatedUser, req.song);
+// 						return populatedUser.save();
+// 					})
+// 					.then(null, function (err){
+// 						console.log("ERROR", err);
+// 					});
+// 			}
+// 			else {
+// 				req.foundUser.addToLibraryOrUpdate(song);
+// 				return req.foundUser.save();
+// 			}
+// 		})
+// 		.then(function(savedUser){
+// 			res.status(201).json(savedUser.musicLibrary);
+// 		})
+// 		.then(null, next); //end of Song.findOne
+// 	}); //end of echo callback
+// });
 
 // router.put('/:userId/library', function(req,res,next){
 // 	User.populateMusicLibrary(req.foundUser)
@@ -131,8 +198,8 @@ router.param('userId', function (req, res, next, userId) {
 	.then(null, next);
 });
 
-//functions
-function checkMatchThenAddOrUpdate(popUser, songToAdd){
-	var index = popUser.findMatchIndex(songToAdd);
-	return popUser.addToLibraryOrUpdate(songToAdd, index);
-}
+// //functions
+// function checkMatchThenAddOrUpdate(popUser, songToAdd){
+// 	var index = popUser.findMatchIndex(songToAdd);
+// 	return popUser.addToLibraryOrUpdate(songToAdd, index);
+// }
