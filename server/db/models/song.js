@@ -43,6 +43,17 @@ schema.statics.checkSongAgainstCollection = function(song) {
 		//if song wasn't found, create it
 		else {
 			return "not found";
+			// return this.find()
+			// .then(function(allSongs){
+			// 	var newSong = _.max(allSongs, function(eachSong){
+			// 		return eachSong.title.score(song.title) + eachSong.artist.score(song.artist);
+			// 	});
+			//
+			// 	if (newSong < 0 || !newSong) {
+			// 		console.log('didnt find a match in our library');
+			// 		// songToAdd = req.body;
+			// 	}
+			// })
 		}
 	}).then(null, function (err) {
 		console.log("ERROR In CSAC:", err);
@@ -52,5 +63,21 @@ schema.statics.checkSongAgainstCollection = function(song) {
 	// });
 };
 
+// schema.static.checkAgainstColectionByTitle = function(song){
+// 	console.log('Matching on title');
+// 	return this.findOne({
+// 		title: song.title, artist: song.artist
+// 	})
+// 	.then(function(foundSong){
+// 		if (foundSong){
+// 			return foundSong;
+// 		}
+// 		else {
+// 			return "not found";
+// 		}
+// 	}).then(null, function(err){
+// 		console.log("ERROR IN CSACBT:", err);
+// 	});
+// };
 
 mongoose.model('Song', schema);
