@@ -22,24 +22,20 @@ app.config(function ($stateProvider) {
 app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
     console.log('theUser in LoginCtrl', theUser);
     $scope.getLoggedInUser = function() {
-        if (theUser) $state.go('player');
+        if (theUser.user) $state.go('player');
     };
-    $scope.getLoggedInUser();
+    // $scope.getLoggedInUser();
 
     $scope.login = {};
     $scope.error = null;
     $scope.sendLogin = function (loginInfo) {
-        alert('apples');
         $scope.error = null;
         LoginFactory.login(loginInfo).then(function (user) {
-            chrome.storage.sync.set({user: user}, function() {
-                console.log('user saved!', user);
+            chrome.storage.sync.set({user: user}, function(user) {
                 chrome.storage.sync.get("user", function(user) {
-                    console.log("user after storagearea.get", user);
-                });
-            });
-            //replace $state.go('home') with something else
-            $state.go('player');
+                    if (user.user) $state.go('player');
+                })
+            })
         }).catch(function () {
             $scope.error = 'Invalid login credentials.';
         });

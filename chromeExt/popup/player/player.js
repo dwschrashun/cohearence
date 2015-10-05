@@ -11,7 +11,13 @@ app.config(function($stateProvider) {
 	})
 })
 
-app.controller('playerCtrl', function($scope, LoginFactory, theUser) {
-console.log(theUser);
-$scope.musicLibrary = theUser.musicLibrary;
+app.controller('playerCtrl', function($scope, LoginFactory, theUser, $state) {
+	console.log(theUser);
+	$scope.musicLibrary = theUser.musicLibrary;
+	$scope.logout = function() {
+		LoginFactory.logout()
+		.then(function() {
+			$state.go('login');
+		})
+	}
 })
