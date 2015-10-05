@@ -25,6 +25,12 @@ function onPlayerChange() {
 	})
 }
 
+function sendSongToRouter(songObj) {
+	chrome.runtime.sendMessage(songObj, function(response) {
+		console.log(`response from router: ${response}`)
+	})
+}
+
 $(document).ready(function() {
 	console.log('=====!!!PAGE LOADED!!!=====')
 	getSongInfo();
