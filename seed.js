@@ -47,23 +47,6 @@ var seedSongs = function () {
 
     var songs = [
         {
-            title: 'Jigsaw Falling Into Place',
-            artist: 'Radiohead',
-            youtube: {
-                url: "https://www.youtube.com/watch?v=R8C2sirFYgI",
-                title: "Radiohead - Jigsaw Falling Into Place (HD)",
-                duration: "4:04"
-            }
-        },
-        {
-            title: 'Born to Run',
-            arist: 'Bruce Springsteen',
-            youtube: {
-                url: "https://www.youtube.com/watch?v=IxuThNgl3YA",
-                title: "Bruce Springsteen - Born to Run",
-                duration: "5:33"
-
-            }
         }
     ];
 

@@ -13,7 +13,7 @@ function getSongInfo() {
 
 	console.log('itemId', itemId);
 	var songObj = {
-		message: "bandcampSong",
+		message: "Bandcamp",
 		url: songHref,
 		category: 'Music',
 		duration: duration,
@@ -30,7 +30,7 @@ function onPlayerChange() {
 	songTitle.bind("DOMSubtreeModified", function() {
 		console.log('OMG CHANGING');
 		getSongInfo();
-	})
+	});
 }
 
 function sendSongToRouter(songObj) {
@@ -40,7 +40,7 @@ function sendSongToRouter(songObj) {
 }
 
 $(document).ready(function() {
-	console.log('=====!!!PAGE LOADED!!!=====')
+	console.log('=====!!!PAGE LOADED!!!=====');
 	getSongInfo();
 	onPlayerChange();
-})
+});
