@@ -60,6 +60,9 @@ var schema = new mongoose.Schema({
 		  },
 		  duration: {
 			  type: String
+		  },
+		  trackId: {
+		  	type: String
 		  }
 	  },
 	echoNestId: {
