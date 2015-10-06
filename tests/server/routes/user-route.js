@@ -34,19 +34,19 @@ describe('User route', function () {
           title: 'King of the South',
           artist: 'Big Krit'
 	  },
-        // {
-        //   title: 'Stairway to Heaven',
-        //   artist: 'Led Zeppelin',
-		//   echoNestId: 'SODFHPG12B0B80B0A4'
-		// }
+        {
+          title: 'Stairway to Heaven',
+          artist: 'Led Zeppelin',
+		  echoNestId: 'SODFHPG12B0B80B0A4'
+	  },
 		{
 			title: 'Clint Eastwood', //this song will be in our library but not the users
-			artist: 'Gorillaz'
-	// 		echoNestId: 'SOHXAFX13AF726A4C1'
+			artist: 'Gorillaz',
+			echoNestId: 'SOHXAFX13AF726A4C1'
 		}
       ])
       .then(function(songs){
-    //     [song1, song2] = songs;
+        [song1, song2] = songs;
         done();
       }).then(null,console.log);
     });
@@ -58,8 +58,8 @@ describe('User route', function () {
 				email: 'user1@test.com',
 				musicLibrary:
 				[
-					// {song: song1._id, plays: [new Date()]},
-					// {song: song2._id, plays: [new Date()]}
+					{song: song1._id, plays: [new Date()]},
+					{song: song2._id, plays: [new Date()]}
 				],
 			},
 			{
@@ -90,7 +90,7 @@ describe('User route', function () {
         });
       });
 
-      xit('gets a single user', function(done){
+      it('gets a single user', function(done){
         guest.get(`/api/users/${user1._id}`)
         .expect(200)
         .end(function(err, response){
@@ -101,7 +101,7 @@ describe('User route', function () {
         });
       });
 
-      xit("gets a user's library", function(done){
+      it("gets a user's library", function(done){
         guest.get(`/api/users/${user1._id}/library`)
         .expect(200)
         .end(function(err, response){
@@ -125,7 +125,7 @@ describe('User route', function () {
 			artist: 'Oasis'
 		};
 
-		xit('returns a changed library when adding a new song', function(done){
+		it('returns a changed library when adding a new song', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(newSong)
 			.expect(201)
@@ -149,7 +149,7 @@ describe('User route', function () {
 			title: 'Clint Eastwood',
 			artist: 'Gorillaz'
 		}
-		xit('adds to the user a song from our library if its already there', function(done){
+		it('adds to the user a song from our library if its already there', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(librarySong)
 			.expect(201)
@@ -172,7 +172,7 @@ describe('User route', function () {
 			artist: 'Led Zeppelin'
 		};
 
-		xit('returns an updated play count when adding a song already in their library', function(done){
+		it('returns an updated play count when adding a song already in their library', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(oldSong)
 			.expect(201)
@@ -190,7 +190,7 @@ describe('User route', function () {
 			// soundcloud: {url: '14'}
 		};
 
-		xit('returns an updated play count when adding a song already in their library, even from another source', function(done){
+		it('returns an updated play count when adding a song already in their library, even from another source', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(oldSoundCloudSong)
 			.expect(201)
@@ -207,7 +207,7 @@ describe('User route', function () {
 			artist: 'Big Krit'
 		}
 
-		xit('still catches duplicates when they dont have an echonest id', function(done){
+		it('still catches duplicates when they dont have an echonest id', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(nonEchoNestSong)
 			.expect(201)
@@ -227,7 +227,7 @@ describe('User route', function () {
 			artist: 'Led Zepelin'
 		}
 
-		xit('recognizes misspelled song names in the library', function(done){
+		it('recognizes misspelled song names in the library', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(misspelledOldSong)
 			.expect(201)
@@ -247,7 +247,7 @@ describe('User route', function () {
 			artist: 'Will Smith'
 		}
 
-		xit('recognizes misspelled song names not in the library', function(done){
+		it('recognizes misspelled song names not in the library', function(done){
 			guest.put(`/api/users/${user1._id}/library`)
 			.send(misspelledNewSong)
 			.expect(201)

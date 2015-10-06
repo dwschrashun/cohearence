@@ -58,8 +58,8 @@ connectToDb.then(function () {
     User.remove({})
     .then(function () {
         return seedUsers();
-    }).then(function () {
-        return Song.remove({});
+    // }).then(function () {
+    //     return Song.remove({});
     }).then(function () {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
