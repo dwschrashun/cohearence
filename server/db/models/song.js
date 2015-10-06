@@ -23,6 +23,45 @@ var schema = new mongoose.Schema({
 			type: String
 		}
 	},
+	soundcloud:
+	  {
+		  url: {
+			  type: String,
+			  unique: true
+		  },
+		  title: {
+			  type: String
+		  },
+		  duration: {
+			  type: String
+		  }
+	  },
+	  spotify:
+	  {
+		  url: {
+			  type: String,
+			  unique: true
+		  },
+		  title: {
+			  type: String
+		  },
+		  duration: {
+			  type: String
+		  }
+	  },
+	  bandcamp:
+	  {
+		  url: {
+			  type: String,
+			  unique: true
+		  },
+		  title: {
+			  type: String
+		  },
+		  duration: {
+			  type: String
+		  }
+	  },
 	echoNestId: {
 		type: String
 	}

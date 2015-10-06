@@ -98,6 +98,8 @@ router.put('/:userId/library', function (req, res, next) {
 					duration: req.body.duration,
 				}
 			};
+			//modify for different sources
+
 			console.log('couldnt find the song, req.song is:', req.song );
 			Song.create(req.song).then(function(newSong){
 				console.log('just created', newSong);
