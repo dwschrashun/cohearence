@@ -45,6 +45,12 @@ var seedUsers = function () {
 
 var seedSongs = function () {
 
+    var songs = [
+        {
+        }
+    ];
+
+    return Song.createAsync(songs);
 
 };
 

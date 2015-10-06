@@ -14,15 +14,13 @@ function getSongInfo() {
 	console.log('itemId', itemId);
 	var songObj = {
 		message: "Bandcamp",
-		href: songHref,
+		url: songHref,
 		category: 'Music',
 		duration: duration,
-		songTitle: songTitle,
+		title: songTitle,
 		artist: artist,
-		bandcamp: {
-			trackId: itemId
-		}
-	}
+		trackId: itemId
+	};
 	console.log('songObj', songObj);
 	return songObj;
 }
@@ -32,7 +30,7 @@ function onPlayerChange() {
 	songTitle.bind("DOMSubtreeModified", function() {
 		console.log('OMG CHANGING');
 		getSongInfo();
-	})
+	});
 }
 
 function sendSongToRouter(songObj) {
@@ -42,7 +40,7 @@ function sendSongToRouter(songObj) {
 }
 
 $(document).ready(function() {
-	console.log('=====!!!PAGE LOADED!!!=====')
+	console.log('=====!!!PAGE LOADED!!!=====');
 	getSongInfo();
 	onPlayerChange();
-})
+});

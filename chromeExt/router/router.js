@@ -33,13 +33,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             response: "hey we got your song at the router"
         });
     }
+    if (request.message === 'Bandcamp') {
+        sendSong(request);
+        sendResponse({
+            response: "hey we got your song at the router"
+        });
+    }
     return true;
 });
 
 function sendSong(songObj) {
-
+    console.log("sending");
 	chrome.storage.sync.get('user', function (user) {
-		console.log(user);
+		console.log("user pre-library put:", user);
 	    if (!user.user._id) {
 	    	console.log('there is no user logged in');
 	    	return;

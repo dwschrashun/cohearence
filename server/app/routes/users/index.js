@@ -27,12 +27,13 @@ router.get('/:userId', function (req, res) {
 });
 
 router.get('/:userId/library', function (req, res, next) {
-	User.populate(req.foundUser, 'musicLibrary.song')
-		.then(function (populatedUser) {
-			console.log('the popul8d usr lolz', populatedUser);
-			res.json(populatedUser);
-		})
-		.then(null, next);
+	User.deepPopulate(req.foundUser, 'musicLibrary.song', function (err, populated) {
+		if (err) next(err);
+		else { 
+			console.log('the popul8d usr lolz', populated.musicLibrary);
+			res.json(populated);
+		}
+	});	
 });
 
 function checkLibrary(artist, title){
@@ -103,8 +104,40 @@ function checkLibrary(artist, title){
 	}); });
 }
 
+function setSongBasedOnProvider (reqBody) {
+	req.song = {
+		title: reqBody.title,
+		artist: reqBody.artist,
+	}
+	if (reqBody.message === "youtube") {f
+		req.song.service ="YouTube";
+		req.song.youtube = {
+			videoTitle: reqBody.videoTitle,
+			url: reqBody.url,					
+			duration: reqBody.duration,
+		};
+	}
+	else if (reqBody.message === "bandcamp") {f
+		req.song.service ="Bandcamp";
+		req.song.bandcamp = {
+			url: reqBody.url,					
+			duration: reqBody.duration,
+			trackId: reqBody.trackId
+		};
+	}
+	else if (reqBody.message === "soundcloud") {f
+		req.song.service = "Soundcloud";
+		req.song.bandcamp = {
+			url: reqBody.url,					
+			duration: reqBody.duration,
+			trackId: reqBody.trackId
+		};
+	}
+}
+
 //#1
 router.put('/:userId/library', function (req, res, next) {
+	console.log("hit put");
 	checkLibrary(req.body.artist, req.body.title)
 	.then(function(song){
 		console.log('song on line 105:', song);
@@ -189,10 +222,15 @@ router.put('/:userId/library', function (req, res, next) {
 });
 
 router.param('userId', function (req, res, next, userId) {
-	User.findById(userId)
-	.then(function (user) {
-		req.foundUser = user;
-		next();
-	})
-	.then(null, next);
+	User.findById(userId).deepPopulate("musicLibrary.song").exec(function (err, populated) {
+		if (err) {
+			console.log("ERROR", err);
+			next(err);
+		}
+		else {
+			console.log("hit param", populated);
+			req.foundUser = populated;
+			next();	
+		}
+	});
 });
