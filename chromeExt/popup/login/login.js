@@ -22,9 +22,9 @@ app.config(function ($stateProvider) {
 app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
     console.log('theUser in LoginCtrl', theUser);
     $scope.getLoggedInUser = function() {
-        if (theUser.user) $state.go('player');
+        if (theUser) $state.go('player');
     };
-    // $scope.getLoggedInUser();
+    $scope.getLoggedInUser();
 
     $scope.login = {};
     $scope.error = null;
