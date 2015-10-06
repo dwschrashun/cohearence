@@ -1,9 +1,8 @@
 {
-    "content_security_policy": "script-src 'self' ​*://127.0.0.1/*​; object-src 'self'",
     "manifest_version": 2,
     "name": "blueberry scrobbler",
     "description": "Gets all your music",
-    "version": "1.0",
+    "version": "0.4",
     "browser_action": {
         "default_icon": "icon.png",
         "default_popup": "popup/index.html"
@@ -51,5 +50,5 @@
         "matches": ["https://bandcamp.com/*", "https://*.bandcamp.com/*", "http://*.bandcamp.com/*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/bandcamp.js"]
     }],
-    "content_security_policy": "script-src 'self'; object-src 'self'"
+    "content_security_policy": "script-src https://s.ytimg.com https://www.youtube.com/iframe_api; object-src 'self'"
 }
