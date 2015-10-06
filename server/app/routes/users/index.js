@@ -43,21 +43,44 @@ function checkLibrary(artist, title){
 
 		if (json.response.status.message === "Success" && json.response.songs.length > 0) {
 			console.log("echonest matches", json.response.songs);
+			var bestMatch = 0;
+			json.response.songs.forEach(function(song){
+				var tS = song.title.score(title);
+				var aS = song.artist_name.score(artist);
+				if (tS + aS > bestMatch) {
+					bestMatch = tS + aS;
+					console.log("title Score: " , tS);
+					console.log("artist Score: " , aS);
+					songToAdd = song;
+				}
+			})
+			console.log("CLosest echonest match: ", songToAdd);
+			console.log("Match percentage: ", bestMatch);
 
-			songToAdd = _.max(json.response.songs, function(song){
-
-				return song.title.score(title);
-			});
-			return Song.findOne({echoNestId: songToAdd.id})
-			.then(function(foundSong){
-				return resolve(foundSong || "not found");
-			});
+			if (songToAdd && bestMatch > 1){ //both title and artist are at least 75% likely to match
+				return Song.findOne({echoNestId: songToAdd.id})
+				.then(function(foundSong){
+					console.log("FOUND SONG:",foundSong);
+					if (!foundSong) return resolve({song: songToAdd, new: true});
+					return resolve(foundSong);
+				});
+			} else {
+				return resolve("not found");
+			}
 		} else {
 			console.log('no echonest matches');
 			return Song.find({})
 			.then(function(allSongs){
 				if (allSongs.length){
 					console.log("all my songs: ",allSongs);
+					// var source = req.body.message
+					// var match;
+					// allSongs.forEach(function(song){
+					// 	if (req.body.url === song[source].url){
+					// 		match = song;
+					// 	}
+					// })
+
 					var newSong = _.max(allSongs, function(eachSong){
 						var tS = eachSong.title.score(title);
 						var aS = eachSong.artist.score(artist);
@@ -65,28 +88,42 @@ function checkLibrary(artist, title){
 						return (tS + aS);
 					});
 					if (newSong <= 0 || !newSong) {
-						console.log('no matches in our db either')
+						console.log('no matches in our db either');
 						return resolve("not found");
 					} else {
 						return resolve(newSong);
 					}
 				} else {
-					console.log('your db is empty')
-
+					console.log('your db is empty');
 					return resolve("not found");
 				}
 			});
 		}
-	})});
+	}); });
 }
 
 //#1
 router.put('/:userId/library', function (req, res, next) {
 	checkLibrary(req.body.artist, req.body.title)
 	.then(function(song){
-
-		if (song !== "not found"){
+		console.log('song on line 105:', song);
+		console.log(song.new);
+		if (song.new) { //should have an echonest id but not be in db
+			req.newSong = true;
+			req.song = {
+				title : song.song.title,
+				artist : song.song.artist_name,
+				echoNestId : song.song.id,
+				youtube: {
+					url : req.body.url,
+					title : req.body.videoTitle,
+					duration : req.body.duration
+				}
+			};
+			console.log("line 102 req.song: ",req.song);
+		} else if (song !== "not found" && !song.new){
 			req.song = song;
+			console.log("line 101 req.song: ",req.song);
 			next();
 		} else {
 			req.song = {
@@ -96,18 +133,17 @@ router.put('/:userId/library', function (req, res, next) {
 					url: req.body.url,
 					title: req.body.videoTitle,
 					duration: req.body.duration,
-				}
+				},
 			};
 			//modify for different sources
-
-			console.log('couldnt find the song, req.song is:', req.song );
-			Song.create(req.song).then(function(newSong){
-				console.log('just created', newSong);
-				req.song = newSong;
-				req.newSong = true;
-				next();
-			})
 		}
+		console.log('got here, ', req.song);
+		Song.create(req.song).then(function(newSong){
+			console.log('just created', newSong);
+			req.song = newSong;
+			req.newSong = true;
+			next();
+		});
 	});
 });
 
@@ -155,3 +191,33 @@ router.param('userId', function (req, res, next, userId) {
 	})
 	.then(null, next);
 });
+
+function setSongBasedOnProvider (reqBody) {
+    req.song = {
+        title: reqBody.title,
+        artist: reqBody.artist,
+    };
+    if (reqBody.message === "youtube") {
+        req.song.service = "YouTube";
+        req.song.youtube = {
+            videoTitle: reqBody.videoTitle,
+            url: reqBody.url,
+            duration: reqBody.duration,
+        };
+    }
+    else if (reqBody.message === "bandcamp") {
+        req.song.service = "Bandcamp";
+        req.song.bandcamp = {
+            url: reqBody.url,
+            duration: reqBody.duration,
+            trackId: reqBody.trackId
+        };
+    }
+    else if (reqBody.message === "soundcloud") {
+        req.song.service = "Soundcloud";
+        req.song.soundcloud = {
+            url: reqBody.url,
+            duration: reqBody.duration,
+        };
+    }
+}

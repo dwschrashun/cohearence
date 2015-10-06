@@ -19,13 +19,13 @@ window.onload = function () {
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.message === 'youtubeSong') {
+    if (request.message === 'youtube') {
         sendSong(request);
         sendResponse({
             response: "hey we got your song at the router"
         });
     }
-    if (request.message === 'soundCloudSong') {
+    if (request.message === 'soundcloud') {
         sendSong(request);
         sendResponse({
             response: "hey we got your song at the router"
@@ -78,9 +78,11 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
             currentWindow: true
         }, function (tabs) {
             console.log("in tabs", tabs);
+			console.log('tab 0: ',tabs[0]);
             chrome.tabs.sendMessage(tabs[0].id, {
                 message: "newSongLoaded"
             }, {}, function (response) {
+				console.log('response:', response);
                 previousUrl = undefined;
                 //console.log("response in newSongLoaded emitter", response);
             });

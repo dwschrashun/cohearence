@@ -13,8 +13,8 @@ var schema = new mongoose.Schema({
   youtube:
 	{
 		url: {
-			type: String,
-			unique: true
+			type: String
+			// unique: true
 		},
 		title: {
 			type: String
@@ -24,47 +24,57 @@ var schema = new mongoose.Schema({
 		}
 	},
 	soundcloud:
-	  {
-		  url: {
-			  type: String,
-			  unique: true
-		  },
-		  title: {
-			  type: String
-		  },
-		  duration: {
-			  type: String
-		  }
-	  },
-	  spotify:
-	  {
-		  url: {
-			  type: String,
-			  unique: true
-		  },
-		  title: {
-			  type: String
-		  },
-		  duration: {
-			  type: String
-		  }
-	  },
-	  bandcamp:
-	  {
-		  url: {
-			  type: String,
-			  unique: true
-		  },
-		  title: {
-			  type: String
-		  },
-		  duration: {
-			  type: String
-		  }
-	  },
+	{
+		url: {
+			type: String
+			// unique: true
+		},
+		title: {
+			type: String
+		},
+		duration: {
+			type: String
+		}
+	},
+	spotify:
+	{
+		url: {
+			type: String
+			// unique: true
+		},
+		title: {
+			type: String
+		},
+		duration: {
+			type: String
+		}
+	},
+	bandcamp:
+	{
+		url: {
+			type: String
+			// unique: true
+		},
+		title: {
+			type: String
+		},
+		duration: {
+			type: String
+		}
+	},
 	echoNestId: {
 		type: String
 	}
 });
 
+// schema.pre('validate', function(next){
+//
+// 	Song.find({youtube.url: this.youtube.url})
+// 	.then(function(match){
+// 		if (match){
+//
+// 		}
+// 	})
+// 	next();
+// });
 mongoose.model('Song', schema);

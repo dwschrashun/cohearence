@@ -14,7 +14,7 @@ function getSongInfo() {
 	}
 	console.log('artist and title in SC:', artist, title);
     var songObj = {
-        message: "soundCloudSong",
+        message: "soundcloud",
         url: songInfo.href,
         videoTitle: songInfo.title,
         category: 'Music',
