@@ -1,11 +1,13 @@
 window.onload = function () {
     chrome.storage.sync.get("user", function (user) {
+        console.log('user', user);
         if (user.user) {
             $.ajax({
-                url: 'http://localhost:1337/api/users/' + user.user._id,
+                url: 'http://localhost:1337/api/users/' + user.user._id + '/library',
                 method: 'GET',
                 dataType: "json"
             }).done(function (response) {
+                console.log('ajax response', response);
                 chrome.storage.sync.set({user: response}, function () {
                     console.log("new saved user", response);
                 });

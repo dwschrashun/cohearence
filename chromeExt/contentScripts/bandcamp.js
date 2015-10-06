@@ -5,13 +5,23 @@ function getSongInfo() {
 	var songHref = frontPageArtistHref.attr('href') || $('.title-section > .title_link').attr('href');
 	var artist = frontPageArtistHref.text().trim() || $('[itemprop="byArtist"] > a').text().trim();
 	var duration = $('.time.secondaryText > .time_total').text().trim();
+
+	var trackId = $('#pagedata').data('blob').login_action_url;
+	var itemId = trackId
+	.match(/(item_id=)\d+/)[0]
+	.split('=')[1];
+
+	console.log('itemId', itemId);
 	var songObj = {
 		message: "Bandcamp",
 		href: songHref,
 		category: 'Music',
 		duration: duration,
 		songTitle: songTitle,
-		artist: artist
+		artist: artist,
+		bandcamp: {
+			trackId: itemId
+		}
 	}
 	console.log('songObj', songObj);
 	return songObj;
