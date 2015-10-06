@@ -36,13 +36,17 @@ router.get('/:userId/library', function (req, res, next) {
 });
 
 function checkLibrary(artist, title){
+
 	return new Promise(function(resolve, reject){
 		echo("song/search").get({artist: artist, title: title}, function (err, json) {
 		if (err) console.log("EROR: ",err);
 		var songToAdd;
 
 		if (json.response.status.message === "Success" && json.response.songs.length > 0) {
+			console.log("echonest matches", json.response.songs);
+
 			songToAdd = _.max(json.response.songs, function(song){
+
 				return song.title.score(title);
 			});
 			return Song.findOne({echoNestId: songToAdd.id})
@@ -50,18 +54,27 @@ function checkLibrary(artist, title){
 				return resolve(foundSong || "not found");
 			});
 		} else {
+			console.log('no echonest matches');
 			return Song.find({})
 			.then(function(allSongs){
-				var newSong = _.max(allSongs, function(eachSong){
-					var tS = eachSong.title.score(title);
-					var aS = eachSong.artist.score(artist);
-					if (aS === 0 || tS === 0) return;
-					return (tS + aS);
-				});
-				if (newSong <= 0 || !newSong) {
-					return resolve("not found");
+				if (allSongs.length){
+					console.log("all my songs: ",allSongs);
+					var newSong = _.max(allSongs, function(eachSong){
+						var tS = eachSong.title.score(title);
+						var aS = eachSong.artist.score(artist);
+						if (aS === 0 || tS === 0) return;
+						return (tS + aS);
+					});
+					if (newSong <= 0 || !newSong) {
+						console.log('no matches in our db either')
+						return resolve("not found");
+					} else {
+						return resolve(newSong);
+					}
 				} else {
-					return resolve(newSong);
+					console.log('your db is empty')
+
+					return resolve("not found");
 				}
 			});
 		}
@@ -84,9 +97,13 @@ router.put('/:userId/library', function (req, res, next) {
 					url: req.body.url,
 					title: req.body.videoTitle,
 					duration: req.body.duration,
-				},
+				}
 			};
+			//modify for different sources
+
+			console.log('couldnt find the song, req.song is:', req.song );
 			Song.create(req.song).then(function(newSong){
+				console.log('just created', newSong);
 				req.song = newSong;
 				req.newSong = true;
 				next();
@@ -125,6 +142,7 @@ router.put('/:userId/library', function (req, res, next) {
 				// return reject(err);
 				return;
 			}
+			console.log("NEW UPDATED FRESH LIBRARY: ",user.musicLibrary);
 			res.status(201).json(user.musicLibrary);
 		});
 	}).then(null, next);
