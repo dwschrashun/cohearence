@@ -22,6 +22,7 @@ window.onload = function () {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message === 'youtubeSong') {
+        console.log("youtubeSong");
         sendSong(request);
         sendResponse({
             response: "hey we got your song at the router"
@@ -37,9 +38,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function sendSong(songObj) {
-
+    console.log("sending");
 	chrome.storage.sync.get('user', function (user) {
-		console.log(user);
+		console.log("user pre-library put:", user);
 	    if (!user.user._id) {
 	    	console.log('there is no user logged in');
 	    	return;

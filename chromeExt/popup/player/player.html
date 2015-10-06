@@ -1,8 +1,12 @@
 <div id="music-library">
-		<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
-		<pre>{{ musicLibrary | json}}</pre>
-		<iframe width="420" height="315" src="https://www.youtube.com/embed/0Ao9Pdaj-n0" frameborder="0" allowfullscreen></iframe>
-
+	<ul>
+		<li ng-repeat="song in musicLibrary" ng-click="loadIFrame(song)">
+		{{song}}, {{song.artist}} - {{song.title}}</li>
+	</ul>
 </div>
+
+<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+
+<iframe width="420" height="315" src="https://www.youtube.com/embed/0Ao9Pdaj-n0" frameborder="0" allowfullscreen></iframe>
 
 <iframe style="border: 0; width: 100%; height: 120px;" src="{{ iFrameURL }}" seamless><a href="http://miniboone.bandcamp.com/album/bad-sports-2">Random Shit</a></iframe>

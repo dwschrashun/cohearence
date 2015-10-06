@@ -18,11 +18,11 @@ app.controller('playerCtrl', function($scope, LoginFactory, theUser, $state) {
 		LoginFactory.logout()
 		.then(function() {
 			$state.go('login');
-		})
-	}
+		});
+	};
 
 	$scope.setBandcampIframe = function(songObj) {
 		$scope.iFrameURL = "http://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=" + songObj.trackId + "/transparent=true/";
 
-	}
-})
+	};
+});

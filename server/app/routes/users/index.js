@@ -27,12 +27,13 @@ router.get('/:userId', function (req, res) {
 });
 
 router.get('/:userId/library', function (req, res, next) {
-	User.populate(req.foundUser, 'musicLibrary.song')
-		.then(function (populatedUser) {
-			console.log('the popul8d usr lolz', populatedUser);
-			res.json(populatedUser);
-		})
-		.then(null, next);
+	User.deepPopulate(req.foundUser, 'musicLibrary.song', function (err, populated) {
+		if (err) next(err);
+		else { 
+			console.log('the popul8d usr lolz', populated.musicLibrary);
+			res.json(populated);
+		}
+	});	
 });
 
 function checkLibrary(artist, title){
@@ -149,10 +150,11 @@ router.put('/:userId/library', function (req, res, next) {
 });
 
 router.param('userId', function (req, res, next, userId) {
-	User.findById(userId)
-	.then(function (user) {
-		req.foundUser = user;
-		next();
-	})
-	.then(null, next);
+	User.findById(userId).deepPopulate("musicLibrary.song", function (err, populated) {
+		if (err) next(err);
+		else {
+			req.foundUser = user;
+			next();	
+		}
+	});
 });

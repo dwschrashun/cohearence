@@ -9,6 +9,7 @@ app.factory("LoginFactory", function ($http) {
 
     function onSuccessfulLogin(response) {
       var data = response.data;
+      console.log("onSuccessfulLogin res data:", response.data);
       // Session.create(data.id, data.user);
       // $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
       return data.user;
@@ -18,7 +19,7 @@ app.factory("LoginFactory", function ($http) {
       var user = new Promise(function(resolve) {
         chrome.storage.sync.get('user', function(user) {
             if (user.user) return resolve(user.user);
-            else resolve()
+            else resolve();
         })
       })
       return user;
