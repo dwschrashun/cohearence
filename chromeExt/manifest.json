@@ -1,4 +1,5 @@
 {
+    "content_security_policy": "script-src 'self' ​*://127.0.0.1/*​; object-src 'self'",
     "manifest_version": 2,
     "name": "blueberry scrobbler",
     "description": "Gets all your music",
@@ -35,10 +36,11 @@
         "matches": ["http://www.pandora.com/*"],
         "js": ["contentScripts/test.js"],
         "run_at": "document_end"
-    }, {
+    },
+
+     {
         "matches": ["https://www.youtube.com/watch?v=*"],
-        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"],
-        "run_at": "document_end"
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"]
     }, {
         "matches": ["https://soundcloud.com/*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/soundCloud.js"]

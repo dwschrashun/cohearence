@@ -1,3 +1,18 @@
+document.giveMeStuff = function (stuff) {
+	console.dir(stuff);
+};
+
+var script   = document.createElement("script");
+script.type  = "text/javascript";
+script.text  = "document.dispatchEvent(new CustomEvent('test-event', { detail: document.getElementById('movie_player').tagName }))";               // use this for inline script
+setTimeout(function () {
+		document.body.appendChild(script);
+}, 4000);
+
+document.addEventListener('test-event', function (e) {
+	console.log(e);
+});
+
 function checkCategory () {
 	//console.log("checking category");
 	var category = $('.watch-info-tag-list').filter(function () {
