@@ -43,16 +43,16 @@ var seedUsers = function () {
 
 };
 
-var seedSongs = function () {
-
-    var songs = [
-        {
-        }
-    ];
-
-    return Song.createAsync(songs);
-
-};
+// var seedSongs = function () {
+//
+//     var songs = [
+//         {
+//         }
+//     ];
+//
+//     return Song.createAsync(songs);
+//
+// };
 
 connectToDb.then(function () {
     User.remove({})
@@ -60,8 +60,6 @@ connectToDb.then(function () {
         return seedUsers();
     }).then(function () {
         return Song.remove({});
-    }).then(function (){
-        return seedSongs();
     }).then(function () {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
