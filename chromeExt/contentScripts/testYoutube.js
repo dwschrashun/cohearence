@@ -30,11 +30,11 @@ function sendSong() {
 	var titleAndArtist = findTitleAndArtist();
 	var songObj = {
 		message: "youtubeSong",
-	    href: location.href,
+	    url: location.href,
 	    videoTitle: $("#eow-title").text().trim(),
 	    category: 'Music',
 	    duration: $('.ytp-time-duration').text(),
-	    songTitle: titleAndArtist[0],
+	    title: titleAndArtist[0],
 	    artist: titleAndArtist[1]
 	};
 	//console.log('the object', songObj);

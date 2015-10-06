@@ -10,19 +10,23 @@ var schema = new mongoose.Schema({
 		type: String,
 		default: "unknown"
 	},
-  youtube:
-	{
-		url: {
-			type: String,
-			unique: true
-		},
-		title: {
-			type: String
-		},
-		duration: {
-			type: String
-		}
+	service: {
+		type: String,
+		enum: ["YouTube", "Spotify", "Bandcamp", "Soundcloud"]
 	},
+  	youtube:
+		{
+			url: {
+				type: String,
+				unique: true
+			},
+			videoTitle: {
+				type: String
+			},
+			duration: {
+				type: String
+			}
+		},
 	soundcloud:
 	  {
 		  url: {
@@ -54,9 +58,6 @@ var schema = new mongoose.Schema({
 		  url: {
 			  type: String,
 			  unique: true
-		  },
-		  title: {
-			  type: String
 		  },
 		  duration: {
 			  type: String

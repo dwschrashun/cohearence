@@ -1,7 +1,9 @@
 <div id="music-library">
 	<ul>
-		<li ng-repeat="song in musicLibrary" ng-click="loadIFrame(song)">
-		{{song}}, {{song.artist}} - {{song.title}}</li>
+		<li ng-repeat="item in musicLibrary" ng-click="loadIFrame(song)">
+			<span ng-if="item.song.youtube.url">{{item.song.youtube.videoTitle}}</span>
+			<span ng-if="!item.song.youtube.url">{{item.song.artist}} - {{item.song.title}}</span>
+		</li>
 	</ul>
 </div>
 

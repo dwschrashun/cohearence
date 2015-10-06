@@ -14,15 +14,13 @@ function getSongInfo() {
 	console.log('itemId', itemId);
 	var songObj = {
 		message: "bandcampSong",
-		href: songHref,
+		url: songHref,
 		category: 'Music',
 		duration: duration,
-		songTitle: songTitle,
+		title: songTitle,
 		artist: artist,
-		bandcamp: {
-			trackId: itemId
-		}
-	}
+		trackId: itemId
+	};
 	console.log('songObj', songObj);
 	return songObj;
 }

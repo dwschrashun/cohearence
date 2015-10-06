@@ -34,6 +34,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             response: "hey we got your song at the router"
         });
     }
+    if (request.message === 'bandcampSong') {
+        sendSong(request);
+        sendResponse({
+            response: "hey we got your song at the router"
+        });
+    }
     return true;
 });
 

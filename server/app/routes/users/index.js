@@ -82,8 +82,40 @@ function checkLibrary(artist, title){
 	})});
 }
 
+function setSongBasedOnProvider (reqBody) {
+	req.song = {
+		title: reqBody.title,
+		artist: reqBody.artist,
+	}
+	if (reqBody.message === "youtube") {f
+		req.song.service ="YouTube";
+		req.song.youtube = {
+			videoTitle: reqBody.videoTitle,
+			url: reqBody.url,					
+			duration: reqBody.duration,
+		};
+	}
+	else if (reqBody.message === "bandcamp") {f
+		req.song.service ="Bandcamp";
+		req.song.bandcamp = {
+			url: reqBody.url,					
+			duration: reqBody.duration,
+			trackId: reqBody.trackId
+		};
+	}
+	else if (reqBody.message === "soundcloud") {f
+		req.song.service = "Soundcloud";
+		req.song.bandcamp = {
+			url: reqBody.url,					
+			duration: reqBody.duration,
+			trackId: reqBody.trackId
+		};
+	}
+}
+
 //#1
 router.put('/:userId/library', function (req, res, next) {
+	console.log("hit put");
 	checkLibrary(req.body.artist, req.body.title)
 	.then(function(song){
 
@@ -96,9 +128,10 @@ router.put('/:userId/library', function (req, res, next) {
 				artist: req.body.artist,
 				youtube: {
 					url: req.body.url,
-					title: req.body.videoTitle,
+					videoTitle: req.body.videoTitle,
 					duration: req.body.duration,
 				}
+
 			};
 			//modify for different sources
 
@@ -108,7 +141,7 @@ router.put('/:userId/library', function (req, res, next) {
 				req.song = newSong;
 				req.newSong = true;
 				next();
-			})
+			});
 		}
 	});
 });
@@ -150,10 +183,14 @@ router.put('/:userId/library', function (req, res, next) {
 });
 
 router.param('userId', function (req, res, next, userId) {
-	User.findById(userId).deepPopulate("musicLibrary.song", function (err, populated) {
-		if (err) next(err);
+	User.findById(userId).deepPopulate("musicLibrary.song").exec(function (err, populated) {
+		if (err) {
+			console.log("ERROR", err);
+			next(err);
+		}
 		else {
-			req.foundUser = user;
+			console.log("hit param", populated);
+			req.foundUser = populated;
 			next();	
 		}
 	});
