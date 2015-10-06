@@ -45,22 +45,22 @@ var seedUsers = function () {
 
 var seedSongs = function () {
 
-    var songs = [
-        {
-            title: 'Jigsaw Falling Into Place',
-            youtube: {
-                url: "https://www.youtube.com/watch?v=R8C2sirFYgI"
-            }
-        },
-        {
-            title: 'Born to Run',
-            youtube: {
-                url: "https://www.youtube.com/watch?v=IxuThNgl3YA"
-            }
-        }
-    ];
+    // var songs = [
+        // {
+        //     title: 'Jigsaw Falling Into Place',
+        //     youtube: {
+        //         url: "https://www.youtube.com/watch?v=R8C2sirFYgI"
+        //     }
+        // },
+        // {
+        //     title: 'Born to Run',
+        //     youtube: {
+        //         url: "https://www.youtube.com/watch?v=IxuThNgl3YA"
+        //     }
+        // }
+    // ];
 
-    return Song.createAsync(songs);
+    // return Song.createAsync(songs);
 
 };
 

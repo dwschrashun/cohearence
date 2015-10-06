@@ -3,10 +3,12 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
 	title: {
-		type: String
+		type: String,
+		default: "unknown"
 	},
 	artist: {
-		type: String
+		type: String,
+		default: "unknown"
 	},
   youtube:
 	{
@@ -21,6 +23,45 @@ var schema = new mongoose.Schema({
 			type: String
 		}
 	},
+	soundcloud:
+	  {
+		  url: {
+			  type: String,
+			  unique: true
+		  },
+		  title: {
+			  type: String
+		  },
+		  duration: {
+			  type: String
+		  }
+	  },
+	  spotify:
+	  {
+		  url: {
+			  type: String,
+			  unique: true
+		  },
+		  title: {
+			  type: String
+		  },
+		  duration: {
+			  type: String
+		  }
+	  },
+	  bandcamp:
+	  {
+		  url: {
+			  type: String,
+			  unique: true
+		  },
+		  title: {
+			  type: String
+		  },
+		  duration: {
+			  type: String
+		  }
+	  },
 	echoNestId: {
 		type: String
 	}
