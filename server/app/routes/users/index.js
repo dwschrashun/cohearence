@@ -53,7 +53,7 @@ function checkLibrary(artist, title){
 					console.log("artist Score: " , aS);
 					songToAdd = song;
 				}
-			})
+			});
 			console.log("CLosest echonest match: ", songToAdd);
 			console.log("Match percentage: ", bestMatch);
 
@@ -114,10 +114,12 @@ router.put('/:userId/library', function (req, res, next) {
 				title : song.song.title,
 				artist : song.song.artist_name,
 				echoNestId : song.song.id,
-				youtube: {
+				duration : req.body.duration,
+				source: {
+					domain: req.body.message,
 					url : req.body.url,
-					title : req.body.videoTitle,
-					duration : req.body.duration
+					videoTitle : req.body.videoTitle,
+					bandcampId : req.body.bandcampId
 				}
 			};
 			console.log("line 102 req.song: ",req.song);
@@ -129,11 +131,13 @@ router.put('/:userId/library', function (req, res, next) {
 			req.song = {
 				title: req.body.title,
 				artist: req.body.artist,
-				youtube: {
+				duration: req.body.duration,
+				source: {
+					domain: req.body.message,
+					videoTitle: req.body.videoTitle,
 					url: req.body.url,
-					title: req.body.videoTitle,
-					duration: req.body.duration,
-				},
+					bandcampId: req.body.bandcampId
+				}
 			};
 			//modify for different sources
 		}
@@ -191,33 +195,3 @@ router.param('userId', function (req, res, next, userId) {
 	})
 	.then(null, next);
 });
-
-function setSongBasedOnProvider (reqBody) {
-    req.song = {
-        title: reqBody.title,
-        artist: reqBody.artist,
-    };
-    if (reqBody.message === "youtube") {
-        req.song.service = "YouTube";
-        req.song.youtube = {
-            videoTitle: reqBody.videoTitle,
-            url: reqBody.url,
-            duration: reqBody.duration,
-        };
-    }
-    else if (reqBody.message === "bandcamp") {
-        req.song.service = "Bandcamp";
-        req.song.bandcamp = {
-            url: reqBody.url,
-            duration: reqBody.duration,
-            trackId: reqBody.trackId
-        };
-    }
-    else if (reqBody.message === "soundcloud") {
-        req.song.service = "Soundcloud";
-        req.song.soundcloud = {
-            url: reqBody.url,
-            duration: reqBody.duration,
-        };
-    }
-}

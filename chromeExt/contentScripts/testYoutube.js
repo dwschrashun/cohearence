@@ -33,7 +33,7 @@ function sendSong() {
 	//console.log('sending song');
 	var titleAndArtist = findTitleAndArtist();
 	var songObj = {
-		message: "youtube",
+		message: "YouTube",
 	    url: location.href,
 	    videoTitle: $("#eow-title").text().trim(),
 	    category: 'Music',

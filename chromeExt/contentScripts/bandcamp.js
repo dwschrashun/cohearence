@@ -6,7 +6,7 @@ function getSongInfo() {
 	var artist = frontPageArtistHref.text().trim() || $('[itemprop="byArtist"] > a').text().trim();
 	var duration = $('.time.secondaryText > .time_total').text().trim();
 	var songObj = {
-		message: "bandcamp",
+		message: "Bandcamp",
 		href: songHref,
 		category: 'Music',
 		duration: duration,

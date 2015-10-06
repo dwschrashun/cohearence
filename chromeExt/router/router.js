@@ -19,13 +19,13 @@ window.onload = function () {
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.message === 'youtube') {
+    if (request.message === 'YouTube') {
         sendSong(request);
         sendResponse({
             response: "hey we got your song at the router"
         });
     }
-    if (request.message === 'soundcloud') {
+    if (request.message === 'Soundcloud') {
         sendSong(request);
         sendResponse({
             response: "hey we got your song at the router"

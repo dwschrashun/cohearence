@@ -20,7 +20,7 @@ function getSongInfo() {
 	var videoTitle = artist + ' - ' + songTitle;
 	console.log('artist', artist);
 	var songObj = {
-	    message: "spotifySng",
+	    message: "Spotify",
 	    href: href,
 	    videoTitle: videoTitle,
 	    category: 'Music',
