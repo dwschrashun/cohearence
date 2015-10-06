@@ -13,7 +13,7 @@ function getSongInfo() {
 
 	console.log('itemId', itemId);
 	var songObj = {
-		message: "bandcampSong",
+		message: "Bandcamp",
 		href: songHref,
 		category: 'Music',
 		duration: duration,

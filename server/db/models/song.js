@@ -10,64 +10,26 @@ var schema = new mongoose.Schema({
 		type: String,
 		default: "unknown"
 	},
-  youtube:
-	{
-		url: {
+	source: {
+		domain: {
 			type: String,
-			unique: true
+			enum: ['YouTube', 'Spotify', 'Soundcloud', 'Bandcamp']
 		},
-		title: {
+		url: {
 			type: String
 		},
-		duration: {
+		videoTitle: {
+			type: String
+		},
+		bandcampId: {
 			type: String
 		}
 	},
-	soundcloud:
-	  {
-		  url: {
-			  type: String,
-			  unique: true
-		  },
-		  title: {
-			  type: String
-		  },
-		  duration: {
-			  type: String
-		  }
-	  },
-	  spotify:
-	  {
-		  url: {
-			  type: String,
-			  unique: true
-		  },
-		  title: {
-			  type: String
-		  },
-		  duration: {
-			  type: String
-		  }
-	  },
-	  bandcamp:
-	  {
-		  url: {
-			  type: String,
-			  unique: true
-		  },
-		  title: {
-			  type: String
-		  },
-		  duration: {
-			  type: String
-		  },
-		  trackId: {
-		  	type: String
-		  }
-	  },
 	echoNestId: {
+		type: String
+	},
+	duration: {
 		type: String
 	}
 });
-
 mongoose.model('Song', schema);
