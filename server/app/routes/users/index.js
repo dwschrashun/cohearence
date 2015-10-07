@@ -47,6 +47,7 @@ function checkLibrary(artist, title){
 			console.log("echonest matches", json.response.songs);
 			var bestMatch = 0;
 			json.response.songs.forEach(function(song){
+				if (!title || !artist) return 0;
 				var tS = song.title.score(title);
 				var aS = song.artist_name.score(artist);
 				if (tS + aS > bestMatch) {
@@ -84,6 +85,7 @@ function checkLibrary(artist, title){
 					// })
 
 					var newSong = _.max(allSongs, function(eachSong){
+						if (!title || !artist) return 0;
 						var tS = eachSong.title.score(title);
 						var aS = eachSong.artist.score(artist);
 						if (aS === 0 || tS === 0) return;
