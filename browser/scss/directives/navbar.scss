@@ -1,21 +1,28 @@
-navbar {
+$background-color: #222;
+$link-color: rgba(60, 178, 208, 1);
 
+navbar {
   display: block;
-  background: white;
+  background: $background-color;
   border-bottom: 1px solid black;
   box-shadow: 1px 1px 14px -3px black;
+	height: 50px;
 
   .container {
     width: 91%;
     max-width: 1340px;
-    padding-top: 20px;
+	padding: none;
+    // padding-top: 20px;
   }
 
-  fullstack-logo {
-    margin-top: 5px;
-    margin-right: 20px;
-    width: 40px;
-  }
+	p {
+		color: $link-color;
+		display: inline;
+		font-size: 35px;
+	}
+ // .navbar-header {
+ //  height: 50px;
+ // }
 
   a {
     color: black;
@@ -52,7 +59,7 @@ navbar {
       color: white;
     }
     a {
-      color: #f30046;
+      color: $link-color;
       cursor: pointer;
     }
   }

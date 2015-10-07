@@ -42,10 +42,13 @@ module.exports = function (app) {
             // req.logIn will establish our session.
             req.logIn(user, function (loginErr) {
                 if (loginErr) return next(loginErr);
-                // We respond with a response object that has user with _id and email.
-                res.status(200).send({
-                    user: _.omit(user.toJSON(), ['password', 'salt'])
-                });
+				User.populate(user, 'musicLibrary.song')
+				.then(function(popUser){
+	                // We respond with a response object that has user with _id and email.
+	                res.status(200).send({
+	                    user: _.omit(popUser.toJSON(), ['password', 'salt'])
+	                });
+				}).then(null, next);
             });
 
         };
