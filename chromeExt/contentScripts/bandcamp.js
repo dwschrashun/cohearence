@@ -30,9 +30,9 @@ function watchAudioTag() {
 		properties: 'attr_src',
 		callback: function(data, i) {
 			var newValue = data.vals[i];
-			getSongInfo(newValue;
+			getSongInfo(newValue);
 		}
-	})
+	});
 }
 
 $(document).ready(function() {
