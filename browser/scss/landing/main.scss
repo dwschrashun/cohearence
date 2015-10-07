@@ -1,0 +1,35 @@
+#landing {
+	font-family: "Lato", sans-serif;
+	font-weight: 300;
+	width: 100%;
+	height: 100vh;
+	background: url(http://p1.pichost.me/i/41/1640952.jpg) no-repeat center center fixed transparent;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 50px;
+  text-align: center;
+
+
+  .landing-panel {
+  	.panel-heading {
+  		background-color: gray;
+  	}
+		.panel-title {
+			font-size: 50px;
+			color: white;
+		}
+		.description {
+			font-size: 24px;
+		}
+		opacity: 1;
+  	margin: 0 auto;
+  	width: 50%;
+  	transition: opacity 0.7s;
+  	&:hover {
+  		opacity: 0.8;
+  	}
+  	height: auto;
+  }
+}
