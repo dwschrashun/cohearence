@@ -1,4 +1,5 @@
 #home {
+	min-height: 900px;
   fullstack-logo {
     padding-top: 30px;
     width: 150px;
@@ -8,5 +9,10 @@
     margin-top: 40px;
     text-align: center;
   }
+  background: url(http://p1.pichost.me/i/41/1640952.jpg) no-repeat center center fixed transparent;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
