@@ -21,6 +21,7 @@ window.onload = function () {
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log('THIS IS THE REQUEST GODDAMMIT', request);
     if (request.message === 'YouTube') {
         sendSong(request);
         sendResponse({
