@@ -44,25 +44,10 @@ function sendSong() {
     chrome.runtime.sendMessage(songObj, function (response) {
         console.log('response from router:', response);
     });
-    // return songObj;
 }
 
-// var port = chrome.runtime.connect({name: "videoStatus"});
-// port.onMessage.addListener(function(request) {
-// 	console.log("in listener");
-//  	if (request.message == "newSongLoaded") {
-//   		console.log("recieved connection message", request);
-//   	}
-// });
-
-
-// checkCategory();
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message === 'newSongLoaded') {
         checkCategory();
-        // sendResponse({
-        //     response: "song item sent to background"
-        // });
     }
-    // return false;
 });

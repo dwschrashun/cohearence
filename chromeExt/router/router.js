@@ -79,21 +79,18 @@ var counter = 0;
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (changeInfo && changeInfo.status == "complete") {
-        counter++;
-        if (tab.url.indexOf('https://www.youtube') !== -1 && counter === 1) {
-            // counter++;
-            // if (counter !== 2) {
-                console.log("Tab updated: ", tab.url, ' sending message', 'tabId', tabId);
+        if (tab.url.indexOf('https://www.youtube.com/watch') !== -1) {
+            counter++;
+            console.log('url changed', counter);
+            if (counter == 2) {
+                console.log("Tab updated: ", tab.url, ' sending message', counter, 'tabId', tabId);
                 chrome.tabs.sendMessage(tabId, {
                     message: "newSongLoaded"
                 }, {}, function (response) {
                     console.log("response in newSongLoaded emitter", response);
                 });
-            // } else if (counter === 2) {
-                // counter = 0;
-            // }
-        } else {
-            counter = 0;
+                counter = 0;
+            }
         }
     }
 });

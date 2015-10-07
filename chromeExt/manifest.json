@@ -32,8 +32,7 @@
         "<all_urls>",
         "storage"
     ],
-    "content_scripts": [
-     {
+    "content_scripts": [{
         "matches": ["https://www.youtube.com/watch?v=*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"]
     }, {
