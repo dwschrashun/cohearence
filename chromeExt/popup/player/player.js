@@ -13,18 +13,23 @@ app.config(function($stateProvider) {
 
 
 
+
+
 app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUser, $state) {
-	var tag = document.createElement('script');
+
+	var window = chrome.extension.getBackgroundPage();
+	console.log('window document',window.document);
+	var tag = window.document.createElement('script');
 	tag.src = "https://www.youtube.com/iframe_api";
 	var firstScriptTag = document.getElementsByTagName('script')[0];
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	var player;
 	setTimeout(() => {
-		player = new YT.Player('player', {
-			height: '390',
-			width: '640',
-			videoId: 'H_IcrHMbb8M',
-		});
+	  player = new YT.Player('player', {
+	    height: '390',
+	    width: '640',
+	    videoId: 'H_IcrHMbb8M',
+	  });
 	},500)
 
 $scope.loadSong = function(song){

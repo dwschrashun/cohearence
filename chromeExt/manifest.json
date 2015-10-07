@@ -8,14 +8,7 @@
         "default_popup": "popup/index.html"
     },
     "background": {
-        "scripts": [
-            "thirdparty/jquery-2.1.4.js",
-            "router/router.js",
-            "authentication/chrome_ex_oauthsimple.js",
-            "authentication/chrome_ex_oauth.js",
-            "authentication/onload.js",
-            "authentication/authentication.js"
-        ]
+        "page": "background/background.html"
     },
     "permissions": [
         "activeTab",
