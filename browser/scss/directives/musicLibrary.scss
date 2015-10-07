@@ -1,6 +1,63 @@
+$link-color: rgba(60, 178, 208, 1);
+$background-color: #222222;
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,300,400);
+
+#library-container {
+	padding-top: 20px;
+}
 #library {
-	li {
-		color: green;
+	h2, li {
 		list-style-type: none;
+		font-family: 'Roboto', sans-serif;
+		font-weight: 300;
+		font-size: 1.2em;
+		letter-spacing: .02em;
+	}
+	background: $background-color;
+	color: $link-color;
+
+	.panel-heading {
+		background-color: $link-color;
+		color: $background-color;
+	}
+
+	a { // sexy looking links
+	 position: relative;
+	 display: table;
+
+	 color: $link-color;
+	 text-decoration: none;
+
+	//  line-height: $lh;
+	//  font-size: 1.2em;
+	//  font-weight: 300;
+	//  letter-spacing: .02em;
+
+	 &:after {
+	   content: '';
+	   position: absolute;
+
+	   bottom: -.2em;
+	   left: 50%;
+	   right: 50%;
+	   height: 1px;
+
+	   background: currentColor; // system color
+	   transition: all ease .1s;
+
+	 } &:hover:after {
+	   left: 0;
+	   right: 0;
+	   height: 2px;
+	 } &:before {
+	   position: absolute;
+	   transform: translateX(-100%);
+	   left: -10px;
+
+	   color: #eee;
+	   opacity: .3;
+	   font-weight: 100;
+	   font-size: .8em;
+	 }
 	}
 }

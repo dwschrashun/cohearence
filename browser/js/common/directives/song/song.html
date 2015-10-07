@@ -1,9 +1,9 @@
 <div class="row" id="{{songObj._id}}">
 	<div class="col-md-2 track-artist">
-		{{songObj.song.artist}}
+		<a href="#">{{songObj.song.artist}}</a>
 	</div>
 	<div class="col-md-2 track-title">
-		{{songObj.song.title}}
+		<a href="#">{{songObj.song.title}}</a>
 	</div>
 	<div class="col-md-2 track-duration">
 		{{songObj.song.duration}}
@@ -12,9 +12,9 @@
 		 Last played: {{songObj.plays[songObj.plays.length-1] | date}}
 	</div>
 	<div class="col-md-2 track-source">
-		<a href="{{songObj.song.url}}">Source</button>
+		<a href="{{songObj.song.source.url}}">Visit Source</button>
 	</div>
 	<div class="col-md-2 track-delete">
-		<button>Delete</button>
+		<a ng-click="">Delete</a>
 	</div>
 </row>
