@@ -8,5 +8,10 @@
 </div>
 
 <div id="player"></div>
+<button ng-click="playVideo()">Play</button>
+<button ng-click="pauseVideo()">Pause</button>
+<button ng-click="skipForward()">Skip Forward</button>
+<button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')">>></button>
+<button ng-mousedown="startOrStopRewind('start')" ng-mouseup="startOrStopRewind('stop')"><<</button>
 
 <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>

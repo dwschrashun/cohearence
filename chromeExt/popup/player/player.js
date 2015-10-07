@@ -6,59 +6,73 @@ app.config(function($stateProvider) {
 		resolve: {
 			theUser: function(LoginFactory) {
 				return LoginFactory.isLoggedIn();
+			},
+			player: function(){
+				var tag = document.createElement('script');
+
+				tag.src = "https://www.youtube.com/iframe_api";
+				var firstScriptTag = document.getElementsByTagName('script')[0];
+				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+				var player;
+				return function onYouTubeIframeAPIReady() {
+					console.log('onYouTubeIframeAPIReady run');
+					return player = new YT.Player('player', {
+						height: '390',
+						width: '640',
+						videoId: 'H_IcrHMbb8M',
+					});
+				}
 			}
 		}
 	})
 })
 
-// 2. This code loads the IFrame Player API code asynchronously.
+
 			var tag = document.createElement('script');
 
 			tag.src = "https://www.youtube.com/iframe_api";
 			var firstScriptTag = document.getElementsByTagName('script')[0];
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-			// 3. This function creates an <iframe> (and YouTube player)
-			//    after the API code downloads.
 			var player;
 			function onYouTubeIframeAPIReady() {
 				console.log('onYouTubeIframeAPIReady run');
 				player = new YT.Player('player', {
 					height: '390',
 					width: '640',
-					videoId: 'u3Y_sbAHdPw',
-					events: {
-						'onReady': onPlayerReady,
-						'onStateChange': onPlayerStateChange
-					}
+					videoId: 'H_IcrHMbb8M',
 				});
 			}
-			console.log('document ====== ',document);
 
-			// 4. The API will call this function when the video player is ready.
-			function onPlayerReady(event) {
-				event.target.playVideo();
-			}
-
-			// 5. The API calls this function when the player's state changes.
-			//    The function indicates that when playing a video (state=1),
-			//    the player should play for six seconds and then stop.
-			var done = false;
-			function onPlayerStateChange(event) {
-				if (event.data == YT.PlayerState.PLAYING && !done) {
-					setTimeout(stopVideo, 6000);
-					done = true;
-				}
-			}
-			function stopVideo() {
-				player.stopVideo();
-			}
 
 app.controller('playerCtrl', function($scope, LoginFactory, theUser, $state) {
 
+$scope.playVideo = function(){
+	player.playVideo();
+}
 
+$scope.pauseVideo = function(){
+	player.pauseVideo();
+}
 
+$scope.skipForward = function(){
+	player.seekTo(player.getCurrentTime() + 15);
+}
 
+$scope.startOrStopFastForward = function(toggle) {
+	console.log('perform on fast forward ', toggle);
+	var ff = () => player.seekTo(player.getCurrentTime() + 1);
+	if (toggle === 'stop') clearInterval(fastForward);
+	else fastForward = setInterval(ff, 100);
+}
+
+$scope.startOrStopRewind = function(toggle) {
+	console.log('perform on fast forward ', toggle);
+	var ff = () => player.seekTo(player.getCurrentTime() - 1);
+	if (toggle === 'stop') clearInterval(fastForward);
+	else fastForward = setInterval(ff, 100);
+}
 
 	console.log(theUser);
 	$scope.musicLibrary = theUser.musicLibrary;
