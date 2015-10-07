@@ -1,4 +1,4 @@
-function getSongInfo() {
+function getSongInfo(itemId) {
 	var songTitle = $('.track_info > .title-section > .title').text().trim() || $('.title_link .title').text().trim() || $('#name-section > .trackTitle').text().trim();
 	//front page selection
 	var frontPageArtistHref = $('.itemsubtext > .detail_item_link_2');
@@ -6,12 +6,6 @@ function getSongInfo() {
 	var artist = frontPageArtistHref.text().trim() || $('[itemprop="byArtist"] > a').text().trim();
 	var duration = $('.time.secondaryText > .time_total').text().trim();
 
-	var trackId = $('#pagedata').data('blob').login_action_url;
-	var itemId = trackId
-	.match(/(item_id=)\d+/)[0]
-	.split('=')[1];
-
-	console.log('itemId', itemId);
 	var songObj = {
 		message: "Bandcamp",
 		url: songHref,
@@ -21,16 +15,7 @@ function getSongInfo() {
 		artist: artist,
 		trackId: itemId
 	};
-	console.log('songObj', songObj);
-	return songObj;
-}
-
-function onPlayerChange() {
-	var songTitle = $('.title_link > .title');
-	songTitle.bind("DOMSubtreeModified", function() {
-		console.log('OMG CHANGING');
-		getSongInfo();
-	});
+	sendSongToRouter(songObj);
 }
 
 function sendSongToRouter(songObj) {
@@ -39,8 +24,19 @@ function sendSongToRouter(songObj) {
 	})
 }
 
+function watchAudioTag() {
+	var audioTag = $('audio');
+	audioTag.watch({
+		properties: 'attr_src',
+		callback: function(data, i) {
+			var newValue = data.vals[i];
+			var trackId = newValue.match(/(id=)\d+/)[0].split('=')[1];
+			getSongInfo(trackId);
+		}
+	})
+}
+
 $(document).ready(function() {
 	console.log('=====!!!PAGE LOADED!!!=====');
-	getSongInfo();
-	onPlayerChange();
+	watchAudioTag();
 });
