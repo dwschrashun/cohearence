@@ -44,7 +44,7 @@
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/spotify.js"]
     }, {
         "matches": ["https://bandcamp.com/*", "https://*.bandcamp.com/*", "http://*.bandcamp.com/*"],
-        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/bandcamp.js"]
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/jquery-watch/jquery-watch.js", "thirdparty/lodash.js", "contentScripts/bandcamp.js"]
     }],
     "content_security_policy": "script-src 'self'; object-src 'self'"
 }
