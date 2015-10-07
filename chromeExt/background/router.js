@@ -93,7 +93,7 @@ function sendSong(songObj) {
     console.log("sending");
 	chrome.storage.sync.get('user', function (user) {
 		console.log("user pre-library put:", user);
-	    if (!user.user._id) {
+	    if (!user && !user.user && !user.user._id) {
 	    	console.log('there is no user logged in');
 	    	return;
 	    }
@@ -114,22 +114,19 @@ function sendSong(songObj) {
 	});
 }
 
-var counter = 0;
+var prevYouTube = false;
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (changeInfo && changeInfo.status == "complete") {
-        if (tab.url.indexOf('https://www.youtube.com/watch') !== -1) {
-            counter++;
-            console.log('url changed', counter);
-            if (counter == 2) {
-                console.log("Tab updated: ", tab.url, ' sending message', counter, 'tabId', tabId);
-                chrome.tabs.sendMessage(tabId, {
-                    message: "newSongLoaded"
-                }, {}, function (response) {
-                    console.log("response in newSongLoaded emitter", response);
-                });
-                counter = 0;
-            }
+        console.log("tab", tab);
+        if (tab.url.indexOf('https://www.youtube.com/watch') !== -1 && tab.url !== prevYouTube) {
+            prevYouTube = tab.url;
+            console.log("Tab updated: ", tab.url, ' sending message', prevYouTube, 'tabId', tabId);
+            chrome.tabs.sendMessage(tabId, {
+                message: "newSongLoaded"
+            }, {}, function (response) {
+                console.log("response in newSongLoaded emitter", response);
+            });
         }
     }
 });

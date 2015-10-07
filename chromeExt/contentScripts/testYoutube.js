@@ -41,6 +41,7 @@ function sendSong() {
         title: titleAndArtistAndVidTitle[0],
         artist: titleAndArtistAndVidTitle[1]
     };
+    console.log("SENDING SCROBBED OBJ TO BACKGROUND", songObj);
     chrome.runtime.sendMessage(songObj, function (response) {
         console.log('response from router:', response);
     });
@@ -48,6 +49,9 @@ function sendSong() {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message === 'newSongLoaded') {
-        checkCategory();
+        setTimeout(function () {
+            checkCategory();
+            sendResponse({response: "request received, will crawl dom"});
+        }, 1000);
     }
 });
