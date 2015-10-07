@@ -1,0 +1,20 @@
+<div class="row" id="{{songObj._id}}">
+	<div class="col-md-2 track-artist">
+		{{songObj.song.artist}}
+	</div>
+	<div class="col-md-2 track-title">
+		{{songObj.song.title}}
+	</div>
+	<div class="col-md-2 track-duration">
+		{{songObj.song.duration}}
+	</div>
+	<div class="col-md-2 track-last-played">
+		 Last played: {{songObj.plays[songObj.plays.length-1] | date}}
+	</div>
+	<div class="col-md-2 track-source">
+		<a href="{{songObj.song.url}}">Source</button>
+	</div>
+	<div class="col-md-2 track-delete">
+		<button>Delete</button>
+	</div>
+</row>
