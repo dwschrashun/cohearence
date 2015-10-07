@@ -6,47 +6,34 @@ app.config(function($stateProvider) {
 		resolve: {
 			theUser: function(LoginFactory) {
 				return LoginFactory.isLoggedIn();
-			},
-			player: function(){
-				var tag = document.createElement('script');
-
-				tag.src = "https://www.youtube.com/iframe_api";
-				var firstScriptTag = document.getElementsByTagName('script')[0];
-				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-				var player;
-				return function onYouTubeIframeAPIReady() {
-					console.log('onYouTubeIframeAPIReady run');
-					return player = new YT.Player('player', {
-						height: '390',
-						width: '640',
-						videoId: 'H_IcrHMbb8M',
-					});
-				}
 			}
 		}
 	})
 })
 
 
-			var tag = document.createElement('script');
 
-			tag.src = "https://www.youtube.com/iframe_api";
-			var firstScriptTag = document.getElementsByTagName('script')[0];
-			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUser, $state) {
+	var tag = document.createElement('script');
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	var player;
+	setTimeout(() => {
+		player = new YT.Player('player', {
+			height: '390',
+			width: '640',
+			videoId: 'H_IcrHMbb8M',
+		});
+	},500)
 
-			var player;
-			function onYouTubeIframeAPIReady() {
-				console.log('onYouTubeIframeAPIReady run');
-				player = new YT.Player('player', {
-					height: '390',
-					width: '640',
-					videoId: 'H_IcrHMbb8M',
-				});
-			}
-
-
-app.controller('playerCtrl', function($scope, LoginFactory, theUser, $state) {
+$scope.loadSong = function(song){
+	$scope.currentSong = song;
+	if(song.source.domain === 'YouTube'){
+		player.cueVideoById(PlayerFactory.getVideoId(song));
+		player.playVideo();
+	}
+}
 
 $scope.playVideo = function(){
 	player.playVideo();
