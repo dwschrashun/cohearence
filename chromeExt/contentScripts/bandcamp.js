@@ -1,4 +1,4 @@
-function getSongInfo(itemId) {
+function getSongInfo(trackSrc) {
 	var songTitle = $('.track_info > .title-section > .title').text().trim() || $('.title_link .title').text().trim() || $('#name-section > .trackTitle').text().trim();
 	//front page selection
 	var frontPageArtistHref = $('.itemsubtext > .detail_item_link_2');
@@ -13,7 +13,7 @@ function getSongInfo(itemId) {
 		duration: duration,
 		title: songTitle,
 		artist: artist,
-		trackId: itemId
+		trackId: trackSrc
 	};
 	sendSongToRouter(songObj);
 }
@@ -30,8 +30,7 @@ function watchAudioTag() {
 		properties: 'attr_src',
 		callback: function(data, i) {
 			var newValue = data.vals[i];
-			var trackId = newValue.match(/(id=)\d+/)[0].split('=')[1];
-			getSongInfo(trackId);
+			getSongInfo(newValue;
 		}
 	})
 }
