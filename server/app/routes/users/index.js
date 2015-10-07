@@ -30,7 +30,6 @@ router.get('/:userId/library', function (req, res, next) {
 	User.deepPopulate(req.foundUser, 'musicLibrary.song', function (err, populated) {
 		if (err) next(err);
 		else {
-			console.log('the popul8d usr lolz', populated.musicLibrary);
 			res.json(populated);
 		}
 	});
@@ -230,7 +229,7 @@ router.param('userId', function (req, res, next, userId) {
 			next(err);
 		}
 		else {
-			console.log("hit param", populated);
+			// console.log("hit param", populated);
 			req.foundUser = populated;
 			next();
 		}

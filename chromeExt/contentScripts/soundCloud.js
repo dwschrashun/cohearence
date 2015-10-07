@@ -4,7 +4,7 @@ function getSongInfo() {
     var artistTitle = songInfo.title.split(' - ');
 	if (artistTitle.length === 1) {
 		title = artistTitle[0];
-		artist = "unknown artist"
+		artist = "unknown artist";
 	} else if (artistTitle.length === 0){
 		artist = "unknown artist";
 		title = "unknown title";
