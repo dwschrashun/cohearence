@@ -29,11 +29,11 @@ router.get('/:userId', function (req, res) {
 router.get('/:userId/library', function (req, res, next) {
 	User.deepPopulate(req.foundUser, 'musicLibrary.song', function (err, populated) {
 		if (err) next(err);
-		else { 
+		else {
 			console.log('the popul8d usr lolz', populated.musicLibrary);
 			res.json(populated);
 		}
-	});	
+	});
 });
 
 function checkLibrary(artist, title){
@@ -113,14 +113,14 @@ function setSongBasedOnProvider (reqBody) {
 		req.song.service ="YouTube";
 		req.song.youtube = {
 			videoTitle: reqBody.videoTitle,
-			url: reqBody.url,					
+			url: reqBody.url,
 			duration: reqBody.duration,
 		};
 	}
 	else if (reqBody.message === "bandcamp") {f
 		req.song.service ="Bandcamp";
 		req.song.bandcamp = {
-			url: reqBody.url,					
+			url: reqBody.url,
 			duration: reqBody.duration,
 			trackId: reqBody.trackId
 		};
@@ -128,7 +128,7 @@ function setSongBasedOnProvider (reqBody) {
 	else if (reqBody.message === "soundcloud") {f
 		req.song.service = "Soundcloud";
 		req.song.bandcamp = {
-			url: reqBody.url,					
+			url: reqBody.url,
 			duration: reqBody.duration,
 			trackId: reqBody.trackId
 		};
@@ -153,7 +153,7 @@ router.put('/:userId/library', function (req, res, next) {
 					domain: req.body.message,
 					url : req.body.url,
 					videoTitle : req.body.videoTitle,
-					bandcampId : req.body.bandcampId
+					bandcampId : req.body.trackId
 				}
 			};
 			console.log("line 102 req.song: ",req.song);
@@ -170,7 +170,7 @@ router.put('/:userId/library', function (req, res, next) {
 					domain: req.body.message,
 					videoTitle: req.body.videoTitle,
 					url: req.body.url,
-					bandcampId: req.body.bandcampId
+					bandcampId: req.body.trackId
 				}
 			};
 			//modify for different sources
@@ -230,7 +230,7 @@ router.param('userId', function (req, res, next, userId) {
 		else {
 			console.log("hit param", populated);
 			req.foundUser = populated;
-			next();	
+			next();
 		}
 	});
 });
