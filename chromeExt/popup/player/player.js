@@ -81,7 +81,7 @@ app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUs
 	}
 
 	$scope.pauseVideo = function(){
-		var request = {message: "pause"};
+		var request = {message: "pause", service: "YouTube"};
 		chrome.runtime.sendMessage(request, function (response) {
 	        console.log('response from router:', response);
 	    });
@@ -89,7 +89,7 @@ app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUs
 	}
 
 	$scope.skipForward = function(){
-		var request = {message: "test"};
+		var request = {message: "test", service: "YouTube"};
 		chrome.runtime.sendMessage(request, function (response) {
 	        console.log('response from router:', response);
 	    });
@@ -97,7 +97,7 @@ app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUs
 	}
 
 	$scope.unMute = function () {
-		var request = {message: "unMute"};
+		var request = {message: "unMute", service: "YouTube"};
 		chrome.runtime.sendMessage(request, function (response) {
 	        console.log('response from router:', response);
 	    });

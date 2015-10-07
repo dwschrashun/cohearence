@@ -21,9 +21,7 @@ window.onload = function () {
         }
     });
 
-    console.log("making player");
     var backgroundDoc = chrome.extension.getBackgroundPage().document;
-    console.log("backgroundDoc:", backgroundDoc);
     var tag = backgroundDoc.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = backgroundDoc.getElementsByTagName('script')[0];
@@ -33,14 +31,14 @@ window.onload = function () {
       player = new YT.Player(player, {
         height: '390',
         width: '640',
-        videoId: 'H_IcrHMbb8M',
+        // videoId: 'H_IcrHMbb8M',
         events: {
             // "onReady": onPlayerReady,
             // "onStateChange": onPlayerStateChange
         }
       });
       console.log("player on first open:", player);
-    }, 2000);
+    }, 800);
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
