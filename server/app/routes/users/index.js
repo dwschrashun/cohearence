@@ -29,13 +29,7 @@ router.get('/:userId', function (req, res) {
 router.get('/:userId/library', function (req, res, next) {
 	User.deepPopulate(req.foundUser, 'musicLibrary.song', function (err, populated) {
 		if (err) next(err);
-<<<<<<< HEAD
-		else { 
-			// console.log('the popul8d usr lolz', populated.musicLibrary);
-=======
 		else {
-			console.log('the popul8d usr lolz', populated.musicLibrary);
->>>>>>> bandcamp
 			res.json(populated);
 		}
 	});
