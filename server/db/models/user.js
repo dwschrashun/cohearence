@@ -69,20 +69,20 @@ schema.method('correctPassword', function (candidatePassword) {
 
 //adds song to user's library if song is not found in user's library
 //if song is found in user's library, add a new timestamp
-var count = 0;
+// var count = 0;
 schema.method('addToLibraryOrUpdate', function(newSong, index){
 	console.log('in addToLibraryOrUpdate', newSong, index);
-	if (count === 0) {
+	// if (count === 0) {
 		if (index !== -1) {
 			this.musicLibrary[index].plays.push(new Date());
 		} else {
 			this.musicLibrary.push({song: newSong._id, plays: [new Date()]});
 		}
-		count++;
-		setInterval(function () {
-			count = 0;
-		}, 2000);
-	}
+		// count++;
+		// setInterval(function () {
+			// count = 0;
+		// }, 2000);
+	// }
 });
 
 schema.statics.populateMusicLibrary = function(user) {
