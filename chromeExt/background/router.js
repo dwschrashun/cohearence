@@ -2,16 +2,16 @@ var player;
 
 window.onload = function () {
     chrome.storage.sync.get("user", function (user) {
-        console.log('user', user);
+        //console.log('user', user);
         if (user.user) {
             $.ajax({
                 url: 'http://localhost:1337/api/users/' + user.user._id + '/library',
                 method: 'GET',
                 dataType: "json"
             }).done(function (response) {
-                console.log('ajax response', response);
+                //console.log('ajax response', response);
                 chrome.storage.sync.set({user: response}, function () {
-                    console.log("new saved user", response);
+                    //console.log("new saved user", response);
                 });
             }).fail(function (error) {
                 console.log(error);
@@ -37,12 +37,12 @@ window.onload = function () {
             // "onStateChange": onPlayerStateChange
         }
       });
-      console.log("player on first open:", player);
+      //console.log("player on first open:", player);
     }, 800);
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log("REQUEST received:", request);
+    //console.log("REQUEST received:", request);
     if (request.message === 'YouTube') {
         sendSong(request);
         sendResponse({
@@ -90,10 +90,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function sendSong(songObj) {
-    console.log("sending");
 	chrome.storage.sync.get('user', function (user) {
-		console.log("user pre-library put:", user);
-	    if (!user.user._id) {
+		//console.log("user pre-library put:", user);
+	    if (!user && !user.user && !user.user._id) {
 	    	console.log('there is no user logged in');
 	    	return;
 	    }
@@ -106,7 +105,7 @@ function sendSong(songObj) {
 	        console.log("New music library from server: ", response);
 	        user.user.musicLibrary = response;
 	        chrome.storage.sync.set({user: user.user}, function () {
-	        	console.log('user music library updated on chrome storage');
+	        	//console.log('user music library updated on chrome storage');
 	        });
 	    }).fail(function (error) {
 	        console.log(error);
@@ -114,22 +113,41 @@ function sendSong(songObj) {
 	});
 }
 
-var counter = 0;
+// var prevYouTube = false;
+var lastLoadTime = 0;
+var quickDraw = false;
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    if (changeInfo && changeInfo.status == "complete") {
-        if (tab.url.indexOf('https://www.youtube.com/watch') !== -1) {
-            counter++;
-            console.log('url changed', counter);
-            if (counter == 2) {
-                console.log("Tab updated: ", tab.url, ' sending message', counter, 'tabId', tabId);
-                chrome.tabs.sendMessage(tabId, {
-                    message: "newSongLoaded"
-                }, {}, function (response) {
-                    console.log("response in newSongLoaded emitter", response);
-                });
-                counter = 0;
-            }
+    //console.log("tab updateed", tab.url);       
+    if (tab.url.indexOf('https://www.youtube.com/watch') !== -1 && changeInfo && changeInfo.status == "complete") {
+        var newLoadTime = new Date () / 1000;
+        var timeSinceLastLoad = newLoadTime - lastLoadTime;
+        //console.log("New page request: new, last, diff", newLoadTime, lastLoadTime, timeSinceLastLoad);
+        if (timeSinceLastLoad === newLoadTime || timeSinceLastLoad < 0.1) {
+            lastLoadTime = newLoadTime;
+            // prevYouTube = tab.url
+            //console.log("Tab updated: ", tab.url, ' sending message', timeSinceLastLoad, 'tabId', tabId);
+            console.log("crawling DOM due to low time diff / first load:", tab);
+            quickDraw = true;
+            chrome.tabs.sendMessage(tabId, {message: "newSongLoaded"}, {}, function (response) {
+                console.log("response in newSongLoaded emitter", response);
+            });
+            setTimeout(function () {
+                quickDraw = false;
+            }, 3000);
+        }
+        else {
+            lastLoadTime = newLoadTime;
+            setTimeout(function () {
+                if (quickDraw) return;
+                else {
+                    console.log("crawling DOM due to only one request", tab);
+                    chrome.tabs.sendMessage(tabId, {message: "newSongLoaded"}, {}, function (response) {
+                        console.log("response in newSongLoaded emitter", response);
+                    });
+                }
+            }, 1000);
+
         }
     }
 });

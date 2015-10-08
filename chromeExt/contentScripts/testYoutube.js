@@ -1,3 +1,5 @@
+console.log("TEST YOUTUBE LOADED");
+
 function checkCategory() {
     var category = $('.watch-info-tag-list').filter(function () {
         var $this = $(this);
@@ -41,13 +43,19 @@ function sendSong() {
         title: titleAndArtistAndVidTitle[0],
         artist: titleAndArtistAndVidTitle[1]
     };
+    console.log("SENDING SCROBBED OBJ TO BACKGROUND", songObj);
     chrome.runtime.sendMessage(songObj, function (response) {
         console.log('response from router:', response);
     });
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log("message received in YT content script", request);
     if (request.message === 'newSongLoaded') {
-        checkCategory();
+        setTimeout(function () {
+            console.log("timeout set to check category");
+            checkCategory();
+            sendResponse({response: "request received, will crawl dom"});
+        }, 1000);
     }
 });
