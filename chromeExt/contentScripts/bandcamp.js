@@ -7,6 +7,7 @@ function getSongInfo(trackSrc) {
 	var duration = $('.time.secondaryText > .time_total').text().trim();
 
 	var songObj = {
+		action: 'scrobble',
 		message: "Bandcamp",
 		url: songHref,
 		category: 'Music',

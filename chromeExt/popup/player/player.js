@@ -28,6 +28,11 @@ app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUs
 			request.id = song.source.url;
 			console.log('loading Soundcloud song');
 		}
+		if (song.source.domain === 'Bandcamp') {
+			request.service = $scope.currentService;
+			request.id = song.source.bandcampId;
+			console.log('loading bandcamp song');
+		}
 		chrome.runtime.sendMessage(request, function (response) {
         	console.log('response from router:', response);
     	});
@@ -35,7 +40,7 @@ app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUs
 
 	$scope.playVideo = function(){
 		var request = {message: "playerAction", action: "play", service: $scope.currentService};
-		
+
 		chrome.runtime.sendMessage(request, function (response) {
 	        // console.log('response from router:', response);
 	    });
@@ -86,23 +91,4 @@ app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUs
 		});
 	};
 
-	$scope.setBandcampIframe = function(id) {
-		$scope.id = id;
-
-		$scope.iFrameURL = "http://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=" + id + "/transparent=true/";
-		var cl = document.getElementsByTagName("iframe")[0];
-		cl.src = "http://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=" + id + "/transparent=true/";
-		var play = document.getElementById('big_play_icon');
-		// console.log(play);
-	};
-
-	$scope.pause = function() {
-		var cl = document.getElementsByTagName("iframe")[0];
-		cl.src = "";
-	};
-
-	$scope.play = function() {
-		var cl = document.getElementsByTagName("iframe")[0];
-		cl.src = "http://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=" + $scope.id + "/transparent=true/";
-	};
 });

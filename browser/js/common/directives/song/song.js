@@ -8,7 +8,7 @@ app.directive('song', function(PlaylistFactory){
 		link: function(scope, elem, attrs) {
 			console.log('THE SCOPE', scope);
 			scope.addToPlaylist = function(playlist) {
-				PlaylistFactory.addToPlaylist(scope.song, playlist, scope.);
+				PlaylistFactory.addToPlaylist(scope.song, playlist, scope);
 			}
 		}
 	};
