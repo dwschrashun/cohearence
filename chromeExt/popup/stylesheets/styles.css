@@ -12,3 +12,18 @@
 	margin-left: 1.2em;
 	font-size: 30px;
 }
+
+.playerbuttons {
+	color: rgba(60, 178, 208, 1) !important;	
+}
+
+.controls {
+	text-align: center;
+}
+.fa {
+	float: left;
+}
+
+#music-library {
+	background
+}
