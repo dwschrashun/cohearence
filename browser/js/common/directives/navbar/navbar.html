@@ -1,12 +1,13 @@
 <nav class="navbar navbar-static-top">
     <div class="container">
-        <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
-        </div>
+        <!-- <div class="navbar-header"> -->
+            <!-- <fullstack-logo></fullstack-logo> -->
+			<p>λ</p>
+        <!-- </div> -->
         <ul class="nav navbar-nav">
-            <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
-            </li>
+            <!-- <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()"> -->
+                <!-- <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a> -->
+            <!-- </li> -->
         </ul>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
         <button ng-show="!user" ui-sref="signup" class="btn login-button">Signup</button>

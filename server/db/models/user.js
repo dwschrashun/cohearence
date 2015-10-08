@@ -23,8 +23,18 @@ var schema = new mongoose.Schema({
 		id: String
 	},
 	musicLibrary: {
-		type: [{song: {type: mongoose.Schema.Types.ObjectId, ref: 'Song'}, plays: [{type: Date}]}], default: [],
-	}
+		type:
+		[
+			{
+				song: {type: mongoose.Schema.Types.ObjectId, ref: 'Song'},
+				plays: [{type: Date}],
+				playlists: {
+					type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Playlist'}],
+					default: []
+				}
+			}
+		], default: [],
+	},
 });
 
 schema.plugin(deepPopulate);
@@ -103,6 +113,11 @@ schema.methods.findMatchIndex = function(song) {
     });
 };
 
+schema.methods.getPlaylists = function() {
+	return Playlist.find({
+		user: this._id
+	}).exec()
+}
 
 
 mongoose.model('User', schema);

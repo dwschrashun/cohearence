@@ -5,12 +5,17 @@ app.config(function ($stateProvider) {
         controller: 'HomeController',
         resolve: {
         	theUser: function(AuthService) {
-        		return AuthService.getLoggedInUser()
+				return AuthService.getLoggedInUser()
+				.then(function(user){
+					return user;
+				});
+        		// return AuthService.getLoggedInUser();
         	}
         }
     });
 });
-// console.log(app);
+
 app.controller('HomeController', function($scope, AuthService, $state, theUser) {
 	if(!theUser) $state.go('landing');
-})
+	$scope.theUser = theUser;
+});

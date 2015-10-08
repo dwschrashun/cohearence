@@ -30,6 +30,6 @@ var schema = new mongoose.Schema({
 	},
 	duration: {
 		type: String
-	}
+	},
 });
 mongoose.model('Song', schema);

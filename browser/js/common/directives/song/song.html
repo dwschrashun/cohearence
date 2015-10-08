@@ -1,0 +1,22 @@
+<div class="row" id="{{song._id}}">
+	<div class="col-md-2 track-artist">
+		<a href="#">{{song.song.artist}}</a>
+	</div>
+	<div class="col-md-2 track-title">
+		<a href="#">{{song.song.title}}</a>
+	</div>
+	<div class="col-md-2 track-duration">
+		{{song.song.duration}}
+	</div>
+	<div class="col-md-2 track-last-played">
+		 Last played: {{song.plays[song.plays.length-1] | date}}
+	</div>
+	<div class="col-md-2 track-source">
+		<a href="{{song.song.source.url}}">Visit Source</a>
+	</div>
+	<div class="col-md-2 track-delete">
+		<a ng-click="addToPlaylist('playlist1')">+</a>
+		<a ng-click="">Delete</a>
+	</div>
+</div>
+
