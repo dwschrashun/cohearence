@@ -3,7 +3,7 @@ app.directive('playlistList', function(PlaylistFactory) {
 		restrict: 'E',
 		templateUrl: 'js/common/directives/playlist-list/playlist-list.html',
 		link: function(scope, elem, attrs) {
-			console.log(scope.playlists);
+			//console.log(scope.playlists);
 			scope.namingPlaylist = false;
 			// console.log("current user: ",scope.theUser);
 			scope.namePlaylist = function() {

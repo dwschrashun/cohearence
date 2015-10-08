@@ -9,7 +9,7 @@
 	</div>
 	<ul>
 		<li>
-			<a ui-sref="home({mainView: playlist._id})" droppable id = "{{playlist._id}}" ng-repeat="playlist in playlists | filter:searchText:false">{{ playlist.name }}</a>
+			<a ui-sref="home({playlistID: playlist._id})" droppable id = "{{playlist._id}}" ng-repeat="playlist in playlists | filter:searchText:false">{{ playlist.name }}</a>
 		</li>
 	</ul>
 </div>

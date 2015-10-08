@@ -26,6 +26,7 @@ router.put('/', function(req,res,next){
 	var playlistId = req.body.playlist;
 	Playlist.findById(playlistId)
 	.then(function(playlist){
+		console.log("reqbod", req.body);
 		playlist.songs.push(req.body.song);
 		playlist.save()
 		.then(function(savedPlaylist){
@@ -33,4 +34,16 @@ router.put('/', function(req,res,next){
 			res.json(savedPlaylist);
 		});
 	});
+});
+
+// 561685d5592e9c2b082a4d82
+
+router.get('/:playlistId', function(req,res,next){
+	Playlist.findById(req.params.playlistId).exec()
+	.then(function(playlist) {
+		return playlist.populate("songs").execPopulate();
+	}).then(function (populated) {
+		console.log("POPULATED", populated);
+		res.json(populated);
+	}).then(null,next);
 });

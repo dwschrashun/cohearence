@@ -1,7 +1,7 @@
-app.directive('song', function(PlaylistFactory){
+app.directive('librarySong', function(PlaylistFactory){
 	return {
 		restrict: 'E',
-		templateUrl: 'js/common/directives/song/song.html',
+		templateUrl: 'js/common/directives/library-song/library-song.html',
 		scope: {
 			song: '='
 		},

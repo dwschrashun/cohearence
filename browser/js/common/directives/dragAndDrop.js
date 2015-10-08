@@ -22,7 +22,8 @@ app.controller('DragAndDropCtrl', function ($scope, PlaylistFactory) {
         e.stopPropagation();
         var songId = e.dataTransfer.getData('text/html').split(">")[1];
 		var playlistId = e.target.id;
-		console.log(playlistId);
+        console.log("Song id in drop:", songId);
+		console.log("Playlist id in drop:", playlistId);
         $scope.$apply(function () {
             PlaylistFactory.addToPlaylist(songId, playlistId);
 			console.log("song added!");
