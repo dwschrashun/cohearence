@@ -1,0 +1,21 @@
+<ul>
+	<li draggable id="{{song._id}}">
+		<div  class="row" >
+				<div class="col-md-2 track-artist">
+					<a href="#">{{song.artist}}</a>
+				</div>
+				<div class="col-md-2 track-title">
+					<a href="#">{{song.title}}</a>
+				</div>
+				<div class="col-md-2 track-duration">
+					{{song.duration}}
+				</div>
+				<div class="col-md-2 track-source">
+					<a target="_blank" href="{{song.source.url}}">Visit Source</a>
+				</div>
+				<div class="col-md-2 track-delete">
+					<a ng-click="">Delete</a>
+				</div>
+		</div>
+	<li>
+</ul>
