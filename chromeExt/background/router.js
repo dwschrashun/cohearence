@@ -51,9 +51,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     if (request.message === 'playerAction') {
-        console.log('request', request);
-        console.log('serviceMethods', serviceMethods);
-        serviceMethods[request.service][request.service.action].call(request.service.reference);
+        var service = serviceMethods[request.service];
+        var self = service.reference;
+        var action = service[request.action];
+        action.call(self);
     }
 
     if (request.message === "cue") {
@@ -145,11 +146,12 @@ function createYouTubeVideo() {
 
 function createSoundcloudVideo() {
     var backgroundDoc = $(chrome.extension.getBackgroundPage().document);
-    soundcloudVideo = backgroundDoc.find('video');
+    soundcloudVideo = backgroundDoc.find('#soundcloudPlayer');
     SC.initialize({
         client_id: '68b135c934141190c88c1fb340c4c10a'
     });
     var streamTrack = function (track) {
+        console.log('soundcloudVideo', soundcloudVideo);
         return SC.stream('/tracks/' + track.id).then(function (player) {
             $.ajax({
                 method: 'get',
