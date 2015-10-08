@@ -3,9 +3,9 @@ app.config(function($stateProvider) {
 		url: '/landing',
 		templateUrl: 'js/landing/landing.html',
 		controller: 'LandingController'
-	})
-})
+	});
+});
 
 app.controller('LandingController', function($scope) {
 
-})
+});
