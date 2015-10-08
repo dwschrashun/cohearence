@@ -15,7 +15,7 @@ var _ = require('lodash');
 chai.should();
 chai.use(sinonChai);
 
-describe('User route', function () {
+xdescribe('User route', function () {
 
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
@@ -37,7 +37,7 @@ describe('User route', function () {
         {
           title: 'Stairway to Heaven',
           artist: 'Led Zeppelin',
-		  echoNestId: 'SODFHPG12B0B80B0A4'
+		      echoNestId: 'SODFHPG12B0B80B0A4'
 	  },
 		{
 			title: 'Clint Eastwood', //this song will be in our library but not the users
@@ -79,7 +79,7 @@ describe('User route', function () {
 		clearDB(done);
 	});
 
-    describe('Get ', function(){
+    xdescribe('Get ', function(){
       it('returns a list of all users', function(done){
         guest.get('/api/users')
         .expect(200)
@@ -116,7 +116,7 @@ describe('User route', function () {
     });
 
 //here is the big one boys
-	describe('put ', function(){
+	xdescribe('put ', function(){
 
 
 		//a song that is not in our main library or the users library
