@@ -1,16 +1,23 @@
-<div id="music-library">
-	<ul>
-		<li ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
-			<span ng-if="item.song.youtube.url">{{item.song.youtube.videoTitle}}</span>
-			<span ng-if="!item.song.youtube.url">{{item.song.artist}} - {{item.song.title}}</span>
-		</li>
-	</ul>
+<div class="panel">
+	<div class="panel-heading">
+		<span class="panel-title">λ</span>
+	</div>
+	<div class="panel-body">
+		<div id="music-library">
+			<ul>
+				<li ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
+					<span ng-if="item.song.youtube.url">{{item.song.youtube.videoTitle}}</span>
+					<span ng-if="!item.song.youtube.url">{{item.song.artist}} - {{item.song.title}}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<md-button class="md-primary" ng-click="playVideo()">Play</md-button>
+	<md-button class="md-primary" ng-click="pauseVideo()">Pause</md-button>
+	<md-button class="md-primary" ng-click="skipForward()">Skip Forward</md-button>
+	<!-- <md-button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')"> >> </md-button>
+	<md-button ng-mousedown="startOrStopRewind('start')" ng-mouseup="startOrStopRewind('stop')"> << </md-button> -->
+
+	<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
 </div>
-
-<button ng-click="playVideo()">Play</button>
-<button ng-click="pauseVideo()">Pause</button>
-<button ng-click="skipForward()">Skip Forward</button>
-<button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')"> >> </button>
-<button ng-mousedown="startOrStopRewind('start')" ng-mouseup="startOrStopRewind('stop')"> << </button>
-
-<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>

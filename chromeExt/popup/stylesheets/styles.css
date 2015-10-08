@@ -1,4 +1,14 @@
 #main {
 	width: 400px;
-	padding: 20px;
+	height: 400px;
+	border-radius: 2px;
+}
+
+.panel-heading {
+	background-color:  #222222;
+	color: rgba(60, 178, 208, 1);
+}
+.panel-title {
+	margin-left: 1.2em;
+	font-size: 30px;
 }
