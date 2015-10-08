@@ -1,3 +1,10 @@
 <div>
-
+	<ul>
+		<li droppable id = "{{playlist._id}}" ng-repeat="playlist in playlists">{{ playlist.name }}</li>
+	</ul>
+	<div>
+		<button ng-hide="namingPlaylist" ng-click="namePlaylist()" class="btn btn-primary">Create new playlist</button>
+		<input ng-show="namingPlaylist" ng-model="playlistName">Name your playlist</input>
+		<button ng-show="namingPlaylist" ng-click="makePlaylist()">Submit</button>
+	</div>
 </div>

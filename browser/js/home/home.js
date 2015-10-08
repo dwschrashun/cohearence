@@ -9,13 +9,16 @@ app.config(function ($stateProvider) {
 				.then(function(user){
 					return user;
 				});
-        		// return AuthService.getLoggedInUser();
-        	}
+        	},
+			thePlaylists: function(PlaylistFactory) {
+				return PlaylistFactory.getPlaylists();
+			}
         }
     });
 });
 
-app.controller('HomeController', function($scope, AuthService, $state, theUser) {
+app.controller('HomeController', function($scope, AuthService, $state, theUser, thePlaylists) {
 	if(!theUser) $state.go('landing');
 	$scope.theUser = theUser;
+	$scope.playlists = thePlaylists;
 });

@@ -6,6 +6,8 @@ $background-color: #222222;
 	padding-top: 20px;
 }
 #library {
+	display: inline-block;
+	float: right;
 	h2, li {
 		list-style-type: none;
 		font-family: 'Roboto', sans-serif;
