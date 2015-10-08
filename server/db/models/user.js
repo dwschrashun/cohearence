@@ -5,6 +5,7 @@ var _ = require('lodash');
 require("string_score");
 var deepPopulate = require("mongoose-deep-populate")(mongoose);
 var Promise = require("bluebird");
+var chalk = require('chalk');
 
 var schema = new mongoose.Schema({
 	email: {
@@ -65,20 +66,20 @@ schema.method('correctPassword', function (candidatePassword) {
 
 //adds song to user's library if song is not found in user's library
 //if song is found in user's library, add a new timestamp
-var count = 0;
+// var count = 0;
 schema.method('addToLibraryOrUpdate', function(newSong, index){
 	console.log('in addToLibraryOrUpdate', newSong, index);
-	if (count === 0) {
+	// if (count === 0) {
 		if (index !== -1) {
 			this.musicLibrary[index].plays.push(new Date());
 		} else {
 			this.musicLibrary.push({song: newSong._id, plays: [new Date()]});
 		}
-		count++;
-		setInterval(function () {
-			count = 0;
-		}, 2000);
-	}
+		// count++;
+		// setInterval(function () {
+			// count = 0;
+		// }, 2000);
+	// }
 });
 
 schema.statics.populateMusicLibrary = function(user) {
@@ -98,8 +99,7 @@ schema.methods.findMatchIndex = function(song) {
     //find index of song that matches song in user's music library
     //if song doesn't have echoNestId, find the song that
     //matches at least .75
-    return _.findIndex(this.musicLibrary, function(el) {
-        if (song.echoNestId) {
+		return _.findIndex(this.musicLibrary, function(el) {    if (song.echoNestId) {
             return el.song.echoNestId === song.echoNestId;
         } else {
             var nameScore = el.song.title.score(song.title);
@@ -108,12 +108,6 @@ schema.methods.findMatchIndex = function(song) {
         }
     });
 };
-
-schema.methods.getPlaylists = function() {
-	return Playlist.find({
-		user: this._id
-	}).exec()
-}
 
 
 mongoose.model('User', schema);

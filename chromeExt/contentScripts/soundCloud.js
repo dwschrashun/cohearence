@@ -1,11 +1,10 @@
 function getSongInfo() {
     var songInfoArr = $(".playbackSoundBadge__titleContextContainer").children();
     var songInfo = songInfoArr[1];
-    // var channelName = songInfoArr.first().text().split("Playing from ")[0].split("\'")[0];
     var channelName = songInfoArr.first().text().split("Playing from ")[1].split("\'")[0];
-    console.log("CHANNELNAME", channelName);
     var duration = $(".playbackTimeline__duration").children()[1].innerText;
     var artistTitle = songInfo.title.split(/[-–]/);
+
 	if (artistTitle.length === 1) {
 		title = artistTitle[0].trim();
 		artist = channelName || "unknown artist";
@@ -16,8 +15,9 @@ function getSongInfo() {
     	artist = artistTitle[0].trim() || channelName || "unknown artist";
     	title = artistTitle[1].trim() || "unknown title";
 	}
-	console.log('artist and title in SC:', artist, title);
+
     var songObj = {
+        action: 'scrobble',
         message: "Soundcloud",
         url: songInfo.href,
         videoTitle: songInfo.title,
@@ -38,7 +38,6 @@ function onPlayerChange() {
             if (songObj.duration !== "0:30") {
                 if (lastSong !== songObj.title) {
             		lastSong = songObj.title;
-                    console.log('sending song');
                     chrome.runtime.sendMessage(songObj, function (response) {
                         console.log('response from router:', response);
                     });
