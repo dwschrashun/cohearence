@@ -4,44 +4,50 @@ var soundcloudVideo;
 var serviceMethods = {};
 
 window.onload = function () {
-    backgroundDoc = $(chrome.extension.getBackgroundPage().document);
-    soundcloudVideo = backgroundDoc.find('#soundcloudPlayer');
+  backgroundDoc = $(chrome.extension.getBackgroundPage().document);
+  soundcloudVideo = backgroundDoc.find('#soundcloudPlayer');
 
-    chrome.storage.sync.get("user", function (user) {
-        if (user.user) {
-            $.ajax({
-                url: 'http://localhost:1337/api/users/' + user.user._id + '/library',
-                method: 'GET',
-                dataType: "json"
-            }).done(function (response) {
-                chrome.storage.sync.set({
-                    user: response
-                }, function () {});
-            }).fail(function (error) {
-                console.error(error);
-            });
-        } else {
-            console.log('user not logged in probably should do something about that');
-        }
-    });
-    
-    createYouTubeVideo();
+  chrome.storage.sync.get("user", function (user) {
+    if (user.user) {
+      $.ajax({
+        url: 'http://localhost:1337/api/users/' + user.user._id + '/library',
+        method: 'GET',
+        dataType: "json"
+      }).done(function (response) {
+        chrome.storage.sync.set({
+            user: response
+        }, function () {});
+      }).fail(function (error) {
+        console.error(error);
+      });
+    } else {
+      console.log('user not logged in probably should do something about that');
+    }
+  });
+  createYouTubeVideo();
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.message === 'YouTube') {
-        sendSong(request);
-        sendResponse({
-            response: "hey we got your song at the router"
-        });
-    }
-    if (request.message === 'Soundcloud') {
-        sendSong(request);
-        sendResponse({
-            response: "hey we got your song at the router"
-        });
-    }
-    if (request.message === 'Bandcamp') {
+  if (request.message === 'YouTube') {
+    sendSong(request);
+    sendResponse({
+        response: "hey we got your song at the router"
+    });
+  }
+  if (request.message === 'Soundcloud') {
+    sendSong(request);
+    sendResponse({
+        response: "hey we got your song at the router"
+    });
+  }
+  if (request.message === 'Bandcamp') {
+    sendSong(request);
+    sendResponse({
+        response: "hey we got your song at the router"
+    });
+  }
+
+    if (request.message === 'Spotify') {
         sendSong(request);
         sendResponse({
             response: "hey we got your song at the router"
@@ -76,44 +82,61 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function sendSong(songObj) {
-    chrome.storage.sync.get('user', function (user) {
-        if (!user.user._id) {
-            return;
-        }
-        $.ajax({
-            url: "http://localhost:1337/api/users/" + user.user._id + "/library",
-            method: 'PUT',
-            data: songObj,
-            dataType: "json"
-        }).done(function (response) {
-            user.user.musicLibrary = response;
-            chrome.storage.sync.set({
-                user: user.user
-            }, function () {
-                // console.log('user music library updated on chrome storage');
-            });
-        }).fail(function (error) {
-            console.log(error);
-        });
-    });
+	chrome.storage.sync.get('user', function (user) {
+		//console.log("user pre-library put:", user);
+	    if (!user && !user.user && !user.user._id) {
+	    	console.log('there is no user logged in');
+	    	return;
+	    }
+	    $.ajax({
+	        url: "http://localhost:1337/api/users/" + user.user._id + "/library",
+	        method: 'PUT',
+	        data: songObj,
+	        dataType: "json"
+	    }).done(function (response) {
+	        user.user.musicLibrary = response;
+	        chrome.storage.sync.set({user: user.user}, function () {
+	        });
+	    }).fail(function (error) {
+	        console.log(error);
+	    });
+	});
 }
 
-var counter = 0;
+// var prevYouTube = false;
+var lastLoadTime = 0;
+var quickDraw = false;
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    if (changeInfo && changeInfo.status == "complete") {
-        if (tab.url.indexOf('https://www.youtube.com/watch') !== -1) {
-            counter++;
-            // console.log('url changed', counter);
-            if (counter == 2) {
-                // console.log("Tab updated: ", tab.url, ' sending message', counter, 'tabId', tabId);
-                chrome.tabs.sendMessage(tabId, {
-                    message: "newSongLoaded"
-                }, {}, function (response) {
-                    // console.log("response in newSongLoaded emitter", response);
-                });
-                counter = 0;
-            }
+    //console.log("tab updateed", tab.url);
+    if (tab.url.indexOf('https://www.youtube.com/watch') !== -1 && changeInfo && changeInfo.status == "complete") {
+        var newLoadTime = new Date () / 1000;
+        var timeSinceLastLoad = newLoadTime - lastLoadTime;
+        //console.log("New page request: new, last, diff", newLoadTime, lastLoadTime, timeSinceLastLoad);
+        if (timeSinceLastLoad === newLoadTime || timeSinceLastLoad < 0.1) {
+            lastLoadTime = newLoadTime;
+            // prevYouTube = tab.url
+            //console.log("Tab updated: ", tab.url, ' sending message', timeSinceLastLoad, 'tabId', tabId);
+            console.log("crawling DOM due to low time diff / first load:", tab);
+            quickDraw = true;
+            chrome.tabs.sendMessage(tabId, {message: "newSongLoaded"}, {}, function (response) {
+                console.log("response in newSongLoaded emitter", response);
+            });
+            setTimeout(function () {
+                quickDraw = false;
+            }, 3000);
+        }
+        else {
+            lastLoadTime = newLoadTime;
+            setTimeout(function () {
+                if (quickDraw) return;
+                else {
+                    console.log("crawling DOM due to only one request", tab);
+                    chrome.tabs.sendMessage(tabId, {message: "newSongLoaded"}, {}, function (response) {
+                        console.log("response in newSongLoaded emitter", response);
+                    });
+                }
+            }, 1000);
         }
     }
 });
@@ -128,10 +151,9 @@ function createYouTubeVideo() {
         youtubePlayer = new YT.Player(youtubePlayer[0], {
             height: '390',
             width: '640',
-            // videoId: 'dw6qJWime_Y',
             events: {
                 "onReady": onPlayerReady
-                    // "onStateChange": onPlayerStateChange
+                // "onStateChange": onPlayerStateChange
             }
         });
     }, 800);
@@ -169,7 +191,6 @@ function createSoundcloudVideo(songUrl) {
             console.error(arguments);
         });
     };
-    // var songUrl = 'https://soundcloud.com/axelsundell/50-cent-in-da-club';
     SC.resolve(songUrl).then(streamTrack);
 }
 
