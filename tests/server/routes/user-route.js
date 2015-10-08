@@ -15,7 +15,7 @@ var _ = require('lodash');
 chai.should();
 chai.use(sinonChai);
 
-xdescribe('User route', function () {
+describe('User route', function () {
 
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
@@ -79,7 +79,7 @@ xdescribe('User route', function () {
 		clearDB(done);
 	});
 
-    xdescribe('Get ', function(){
+    describe('Get ', function(){
       it('returns a list of all users', function(done){
         guest.get('/api/users')
         .expect(200)
@@ -116,7 +116,7 @@ xdescribe('User route', function () {
     });
 
 //here is the big one boys
-	xdescribe('put ', function(){
+	describe('put ', function(){
 
 
 		//a song that is not in our main library or the users library

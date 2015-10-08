@@ -29,7 +29,7 @@ describe('User model', function () {
         clearDB(done);
     });
 
-    xit('should exist', function () {
+    it('should exist', function () {
         expect(User).to.be.a('function');
     });
 
@@ -37,11 +37,11 @@ describe('User model', function () {
 
         describe('generateSalt method', function () {
 
-            xit('should exist', function () {
+            it('should exist', function () {
                 expect(User.generateSalt).to.be.a('function');
             });
 
-            xit('should return a random string basically', function () {
+            it('should return a random string basically', function () {
                 expect(User.generateSalt()).to.be.a('string');
             });
 
@@ -70,16 +70,16 @@ describe('User model', function () {
                 cryptoStub.restore();
             });
 
-            xit('should exist', function () {
+            it('should exist', function () {
                 expect(User.encryptPassword).to.be.a('function');
             });
 
-            xit('should call crypto.createHash with "sha1"', function () {
+            it('should call crypto.createHash with "sha1"', function () {
                 User.encryptPassword('asldkjf', 'asd08uf2j');
                 expect(cryptoStub.calledWith('sha1')).to.be.ok;
             });
 
-            xit('should call hash.update with the first and second argument', function () {
+            it('should call hash.update with the first and second argument', function () {
 
                 var pass = 'testing';
                 var salt = '1093jf10j23ej===12j';
@@ -91,7 +91,7 @@ describe('User model', function () {
 
             });
 
-            xit('should call hash.digest with hex and return the result', function () {
+            it('should call hash.digest with hex and return the result', function () {
 
                 var x = {};
                 hashDigestStub.returns(x);
@@ -124,7 +124,7 @@ describe('User model', function () {
                 saltSpy.restore();
             });
 
-            xit('should call User.encryptPassword with the given password and generated salt', function (done) {
+            it('should call User.encryptPassword with the given password and generated salt', function (done) {
                 createUser().then(function () {
                     var generatedSalt = saltSpy.getCall(0).returnValue;
                     expect(encryptSpy.calledWith('potus', generatedSalt)).to.be.ok;
@@ -132,7 +132,7 @@ describe('User model', function () {
                 });
             });
 
-            xit('should set user.salt to the generated salt', function (done) {
+            it('should set user.salt to the generated salt', function (done) {
                createUser().then(function (user) {
                    var generatedSalt = saltSpy.getCall(0).returnValue;
                    expect(user.salt).to.be.equal(generatedSalt);
@@ -140,7 +140,7 @@ describe('User model', function () {
                });
             });
 
-            xit('should set user.password to the encrypted password', function (done) {
+            it('should set user.password to the encrypted password', function (done) {
                 createUser().then(function (user) {
                     var createdPassword = encryptSpy.getCall(0).returnValue;
                     expect(user.password).to.be.equal(createdPassword);
@@ -240,7 +240,6 @@ describe('User model', function () {
             });
             done();
           });
-
       });
 
 });
