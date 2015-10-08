@@ -1,0 +1,27 @@
+$link-color: rgba(60, 178, 208, 1);
+$background-color: #222222;
+
+#sidebar-container {
+	padding-top: 20px;
+	// width: 400px;
+}
+
+#sidebar {
+	background-color: $background-color;
+	playlist-list {
+		div {
+			color: $link-color;
+			background-color: $background-color;
+		}
+	}
+
+	#controls {
+		text-align: center;
+		.btn-add {
+			border-radius: 50px;
+			background-color: $link-color;
+			color: $background-color;
+		}
+		margin: 20px;
+	}
+}

@@ -6,10 +6,9 @@ app.directive('song', function(PlaylistFactory){
 			song: '='
 		},
 		link: function(scope, elem, attrs) {
-			console.log('THE SCOPE', scope);
-			scope.addToPlaylist = function(playlist) {
-				PlaylistFactory.addToPlaylist(scope.song, playlist);
-			}
+			scope.addToPlaylist = function(playlistId) {
+				PlaylistFactory.addToPlaylist(scope.song._id, playlistId);
+			};
 		}
 	};
 });

@@ -27,11 +27,7 @@ var schema = new mongoose.Schema({
 		[
 			{
 				song: {type: mongoose.Schema.Types.ObjectId, ref: 'Song'},
-				plays: [{type: Date}],
-				playlists: {
-					type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Playlist'}],
-					default: []
-				}
+				plays: [{type: Date}]
 			}
 		], default: [],
 	},
