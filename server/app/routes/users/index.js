@@ -10,6 +10,7 @@ var echo = echojs({
   key: "BC5YTSWIE5Q9YWVGF"
 });
 var deepPopulate = require("mongoose-deep-populate")(mongoose);
+var http = require("http");
 
 
 router.get("/", function (req, res) {
@@ -68,6 +69,13 @@ function checkEchoNest(artist, title){
 	});
 }
 
+function getSpotifyFakeUrl (title, artist) {
+	//get youtube URL from youtube API using http
+	// http.get("https://www.googleapis.com/youtube/v3/search");
+
+	// videoCategoryid?
+}
+
 function createSongFromReqBody(reqBody){
 	var title = reqBody.title || "unknown";
 	var artist = reqBody.artist || "unknown";
@@ -78,20 +86,36 @@ function createSongFromReqBody(reqBody){
 		bandcampId: null
 	};
 
-	var newSongObj = {
-		title: title,
-		artist: artist,
-		source: source
-	};
-	return newSongObj;
+	if (source.domain === "Spotify") {
+		getSpotifyFakeUrl(reqBody.title, reqBody.artist).then(function (url){
+			source.fakeUrl = url;
+			var newSongObj = {
+				title: title,
+				artist: artist,
+				source: source
+			};
+			return newSongObj;
+		});
+	}
+	else {
+		var newSongObj = {
+			title: title,
+			artist: artist,
+			source: source
+		};
+		return newSongObj;
+	}
 }
 //#1 Search in EchoNest
 router.put('/:userId/library', function(req, res, next){
-	// console.log('hit route 1');
+	//console.log('hit route 1', req.body);
 	checkEchoNest(req.body.artist, req.body.title)
 	.then(function(match){
 		if (match){
+			console.log("EN MATCH:", match);
 			req.echoNestId = match.id;
+			req.title = match.title;
+			req.artist = match.artist_name;
 		}
 		// console.log("song: ",match);
 		next();
@@ -140,13 +164,15 @@ router.put('/:userId/Library', function(req, res, next){
 //#3 Create the song if we have to and check if its on the user
 router.put('/:userId/Library', function(req, res, next){
 	if (req.new) {
-		console.log("NEW SONG");
+		console.log("NEW SONG", req.songToSave);
 		Song.create(req.songToSave)		//must create song
 		.then(function(newSong){
 			console.log("created the new song in main library");
 			req.songToSave = newSong; //reassign songToSave
 			req.index = -1;
 			next();
+		}).then(null, function (err){
+			console.log("ERROR:", err);
 		});
 	} else { //not new so must check if user has it
 		User.populateMusicLibrary(req.foundUser)

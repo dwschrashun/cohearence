@@ -52,7 +52,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 function sendSong(songObj) {
 	chrome.storage.sync.get('user', function (user) {
-		//console.log("user pre-library put:", user);
+		console.log("user pre-library put:", user);
 	    if (!user && !user.user && !user.user._id) {
 	    	console.log('there is no user logged in');
 	    	return;
@@ -63,6 +63,7 @@ function sendSong(songObj) {
 	        data: songObj,
 	        dataType: "json"
 	    }).done(function (response) {
+          console.log("updated library:", response);
 	        user.user.musicLibrary = response;
 	        chrome.storage.sync.set({user: user.user}, function () {
 	        });
