@@ -2,6 +2,7 @@ function onPlayerChange() {
     var player = $($("#app-player").contents().find("#track-name")[0]);
     console.log('got the player', player);
     player.bind("DOMSubtreeModified", function () {
+        console.log("modified");
         counter++;
         if (counter == 2) {
             getSongInfo().then(function (songObj) {

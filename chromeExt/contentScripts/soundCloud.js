@@ -1,16 +1,20 @@
 function getSongInfo() {
-    var songInfo = $(".playbackSoundBadge__titleContextContainer").children()[1];
+    var songInfoArr = $(".playbackSoundBadge__titleContextContainer").children();
+    var songInfo = songInfoArr[1];
+    // var channelName = songInfoArr.first().text().split("Playing from ")[0].split("\'")[0];
+    var channelName = songInfoArr.first().text().split("Playing from ")[1].split("\'")[0];
+    console.log("CHANNELNAME", channelName);
     var duration = $(".playbackTimeline__duration").children()[1].innerText;
-    var artistTitle = songInfo.title.split(' - ');
+    var artistTitle = songInfo.title.split(/[-–]/);
 	if (artistTitle.length === 1) {
-		title = artistTitle[0];
-		artist = "unknown artist";
+		title = artistTitle[0].trim();
+		artist = channelName || "unknown artist";
 	} else if (artistTitle.length === 0){
-		artist = "unknown artist";
+		artist = channelName || "unknown artist";
 		title = "unknown title";
 	} else {
-    	artist = artistTitle[0] || "unknown artist";
-    	title = artistTitle[1] || "unknown title";
+    	artist = artistTitle[0].trim() || channelName || "unknown artist";
+    	title = artistTitle[1].trim() || "unknown title";
 	}
 	console.log('artist and title in SC:', artist, title);
     var songObj = {

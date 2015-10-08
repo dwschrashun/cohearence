@@ -62,6 +62,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         });
     }
 
+    if (request.message === 'Spotify') {
+        sendSong(request);
+        sendResponse({
+            response: "hey we got your song at the router"
+        });
+    }
+
     if (request.message === "play") {
         console.log("play received", player);
         player.playVideo();
