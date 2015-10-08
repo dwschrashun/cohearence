@@ -1,12 +1,9 @@
 function onPlayerChange() {
     var player = $($("#app-player").contents().find("#track-name")[0]);
-    console.log('got the player', player);
     player.bind("DOMSubtreeModified", function () {
-        console.log("modified");
         counter++;
         if (counter == 2) {
             getSongInfo().then(function (songObj) {
-                console.log('song', songObj);
                 counter = 0;
                 if (songObj.url.indexOf('adclick') === -1) {
 	                chrome.runtime.sendMessage(songObj, function (response) {
@@ -28,6 +25,7 @@ function getSongInfo() {
                 artist = $($("#app-player").contents().find("#track-artist > a")[0]).text();
                 var videoTitle = artist + ' - ' + songTitle;
                 var songObj = {
+                    action: 'scrobble',
                     message: "Spotify",
                     url: href,
                     videoTitle: videoTitle,
@@ -36,7 +34,6 @@ function getSongInfo() {
                     title: songTitle,
                     artist: artist
                 };
-                console.log('spotify songObj', songObj);
                 return resolve(songObj);
             }, 500);
     });
@@ -45,6 +42,5 @@ function getSongInfo() {
 var counter = 0;
 
 $('iframe#app-player').load(function () {
-    // console.log('window loaded');
     onPlayerChange();
 });
