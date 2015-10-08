@@ -28,7 +28,7 @@
         "matches" : ["http://*/*", "https://*/*"],
         "js": ["contentScripts/contentRouter.js"]
     }, {
-        "matches": ["https://www.youtube.com/watch?v=*"],
+        "matches": ["https://www.youtube.com/*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"]
     }, {
         "matches": ["https://soundcloud.com/*"],
