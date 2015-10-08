@@ -1,36 +1,34 @@
+var backgroundDoc;
 var youtubePlayer;
 var soundcloudVideo;
 var serviceMethods = {};
 
 window.onload = function () {
+    backgroundDoc = $(chrome.extension.getBackgroundPage().document);
+    soundcloudVideo = backgroundDoc.find('#soundcloudPlayer');
+
     chrome.storage.sync.get("user", function (user) {
-        // console.log('user', user);
         if (user.user) {
             $.ajax({
                 url: 'http://localhost:1337/api/users/' + user.user._id + '/library',
                 method: 'GET',
                 dataType: "json"
             }).done(function (response) {
-                // console.log('ajax response', response);
                 chrome.storage.sync.set({
                     user: response
-                }, function () {
-                    // console.log("new saved user", response);
-                });
+                }, function () {});
             }).fail(function (error) {
                 console.error(error);
             });
         } else {
-            // console.log('user not logged in probably should do something about that');
+            console.log('user not logged in probably should do something about that');
         }
     });
+    
     createYouTubeVideo();
-    createSoundcloudVideo();
 };
 
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    // console.log("REQUEST received:", request);
     if (request.message === 'YouTube') {
         sendSong(request);
         sendResponse({
@@ -58,8 +56,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     if (request.message === "cue") {
-        console.log("cue received", youtubePlayer);
-        youtubePlayer.cueVideoById(request.id);
+        stopAllVideos();
+        if (request.service === 'YouTube') {
+            console.log("cue received", youtubePlayer);
+            youtubePlayer.cueVideoById(request.id);
+        }
+        if (request.service === 'Soundcloud') {
+            console.log('soundcloud song received', request);
+            createSoundcloudVideo(request.id);
+        }
     }
 
     if (request.message === "unMute") {
@@ -71,11 +76,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function sendSong(songObj) {
-    console.log("sending");
     chrome.storage.sync.get('user', function (user) {
-        // console.log("user pre-library put:", user);
         if (!user.user._id) {
-            // console.log('there is no user logged in');
             return;
         }
         $.ajax({
@@ -84,7 +86,6 @@ function sendSong(songObj) {
             data: songObj,
             dataType: "json"
         }).done(function (response) {
-            // console.log("New music library from server: ", response);
             user.user.musicLibrary = response;
             chrome.storage.sync.set({
                 user: user.user
@@ -118,35 +119,33 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 function createYouTubeVideo() {
-    var backgroundDoc = chrome.extension.getBackgroundPage().document;
-    var tag = backgroundDoc.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = backgroundDoc.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    youtubePlayer = backgroundDoc.getElementById("youtubePlayer");
+    var tag = $('<script></script>');
+    tag.attr('src', "https://www.youtube.com/iframe_api");
+    var firstScriptTag = $(backgroundDoc.find('script')[0]);
+    tag.insertBefore(firstScriptTag);
+    youtubePlayer = backgroundDoc.find("#youtubePlayer");
     setTimeout(() => {
-        youtubePlayer = new YT.Player(youtubePlayer, {
+        youtubePlayer = new YT.Player(youtubePlayer[0], {
             height: '390',
             width: '640',
-            // videoId: 'H_IcrHMbb8M',
+            // videoId: 'dw6qJWime_Y',
             events: {
-                // "onReady": onPlayerReady,
-                // "onStateChange": onPlayerStateChange
+                "onReady": onPlayerReady
+                    // "onStateChange": onPlayerStateChange
             }
         });
-        // console.log('youtubePlayer', youtubePlayer);
+    }, 800);
+
+    function onPlayerReady(event) {
         serviceMethods.YouTube = {
             play: youtubePlayer.playVideo,
-            pause: youtubePlayer.pause,
+            pause: youtubePlayer.pauseVideo,
             reference: youtubePlayer
         };
-        // console.log(serviceMethods);
-    }, 800);
+    }
 }
 
-function createSoundcloudVideo() {
-    var backgroundDoc = $(chrome.extension.getBackgroundPage().document);
-    soundcloudVideo = backgroundDoc.find('#soundcloudPlayer');
+function createSoundcloudVideo(songUrl) {
     SC.initialize({
         client_id: '68b135c934141190c88c1fb340c4c10a'
     });
@@ -157,7 +156,9 @@ function createSoundcloudVideo() {
                 method: 'get',
                 url: track.stream_url + "s?client_id=68b135c934141190c88c1fb340c4c10a"
             }).done(function (response) {
+                console.log('soundcloudVid', soundcloudVideo);
                 soundcloudVideo.attr('src', response.http_mp3_128_url);
+                soundcloudVideo[0].play();
                 serviceMethods.Soundcloud = {
                     play: soundcloudVideo[0].play,
                     pause: soundcloudVideo[0].pause,
@@ -168,7 +169,11 @@ function createSoundcloudVideo() {
             console.error(arguments);
         });
     };
-    var songUrl = 'https://soundcloud.com/axelsundell/50-cent-in-da-club';
+    // var songUrl = 'https://soundcloud.com/axelsundell/50-cent-in-da-club';
     SC.resolve(songUrl).then(streamTrack);
 }
 
+function stopAllVideos() {
+    if (youtubePlayer) youtubePlayer.stopVideo();
+    if (soundcloudVideo[0]) soundcloudVideo[0].pause(); // Video tags have no stop method;
+}

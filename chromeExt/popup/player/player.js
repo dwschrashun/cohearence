@@ -12,47 +12,46 @@ app.config(function($stateProvider) {
 });
 
 app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUser, $state) {
-	$scope.currentService = 'Soundcloud';
+	$scope.currentService = null;
 
 	$scope.loadSong = function(song){
 		$scope.currentSong = song;
 		$scope.currentService = song.source.domain;
+		var request = {message: "cue"};
 		if (song.source.domain === 'YouTube') {
-			var request = {message: "cue"};
-			request.id = PlayerFactory.getVideoId(song);
 			request.service = $scope.currentService;
-			console.log("cue message sending", request);
-			chrome.runtime.sendMessage(request, function (response) {
-	        	console.log('response from router:', response);
-	    	});
-
-			// var id = PlayerFactory.getVideoId(song);
-			// player.cueVideoById(id);
-			// console.log("player w new song", player);
-			// player.unMute();
-			// player.playVideo();
+			request.id = PlayerFactory.getVideoId(song);
+			console.log("youtube message sending", request);
 		}
+		if (song.source.domain === 'Soundcloud') {
+			request.service = $scope.currentService;
+			request.id = song.source.url;
+			console.log('loading Soundcloud song');
+		}
+		chrome.runtime.sendMessage(request, function (response) {
+        	console.log('response from router:', response);
+    	});
 	};
 
 	$scope.playVideo = function(){
 		var request = {message: "playerAction", action: "play", service: $scope.currentService};
-		console.log("play message sending", request);
+		
 		chrome.runtime.sendMessage(request, function (response) {
-	        console.log('response from router:', response);
+	        // console.log('response from router:', response);
 	    });
 	};
 
 	$scope.pauseVideo = function(){
 		var request = {message: "playerAction", action: "pause", service: $scope.currentService};
 		chrome.runtime.sendMessage(request, function (response) {
-	        console.log('response from router:', response);
+	        // console.log('response from router:', response);
 	    });
 	};
 
 	$scope.skipForward = function(){
 		var request = {message: "test", service: $scope.currentService};
 		chrome.runtime.sendMessage(request, function (response) {
-	        console.log('response from router:', response);
+	        // console.log('response from router:', response);
 	    });
 		player.seekTo(player.getCurrentTime() + 15);
 	};
@@ -60,25 +59,25 @@ app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUs
 	$scope.unMute = function () {
 		var request = {message: "unMute", service: $scope.currentService};
 		chrome.runtime.sendMessage(request, function (response) {
-	        console.log('response from router:', response);
+	        // console.log('response from router:', response);
 	    });
 	};
 
 	$scope.startOrStopFastForward = function(toggle) {
-		console.log('perform on fast forward ', toggle);
+		// console.log('perform on fast forward ', toggle);
 		var ff = () => player.seekTo(player.getCurrentTime() + 1);
 		if (toggle === 'stop') clearInterval(fastForward);
 		else fastForward = setInterval(ff, 100);
 	};
 
 	$scope.startOrStopRewind = function(toggle) {
-		console.log('perform on fast forward ', toggle);
+		// console.log('perform on fast forward ', toggle);
 		var ff = () => player.seekTo(player.getCurrentTime() - 1);
 		if (toggle === 'stop') clearInterval(fastForward);
 		else fastForward = setInterval(ff, 100);
 	};
 
-	console.log("theUser:", theUser);
+	// console.log("theUser:", theUser);
 	$scope.musicLibrary = theUser.musicLibrary;
 	$scope.logout = function() {
 		LoginFactory.logout()
@@ -94,7 +93,7 @@ app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUs
 		var cl = document.getElementsByTagName("iframe")[0];
 		cl.src = "http://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=" + id + "/transparent=true/";
 		var play = document.getElementById('big_play_icon');
-		console.log(play);
+		// console.log(play);
 	};
 
 	$scope.pause = function() {
