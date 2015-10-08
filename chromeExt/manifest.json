@@ -17,9 +17,6 @@
         "identity",
         "https://ajax.googleapis.com/",
         "http://localhost:1337/",
-        "https://www.google.com/accounts/OAuthGetRequestToken",
-        "https://www.google.com/accounts/OAuthAuthorizeToken",
-        "https://www.google.com/accounts/OAuthGetAccessToken",
         "cookies",
         "<all_urls>",
         "storage"
