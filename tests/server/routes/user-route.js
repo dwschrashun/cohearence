@@ -37,7 +37,7 @@ describe('User route', function () {
         {
           title: 'Stairway to Heaven',
           artist: 'Led Zeppelin',
-		  echoNestId: 'SODFHPG12B0B80B0A4'
+		      echoNestId: 'SODFHPG12B0B80B0A4'
 	  },
 		{
 			title: 'Clint Eastwood', //this song will be in our library but not the users

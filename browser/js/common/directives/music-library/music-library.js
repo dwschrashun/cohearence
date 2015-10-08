@@ -7,5 +7,5 @@ app.directive('musicLibrary', function(){
 });
 
 app.controller('MusicLibraryCtrl', function($scope) {
-	console.log('im a controller');
+
 });
