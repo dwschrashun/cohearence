@@ -1,3 +1,5 @@
+console.log("TEST YOUTUBE LOADED");
+
 function checkCategory() {
     var category = $('.watch-info-tag-list').filter(function () {
         var $this = $(this);
@@ -48,6 +50,7 @@ function sendSong() {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log("message received in YT content script", request);
     if (request.message === 'newSongLoaded') {
         setTimeout(function () {
             checkCategory();
