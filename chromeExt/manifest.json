@@ -25,6 +25,9 @@
         "storage"
     ],
     "content_scripts": [{
+        "matches" : ["http://*/*", "https://*/*"],
+        "js": ["contentScripts/contentRouter.js"]
+    }, {
         "matches": ["https://www.youtube.com/watch?v=*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/testYoutube.js"]
     }, {
