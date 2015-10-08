@@ -9,6 +9,7 @@ function cueSong(request) {
     createBandcampVideo(request.id);
   }
 }
+
 function stopAllVideos() {
     if (youtubePlayer) youtubePlayer.stopVideo();
     if (soundcloudVideo[0]) soundcloudVideo[0].pause();
