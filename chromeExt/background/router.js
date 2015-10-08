@@ -168,7 +168,7 @@ function createSoundcloudVideo() {
             console.error(arguments);
         });
     };
-    var songUrl = 'https://soundcloud.com/travisscott-2/travis-scott-antidote';
+    var songUrl = 'https://soundcloud.com/axelsundell/50-cent-in-da-club';
     SC.resolve(songUrl).then(streamTrack);
 }
 

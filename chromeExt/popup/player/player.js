@@ -20,6 +20,7 @@ app.controller('playerCtrl', function($scope, LoginFactory, PlayerFactory, theUs
 		if (song.source.domain === 'YouTube') {
 			var request = {message: "cue"};
 			request.id = PlayerFactory.getVideoId(song);
+			request.service = $scope.currentService;
 			console.log("cue message sending", request);
 			chrome.runtime.sendMessage(request, function (response) {
 	        	console.log('response from router:', response);
