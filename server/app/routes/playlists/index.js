@@ -10,7 +10,7 @@ router.post('/', function(req,res,next){
 	console.log("user: ",req.user);
 	Playlist.create({user: req.user, name: req.body.name})
 	.then(function(playlist){
-		console.log(playlist);
+		console.log("in router",playlist);
 		res.json(playlist);
 	}).then(null, console.log);
 });
