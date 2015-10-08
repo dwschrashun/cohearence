@@ -53,6 +53,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log("message received in YT content script", request);
     if (request.message === 'newSongLoaded') {
         setTimeout(function () {
+            console.log("timeout set to check category");
             checkCategory();
             sendResponse({response: "request received, will crawl dom"});
         }, 1000);

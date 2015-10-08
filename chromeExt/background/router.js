@@ -129,9 +129,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             //console.log("Tab updated: ", tab.url, ' sending message', timeSinceLastLoad, 'tabId', tabId);
             console.log("crawling DOM due to low time diff / first load:", tab);
             quickDraw = true;
-            chrome.tabs.sendMessage(tabId, {
-                message: "newSongLoaded"
-            }, {}, function (response) {
+            chrome.tabs.sendMessage(tabId, {message: "newSongLoaded"}, {}, function (response) {
                 console.log("response in newSongLoaded emitter", response);
             });
             setTimeout(function () {
@@ -142,7 +140,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             lastLoadTime = newLoadTime;
             setTimeout(function () {
                 if (quickDraw) return;
-                else console.log("crawling DOM due to only one request", tab);
+                else {
+                    console.log("crawling DOM due to only one request", tab);
+                    chrome.tabs.sendMessage(tabId, {message: "newSongLoaded"}, {}, function (response) {
+                        console.log("response in newSongLoaded emitter", response);
+                    });
+                }
             }, 1000);
 
         }
