@@ -23,5 +23,9 @@ $background-color: #222222;
 			color: $background-color;
 		}
 		margin: 20px;
+		.btn, input {
+			margin-bottom: 5px;
+		}
 	}
 }
+
