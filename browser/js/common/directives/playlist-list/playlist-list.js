@@ -1,4 +1,4 @@
-app.directive('playlistList', function(PlaylistFactory) {
+app.directive('playlistList', function(PlaylistFactory, $state) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/common/directives/playlist-list/playlist-list.html',

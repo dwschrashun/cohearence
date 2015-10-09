@@ -10,8 +10,9 @@
 		</form>
 	</div>
 	<ul>
-		<li>
-			<a ui-sref="playlist({playlistID: playlist._id})" droppable id = "{{playlist._id}}" ng-repeat="playlist in playlists | filter:searchText:false">{{ playlist.name }}</a>
+		<li ng-repeat="playlist in playlists | filter:searchText:false">
+			<a ui-sref="playlist({playlistID: playlist._id})" droppable id = "{{playlist._id}}">{{ playlist.name }}</a>
+			<button class="btn btn-add" ng-click="removePlaylist(playlist._id)">x</button>
 		</li>
 	</ul>
 </div>

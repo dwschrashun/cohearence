@@ -26,4 +26,11 @@ app.controller('HomeController', function($scope, AuthService, $state, theUser, 
 			$scope.playlistView = false;
 		});
 	}
+
+	$scope.removePlaylist = function(id){
+		PlaylistFactory.deletePlaylist(id)
+		.then(function(){
+			$state.go('home');
+		});
+	};
 });
