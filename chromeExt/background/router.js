@@ -48,9 +48,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 
   if (request.message === "ytCall") {
-    var url = getYouTubeUrl(request.title, request.artist);
-    sendResponse({
-      response: url
+   // getYouTubeUrl(request.title, request.artist);
+   //  console.log("yt id in router:", id);
+   //  sendResponse({response: id});
+    var q = `${request.artist} - ${request.title}`;
+    var request = gapi.client.youtube.search.list({
+      q: q,
+      part: 'snippet',
+      type: 'video',
+      videoCategoryId: "Music"
+    });
+    request.execute(function(response) {
+      var id = response.result.items[0].id.videoId;
+      console.log("video id to send to router", id);
+      sendResponse(id);
     });
   }
 

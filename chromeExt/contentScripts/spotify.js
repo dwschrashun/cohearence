@@ -12,9 +12,12 @@ function onPlayerChange() {
                         title: songObj.title,
                         message: "ytCall"
                     };
+                    console.log("sending songobj to router");
                     chrome.runtime.sendMessage(ytCallObj, function (response1) {
+                        console.log("response w/ populated yt url:", response1);
+                        songObj.source.url = `https://www.youtube.com/watch?v=${response1}`;
     	                chrome.runtime.sendMessage(songObj, function (response2) {
-    	                    console.log('response from router:', response);
+    	                    console.log('response from router:', response2);
     	                });
                     });
                 }

@@ -69,13 +69,6 @@ function checkEchoNest(artist, title){
 	});
 }
 
-function getSpotifyFakeUrl (title, artist) {
-	//get youtube URL from youtube API using http
-	// http.get("https://www.googleapis.com/youtube/v3/search");
-
-	// videoCategoryid?
-}
-
 function createSongFromReqBody(reqBody){
 	var title = reqBody.title || "unknown";
 	var artist = reqBody.artist || "unknown";
@@ -88,15 +81,12 @@ function createSongFromReqBody(reqBody){
 	};
 
 	if (source.domain === "Spotify") {
-		getSpotifyFakeUrl(reqBody.title, reqBody.artist).then(function (url){
-			source.fakeUrl = url;
-			var newSongObj = {
-				title: title,
-				artist: artist,
-				source: source
-			};
-			return newSongObj;
-		});
+		var newSongObj = {
+			title: title,
+			artist: artist,
+			source: source
+		};
+		return newSongObj;
 	}
 	else {
 		var newSongObj = {
