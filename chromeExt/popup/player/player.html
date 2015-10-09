@@ -1,16 +1,21 @@
 <navbar-popup></navbar-popup>
 <div id="push">
 </div>
-<music-library></music-library>
+<div id="music-library-wrap">
+    <music-library></music-library>
+</div>
+<hr>
 <div class="container" id="popup-container">
     <div id="player" class="col-md-12">
         <div class="col-md-8">
             <div class="buttons">
-                <i class="fa fa-2x fa-step-backward" ng-click="skipBackward()"></i>
-                <i class="fa fa-2x fa-play-circle-o" ng-click="playVideo()"></i>
-                <i class="fa fa-2x fa-pause" ng-click="pauseVideo()"></i>
-                <i class="fa fa-2x fa-step-forward" ng-click="skipForward()"></i>
+                <i class="fa fa-lg fa-step-backward" ng-click="skipBackward()"></i>
+                <i ng-if="!currentService" class="fa fa-2x fa-play-circle-o" ng-click="playVideo()"></i>
+                <i ng-if="currentService" class="fa fa-lg fa-pause" ng-click="pauseVideo()"></i>
+                <i class="fa fa-lg fa-step-forward" ng-click="skipForward()"></i>
             </div>
+        </div>
+        <div class="col-md-4">
         </div>
     </div>
 </div>

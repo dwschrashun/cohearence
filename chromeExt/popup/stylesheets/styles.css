@@ -18,7 +18,7 @@
 }
 
 #nav-container {
-	background-color:  #222222; 
+	background-color:  #222222;
 	color: rgba(60, 178, 208, 1);
 	height: 40px;
 }
@@ -31,7 +31,15 @@
     text-align: center;
 }
 
-
+#music-library-wrap {
+	height: 180px;
+}
+#header-border {
+	border-bottom: 1px solid lightgray;
+}
+i {
+	margin-left: 5px;
+}
 /*#music-library {
     font-size: .9em;
 
@@ -53,7 +61,7 @@
 }
 
 .songColumn {
-	overflow-x: hidden; 
+	overflow-x: hidden;
 }
 
 .popup-nav {
@@ -78,3 +86,12 @@
 	font-size: 30px;
 }
 
+hr {
+	margin-top: 5px;
+  border: 0;
+  height: 1px;
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+}
