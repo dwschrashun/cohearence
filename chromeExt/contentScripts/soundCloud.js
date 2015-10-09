@@ -2,26 +2,30 @@ function getSongInfo() {
     var songInfoArr = $(".playbackSoundBadge__titleContextContainer").children();
     var songInfo = songInfoArr[1];
 	console.log(songInfoArr.first().text());
-    var channelName = songInfoArr.first().text().split("Playing from ")[1].split("\'")[0];
+    // var channelName = songInfoArr.first().text().split("Playing from ")[1].split("\'")[0];
     var duration = $(".playbackTimeline__duration").children()[1].innerText;
     var artistTitle = songInfo.title.split(/[-–]/);
 
 	if (artistTitle.length === 1) {
 		title = artistTitle[0].trim();
-		artist = channelName || "unknown artist";
+		artist = "unknown artist";
 	} else if (artistTitle.length === 0){
-		artist = channelName || "unknown artist";
+		artist = "unknown artist";
 		title = "unknown title";
 	} else {
-    	artist = artistTitle[0].trim() || channelName || "unknown artist";
+    	artist = artistTitle[0].trim() || "unknown artist";
     	title = artistTitle[1].trim() || "unknown title";
 	}
 
     var songObj = {
         action: 'scrobble',
         message: "Soundcloud",
-        url: songInfo.href,
-        videoTitle: songInfo.title,
+		source: {
+        	url: songInfo.href,
+        	videoTitle: songInfo.title,
+			domain: "Soundcloud",
+			bandcampId: null
+		},
         category: 'Music',
         duration: duration,
         title: title,

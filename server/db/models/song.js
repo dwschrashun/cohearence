@@ -23,6 +23,9 @@ var schema = new mongoose.Schema({
 		},
 		bandcampId: {
 			type: String
+		},
+		spotifyUrl: {
+			type: String
 		}
 	},
 	echoNestId: {
