@@ -1,4 +1,3 @@
-
 //this function is not getting called, since i can't figure out how to deal with the youtube client promise system
 function getYouTubeUrl (title, artist) {
 	console.log("getting TY Url", gapi.client.youtube);
