@@ -9,21 +9,21 @@ app.config(function ($stateProvider) {
 				.then(function(user){
 					return user;
 				});
-        	},
-			thePlaylists: function(PlaylistFactory) {
-				return PlaylistFactory.getPlaylists();
 			}
-        }
-    });
+		}
+	});
 });
 
-app.controller('HomeController', function($scope, AuthService, $state, theUser, thePlaylists, PlaylistFactory) {
+app.controller('HomeController', function($scope, AuthService, $state, theUser, PlaylistFactory) {
 	if(!theUser) $state.go('landing');
 	else {
-		$scope.theUser = theUser;
-		$scope.playlists = thePlaylists;
-		$scope.view = $scope.theUser.musicLibrary;
-		$scope.header = "My Library";
-		$scope.playlistView = false;
+		PlaylistFactory.getPlaylists()
+		.then(function(playlists){
+			$scope.theUser = theUser;
+			$scope.playlists = playlists;
+			$scope.view = $scope.theUser.musicLibrary;
+			$scope.header = "My Library";
+			$scope.playlistView = false;
+		});
 	}
 });
