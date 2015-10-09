@@ -72,7 +72,6 @@
 
             // Optionally, if true is given as the fromServer parameter,
             // then this cached value will not be used.
-
             if (this.isAuthenticated() && fromServer !== true) {
                 return $q.when(Session.user);
             }

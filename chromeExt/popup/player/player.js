@@ -103,7 +103,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         else fastForward = setInterval(ff, 100);
     };
 
-    // console.log("theUser:", theUser);
     $scope.musicLibrary = theUser.musicLibrary;
     $scope.logout = function () {
         LoginFactory.logout()

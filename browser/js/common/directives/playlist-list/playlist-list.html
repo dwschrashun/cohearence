@@ -4,12 +4,14 @@
 			<input class="form-control" placeholder="Search Playlists" ng-model="searchText">
 		</div>
 		<button ng-hide="namingPlaylist" ng-click="namePlaylist()" class="btn btn-primary btn-add">+</button>
-		<input class="form-control" placeholder="Enter a unique name" ng-show="namingPlaylist" ng-model="playlistName"></input>
-		<button class="btn btn-primary btn-add" ng-show="namingPlaylist" ng-click="makePlaylist()">✓</button>
+		<form name="playlistForm" ng-submit=" playlistForm.name.$valid && makePlaylist()">
+			<input name="name" class="form-control" placeholder="Playlist Name" ng-show="namingPlaylist" ng-model="playlistName" required ng-minlength="1"></input>
+			<button type="submit" class="btn btn-primary btn-add" ng-show="namingPlaylist && playlistForm.name.$valid">✓</button>
+		</form>
 	</div>
 	<ul>
 		<li>
-			<a ui-sref="home({playlistID: playlist._id})" droppable id = "{{playlist._id}}" ng-repeat="playlist in playlists | filter:searchText:false">{{ playlist.name }}</a>
+			<a ui-sref="playlist({playlistID: playlist._id})" droppable id = "{{playlist._id}}" ng-repeat="playlist in playlists | filter:searchText:false">{{ playlist.name }}</a>
 		</li>
 	</ul>
 </div>

@@ -1,4 +1,3 @@
-
 <div id="landing">
 	<div id="mask">
 		<div class="panel landing-panel">
@@ -11,10 +10,13 @@
 				<div class="description">
 					<p>Cohearance is dope. Sign up.</p>
 				</div>
-				<md-button class="md-raised md-primary landing-button" ui-sref="signup">Signup</md-button>
-				<md-button class="md-raised md-primary landing-button" ui-sref="login">Login</md-button>
+				<md-button class="md-raised md-primary landing-button" ng-click="toggleSignup()">Signup</md-button>
+				<md-button class="md-raised md-primary landing-button" ng-click="toggleLogin()">Login</md-button>
+				<div id="forms" ng-show="loggingIn || signingUp">
+					<login-form ng-show="loggingIn"></login-form>
+					<signup-form ng-show="signingUp"></signup-form>
+				</div>
 			</div>
 		</div>
 	</div>
-
 </div>

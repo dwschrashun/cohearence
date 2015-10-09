@@ -21,7 +21,6 @@ app.controller('SignupCtrl', function ($scope, AuthService, $state) {
        .catch(function () {
            $scope.error = 'Email is taken!';
        });
-
    };
 
 });

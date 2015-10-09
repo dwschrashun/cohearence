@@ -9,28 +9,36 @@ app.factory("LoginFactory", function ($http) {
 
     function onSuccessfulLogin(response) {
       var data = response.data;
-      console.log("onSuccessfulLogin res data:", response.data);
-      // Session.create(data.id, data.user);
-      // $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+      console.log('onsuccessful', data.user);
+      setInLocalStorage(data.user);
       return data.user;
     }
 
     function isLoggedIn() {
-      var user = new Promise(function(resolve) {
-        chrome.storage.sync.get('user', function(user) {
-            if (user.user) return resolve(user.user);
-            else resolve();
-        })
-      })
-      return user;
+      var user = getFromLocalStorage();
+      console.log('user', user);
+      return getFromLocalStorage();
     }
 
     function logout() {
-      return new Promise(function(resolve) {
-        chrome.storage.sync.remove('user', function() {
-          resolve()
-        });
-      })
+      return $http.get('http://localhost:1337/logout')
+      .then(removeFromLocalStorage)
+    }
+
+    function setInLocalStorage(user) {
+      var stringifiedUser = JSON.stringify(user);
+      console.log('STRINGIFIED POPUP USER ABOUT TO BE SET ON LOGIN', stringifiedUser);
+      localStorage.setItem("cohearenceUser", stringifiedUser);
+    }
+
+    function getFromLocalStorage() {
+      var stringifiedUser = localStorage.getItem("cohearenceUser");
+      console.log('GETTING FROM LOCAL STORAGE IN POPUP', JSON.parse(stringifiedUser));
+      return JSON.parse(stringifiedUser)
+    }
+
+    function removeFromLocalStorage() {
+      localStorage.removeItem("cohearenceUser");
     }
 
     return {
