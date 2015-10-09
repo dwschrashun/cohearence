@@ -30,12 +30,9 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
     $scope.error = null;
     $scope.sendLogin = function (loginInfo) {
         $scope.error = null;
-        LoginFactory.login(loginInfo).then(function (user) {
-            chrome.storage.sync.set({user: user}, function(user) {
-                chrome.storage.sync.get("user", function(user) {
-                    if (user.user) $state.go('player');
-                });
-            });
+        LoginFactory.login(loginInfo)
+        .then(function (user) {
+            if (user) $state.go('player');
         }).catch(function () {
             $scope.error = 'Invalid login credentials.';
         });
