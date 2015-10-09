@@ -5,18 +5,30 @@
    </div>
  </div>
 </nav> -->
-<nav role="navigation" class="popup-nav popup-heading">
+<!-- <nav role="navigation" class="popup-nav popup-heading">
 	<div class="container" id="nav-container">
 		<div class="row">
 			<div class="col-xs-4">
 				<span id="popup-logo">λ</span>
 			</div>
 			<div class="col-xs-8">
-				<ul>
-					<li>Playlists</li>
-					<li>Library</li>
+				<ul class="navbar-ul">
+					<li class="navbar-li">Playlists</li>
+					<li class="navbar-li">Library</li>
 				</ul>
 			</div>
 		</div>
 	</div>
+</nav> -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><span id="lambda">λ</span></a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Library</a></li>
+            <li><a href="#about">Playlists</a></li>
+            <li ng-click="logout()"><a href="../navbar-static-top/" >Login</a></li>
+        </ul>
+    </div>
 </nav>

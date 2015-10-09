@@ -1,22 +1,16 @@
 <navbar-popup></navbar-popup>
+<div id="push">
+</div>
+<music-library></music-library>
 <div class="container" id="popup-container">
     <div id="player" class="col-md-12">
-        <div id="music-library">
-            <ul>
-                <li class="popup-song" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
-                    <span ng-if="item.song.youtube.url">{{item.song.youtube.videoTitle}}</span>
-                    <span ng-if="!item.song.youtube.url">{{item.song.artist}} - {{item.song.title}}</span>
-                </li>
-            </ul>
-        </div>
         <div class="col-md-8">
             <div class="buttons">
-                <i class="fa fa-2x fa-backward" ng-click="skipBackward()"></i>
-                <i class="fa fa-2x fa-play" ng-click="playVideo()"></i>
+                <i class="fa fa-2x fa-step-backward" ng-click="skipBackward()"></i>
+                <i class="fa fa-2x fa-play-circle-o" ng-click="playVideo()"></i>
                 <i class="fa fa-2x fa-pause" ng-click="pauseVideo()"></i>
-                <i class="fa fa-2x fa-forward" ng-click="skipForward()"></i>
+                <i class="fa fa-2x fa-step-forward" ng-click="skipForward()"></i>
             </div>
         </div>
     </div>
-    <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
 </div>
