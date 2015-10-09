@@ -19,6 +19,8 @@
         loginSuccess: 'auth-login-success',
         loginFailed: 'auth-login-failed',
         logoutSuccess: 'auth-logout-success',
+		signupSuccess: 'auth-signup-success',
+		signupFailed: 'auth-signup-failed',
         sessionTimeout: 'auth-session-timeout',
         notAuthenticated: 'auth-not-authenticated',
         notAuthorized: 'auth-not-authorized'
@@ -34,7 +36,7 @@
         return {
             responseError: function (response) {
                 $rootScope.$broadcast(statusDict[response.status], response);
-                return $q.reject(response)
+                return $q.reject(response);
             }
         };
     });
@@ -56,6 +58,13 @@
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             return data.user;
         }
+
+		function onSuccessfulSignup(response) {
+			var data = response.data;
+			Session.create(data.id, data.user);
+			$rootScope.$broadcast(AUTH_EVENTS.signupSuccess);
+			return data.user;
+		}
 
         // Uses the session factory to see if an
         // authenticated user is currently registered.
@@ -99,6 +108,13 @@
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             });
         };
+
+		this.signup = function (credentials) {
+			console.log('in authservice');
+		// don't catch this to get an error for signup
+		return $http.post('/signup', credentials)
+			.then(onSuccessfulSignup);
+		};
 
     });
 

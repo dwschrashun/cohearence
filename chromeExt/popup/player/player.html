@@ -29,6 +29,27 @@
     </div>
     
     <!-- <md-button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')"> >> </md-button>
+=======
+	<div class="panel-heading">
+		<span class="panel-title">λ</span>
+	</div>
+	<div class="panel-body">
+		<div id="music-library">
+			<ul>
+				<li class="popup-song" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
+					<span ng-if="item.song.youtube.url">{{item.song.youtube.videoTitle}}</span>
+					<span ng-if="!item.song.youtube.url">{{item.song.artist}} - {{item.song.title}}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<i class="fa fa-play" ng-click="playVideo()">Play</i>
+	<i class="fa fa-pause" ng-click="pauseVideo()">Pause</i>
+	<i class="fa fa-forward" ng-click="skipForward()">Skip Forward</i>
+	<!-- <md-button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')"> >> </md-button>
+>>>>>>> master
 	<md-button ng-mousedown="startOrStopRewind('start')" ng-mouseup="startOrStopRewind('stop')"> << </md-button> -->
 </div>
 <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+
