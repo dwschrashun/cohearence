@@ -54,13 +54,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     });
   }
   if (request.message === 'playerAction') {
+      console.log("REQUEST in router:", request);
       var service = serviceMethods[request.service];
-      console.log(request, 'service', service);
+      console.log("SERVICE in router:", service);
       var self = service.reference;
       var action = service[request.action];
       action.call(self);
   }
   if (request.message === "cue") {
+    console.log("REQUEST on cue:", request);
       stopAllVideos();
       cueSong(request);
   }

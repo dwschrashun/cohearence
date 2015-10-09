@@ -22,13 +22,18 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
 
     $scope.loadSong = function (song) {
         $scope.currentSong = song;
-        $scope.currentService = song.source.domain;
+        if (song.source.domain === "Spotify") {
+        	$scope.currentService = "YouTube";
+        }
+        else $scope.currentService = song.source.domain;
         var request = {
             message: "cue",
 			service: $scope.currentService
         };
-        if (song.source.domain === 'YouTube') {
+        if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
+            console.log("request in loadsong:", request, song);
             request.id = PlayerFactory.getVideoId(song);
+            request.service = "YouTube";
             console.log("youtube message sending", request);
         }
         if (song.source.domain === 'Soundcloud') {
