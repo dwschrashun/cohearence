@@ -59,8 +59,8 @@ function handleAuthResult(authResult) {
 //how do we store our api keys securely on the extension?????
 function youTubeInit () {
 	console.log("initializing YT");
-	var apiKey = "20757556090-hk3pvocfvd4ev4jvodg55k11454647k9.apps.googleusercontent.com";
-	gapi.client.setApiKey(apiKey);
+	// var apiKey = "20757556090-hk3pvocfvd4ev4jvodg55k11454647k9.apps.googleusercontent.com";
+	// gapi.client.setApiKey(apiKey);
 	gapi.auth.init(function() {
 		console.log("init callback");
 		window.setTimeout(checkAuth, 1);
