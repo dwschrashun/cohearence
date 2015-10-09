@@ -1,4 +1,35 @@
 <div class="panel">
+    <div class="panel-heading">
+        <span class="panel-title">λ</span>
+    </div>
+    <div class="panel-body">
+        <div id="music-library">
+            <ul>
+                <li ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
+                    <span ng-if="item.song.youtube.url">{{item.song.youtube.videoTitle}}</span>
+                    <span ng-if="!item.song.youtube.url">{{item.song.artist}} - {{item.song.title}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-3 controls">
+            <md-button class="md-primary playerbuttons" ng-click="skipBackward()"><i class="fa fa-backward fa-2x"></i></md-button>
+        </div>
+        <div class="col-xs-3 controls">
+            <md-button class="md-primary playerbuttons" ng-click="playVideo()"><i class="fa fa-play fa-2x"></i></md-button>
+        </div>
+        <div class="col-xs-3 controls">
+            <md-button class="md-primary playerbuttons" ng-click="pauseVideo()"><i class="fa fa-pause fa-2x"></i></md-button>
+        </div>
+        <div class="col-xs-3 controls">
+            <md-button class="md-primary playerbuttons" ng-click="skipForward()"><i class="fa fa-forward fa-2x"></i></md-button>
+        </div>
+    </div>
+    
+    <!-- <md-button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')"> >> </md-button>
+=======
 	<div class="panel-heading">
 		<span class="panel-title">λ</span>
 	</div>
@@ -17,12 +48,8 @@
 	<i class="fa fa-pause" ng-click="pauseVideo()">Pause</i>
 	<i class="fa fa-forward" ng-click="skipForward()">Skip Forward</i>
 	<!-- <md-button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')"> >> </md-button>
+>>>>>>> master
 	<md-button ng-mousedown="startOrStopRewind('start')" ng-mouseup="startOrStopRewind('stop')"> << </md-button> -->
-
-	<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
 </div>
-<i class="fa fa-backward"></i>
-<i class="fa fa-play"></i>
-<i class="fa fa-pause"></i>
-<i class="fa fa-stop"></i>
-<i class="fa fa-forward"></i>
+<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+

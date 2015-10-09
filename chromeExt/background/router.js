@@ -55,6 +55,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   if (request.message === 'playerAction') {
       var service = serviceMethods[request.service];
+      console.log(request, 'service', service);
       var self = service.reference;
       var action = service[request.action];
       action.call(self);
@@ -63,7 +64,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       stopAllVideos();
       cueSong(request);
   }
-
+  if (request === "whoIsPlaying") {
+    var playerStates = getPlayerState();
+    sendResponse({
+      response: playerStates
+    });
+  }
   return true;
 });
 
