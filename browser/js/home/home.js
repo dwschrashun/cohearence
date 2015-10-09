@@ -7,28 +7,23 @@ app.config(function ($stateProvider) {
         	theUser: function(AuthService) {
 				return AuthService.getLoggedInUser()
 				.then(function(user){
-					console.log('user: ', user);
 					return user;
 				});
-        	}
-			// thePlaylists: function(PlaylistFactory) {
-			// 	console.log('in here');
-			// 	return PlaylistFactory.getPlaylists();
-			// }
+        	},
+			thePlaylists: function(PlaylistFactory) {
+				return PlaylistFactory.getPlaylists();
+			}
         }
     });
 });
 
-app.controller('HomeController', function($scope, AuthService, $state, theUser, PlaylistFactory) {
-	console.log('in the home controller');
+app.controller('HomeController', function($scope, AuthService, $state, theUser, thePlaylists, PlaylistFactory) {
 	if(!theUser) $state.go('landing');
 	else {
-		console.log(theUser);
 		$scope.theUser = theUser;
-		// $scope.playlists = thePlaylists;
+		$scope.playlists = thePlaylists;
 		$scope.view = $scope.theUser.musicLibrary;
 		$scope.header = "My Library";
 		$scope.playlistView = false;
 	}
-	console.log("VIEEWW", $scope.view);
 });

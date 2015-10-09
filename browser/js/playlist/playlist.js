@@ -31,8 +31,5 @@ app.controller('PlaylistController', function($scope, AuthService, $state, theUs
 		$scope.view = thePlaylist;
 		$scope.header = $scope.view.name;
 		$scope.playlistView = true;
-		//console.log("ID", $stateParams.playlistID);
-		//console.log("playlist:", thePlaylist);
 	}
-	console.log("VIEEWW", $scope.view);
 });
