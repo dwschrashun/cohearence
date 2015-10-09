@@ -58,4 +58,24 @@ module.exports = function (app) {
 
     });
 
+	app.post('/signup', function(req, res, next) {
+	User.create(req.body)
+		.then(function(user) {
+			// req.logIn will establish our session.
+			req.logIn(user, function(loginErr) {
+				if (loginErr) return next(loginErr);
+				User.populate(user, 'musicLibrary.song')
+				.then(function(popUser){
+                    console.log('POPUSER', popUser);
+	                // We respond with a response object that has user with _id and email.
+					res.status(201).send({
+						user: _.omit(popUser.toJSON(), ['password', 'salt']),
+	                });
+				}).then(null, next);
+			});
+		})
+		.then(null, function(err) {
+			res.status(401).send(err);
+		});
+	});
 };
