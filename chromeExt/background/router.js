@@ -47,6 +47,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       cueSong(request);
   }
 
+  if (request.message === "ytCall") {
+    var url = getYouTubeUrl(request.title, request.artist);
+    sendResponse({
+      response: url
+    });
+  }
+
   return true;
 });
 

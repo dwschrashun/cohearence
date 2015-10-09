@@ -83,7 +83,8 @@ function createSongFromReqBody(reqBody){
 		domain: null,
 		url: null,
 		videoTitle: null,
-		bandcampId: null
+		bandcampId: null,
+		spotifyUrl: null
 	};
 
 	if (source.domain === "Spotify") {

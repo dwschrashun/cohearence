@@ -37,5 +37,11 @@
         "matches": ["https://bandcamp.com/*", "https://*.bandcamp.com/*", "http://*.bandcamp.com/*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/jquery-watch/jquery-watch.js", "thirdparty/lodash.js", "contentScripts/bandcamp.js"]
     }],
-    "content_security_policy": "script-src https://s.ytimg.com https://www.youtube.com/iframe_api; object-src 'self'"
+    "oauth2": {
+        "client_id": "20757556090-hk3pvocfvd4ev4jvodg55k11454647k9.apps.googleusercontent.com",
+        "scopes": [
+          "https://www.googleapis.com/auth/youtube"
+        ]
+    },
+    "content_security_policy": "script-src 'self' https://apis.google.com/ https://s.ytimg.com https://www.youtube.com/iframe_api; object-src 'self'"
 }

@@ -1,20 +1,28 @@
 function onPlayerChange() {
-    var player = $($("#app-player").contents().find("#track-name")[0]);
+    var player = $("#app-player").contents().find("#track-name");
     player.bind("DOMSubtreeModified", function () {
         counter++;
         if (counter == 2) {
             getSongInfo().then(function (songObj) {
                 counter = 0;
                 console.log("Populated Song Obj:", songObj);
-                if (songObj.source.url.indexOf('adclick') === -1) {
-	                chrome.runtime.sendMessage(songObj, function (response) {
-	                    console.log('response from router:', response);
-	                });
+                if (songObj.source.spotifyUrl.indexOf('adclick') === -1) {
+                    var ytCallObj = {
+                        artist: songObj.artist,
+                        title: songObj.title,
+                        message: "ytCall"
+                    };
+                    chrome.runtime.sendMessage(ytCallObj, function (response1) {
+    	                chrome.runtime.sendMessage(songObj, function (response2) {
+    	                    console.log('response from router:', response);
+    	                });
+                    });
                 }
             });
         }
     });
 }
+
 
 //timeout set in order to catch changes to artist name on DOM, which is fired after track name change
 function getSongInfo() {
@@ -26,7 +34,6 @@ function getSongInfo() {
     return new Promise(function (resolve, reject) {
             setTimeout(function () {
                 artist = appPlayer.find("#track-artist > a").text();
-                var videoTitle = artist + ' - ' + songTitle;
                 var songObj = {
                     action: 'scrobble',
                     message: "Spotify",
@@ -36,9 +43,10 @@ function getSongInfo() {
                     artist: artist,
                     source: {
                         domain: "Spotify",
-                        url: href,
                         videoTitle: null,
-                        bandcampID: null
+                        bandcampID: null,
+                        spotifyUrl: href,
+                        url: null,
                     }
                 };
                 return resolve(songObj);
