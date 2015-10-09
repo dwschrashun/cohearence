@@ -1,6 +1,7 @@
 function getSongInfo() {
     var songInfoArr = $(".playbackSoundBadge__titleContextContainer").children();
     var songInfo = songInfoArr[1];
+	console.log(songInfoArr.first().text());
     var channelName = songInfoArr.first().text().split("Playing from ")[1].split("\'")[0];
     var duration = $(".playbackTimeline__duration").children()[1].innerText;
     var artistTitle = songInfo.title.split(/[-–]/);
