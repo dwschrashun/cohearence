@@ -1,17 +1,19 @@
+
 #main {
     width: 400px;
     height: 400px;
     border-radius: 2px;
 }
 
-.panel-heading {
-    background-color: #222222;
-    color: rgba(60, 178, 208, 1);
+#popup-container {
+	position: absolute;
+	bottom: 0;
 }
 
-.panel-title {
-    margin-left: 1.2em;
-    font-size: 30px;
+.popup-heading {
+	background-color:  #222222;
+	color: rgba(60, 178, 208, 1);
+	height: 40px;
 }
 
 .playerbuttons {
@@ -33,3 +35,19 @@
 .popup-song {
     list-style-type: none;
 }
+
+#player i {
+	cursor: pointer;
+	color: rgba(60, 178, 208, 1);
+}
+
+.popup-nav li, ul {
+	display: inline;
+	list-style-type: none;
+	font-size: 25px;
+}
+
+#popup-logo {
+	font-size: 30px;
+}
+
