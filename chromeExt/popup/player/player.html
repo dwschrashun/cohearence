@@ -5,7 +5,7 @@
 	<div class="panel-body">
 		<div id="music-library">
 			<ul>
-				<li ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
+				<li class="popup-song" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
 					<span ng-if="item.song.youtube.url">{{item.song.youtube.videoTitle}}</span>
 					<span ng-if="!item.song.youtube.url">{{item.song.artist}} - {{item.song.title}}</span>
 				</li>
