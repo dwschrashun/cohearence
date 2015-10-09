@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Blueberry Scrobbler</title>
+    <script src="/thirdparty/jquery-2.1.4.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="/thirdparty/angular/angular.js"></script>
+    <script src="/thirdparty/angular-ui-router/release/angular-ui-router.js"></script>
+    <link rel="stylesheet" type="text/css" href="/popup/stylesheets/styles.css">
+    <link rel="stylesheet" type="text/css" href="/thirdparty/angular-material/angular-material.css">
+    <link rel="stylesheet" type="text/css" href="/thirdparty/bootstrap/css/bootstrap.min.css">
+    <script src="/thirdparty/angular-animate/angular-animate.js"></script>
+    <script src="/thirdparty/angular-aria/angular-aria.js"></script>
+    <script src="/thirdparty/angular-material/angular-material.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="/popup/app.js"></script>
+    <script src="/popup/login/login.factory.js"></script>
+    <script src="/popup/login/login.js"></script>
+    <script src="/popup/player/player.factory.js"></script>
+    <script src="/popup/player/player.js"></script>
+    <script src="/thirdparty/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body ng-app="ScrobblerPopUp" ng-csp="">
+    <div id="main" ui-view></div>
+</body>
+
+</html>
