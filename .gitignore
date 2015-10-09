@@ -5,3 +5,4 @@ public
 .DS_Store
 coverage
 chromeExt/thirdparty/**/**/**
+chromeExt/secrets.json

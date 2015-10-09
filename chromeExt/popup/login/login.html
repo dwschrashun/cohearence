@@ -1,0 +1,20 @@
+<form id="login-form" name="loginForm" ng-submit="sendLogin(login)">
+        <alert type="danger" ng-if="error">
+            <!-- {{ error }} -->
+        </alert>
+        <!-- <pre>{{ theUser | json }}</pre> -->
+        <md-input-container>
+            <label for="email">Email address</label>
+            <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Enter email">
+        </md-input-container>
+        <md-input-container>
+            <label for="login-password">Password</label>
+            <input type="password" ng-model="login.password" class="form-control" id="login-password" placeholder="Password">
+        </md-input-container>
+        <md-button class="md-raised md-primary" type="submit" class="btn btn-default">Submit</md-button>
+        <div class='oauth'>
+            <a href="/auth/facebook" class='btn-facebook btn' target="_self"><i class="fa fa-facebook-official fa-lg">Sign in with Facebook</i></a>
+            <a href="/auth/google" class='btn-google btn' target="_self"><i class="fa fa-google-plus fa-lg"> Sign in with Google +</i></a>
+            <a href="/auth/twitter" class='btn-twitter btn' target="_self"><i class="fa fa-twitter fa-lg"> Sign in with Twitter</i></a>
+        </div>
+    </form>

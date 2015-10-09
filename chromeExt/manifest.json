@@ -1,0 +1,38 @@
+{
+    "manifest_version": 2,
+    "name": "blueberry scrobbler",
+    "description": "Gets all your music",
+    "version": "0.4",
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup/index.html"
+    },
+    "background": {
+        "page": "background/background.html"
+    },
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "webNavigation",
+        "identity",
+        "https://ajax.googleapis.com/",
+        "http://localhost:1337/",
+        "cookies",
+        "<all_urls>",
+        "storage"
+    ],
+    "content_scripts": [{
+        "matches": ["https://www.youtube.com/*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/youtube.js"]
+    }, {
+        "matches": ["https://soundcloud.com/*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/soundCloud.js"]
+    }, {
+        "matches": ["https://play.spotify.com/*", "https://player.spotify.com/*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/spotify.js"]
+    }, {
+        "matches": ["https://bandcamp.com/*", "https://*.bandcamp.com/*", "http://*.bandcamp.com/*"],
+        "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/jquery-watch/jquery-watch.js", "thirdparty/lodash.js", "contentScripts/bandcamp.js"]
+    }],
+    "content_security_policy": "script-src 'self' https://apis.google.com/ https://s.ytimg.com https://www.youtube.com/iframe_api; object-src 'self'"
+}
