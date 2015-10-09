@@ -1,8 +1,6 @@
-<div class="panel">
-	<div class="panel-heading">
-		<span class="panel-title">λ</span>
-	</div>
-	<div class="panel-body">
+<navbar-popup></navbar-popup>
+<div class="container" id="popup-container">
+	<div id="player" class="col-md-12">
 		<div id="music-library">
 			<ul>
 				<li class="popup-song" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
@@ -11,18 +9,16 @@
 				</li>
 			</ul>
 		</div>
+		<!-- <div class="col-md-8"> -->
+		<div class="buttons">
+			<i class="fa fa-2x fa-backward" ng-click="skipBackward()"></i>
+			<i class="fa fa-2x fa-play" ng-click="playVideo()"></i>
+			<i class="fa fa-2x fa-pause" ng-click="pauseVideo()"></i>
+			<i class="fa fa-2x fa-forward" ng-click="skipForward()"></i>
+		</div>
+		<!-- </div> -->
+				<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+			<!-- <md-button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')"> >> </md-button>
+			<md-button ng-mousedown="startOrStopRewind('start')" ng-mouseup="startOrStopRewind('stop')"> << </md-button> -->
 	</div>
-
-	<i class="fa fa-play" ng-click="playVideo()">Play</i>
-	<i class="fa fa-pause" ng-click="pauseVideo()">Pause</i>
-	<i class="fa fa-forward" ng-click="skipForward()">Skip Forward</i>
-	<!-- <md-button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')"> >> </md-button>
-	<md-button ng-mousedown="startOrStopRewind('start')" ng-mouseup="startOrStopRewind('stop')"> << </md-button> -->
-
-	<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
 </div>
-<i class="fa fa-backward"></i>
-<i class="fa fa-play"></i>
-<i class="fa fa-pause"></i>
-<i class="fa fa-stop"></i>
-<i class="fa fa-forward"></i>
