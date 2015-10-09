@@ -35,13 +35,18 @@ function sendSong() {
     var songObj = {
         action: 'scrobble',
         message: "YouTube",
-        url: location.href,
-        videoTitle: titleAndArtistAndVidTitle[2],
+		source: {
+	        url: location.href,
+	        videoTitle: titleAndArtistAndVidTitle[2],
+			domain: "YouTube",
+			bandcampId: null
+		},
         category: 'Music',
         duration: $('.ytp-time-duration').text(),
         title: titleAndArtistAndVidTitle[0],
         artist: titleAndArtistAndVidTitle[1]
     };
+	console.log(songObj);
     chrome.runtime.sendMessage(songObj, function (response) {
         console.log('response from router:', response);
     });

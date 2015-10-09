@@ -57,7 +57,7 @@ function checkEchoNest(artist, title){
 		echo("song/search").get({artist: artist, title: title}, function(err, json){
 			if (err) console.log("ERROR: ",err);
 			else if (json.response.status.message === "Success" && json.response.songs.length > 0){
-				// console.log('Matches from echonest: ' , json.response.songs);
+				console.log('Matches from echonest: ' , json.response.songs);
 				var bestMatch = fuzzySearch(json.response.songs, artist, title);
 				console.log('best match: ', bestMatch);
 				return resolve(bestMatch);
@@ -105,8 +105,8 @@ router.put('/:userId/library', function(req, res, next){
 		if (match){
 			console.log("EN MATCH:", match);
 			req.echoNestId = match.id;
-			req.title = match.title;
-			req.artist = match.artist_name;
+			req.body.title = match.title;
+			req.body.artist = match.artist_name;
 		}
 		// console.log("song: ",match);
 		next();
@@ -116,25 +116,25 @@ router.put('/:userId/library', function(req, res, next){
 //#2 Search in our library
 router.put('/:userId/Library', function(req, res, next){
 	if (req.echoNestId){
-		// console.log('YES');
+		console.log('YES song on 119: ', req.title, req.artist);
 		Song.findOne({echoNestId: req.echoNestId})
 		.then(function(foundSong){
 			if (foundSong) {
-				// console.log("Found the song in our library, with echonest:",foundSong);
+				console.log("Found the song in our library, with echonest:",foundSong);
 				req.songToSave = foundSong;
 				next();
 			} else {
-				// console.log('need to create it ourselves 1');
+				console.log('need to create it ourselves 1');
 				req.songToSave = createSongFromReqBody(req.body);
 				req.songToSave.echoNestId = req.echoNestId;
 				req.new = true;
-				// console.log("Your newly created song object: ", req.songToSave);
+				console.log("Your newly created song object: ", req.songToSave);
 				next();
 			}
 		});
 	} else {
 		var url = req.body.source.url;
-		// console.log('NO');
+		console.log('NO');
 		Song.findOne({'source.url': url})
 		.then(function(foundSong){
 			if (foundSong) {
