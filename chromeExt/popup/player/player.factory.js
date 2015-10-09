@@ -9,7 +9,6 @@ app.factory("PlayerFactory", function($http) {
 		}
 		else if (songObj.soundCloud.url) console.log('fix this l8r');
 	};
-	
 	factory.setCurrentService = function (playerStates) {
         var playing = [];
         var playerStates = playerStates.response;
