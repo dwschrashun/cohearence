@@ -16,6 +16,7 @@ module.exports = function (app) {
     };
 
     var createNewUser = function (token, tokenSecret, profile) {
+		console.log(profile);
         return UserModel.create({
             twitter: {
                 id: profile.id,
