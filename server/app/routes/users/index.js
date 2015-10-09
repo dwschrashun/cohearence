@@ -229,7 +229,7 @@ router.param('userId', function (req, res, next, userId) {
 			next(err);
 		}
 		else {
-			// console.log("hit param", populated);
+			console.log("hit param", populated);
 			req.foundUser = populated;
 			next();
 		}
