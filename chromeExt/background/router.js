@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'scrobble') {
     sendSong(request);
     sendResponse({
-        response: "hey we got your song at the router"
+        response: "hey we got your song at the router from:" + request.message
     });
   }
   if (request.message === 'playerAction') {
@@ -100,6 +100,6 @@ function sendSong(songObj) {
     })
     .fail(function(error) {
       console.log(error);
-    })
+    });
   }
 }
