@@ -26,4 +26,12 @@ app.controller('HomeController', function($scope, AuthService, $state, theUser, 
 			$scope.playlistView = false;
 		});
 	}
+
+	$scope.removePlaylist = function(id){
+		PlaylistFactory.deletePlaylist(id)
+		.then(function(){
+			$scope.playlists.splice($scope.playlists.indexOf(id));
+			$state.go('home');
+		});
+	};
 });

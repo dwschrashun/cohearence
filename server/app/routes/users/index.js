@@ -72,6 +72,7 @@ function checkEchoNest(artist, title){
 function createSongFromReqBody(reqBody){
 	var title = reqBody.title || "unknown";
 	var artist = reqBody.artist || "unknown";
+	var duration = reqBody.duration || "";
 	var source = reqBody.source || {
 		domain: null,
 		url: null,
@@ -80,22 +81,24 @@ function createSongFromReqBody(reqBody){
 		spotifyUrl: null
 	};
 
-	if (source.domain === "Spotify") {
+	// if (source.domain === "Spotify") {
+	// 	var newSongObj = {
+	// 		title: title,
+	// 		artist: artist,
+	// 		duration: duration,
+	// 		source: source
+	// 	};
+	// 	return newSongObj;
+	// }
+	// else {
 		var newSongObj = {
 			title: title,
 			artist: artist,
+			duration: duration,
 			source: source
 		};
 		return newSongObj;
-	}
-	else {
-		var newSongObj = {
-			title: title,
-			artist: artist,
-			source: source
-		};
-		return newSongObj;
-	}
+	// }
 }
 //#1 Search in EchoNest
 router.put('/:userId/library', function(req, res, next){

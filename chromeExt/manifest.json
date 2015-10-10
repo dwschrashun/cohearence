@@ -17,7 +17,7 @@
         "identity",
         "https://ajax.googleapis.com/",
         "http://localhost:1337/",
-        "https://aqueous-gorge-7560.herokuapp.com/"
+        "https://aqueous-gorge-7560.herokuapp.com/",
         "cookies",
         "<all_urls>",
         "storage"

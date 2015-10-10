@@ -32,4 +32,15 @@ app.controller('PlaylistController', function($scope, AuthService, $state, theUs
 		$scope.header = $scope.view.name;
 		$scope.playlistView = true;
 	}
+
+	$scope.removePlaylist = function(id){
+		PlaylistFactory.deletePlaylist(id)
+		.then(function(){
+			$scope.playlists.splice($scope.playlists.indexOf(id));
+			console.log(thePlaylist);
+			if (thePlaylist._id === id) {
+				$state.go('home');
+			}
+		});
+	};
 });
