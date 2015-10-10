@@ -52,8 +52,8 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         if (song.source.domain === 'Bandcamp') {
             $scope.currentService = 'Bandcamp';
             request.service ='Bandcamp';
-            request.id = song.source.bandcampId;
-            // console.log('loading bandcamp song');
+            request.id = song.source.url;
+            console.log('loading bandcamp song', song, request);
         }
         chrome.runtime.sendMessage(request, function (response) {
             // console.log('response from router:', response);

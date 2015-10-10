@@ -13,7 +13,7 @@
 // }
 
 // function onAuthorized() {
-//   var url = 'http://localhost:1337';
+//   var url = environment.server;
 //   var request = {
 //     'method': 'GET',
 //     'parameters': {'alt': 'json'}
