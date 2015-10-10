@@ -1,6 +1,6 @@
 //this function is not getting called, since i can't figure out how to deal with the youtube client promise system
 function getYouTubeUrl (title, artist) {
-	console.log("getting TY Url", gapi.client.youtube);
+	// console.log("getting TY Url", gapi.client.youtube);
 	var q = `${artist} - ${title}`;
   	var request = gapi.client.youtube.search.list({
     	q: q,
@@ -8,7 +8,7 @@ function getYouTubeUrl (title, artist) {
     	type: 'video',
     	videoCategoryId: "Music"
   	});
-  	console.log("the request:", request);
+  	// console.log("the request:", request);
 	return new Promise (function (resolve) {
 		request.execute(function(response) {
 			console.log("response?", response);
@@ -26,12 +26,12 @@ function getYouTubeUrl (title, artist) {
 
 //how do we store our api keys securely on the extension?????
 function youTubeInit () {
-	console.log("initializing YT");
+	// console.log("initializing YT");
 	var apiKey = "AIzaSyDFtbzUzDbzN4jGBqEf-tUN1CDVwaOt0Vc";
 	gapi.client.setApiKey(apiKey);
 	gapi.client.load("youtube", "v3").then(function (err){
-		console.log("error?", err);
-		console.log("yt client?", gapi.client.youtube.search.list);
+		// console.log("error?", err);
+		// console.log("yt client?", gapi.client.youtube.search.list);
 	});
 	// gapi.auth.init(function() {
 	// 	console.log("init callback");

@@ -27,7 +27,7 @@
 }
 
 #music-library {
-    background
+    overflow-y: auto;
 }
 
 .popup-song {

@@ -1,9 +1,6 @@
 app.factory("PlayerFactory", function($http) {
 	var factory = {};
-	
-	factory.getVideoId = function(songObj){
-		return songObj.source.url.split('watch?v=')[1];
-	};
+
 	factory.setCurrentService = function (playerStates) {
         var playing = [];
         var playerStates = playerStates.response;
@@ -22,6 +19,14 @@ app.factory("PlayerFactory", function($http) {
         } else {
             return playing[0];
         }
+    };
+
+    factory.checkSoundcloudStreamable = function (song) {
+        if (song.source.url.indexOf('soundcloud') === -1) {
+            // console.log('not streamable', song);
+            return false;
+        }
+        return true;
     };
 
 	return factory;
