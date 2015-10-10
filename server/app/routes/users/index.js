@@ -43,7 +43,7 @@ function fuzzySearch(arr, artist, title){
 	arr.forEach(function(el) {
 		el.titleScore = title.score(el.title);
 		el.artistScore = artist.score(el.artist_name);
-		console.log("hello ",el, el.titleScore, el.artistScore);
+		// console.log("hello ",el, el.titleScore, el.artistScore);
 		if ((el.titleScore + el.artistScore) > (titleMax + artistMax ) && el.titleScore > .75 && el.artistScore > .75) {
 			titleMax = el.titleScore;
 			artistMax = el.artistScore;
@@ -57,12 +57,12 @@ function checkEchoNest(artist, title){
 		echo("song/search").get({artist: artist, title: title}, function(err, json){
 			if (err) console.log("ERROR: ",err);
 			else if (json.response.status.message === "Success" && json.response.songs.length > 0){
-				console.log('Matches from echonest: ' , json.response.songs);
+				// console.log('Matches from echonest: ' , json.response.songs);
 				var bestMatch = fuzzySearch(json.response.songs, artist, title);
-				console.log('best match: ', bestMatch);
+				// console.log('best match: ', bestMatch);
 				return resolve(bestMatch);
 			} else {
-				console.log('no matches');
+				// console.log('no matches');
 				return resolve(null);
 			}
 		});
@@ -103,7 +103,7 @@ router.put('/:userId/library', function(req, res, next){
 	checkEchoNest(req.body.artist, req.body.title)
 	.then(function(match){
 		if (match){
-			console.log("EN MATCH:", match);
+			// console.log("EN MATCH:", match);
 			req.echoNestId = match.id;
 			req.body.title = match.title;
 			req.body.artist = match.artist_name;
@@ -116,25 +116,25 @@ router.put('/:userId/library', function(req, res, next){
 //#2 Search in our library
 router.put('/:userId/Library', function(req, res, next){
 	if (req.echoNestId){
-		console.log('YES song on 119: ', req.title, req.artist);
+		// console.log('YES song on 119: ', req.title, req.artist);
 		Song.findOne({echoNestId: req.echoNestId})
 		.then(function(foundSong){
 			if (foundSong) {
-				console.log("Found the song in our library, with echonest:",foundSong);
+				// console.log("Found the song in our library, with echonest:",foundSong);
 				req.songToSave = foundSong;
 				next();
 			} else {
-				console.log('need to create it ourselves 1');
+				// console.log('need to create it ourselves 1');
 				req.songToSave = createSongFromReqBody(req.body);
 				req.songToSave.echoNestId = req.echoNestId;
 				req.new = true;
-				console.log("Your newly created song object: ", req.songToSave);
+				// console.log("Your newly created song object: ", req.songToSave);
 				next();
 			}
 		});
 	} else {
 		var url = req.body.source.url;
-		console.log('NO');
+		// console.log('NO');
 		Song.findOne({'source.url': url})
 		.then(function(foundSong){
 			if (foundSong) {
@@ -155,10 +155,10 @@ router.put('/:userId/Library', function(req, res, next){
 //#3 Create the song if we have to and check if its on the user
 router.put('/:userId/Library', function(req, res, next){
 	if (req.new) {
-		console.log("NEW SONG", req.songToSave);
+		// console.log("NEW SONG", req.songToSave);
 		Song.create(req.songToSave)		//must create song
 		.then(function(newSong){
-			console.log("created the new song in main library");
+			// console.log("created the new song in main library");
 			req.songToSave = newSong; //reassign songToSave
 			req.index = -1;
 			next();
@@ -185,7 +185,7 @@ router.put('/:userId/library', function (req, res, next) {
 				// return reject(err);
 				return;
 			}
-			console.log("NEW UPDATED FRESH LIBRARY: ",user.musicLibrary);
+			// console.log("NEW UPDATED FRESH LIBRARY: ",user.musicLibrary);
 			res.status(201).json(user.musicLibrary);
 		});
 	}).then(null, next);
@@ -358,7 +358,7 @@ router.param('userId', function (req, res, next, userId) {
 			next(err);
 		}
 		else {
-			console.log("hit param", populated);
+			// console.log("hit param", populated);
 			req.foundUser = populated;
 			next();
 		}
