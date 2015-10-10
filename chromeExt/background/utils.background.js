@@ -7,6 +7,7 @@ function cueSong(request) {
         createSoundcloudVideo(request.id);
     }
     if (request.service === 'Bandcamp') {
+        console.log('cueing bandcamp song', request);
         createBandcampVideo(request.id);
     }
 }
