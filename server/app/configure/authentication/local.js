@@ -44,7 +44,7 @@ module.exports = function (app) {
                 if (loginErr) return next(loginErr);
 				User.populate(user, 'musicLibrary.song')
 				.then(function(popUser){
-                    console.log('POPUSER', popUser);
+                    // console.log('POPUSER', popUser);
 	                // We respond with a response object that has user with _id and email.
 	                res.status(200).send({
 	                    user: _.omit(popUser.toJSON(), ['password', 'salt'])

@@ -36,7 +36,14 @@ router.put('/', function(req,res,next){
 	});
 });
 
-// 561685d5592e9c2b082a4d82
+router.delete('/:playlistId', function(req,res,next){
+	console.log(req.params.playlistId);
+	Playlist.remove({_id: req.params.playlistId})
+	.then(function(){
+		console.log("removed! in route");
+		res.status(204).end();
+	}).then(null, next);
+});
 
 router.get('/:playlistId', function(req,res,next){
 	Playlist.findById(req.params.playlistId).exec()

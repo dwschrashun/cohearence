@@ -28,10 +28,18 @@ app.factory('PlaylistFactory', function($http) {
 		});
 	}
 
+	function deletePlaylist(id){
+		console.log(id);
+		return $http.delete("/api/playlists/" + id).then(function(response){
+			return response.data;
+		});
+	}
+
 	return {
 		addToPlaylist: addToPlaylist,
 		makePlaylist: makePlaylist,
 		getPlaylists: getPlaylists,
-		getPopulatedPlaylist: getPopulatedPlaylist
+		getPopulatedPlaylist: getPopulatedPlaylist,
+		deletePlaylist: deletePlaylist
 	};
 });
