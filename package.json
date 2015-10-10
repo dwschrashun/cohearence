@@ -7,6 +7,9 @@
     "start": "nodemon --watch server -e js,html server/start.js",
     "postinstall": "gulp build"
   },
+  "engines": {
+    "node": "0.12.7"
+  },
   "dependencies": {
     "angular": "^1.4.0",
     "angular-animate": "^1.4.7",

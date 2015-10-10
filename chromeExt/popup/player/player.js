@@ -22,22 +22,25 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
 
     $scope.loadSong = function (song) {
         $scope.currentSong = song;
-        $scope.currentService = song.source.domain;
+        if (song.source.domain === "Spotify") {
+        	$scope.currentService = "YouTube";
+        }
+        else $scope.currentService = song.source.domain;
         var request = {
-            message: "cue"
+            message: "cue",
+			service: $scope.currentService
         };
-        if (song.source.domain === 'YouTube') {
-            request.service = $scope.currentService;
+        if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
+            console.log("request in loadsong:", request, song);
             request.id = PlayerFactory.getVideoId(song);
+            request.service = "YouTube";
             console.log("youtube message sending", request);
         }
         if (song.source.domain === 'Soundcloud') {
-            request.service = $scope.currentService;
             request.id = song.source.url;
             console.log('loading Soundcloud song');
         }
         if (song.source.domain === 'Bandcamp') {
-            request.service = $scope.currentService;
             request.id = song.source.bandcampId;
             console.log('loading bandcamp song');
         }
@@ -107,6 +110,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     $scope.logout = function () {
         LoginFactory.logout()
             .then(function () {
+				$scope.pauseVideo();
                 $state.go('login');
             });
     };

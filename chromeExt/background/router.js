@@ -54,13 +54,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     });
   }
   if (request.message === 'playerAction') {
+      console.log("REQUEST in router:", request);
       var service = serviceMethods[request.service];
-      console.log(request, 'service', service);
+      console.log("SERVICE in router:", service);
       var self = service.reference;
       var action = service[request.action];
       action.call(self);
   }
   if (request.message === "cue") {
+    console.log("REQUEST on cue:", request);
       stopAllVideos();
       cueSong(request);
   }
@@ -68,6 +70,24 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     var playerStates = getPlayerState();
     sendResponse({
       response: playerStates
+    });
+  }
+
+  if (request.message === "ytCall") {
+   // getYouTubeUrl(request.title, request.artist);
+   //  console.log("yt id in router:", id);
+   //  sendResponse({response: id});
+    var q = `${request.artist} - ${request.title}`;
+    var request = gapi.client.youtube.search.list({
+      q: q,
+      part: 'snippet',
+      type: 'video',
+      videoCategoryId: "Music"
+    });
+    request.execute(function(response) {
+      var id = response.result.items[0].id.videoId;
+      console.log("video id to send to router", id);
+      sendResponse(id);
     });
   }
   return true;
