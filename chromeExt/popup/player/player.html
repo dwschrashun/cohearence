@@ -6,17 +6,19 @@
 </div>
 <hr>
 <div class="container" id="popup-container">
-    <div id="player" class="col-md-12">
-        <div class="col-md-4">
-            <div class="buttons">
-                <i class="fa fa-lg fa-step-backward" ng-click="skipBackward()"></i>
-                <i ng-if="!currentService" class="fa fa-2x fa-play-circle-o" ng-click="playVideo()"></i>
-                <i ng-if="currentService" class="fa fa-lg fa-pause" ng-click="pauseVideo()"></i>
-                <i class="fa fa-lg fa-step-forward" ng-click="skipForward()"></i>
+    <div class="row">
+        <div id="player">
+            <div class="col-xs-2 text-center">
+                <div class="buttons">
+                    <i class="fa fa-lg fa-step-backward" ng-click="skipBackward()"></i>
+                    <i ng-if="paused" class="fa fa-lg fa-play-circle-o" ng-click="playVideo()"></i>
+                    <i ng-if="!paused" class="fa fa-lg fa-pause" ng-click="pauseVideo()"></i>
+                    <i class="fa fa-lg fa-step-forward" ng-click="skipForward()"></i>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <progress-bar></progress-bar>
+            <div class="col-xs-10">
+                <progress-bar></progress-bar>
+            </div>
         </div>
     </div>
 </div>

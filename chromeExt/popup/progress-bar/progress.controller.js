@@ -1,28 +1,22 @@
-app.controller('ProgressCtrl', function ($scope) {
+app.controller('ProgressCtrl', function ($scope, PlayerFactory) {
     console.log('THE SCOPE', $scope);
     $scope.duration = 0;
     $scope.timeElapsed = 0;
     //send message to background script to get time elapsed
     function getTimeFromBackground() {
-        if ($scope.currentService === 'YouTube') {
+        chrome.runtime.sendMessage('whoIsPlaying', function (response) {
+            var currentService = PlayerFactory.setCurrentService(response);
             var request = {
                 message: "checkTimeAction",
-                action: "checkTime",
-                service: $scope.currentService
+                service: currentService
             };
+            console.log('making request for time with', request);
             chrome.runtime.sendMessage(request, function (response) {
-                // var theProgressBar = angular.element(elem.find('.progress-bar')[0]);
-                // scope.theTime = response.currentTime/response.duration*100;
                 $scope.duration = response.duration;
                 $scope.timeElapsed = response.currentTime;
                 $scope.$digest();
-                // console.log('PROGRESS BAR', theProgressBar);
-                // theProgressBar.css(
-                // 	"width", response.currentTime/response.duration*100 + "%"
-                // 	)
-                // console.log('ze element', element)
             });
-        }
+        });
     }
     setInterval(getTimeFromBackground, 1000);
 

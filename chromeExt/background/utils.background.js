@@ -32,3 +32,21 @@ function getPlayerState() {
     }
     return playerStates;
 }
+
+function getCurrentTime (service) {
+    var currentTime,
+        duration;
+        
+    if (service === "YouTube") {
+      currentTime = youtubePlayer.getCurrentTime();
+      duration = youtubePlayer.getDuration();
+    } else if (service === 'Soundcloud') {
+        currentTime = soundcloudVideo[0].currentTime;
+        duration = soundcloudVideo[0].duration;
+    } else if (service === 'Bandcamp') {
+        currentTime = bandcampVideo[0].currentTime;
+        duration = bandcampVideo[0].duration;
+    }
+    console.log('getting current time', currentTime, duration);
+    return [currentTime, duration];
+}

@@ -53,8 +53,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     });
   }
 
-
-
   //if making player perform some action (play, pause, etc.)
   if (request.message === 'playerAction') {
     var service = serviceMethods[request.service];
@@ -66,18 +64,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
    //if checking time of video
   if (request.message === "checkTimeAction") {
     var service = request.service;
-    console.log('THE SERVICE IN CHECKTIME', service)
-    var currentTime;
-    var duration;
-
-    if (service === "YouTube") {
-      currentTime = youtubePlayer.getCurrentTime();
-      duration = youtubePlayer.getDuration();
-    }
-    else console.log('bc or sc, implement later');
+    var currentTime = getCurrentTime(service);
     sendResponse({
-        currentTime: currentTime,
-        duration: duration
+        currentTime: currentTime[0],
+        duration: currentTime[1]
     });
   }
 
@@ -87,7 +77,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       cueSong(request);
   }
 
-  //
+  // persisting controls on popup close
   if (request === "whoIsPlaying") {
     var playerStates = getPlayerState();
 

@@ -15,6 +15,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     function whoIsPlaying() {
         chrome.runtime.sendMessage('whoIsPlaying', function (response) {
             $scope.currentService = PlayerFactory.setCurrentService(response);
+            if ($scope.currentService !== null) $scope.paused = false;
         });
     }
     // This needs to run everytime the controller loads
@@ -22,6 +23,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
 
     $scope.loadSong = function (song) {
         $scope.currentSong = song;
+        $scope.paused = false;
         var request = {
             message: "cue",
 			service: $scope.currentService
@@ -59,6 +61,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     };
 
     $scope.playVideo = function () {
+        $scope.paused = false;
         var request = {
             message: "playerAction",
             action: "play",
@@ -70,6 +73,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     };
 
     $scope.pauseVideo = function () {
+        $scope.paused = true;
         var request = {
             message: "playerAction",
             action: "pause",
