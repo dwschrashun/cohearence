@@ -68,7 +68,6 @@ schema.method('correctPassword', function (candidatePassword) {
 //if song is found in user's library, add a new timestamp
 // var count = 0;
 schema.method('addToLibraryOrUpdate', function(newSong, index){
-	console.log('in addToLibraryOrUpdate', newSong, index);
 	// if (count === 0) {
 		if (index !== -1) {
 			this.musicLibrary[index].plays.push(new Date());
