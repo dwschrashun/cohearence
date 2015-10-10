@@ -47,25 +47,53 @@ window.onload = function () {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+
+  //if scrobbling
   if (request.action === 'scrobble') {
     sendSong(request);
     sendResponse({
         response: "hey we got your song at the router"
     });
   }
+
+
+
+  //if making player perform some action (play, pause, etc.)
   if (request.message === 'playerAction') {
-      console.log("REQUEST in router:", request);
-      var service = serviceMethods[request.service];
-      console.log("SERVICE in router:", service);
-      var self = service.reference;
-      var action = service[request.action];
-      action.call(self);
+    var service = serviceMethods[request.service];
+    var self = service.reference;
+    var action = service[request.action];
+    action.call(self);
   }
+
+   //if checking time of video
+  if (request.message === "checkTimeAction") {
+    var service = request.service;
+    console.log('THE SERVICE IN CHECKTIME', service)
+    var currentTime;
+    var duration;
+
+    if (service === "YouTube") {
+      currentTime = youtubePlayer.getCurrentTime();
+      duration = youtubePlayer.getDuration();
+    }
+    else console.log('bc or sc, implement later');
+    sendResponse({
+      response: {
+        currentTime: currentTime,
+        duration: duration
+      }
+    });
+  }
+
+  //if cueing video
   if (request.message === "cue") {
     console.log("REQUEST on cue:", request);
       stopAllVideos();
       cueSong(request);
   }
+
+  //
   if (request === "whoIsPlaying") {
     var playerStates = getPlayerState();
     sendResponse({
@@ -90,6 +118,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse(id);
     });
   }
+
   return true;
 });
 
