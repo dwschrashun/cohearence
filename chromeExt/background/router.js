@@ -1,8 +1,4 @@
-var backgroundDoc;
-var youtubePlayer;
-var soundcloudVideo;
-var bandcampVideo;
-var serviceMethods = {};
+
 
 console.log('localstorage!', localStorage);
 
@@ -22,7 +18,7 @@ function getBackendUserAndUpdateLocalStorage() {
   console.log('onload', user);
   if (user) {
     $.ajax({
-      url: 'http://localhost:1337/api/users/' + user._id + '/library',
+      url: environment.server + "/api/users/" + user._id + '/library',
       method: 'GET',
       dataType: "json"
     })
@@ -37,14 +33,6 @@ function getBackendUserAndUpdateLocalStorage() {
   }
 }
 
-window.onload = function () {
-  backgroundDoc = $(chrome.extension.getBackgroundPage().document);
-  soundcloudVideo = backgroundDoc.find('#soundcloudPlayer');
-  bandcampVideo = backgroundDoc.find('#bandcampPlayer');
-  createYouTubeVideo();
-  //get user from backend and update in local storage if exists
-  getBackendUserAndUpdateLocalStorage();
-}
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'scrobble') {
@@ -72,7 +60,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       response: playerStates
     });
   }
-
   if (request.message === "ytCall") {
    // getYouTubeUrl(request.title, request.artist);
    //  console.log("yt id in router:", id);
@@ -90,15 +77,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse(id);
     });
   }
+  if (request.message === "getEnv") {
+    console.log("getting env:", environment);
+    sendResponse(environment);
+  }
   return true;
 });
 
 function sendSong(songObj) {
   var user = getUser();
-  console.log('sendsong', user);
+  console.log('sendsong', songObj);
   if (user) {
     $.ajax({
-      url: "http://localhost:1337/api/users/" + user._id + "/library",
+      url: environment.server + "/api/users/" + user._id + "/library",
       method: 'PUT',
       data: songObj,
       dataType: "json"
