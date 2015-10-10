@@ -1,5 +1,3 @@
-
-
 function getUser() {
   return JSON.parse(localStorage.getItem("cohearenceUser"));
 }
@@ -31,24 +29,43 @@ function getBackendUserAndUpdateLocalStorage() {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+
+  //if scrobbling
   if (request.action === 'scrobble') {
     sendSong(request);
     sendResponse({
         response: "hey we got your song at the router from:" + request.message
     });
   }
+
+  //if making player perform some action (play, pause, etc.)
   if (request.message === 'playerAction') {
-      var service = serviceMethods[request.service];
-      var self = service.reference;
-      var action = service[request.action];
-      action.call(self);
+    var service = serviceMethods[request.service];
+    var self = service.reference;
+    var action = service[request.action];
+    action.call(self);
   }
+
+   //if checking time of video
+  if (request.message === "checkTimeAction") {
+    var service = request.service;
+    var currentTime = getCurrentTime(service);
+    sendResponse({
+        currentTime: currentTime[0],
+        duration: currentTime[1]
+    });
+  }
+
+  //if cueing video
   if (request.message === "cue") {
       stopAllVideos();
       cueSong(request);
   }
+
+  // persisting controls on popup close
   if (request === "whoIsPlaying") {
     var playerStates = getPlayerState();
+
     sendResponse({
       response: playerStates
     });
@@ -81,7 +98,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     SC.resolve(request.song.source.url)
         .then(function (trackInfo) {
             if (trackInfo.streamable) {
-                sendResponse(true); 
+                sendResponse(true);
             } else {
                 sendResponse(false);
             }

@@ -1,6 +1,6 @@
 //instantiate angular app
 
-window.app = angular.module('ScrobblerPopUp', ['ui.router', 'ngMaterial']);
+window.app = angular.module('ScrobblerPopUp', ['ui.router', 'ngMaterial', 'ui.bootstrap']);
 
 
 app.config(function($urlRouterProvider, $locationProvider) {
