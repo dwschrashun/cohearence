@@ -43,9 +43,14 @@ i {
 /*#music-library {
     font-size: .9em;
 
+<<<<<<< HEAD
     overflow-y: auto;
     left: 0;
     position: absolute;
+=======
+#music-library {
+    overflow-y: auto;
+>>>>>>> master
 }
 
 #music-library li {

@@ -24,7 +24,7 @@ var schema = new mongoose.Schema({
 		bandcampId: {
 			type: String
 		},
-		spotifyUrl: {
+		sourceUrl: {
 			type: String
 		}
 	},
