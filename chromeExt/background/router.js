@@ -76,10 +76,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
     else console.log('bc or sc, implement later');
     sendResponse({
-      response: {
         currentTime: currentTime,
         duration: duration
-      }
     });
   }
 
@@ -92,6 +90,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   //
   if (request === "whoIsPlaying") {
     var playerStates = getPlayerState();
+
     sendResponse({
       response: playerStates
     });

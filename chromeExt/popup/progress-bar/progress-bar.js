@@ -5,22 +5,31 @@ app.directive('progressBar', function() {
 		link: function(scope, elem, attrs) {
 
 			console.log('THE SCOPE', scope);
+			scope.duration = 0;
+			scope.timeElapsed = 0;
 			//send message to background script to get time elapsed
 			function getTimeFromBackground() {
 				if (scope.currentService === 'YouTube') {
-					console.log(scope.currentService)
+					// console.log(scope.currentService)
 					var request = {
 						message: "checkTimeAction",
 						action: "checkTime",
 						service: scope.currentService
 					}
-					console.log('link fn service', request.service)
+					// console.log('link fn service', request.service)
 					chrome.runtime.sendMessage(request, function(response) {
-						console.log('response', response);
-						var theProgressBar = angular.element(elem[0])
-						theProgressBar.css({
-							"width": response.currentTime/response.duration*100 + "%"
-						})
+						// console.log('response', response);
+						// var theProgressBar = angular.element(elem.find('.progress-bar')[0]);
+						// scope.theTime = response.currentTime/response.duration*100;
+						console.log('ze response', response)
+						scope.duration = response.duration;
+						scope.timeElapsed = response.currentTime;
+						console.log('scope.duration', scope.duration);
+						console.log('scope.timeElapsed', scope.timeElapsed);
+						// console.log('PROGRESS BAR', theProgressBar);
+						// theProgressBar.css(
+						// 	"width", response.currentTime/response.duration*100 + "%"
+						// 	)
 						// console.log('ze element', element)
 					})
 				}
