@@ -70,8 +70,10 @@ function checkEchoNest(artist, title){
 }
 
 function createSongFromReqBody(reqBody){
+	console.log("REQ BODY: ",reqBody);
 	var title = reqBody.title || "unknown";
 	var artist = reqBody.artist || "unknown";
+	var duration = reqBody.duration;
 	var source = reqBody.source || {
 		domain: null,
 		url: null,
@@ -84,6 +86,7 @@ function createSongFromReqBody(reqBody){
 		var newSongObj = {
 			title: title,
 			artist: artist,
+			duration: duration,
 			source: source
 		};
 		return newSongObj;
@@ -92,7 +95,9 @@ function createSongFromReqBody(reqBody){
 		var newSongObj = {
 			title: title,
 			artist: artist,
+			duration: duration,
 			source: source
+
 		};
 		return newSongObj;
 	}
