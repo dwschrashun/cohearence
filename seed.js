@@ -18,8 +18,10 @@ name in the environment files.
 */
 
 var mongoose = require('mongoose');
+var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
+var Promise = require("bluebird");
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Song = Promise.promisifyAll(mongoose.model('Song'));
 

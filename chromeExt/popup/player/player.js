@@ -22,30 +22,39 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
 
     $scope.loadSong = function (song) {
         $scope.currentSong = song;
-        if (song.source.domain === "Spotify") {
-        	$scope.currentService = "YouTube";
-        }
-        else $scope.currentService = song.source.domain;
         var request = {
             message: "cue",
 			service: $scope.currentService
         };
         if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
-            console.log("request in loadsong:", request, song);
-            request.id = PlayerFactory.getVideoId(song);
+            $scope.currentService = "YouTube";
+            // console.log("request in loadsong:", request, song);
+            request.id = song.source.url;
             request.service = "YouTube";
-            console.log("youtube message sending", request);
+            // console.log("youtube message sending", request);
         }
         if (song.source.domain === 'Soundcloud') {
-            request.id = song.source.url;
-            console.log('loading Soundcloud song');
+            var streamable = PlayerFactory.checkSoundcloudStreamable(song);
+            if (streamable) {
+                $scope.currentService = 'Soundcloud';
+                request.id = song.source.url;
+                request.service = 'Soundcloud';
+                // console.log('loading Soundcloud song');
+            } else {
+                $scope.currentService = "YouTube";
+                request.id = song.source.url;
+                request.service = 'YouTube';
+                // console.log('streamable', streamable, request);
+            }
         }
         if (song.source.domain === 'Bandcamp') {
-            request.id = song.source.bandcampId;
-            console.log('loading bandcamp song');
+            $scope.currentService = 'Bandcamp';
+            request.service ='Bandcamp';
+            request.id = song.source.url;
+            console.log('loading bandcamp song', song, request);
         }
         chrome.runtime.sendMessage(request, function (response) {
-            console.log('response from router:', response);
+            // console.log('response from router:', response);
         });
     };
 

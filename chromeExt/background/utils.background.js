@@ -1,12 +1,13 @@
-
 function cueSong(request) {
     if (request.service === 'YouTube') {
+        console.log('cueing youtube song');
         youtubePlayer.loadVideoById(request.id);
     }
     if (request.service === 'Soundcloud') {
         createSoundcloudVideo(request.id);
     }
     if (request.service === 'Bandcamp') {
+        console.log('cueing bandcamp song', request);
         createBandcampVideo(request.id);
     }
 }

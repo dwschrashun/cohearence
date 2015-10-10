@@ -5,17 +5,18 @@ function onPlayerChange() {
         if (counter == 2) {
             getSongInfo().then(function (songObj) {
                 counter = 0;
-                console.log("Populated Song Obj:", songObj);
+                // console.log("Populated Song Obj:", songObj);
                 if (songObj.source.spotifyUrl.indexOf('adclick') === -1) {
                     var ytCallObj = {
                         artist: songObj.artist,
                         title: songObj.title,
                         message: "ytCall"
                     };
-                    console.log("sending songobj to router");
+                    // console.log("sending songobj to router");
                     chrome.runtime.sendMessage(ytCallObj, function (response1) {
-                        console.log("response w/ populated yt url:", response1);
-                        songObj.source.url = `https://www.youtube.com/watch?v=${response1}`;
+                        // console.log("response w/ populated yt url:", response1);
+                        songObj.source.url = response1;
+                        songObj.source.sourceUrl = "https://youtube.com/watch?v=" + response1;
     	                chrome.runtime.sendMessage(songObj, function (response2) {
     	                    console.log('response from router:', response2);
     	                });
@@ -25,7 +26,6 @@ function onPlayerChange() {
         }
     });
 }
-
 
 //timeout set in order to catch changes to artist name on DOM, which is fired after track name change
 function getSongInfo() {

@@ -31,22 +31,22 @@ function findTitleAndArtistAndVidTitle() {
 }
 
 function sendSong() {
+    var youtubeId = location.href.split('watch?v=')[1].split('&list=')[0];
     var titleAndArtistAndVidTitle = findTitleAndArtistAndVidTitle();
     var songObj = {
         action: 'scrobble',
         message: "YouTube",
 		source: {
-	        url: location.href,
+	        url: youtubeId,
 	        videoTitle: titleAndArtistAndVidTitle[2],
 			domain: "YouTube",
-			bandcampId: null
+			sourceUrl: location.href
 		},
         category: 'Music',
         duration: $('.ytp-time-duration').text(),
         title: titleAndArtistAndVidTitle[0],
         artist: titleAndArtistAndVidTitle[1]
     };
-	console.log(songObj);
     chrome.runtime.sendMessage(songObj, function (response) {
         console.log('response from router:', response);
     });
@@ -54,6 +54,7 @@ function sendSong() {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message === 'newSongLoaded') {
+        console.log("newSongLoaded in yt cs", request);
         setTimeout(function () {
             checkCategory();
             sendResponse({response: "request received, will crawl dom"});

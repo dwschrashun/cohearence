@@ -1,31 +1,32 @@
 function getSongInfo() {
     var songInfoArr = $(".playbackSoundBadge__titleContextContainer").children();
     var songInfo = songInfoArr[1];
-	console.log(songInfoArr.first().text());
+    // console.log(songInfoArr.first().text());
     // var channelName = songInfoArr.first().text().split("Playing from ")[1].split("\'")[0];
     var duration = $(".playbackTimeline__duration").children()[1].innerText;
-    var artistTitle = songInfo.title.split(/[-–]/);
+    var artistTitle = songInfo.title.split(/[-–~]/);
 
-	if (artistTitle.length === 1) {
-		title = artistTitle[0].trim();
-		artist = "unknown artist";
-	} else if (artistTitle.length === 0){
-		artist = "unknown artist";
-		title = "unknown title";
-	} else {
-    	artist = artistTitle[0].trim() || "unknown artist";
-    	title = artistTitle[1].trim() || "unknown title";
-	}
+    if (artistTitle.length === 1) {
+        title = artistTitle[0].trim();
+        artist = "unknown artist";
+    } else if (artistTitle.length === 0) {
+        artist = "unknown artist";
+        title = "unknown title";
+    } else {
+        artist = artistTitle[0].trim() || "unknown artist";
+        title = artistTitle[1].trim() || "unknown title";
+    }
 
     var songObj = {
         action: 'scrobble',
         message: "Soundcloud",
-		source: {
-        	url: songInfo.href,
-        	videoTitle: songInfo.title,
-			domain: "Soundcloud",
-			bandcampId: null
-		},
+        source: {
+            url: songInfo.href,
+            videoTitle: songInfo.title,
+            domain: "Soundcloud",
+            bandcampId: null,
+            sourceUrl: songInfo.href
+        },
         category: 'Music',
         duration: duration,
         title: title,
@@ -40,11 +41,28 @@ function onPlayerChange() {
         counter += 1;
         if (counter === 6) {
             var songObj = getSongInfo();
-            if (songObj.duration !== "0:30") {
+            if (songObj.duration !== '0:30') {
                 if (lastSong !== songObj.title) {
-            		lastSong = songObj.title;
-                    chrome.runtime.sendMessage(songObj, function (response) {
-                        console.log('response from router:', response);
+                    lastSong = songObj.title;
+                    var request = {
+                        message: 'checkForStreamable',
+                        song: songObj
+                    };
+                    chrome.runtime.sendMessage(request, function (response) {
+                        if (response) {
+                            chrome.runtime.sendMessage(songObj, function (response) {
+                                // console.log('response from router:', response);
+                            });
+                        } else {
+                            request.message = 'ytCall';
+                            request.artist = songObj.artist;
+                            request.title = songObj.title;
+                            chrome.runtime.sendMessage(request, function (response) {
+                                songObj.source.url = response;
+                                chrome.runtime.sendMessage(songObj, function (response) {
+                                });
+                            });
+                        }
                     });
                 }
             }
@@ -52,6 +70,7 @@ function onPlayerChange() {
         }
     });
 }
+
 var counter = 0;
 var lastSong;
 

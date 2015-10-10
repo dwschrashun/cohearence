@@ -1,10 +1,4 @@
-var backgroundDoc;
-var youtubePlayer;
-var soundcloudVideo;
-var bandcampVideo;
-var serviceMethods = {};
 
-console.log('localstorage!', localStorage);
 
 function getUser() {
   return JSON.parse(localStorage.getItem("cohearenceUser"));
@@ -19,10 +13,9 @@ function setUser(library) {
 
 function getBackendUserAndUpdateLocalStorage() {
   var user = getUser();
-  console.log('onload', user);
   if (user) {
     $.ajax({
-      url: 'http://localhost:1337/api/users/' + user._id + '/library',
+      url: environment.server + "/api/users/" + user._id + '/library',
       method: 'GET',
       dataType: "json"
     })
@@ -37,32 +30,20 @@ function getBackendUserAndUpdateLocalStorage() {
   }
 }
 
-window.onload = function () {
-  backgroundDoc = $(chrome.extension.getBackgroundPage().document);
-  soundcloudVideo = backgroundDoc.find('#soundcloudPlayer');
-  bandcampVideo = backgroundDoc.find('#bandcampPlayer');
-  createYouTubeVideo();
-  //get user from backend and update in local storage if exists
-  getBackendUserAndUpdateLocalStorage();
-}
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'scrobble') {
     sendSong(request);
     sendResponse({
-        response: "hey we got your song at the router"
+        response: "hey we got your song at the router from:" + request.message
     });
   }
   if (request.message === 'playerAction') {
-      console.log("REQUEST in router:", request);
       var service = serviceMethods[request.service];
-      console.log("SERVICE in router:", service);
       var self = service.reference;
       var action = service[request.action];
       action.call(self);
   }
   if (request.message === "cue") {
-    console.log("REQUEST on cue:", request);
       stopAllVideos();
       cueSong(request);
   }
@@ -72,11 +53,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       response: playerStates
     });
   }
-
   if (request.message === "ytCall") {
-   // getYouTubeUrl(request.title, request.artist);
-   //  console.log("yt id in router:", id);
-   //  sendResponse({response: id});
+    // console.log('request to youtube', request);
     var q = `${request.artist} - ${request.title}`;
     var request = gapi.client.youtube.search.list({
       q: q,
@@ -86,29 +64,46 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     });
     request.execute(function(response) {
       var id = response.result.items[0].id.videoId;
-      console.log("video id to send to router", id);
+      // console.log("video id to send to router", id);
       sendResponse(id);
     });
+  }
+
+  if (request.message === "getEnv") {
+    console.log("getting env:", environment);
+    sendResponse(environment);
+  }
+
+  if (request.message === 'checkForStreamable') {
+    SC.initialize({
+        client_id: '68b135c934141190c88c1fb340c4c10a'
+    });
+    SC.resolve(request.song.source.url)
+        .then(function (trackInfo) {
+            if (trackInfo.streamable) {
+                sendResponse(true); 
+            } else {
+                sendResponse(false);
+            }
+        });
   }
   return true;
 });
 
 function sendSong(songObj) {
   var user = getUser();
-  console.log('sendsong', user);
   if (user) {
     $.ajax({
-      url: "http://localhost:1337/api/users/" + user._id + "/library",
+      url: environment.server + "/api/users/" + user._id + "/library",
       method: 'PUT',
       data: songObj,
       dataType: "json"
     })
     .done(function(response) {
-      console.log('AJAX RESPONSE', response);
       setUser(response);
     })
     .fail(function(error) {
       console.log(error);
-    })
+    });
   }
 }
