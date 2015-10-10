@@ -1,11 +1,11 @@
-<div id="list-container">
+<div ng-cloak id="list-container">
 	<div id="controls">
 		<div class="search">
 			<input class="form-control" placeholder="Search Playlists" ng-model="searchText">
 		</div>
 		<button ng-hide="namingPlaylist" ng-click="namePlaylist()" class="btn btn-primary btn-add">+</button>
 		<form name="playlistForm" ng-submit=" playlistForm.name.$valid && makePlaylist()">
-			<input name="name" class="form-control" placeholder="Playlist Name" ng-show="namingPlaylist" ng-model="playlistName" required ng-minlength="1"></input>
+			<input name="name" class="form-control" placeholder="Playlist Name" ng-show="namingPlaylist" ng-model="playlistName" required ></input>
 			<button type="submit" class="btn btn-primary btn-add" ng-show="namingPlaylist && playlistForm.name.$valid">✓</button>
 		</form>
 	</div>
