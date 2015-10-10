@@ -54,6 +54,7 @@ function sendSong() {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message === 'newSongLoaded') {
+        console.log("newSongLoaded in yt cs", request);
         setTimeout(function () {
             checkCategory();
             sendResponse({response: "request received, will crawl dom"});

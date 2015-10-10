@@ -1,8 +1,4 @@
-var backgroundDoc;
-var youtubePlayer;
-var soundcloudVideo;
-var bandcampVideo;
-var serviceMethods = {};
+
 
 function getUser() {
   return JSON.parse(localStorage.getItem("cohearenceUser"));
@@ -19,7 +15,7 @@ function getBackendUserAndUpdateLocalStorage() {
   var user = getUser();
   if (user) {
     $.ajax({
-      url: 'http://localhost:1337/api/users/' + user._id + '/library',
+      url: environment.server + "/api/users/" + user._id + '/library',
       method: 'GET',
       dataType: "json"
     })
@@ -34,20 +30,11 @@ function getBackendUserAndUpdateLocalStorage() {
   }
 }
 
-window.onload = function () {
-  backgroundDoc = $(chrome.extension.getBackgroundPage().document);
-  soundcloudVideo = backgroundDoc.find('#soundcloudPlayer');
-  bandcampVideo = backgroundDoc.find('#bandcampPlayer');
-  createYouTubeVideo();
-  //get user from backend and update in local storage if exists
-  getBackendUserAndUpdateLocalStorage();
-};
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'scrobble') {
     sendSong(request);
     sendResponse({
-        response: "hey we got your song at the router"
+        response: "hey we got your song at the router from:" + request.message
     });
   }
   if (request.message === 'playerAction') {
@@ -66,7 +53,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       response: playerStates
     });
   }
-
   if (request.message === "ytCall") {
     // console.log('request to youtube', request);
     var q = `${request.artist} - ${request.title}`;
@@ -82,6 +68,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse(id);
     });
   }
+
+  if (request.message === "getEnv") {
+    console.log("getting env:", environment);
+    sendResponse(environment);
+  }
+
   if (request.message === 'checkForStreamable') {
     SC.initialize({
         client_id: '68b135c934141190c88c1fb340c4c10a'
@@ -102,7 +94,7 @@ function sendSong(songObj) {
   var user = getUser();
   if (user) {
     $.ajax({
-      url: "http://localhost:1337/api/users/" + user._id + "/library",
+      url: environment.server + "/api/users/" + user._id + "/library",
       method: 'PUT',
       data: songObj,
       dataType: "json"

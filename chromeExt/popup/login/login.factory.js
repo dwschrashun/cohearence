@@ -1,6 +1,6 @@
-app.factory("LoginFactory", function ($http) {
+app.factory("LoginFactory", function ($http, $rootScope) {
     function login(credentials) {
-      return $http.post('http://localhost:1337/login', credentials)
+      return $http.post($rootScope.environment.server + '/login', credentials)
         .then(onSuccessfulLogin)
         .catch(function () {
           //return $q.reject({ message: 'Invalid login credentials.' });
@@ -21,8 +21,8 @@ app.factory("LoginFactory", function ($http) {
     }
 
     function logout() {
-      return $http.get('http://localhost:1337/logout')
-      .then(removeFromLocalStorage)
+      return $http.get($rootScope.environment.server + '/logout')
+      .then(removeFromLocalStorage);
     }
 
     function setInLocalStorage(user) {
@@ -34,7 +34,7 @@ app.factory("LoginFactory", function ($http) {
     function getFromLocalStorage() {
       var stringifiedUser = localStorage.getItem("cohearenceUser");
       console.log('GETTING FROM LOCAL STORAGE IN POPUP', JSON.parse(stringifiedUser));
-      return JSON.parse(stringifiedUser)
+      return JSON.parse(stringifiedUser);
     }
 
     function removeFromLocalStorage() {
