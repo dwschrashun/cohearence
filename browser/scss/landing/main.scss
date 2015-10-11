@@ -1,38 +1,76 @@
+//landing
+$blue: rgba(60, 178, 208, 1);
+$green: #90EE90;
+$yellow: #FFFE8D;
+$pink: #FFB6C1;
+$orange: #FFA07A;
+$background-color: #222222;
+$background-color-light: #333333;
+
 #landing {
 	font-family: "Lato", sans-serif;
 	font-weight: 300;
 	width: 100%;
 	height: 100vh;
+	background-color: $background-color-light;
 	// background: linear-gradient(rgba(60, 178, 208, 0.5), rgba(60, 178, 208, 0.4)), url(http://lemasney.com/consulting/wp-content/uploads/2012/11/open_waveform.png) no-repeat center center fixed transparent;
+	// background-image: url('http://img10.deviantart.net/635c/i/2013/009/e/a/cyan_clean_bg_2560x1200_by_markwester-d5qxcu6.png');
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	padding-top: 50px;
+	text-align: center;
 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  padding-top: 50px;
-  text-align: center;
-
-
-  .landing-panel {
-    background: rgb(10, 10, 10);
-    color: white;
+	.landing-panel {
+	// background-color: $background-color-light;
+	background-image: url('http://img10.deviantart.net/635c/i/2013/009/e/a/cyan_clean_bg_2560x1200_by_markwester-d5qxcu6.png');
+	transition: opacity 0.3s;
+	border-radius: 5px;
+	color: $background-color;
 		.panel-title {
-      color: rgba(60, 178, 208, 1);
+			color: $blue;
 			font-size: 50px;
+			font-weight: 300;
 		}
 		.description {
-			font-size: 24px;
+			font-size: 26px;
 		}
-    .landing-button {
-      font-weight: 400;
-      background-color: rgba(60, 178, 208, 1);
-    }
-  	margin: 0 auto;
-  	width: 30%;
-  	opacity: 0.7;
-  	height: auto;
-    &:hover {
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-    }
-  }
+		.landing-button {
+			font-weight: 400;
+			background-color: rgba(60, 178, 208, 1);
+		}
+		margin: 0 auto;
+		width: 50%;
+		// opacity: 0.8;
+		height: auto;
+		border: none;
+		box-shadow: 0 5px 5px 7px rgba(0, 0, 0, 0.2), inset 0 -3px 3px 3px rgba(0, 0, 0, 0.2);
+		// &:hover {
+		// 	opacity: 1;
+		// 	transition: opacity 0.3s;
+		// }
+	}
+
+	#description {
+		margin-top: 130px;
+		margin-left: 60px;
+		margin-right: 60px;
+
+		.col-md-3 {
+			&:hover {
+				p {
+					color: black;
+				}
+			}
+		}
+		img {
+			height: 200px;
+		}
+		p {
+			color: transparent;
+			font-size: 36px;
+			transition: color .5s ease-in-out;
+		}
+	}
 }

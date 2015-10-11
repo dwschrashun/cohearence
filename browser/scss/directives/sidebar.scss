@@ -1,5 +1,11 @@
-$link-color: rgba(60, 178, 208, 1);
+//sidebar
+$blue: rgba(60, 178, 208, 1);
+$green: #90EE90;
+$yellow: #FFFE8D;
+$pink: #FFB6C1;
+$orange: #FFA07A;
 $background-color: #222222;
+$background-color-light: #333333;
 
 #sidebar-container {
 	padding-top: 20px;
@@ -10,7 +16,7 @@ $background-color: #222222;
 	background-color: $background-color;
 	playlist-list {
 		div {
-			color: $link-color;
+			color: $blue;
 			background-color: $background-color;
 		}
 	}
@@ -19,7 +25,7 @@ $background-color: #222222;
 		text-align: center;
 		.btn-add {
 			border-radius: 50px;
-			background-color: $link-color;
+			background-color: $blue;
 			color: $background-color;
 		}
 		margin: 20px;

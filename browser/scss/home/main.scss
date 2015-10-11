@@ -1,17 +1,13 @@
 #home {
 	min-height: 900px;
-  fullstack-logo {
-    padding-top: 30px;
-    width: 150px;
-    margin: 0 auto;
-  }
-  h1 {
-    margin-top: 40px;
-    text-align: center;
-  }
-  // background: linear-gradient(rgba(60, 178, 208, 0.5), rgba(60, 178, 208, 0.4)), url(http://lemasney.com/consulting/wp-content/uploads/2012/11/open_waveform.png) no-repeat center center fixed transparent;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+	// background: linear-gradient(rgba(60, 178, 208, 0.5), rgba(60, 178, 208, 0.4)), url(http://lemasney.com/consulting/wp-content/uploads/2012/11/open_waveform.png) no-repeat center center fixed transparent;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	
+	// h1 {
+	// 	margin-top: 40px;
+	// 	text-align: center;
+	// }
 }

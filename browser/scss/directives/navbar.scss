@@ -1,9 +1,17 @@
-$background-color: #222;
-$link-color: rgba(60, 178, 208, 1);
+//navbar
+$blue: rgba(60, 178, 208, 1);
+$green: #90EE90;
+$yellow: #FFFE8D;
+$pink: #FFB6C1;
+$orange: #FFA07A;
+$background-color: #222222;
+$background-color-light: #333333;
+
 
 navbar {
   display: block;
-  background: $background-color;
+  background-color: $background-color;
+  // opacity: 0.7;
   border-bottom: 1px solid black;
   box-shadow: 1px 1px 14px -3px black;
 	height: 50px;
@@ -16,7 +24,7 @@ navbar {
   }
 
 	p {
-		color: $link-color;
+		color: $blue;
 		display: inline;
 		font-size: 35px;
 	}
@@ -44,13 +52,13 @@ navbar {
     }
   }
 
-  .login-button {
-    float: right;
-    border: 1px solid black;
-    margin-top: 10px;
-    background: none;
-    outline: none !important;
-  }
+  // .login-button {
+  //   float: right;
+  //   border: 1px solid black;
+  //   margin-top: 10px;
+  //   background: none;
+  //   outline: none !important;
+  // }
 
   .welcome {
     float: right;
@@ -59,7 +67,7 @@ navbar {
       color: white;
     }
     a {
-      color: $link-color;
+      color: $blue;
       cursor: pointer;
     }
   }
