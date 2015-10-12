@@ -18,7 +18,7 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
             $scope.seekTo(newTime);
             $scope.playVideo();
             sliderUpdater = $interval(getTimeFromBackground, 1000)
-            console.log(newTime);
+            // console.log(newTime);
         }
     });
     var max = theSlider.slider("option", "max");
@@ -34,7 +34,7 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
             };
             // console.log('making request for time with', request);
             chrome.runtime.sendMessage(request, function (response) {
-                console.log('RESPONSE', response);
+                // console.log('RESPONSE', response);
                 $scope.duration = response.duration|| $scope.duration ;
                 $scope.timeElapsed = response.currentTime || $scope.timeElapsed;
                 if ($scope.duration !== max) {
@@ -55,7 +55,7 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
 app.filter('songTime', function() {
     return function(input) {
         input = Math.floor(parseInt(input));
-        console.log(input);
+        // console.log(input);
 
         var hours = Math.floor(input / 60 / 60);
         hours = hours && hours < 10 ? "0" + Math.floor(hours) : Math.floor(hours);
