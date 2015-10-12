@@ -1,7 +1,26 @@
 app.controller('ProgressCtrl', function ($scope, PlayerFactory) {
-    console.log('THE SCOPE', $scope);
     $scope.duration = 0;
     $scope.timeElapsed = 0;
+    //initialize slider
+    console.log('$scope in progressctrl', $scope);
+    var theSlider = $('#slider');
+    theSlider.slider({
+        min: 0,
+        stop: function(event, ui) {
+            //stop setInterval
+            //pause video
+            //get new time
+            //seek to new time
+            //continue playing video
+            //update timeElapsed
+            $scope.pauseVideo();
+            var newTime = ui.value;
+            console.log(newTime);
+        }
+    });
+    var max = theSlider.slider("option", "max");
+    // console.log(sliderMaxTime);
+
     //send message to background script to get time elapsed
     function getTimeFromBackground() {
         chrome.runtime.sendMessage('whoIsPlaying', function (response) {
@@ -10,25 +29,23 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory) {
                 message: "checkTimeAction",
                 service: currentService
             };
-            console.log('making request for time with', request);
+            // console.log('making request for time with', request);
             chrome.runtime.sendMessage(request, function (response) {
                 $scope.duration = response.duration;
                 $scope.timeElapsed = response.currentTime;
+                if ($scope.duration !== max) {
+                    max = $scope.duration;
+                    theSlider.slider("option", "max", max);
+                }
+                theSlider.slider({
+                    value: $scope.timeElapsed
+                })
                 $scope.$digest();
             });
         });
     }
-    setInterval(getTimeFromBackground, 1000);
 
-    //if song is playing
-    //constantly check:
-    //whats the service?
-    //set interval on this and poll time elapsed
-    //poll page for time elapsed
-    //calculate as percentage of total time
-    //re render css accordingly
-    // setInterval(function() {
-    // 	console.log('elem', elem, 'attrs', attrs)
-    // }, 2000)
-
+    setInterval(function() {
+        if (!$scope.paused) getTimeFromBackground;
+    }, 1000);
 });
