@@ -15,6 +15,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     action.call(self);
   }
 
+  // changing songs
+  if (request.message === 'changeSong') {
+    var nextSong = autoPlayNextSong(request.direction);
+    cueSong(nextSong);
+  }
+
    //if checking time of video
   if (request.message === "checkTimeAction") {
     var service = request.service;

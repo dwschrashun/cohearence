@@ -26,10 +26,8 @@ function createYouTubeVideo() {
     }
 
     function onPlayerStateChange(event) {
-        console.log('running youtube player state', event.data);
         if (event.data === 0) {
             var nextSong = autoPlayNextSong();
-            console.log('playing next song', nextSong);
             cueSong(nextSong);
         }
     }

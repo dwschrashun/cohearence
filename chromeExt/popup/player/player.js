@@ -93,6 +93,16 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         });
     };
 
+    $scope.changeSong = function (action) {
+        var request = {
+            message: 'changeSong',
+            direction: action
+        };
+        chrome.runtime.sendMessage(request, function (response) {
+            console.log('changed song response', response);
+        });
+    };
+
     $scope.skipForward = function () {
         var request = {
             message: "test",

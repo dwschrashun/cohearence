@@ -36,14 +36,18 @@ function stopAllVideos() {
     if (bandcampVideo[0]) bandcampVideo[0].pause();
 }
 
-function autoPlayNextSong() {
+function autoPlayNextSong(direction) {
     var musicLibrary = getUser().musicLibrary;
-    if (currentSongIndex === musicLibrary.length - 1) {
+    var request = {};
+    
+    if (direction === 'forward') currentSongIndex += 1;
+    if (direction === 'backward') currentSongIndex -= 1;
+    if (currentSongIndex === musicLibrary.length || currentSongIndex < 0) {
         return;
     }
-    currentSongIndex += 1;
+    
     var song = musicLibrary[currentSongIndex].song;
-    var request = {};
+    
     if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
         request.service = "YouTube";
     }
