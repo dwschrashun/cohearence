@@ -7,7 +7,6 @@ function cueSong(request) {
         createSoundcloudVideo(request.id);
     }
     if (request.service === 'Bandcamp') {
-        console.log('cueing bandcamp song', request);
         createBandcampVideo(request.id);
     }
 }
@@ -47,16 +46,17 @@ function getCurrentTime (service) {
     } else if (service === 'Bandcamp') {
         currentTime = bandcampVideo[0].currentTime;
         duration = bandcampVideo[0].duration;
+
     }
-    console.log('getting current time', currentTime, duration);
     return [currentTime, duration];
 }
 
 function seekTo(time, service) {
+    console.log('HITTING SEEK TO');
     if (service === "YouTube") {
         youtubePlayer.seekTo(time);
     } else if (service === 'Soundcloud') {
-        soundCloudVideo[0].seek(time);
+        soundcloudVideo[0].currentTime = time;
     } else if (service === 'Bandcamp') {
         bandcampVideo[0].currentTime = time;
     }
