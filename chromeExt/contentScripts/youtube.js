@@ -1,4 +1,5 @@
 function checkCategory() {
+
     var category = $('.watch-info-tag-list').filter(function () {
         var $this = $(this);
         var $h4 = $this.siblings('h4');
@@ -6,6 +7,13 @@ function checkCategory() {
     }).find('li a').text();
     if (category === "Music") {
         sendSong();
+    }
+    else {
+        var titles = $("h4.title").map(function () {
+            var element = $(this);
+            return element.text().trim();
+        });
+        if ($.makeArray(titles).indexOf("Music") > -1) sendSong();
     }
 }
 

@@ -6,6 +6,7 @@ function getSongInfo(trackSrc) {
     var artist = frontPageArtistHref.text().trim() || $('[itemprop="byArtist"] > a').text().trim();
     var duration = $('.time.secondaryText > .time_total').text().trim();
 
+	var bandcampId = trackSrc.split('&id=')[1].split('&stream')[0] || null;
     var songObj = {
         action: 'scrobble',
         message: "Bandcamp",
@@ -15,7 +16,8 @@ function getSongInfo(trackSrc) {
             domain: 'Bandcamp',
             url: trackSrc,
             videoTitle: artist + songTitle,
-            sourceUrl: songHref
+            sourceUrl: songHref,
+			bandcampId: bandcampId
         },
         duration: duration,
     };
@@ -24,7 +26,8 @@ function getSongInfo(trackSrc) {
 
 function sendSongToRouter(songObj) {
     chrome.runtime.sendMessage(songObj, function (response) {
-        console.log(`response from router: ${response}`)
+        console.log('response from router:');
+		console.dir(response);
     });
 }
 
