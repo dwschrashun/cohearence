@@ -22,12 +22,13 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     $scope.paused = true;
     whoIsPlaying();
 
-    $scope.loadSong = function (song) {
+    $scope.loadSong = function (song, songIndex) {
         $scope.currentSong = song;
         $scope.paused = false;
         var request = {
             message: "cue",
-			      service: $scope.currentService
+			service: $scope.currentService,
+            songIndex: songIndex
         };
         if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
             $scope.currentService = "YouTube";
