@@ -1,7 +1,12 @@
 function cueSong(request) {
     if (request.service === 'YouTube') {
-        console.log('cueing youtube song');
-        youtubePlayer.loadVideoById(request.id);
+        var url = `http://www.youtube.com/v/${request.id}?version=3`;
+        console.log('cueing youtube song:', url);
+        youtubePlayer.cueVideoByUrl({
+            mediaContentUrl: url
+        });
+        youtubePlayer.playVideo();
+        // youtubePlayer.loadVideoById(request.id);
     }
     if (request.service === 'Soundcloud') {
         createSoundcloudVideo(request.id);

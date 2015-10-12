@@ -1,6 +1,11 @@
+window.onload = function () {
+	createYouTubeVideo();
+};
+
+
 function createYouTubeVideo() {
     var tag = $('<script></script>');
-    tag.attr('src', "https://www.youtube.com/iframe_api?version=3");
+    tag.attr('src', "https://www.youtube.com/iframe_api");
     var firstScriptTag = $(backgroundDoc.find('script')[0]);
     tag.insertBefore(firstScriptTag);
     youtubePlayer = backgroundDoc.find("#youtubePlayer");
@@ -29,7 +34,4 @@ function createYouTubeVideo() {
 
 function logYtError (event) {
     console.log("logYtError event:", event);
-    if (event.data === 150 || event.data === 101) {
-
-    }
 }
