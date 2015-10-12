@@ -25,7 +25,6 @@ function cueSong(request) {
         createSoundcloudVideo(request.id);
     }
     if (request.service === 'Bandcamp') {
-        console.log('cueing bandcamp song', request);
         createBandcampVideo(request.id);
     }
 }
@@ -39,15 +38,15 @@ function stopAllVideos() {
 function autoPlayNextSong(direction) {
     var musicLibrary = getUser().musicLibrary;
     var request = {};
-    
+
     if (direction === 'forward') currentSongIndex += 1;
     if (direction === 'backward') currentSongIndex -= 1;
     if (currentSongIndex === musicLibrary.length || currentSongIndex < 0) {
         return;
     }
-    
+
     var song = musicLibrary[currentSongIndex].song;
-    
+
     if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
         request.service = "YouTube";
     }
@@ -104,15 +103,17 @@ function getCurrentTime(service) {
     } else if (service === 'Bandcamp') {
         currentTime = bandcampVideo[0].currentTime;
         duration = bandcampVideo[0].duration;
+
     }
     return [currentTime, duration];
 }
 
 function seekTo(time, service) {
+    console.log('HITTING SEEK TO');
     if (service === "YouTube") {
         youtubePlayer.seekTo(time);
     } else if (service === 'Soundcloud') {
-        soundCloudVideo[0].currentTime = time;
+        soundcloudVideo[0].currentTime = time;
     } else if (service === 'Bandcamp') {
         bandcampVideo[0].currentTime = time;
     }
