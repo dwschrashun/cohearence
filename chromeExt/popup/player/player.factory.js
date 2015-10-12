@@ -1,4 +1,4 @@
-app.factory("PlayerFactory", function($http) {
+app.factory("PlayerFactory", function ($http, $rootScope) {
 	var factory = {};
 
 	factory.setCurrentService = function (playerStates) {
@@ -27,6 +27,11 @@ app.factory("PlayerFactory", function($http) {
             return false;
         }
         return true;
+    };
+
+    factory.getPlaylists = function () {
+        return $http.get($rootScope.environment.server + '/api/playlists/user')
+            .then(response => response.data);
     };
 
 	return factory;
