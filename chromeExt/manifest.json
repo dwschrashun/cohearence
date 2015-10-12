@@ -23,6 +23,9 @@
         "storage"
     ],
     "content_scripts": [{
+        "matches": ["http://www.cohearence.lol/*", "http://cohearence.lol", "http://localhost:1337", "https://aqueous-gorge-7560.herokuapp.com/"],
+        "js": ["contentScripts/webPlayer.js"]
+    }, {
         "matches": ["https://www.youtube.com/*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/youtube.js"]
     }, {
