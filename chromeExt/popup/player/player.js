@@ -65,12 +65,12 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         };
 
         //if footer play button is clicked and no current service is set, set it to service of first song in music library
-        var firstSongObj = $scope.musicLibrary[0]
+        var firstSongObj = $scope.musicLibrary[0];
         if (!request.service && firstSongObj) {
             var firstSongService = firstSongObj.song.source.domain;
             if (firstSongService) {
                 request.service = firstSongService;
-                $scope.loadSong(firstSongObj.song)
+                $scope.loadSong(firstSongObj.song);
             }
         }
         //if footer OR specific song button is clicked and current service exists
@@ -133,12 +133,12 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         action: "seekTo",
         service: $scope.currentService,
         time: time
-      }
+      };
 
       chrome.runtime.sendMessage(request, function(response) {
 
-      })
-    }
+      });
+    };
 
     $scope.musicLibrary = theUser.musicLibrary;
     console.log($scope.musicLibrary);
