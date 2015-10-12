@@ -29,21 +29,51 @@ function getBackendUserAndUpdateLocalStorage() {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  
+  //on all player or scrobbler messages
+  if (request.action) {
 
-  //if scrobbling
-  if (request.action === 'scrobble') {
-    sendSong(request);
-    sendResponse({
-        response: "hey we got your song at the router from:" + request.message
-    });
-  }
+    var playerStates = getPlayerState();
+    var playing;
+    for (var key in playerStates) {
+        if (playerStates[key]) {
+            playing = true;
+        }
+    } 
 
-  //if making player perform some action (play, pause, etc.)
-  if (request.message === 'playerAction') {
-    var service = serviceMethods[request.service];
-    var self = service.reference;
-    var action = service[request.action];
-    action.call(self);
+    //if scrobbling
+    if (request.action === 'scrobble') {
+      sendSong(request);
+      setIcon(playing, "scrobble");
+      sendResponse({
+          response: "hey we got your song at the router from:" + request.message
+      });
+    }
+
+    //if making player perform some action (play, pause, etc.)
+    if (request.message === 'playerAction') {
+      setIcon(request.action !== "pause", "player");
+      var service = serviceMethods[request.service];
+      var self = service.reference;
+      var action = service[request.action];
+      action.call(self);
+    }
+
+
+    //if cueing video
+    if (request.message === "cue") {
+        stopAllVideos();
+        cueSong(request);
+        setIcon(true, "player");
+    }
+
+    // persisting controls on popup close
+    if (request === "whoIsPlaying") {
+      sendResponse({
+        response: playerStates
+      });
+    }
+
   }
 
    //if checking time of video
@@ -55,21 +85,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         duration: currentTime[1]
     });
   }
-
-  //if cueing video
-  if (request.message === "cue") {
-      stopAllVideos();
-      cueSong(request);
-  }
-
-  // persisting controls on popup close
-  if (request === "whoIsPlaying") {
-    var playerStates = getPlayerState();
-
-    sendResponse({
-      response: playerStates
-    });
-  }
+  
   if (request.message === "ytCall") {
     // console.log('request to youtube', request);
     var q = `${request.artist} - ${request.title}`;

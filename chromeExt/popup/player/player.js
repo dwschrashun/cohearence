@@ -13,7 +13,11 @@ app.config(function ($stateProvider) {
 
 app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, $state) {
     function whoIsPlaying() {
-        chrome.runtime.sendMessage('whoIsPlaying', function (response) {
+        var request = {
+            message: "whoIsPlaying",
+            action: "whoIsPlaying"
+        };
+        chrome.runtime.sendMessage(request, function (response) {
             $scope.currentService = PlayerFactory.setCurrentService(response);
             if ($scope.currentService !== null) $scope.paused = false;
         });
@@ -28,7 +32,8 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         $scope.paused = false;
         var request = {
             message: "cue",
-			      service: $scope.currentService
+            action: "cue",
+			service: $scope.currentService
         };
         if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
             $scope.currentService = "YouTube";

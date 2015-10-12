@@ -51,3 +51,21 @@ function getCurrentTime (service) {
     console.log('getting current time', currentTime, duration);
     return [currentTime, duration];
 }
+
+function setIcon (playing, action) {
+    var state = `${playing ? "playing" : "paused"}${action}`;
+    console.log("set icon state:", state);
+    var iconMap = {
+        playingscrobble: "/icons/playingscrobble.jpg",
+        playingplayer: "/icons/playingplayer.jpg",
+        pausedscrobble: "/icons/pausedscrobble.jpg",
+        pausedplayer: "/icons/pausedplayer.jpg"
+    };
+    chrome.browserAction.setIcon({path: iconMap[state]});
+    if (action === "scrobble") {
+        setTimeout(function () {
+            state = `${playing ? "playing" : "paused"}player`;
+            chrome.browserAction.setIcon({path: iconMap[state]});
+        }, 5000);xs
+    }
+}
