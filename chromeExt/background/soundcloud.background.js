@@ -24,7 +24,7 @@ function createSoundcloudVideo(songUrl) {
                         play: theVideo.play,
                         pause: theVideo.pause,
                         reference: theVideo,
-                        seekTo: seek
+                        seekTo: undefined
                     };
                 }).fail(function () {
                     console.log("failed");

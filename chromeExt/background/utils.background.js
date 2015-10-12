@@ -58,6 +58,6 @@ function seekTo(time, service) {
     } else if (service === 'Soundcloud') {
         soundCloudVideo[0].seek(time);
     } else if (service === 'Bandcamp') {
-        bandcampVideo[0].currenetTime = time;
+        bandcampVideo[0].currentTime = time;
     }
 }
