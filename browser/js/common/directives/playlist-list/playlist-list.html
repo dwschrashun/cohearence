@@ -1,18 +1,21 @@
 <div ng-cloak id="list-container">
-	<div id="controls">
-		<div class="search">
-			<input class="form-control" placeholder="Search Playlists" ng-model="searchText">
-		</div>
-		<button ng-hide="namingPlaylist" ng-click="namePlaylist()" class="btn btn-primary btn-add">+</button>
-		<form name="playlistForm" ng-submit=" playlistForm.name.$valid && makePlaylist()">
-			<input name="name" class="form-control" placeholder="Playlist Name" ng-show="namingPlaylist" ng-model="playlistName" required ></input>
-			<button type="submit" class="btn btn-primary btn-add" ng-show="namingPlaylist && playlistForm.name.$valid">✓</button>
-		</form>
+	<div id="list-header">
+		<h2>My Playlists</h2>
 	</div>
 	<ul>
 		<li ng-repeat="playlist in playlists | filter:searchText:false">
 			<a ui-sref="playlist({playlistID: playlist._id})" droppable id = "{{playlist._id}}">{{ playlist.name }}</a>
-			<button class="btn btn-add" ng-click="removePlaylist(playlist._id)">x</button>
+			<button class="btn-remove" ng-click="removePlaylist(playlist._id)"> x </button>
 		</li>
 	</ul>
+	<div id="controls">
+		<div class="search">
+			<input class="form-control" placeholder="Search" ng-model="searchText">
+		</div>
+		<button ng-hide="namingPlaylist" ng-click="namePlaylist()" class="btn-add">+</button>
+		<form name="playlistForm" ng-submit=" playlistForm.name.$valid && makePlaylist()">
+			<button type="submit" id="confirm" class="btn-add" ng-show="namingPlaylist && playlistForm.name.$valid">✓</button>
+			<input name="name" class="form-control form-add" placeholder="Playlist Name" ng-show="namingPlaylist" ng-model="playlistName" required ></input>
+		</form>
+	</div>
 </div>

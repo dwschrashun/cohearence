@@ -1,9 +1,13 @@
-<div class="col-md-2" id="library-container">
+<div class="col-md-2" id="sidebar-container">
 	<div class="panel coolPanel" id="sidebar">
 		<div class="panel-heading">
-			<h2 class="panel-title">My Playlists</h2>
+			<h2 class="panel-title">Control Panel</h2>
 		</div>
-			<playlist-list></playlist-list>
-			<button ui-sref="home">My Library</button>
+		<div class="sidebar-body">
+			<ul>
+				<li ng-repeat="item in items" class="item-button" ng-click=setCurrentItem(item) ng-class="{ active: item === currentItem }" id=" item{{$index}}">{{ item }}</li>
+			</ul>
+			<playlist-list ng-if="showingPlaylists"></playlist-list>
+		</div>
 	</div>
 </div>
