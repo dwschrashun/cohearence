@@ -33,8 +33,8 @@
 
 #music-library-wrap {
     height: 250px;
-    overflow-y: scroll;
-}   
+    overflow-y: auto;
+}
 
 #header-border {
     border-bottom: 1px solid lightgray;
@@ -46,7 +46,6 @@ i {
 
 #music-library {
     font-size: .9em;
-    
 }
 
 #music-library li {
@@ -63,7 +62,7 @@ i {
 }
 
 .songColumn {
-    overflow-x: hidden;
+    overflow-x: auto;
 }
 
 .popup-nav {

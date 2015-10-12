@@ -19,6 +19,8 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         });
     }
     // This needs to run everytime the controller loads
+    // $scope.paused = true;
+    $scope.paused;
     whoIsPlaying();
 
     $scope.loadSong = function (song) {
@@ -26,14 +28,12 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         $scope.paused = false;
         var request = {
             message: "cue",
-			service: $scope.currentService
+			      service: $scope.currentService
         };
         if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
             $scope.currentService = "YouTube";
-            // console.log("request in loadsong:", request, song);
             request.id = song.source.url;
             request.service = "YouTube";
-            // console.log("youtube message sending", request);
         }
         if (song.source.domain === 'Soundcloud') {
             var streamable = PlayerFactory.checkSoundcloudStreamable(song);
@@ -41,12 +41,10 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
                 $scope.currentService = 'Soundcloud';
                 request.id = song.source.url;
                 request.service = 'Soundcloud';
-                // console.log('loading Soundcloud song');
             } else {
                 $scope.currentService = "YouTube";
                 request.id = song.source.url;
                 request.service = 'YouTube';
-                // console.log('streamable', streamable, request);
             }
         }
         if (song.source.domain === 'Bandcamp') {
@@ -56,7 +54,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             console.log('loading bandcamp song', song, request);
         }
         chrome.runtime.sendMessage(request, function (response) {
-            // console.log('response from router:', response);
         });
     };
 
@@ -67,9 +64,21 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             action: "play",
             service: $scope.currentService
         };
-        chrome.runtime.sendMessage(request, function (response) {
-            // console.log('response from router:', response);
-        });
+
+        //if footer play button is clicked and no current service is set, set it to service of first song in music library
+        var firstSongObj = $scope.musicLibrary[0]
+        if (!request.service && firstSongObj) {
+            var firstSongService = firstSongObj.song.source.domain;
+            if (firstSongService) {
+                request.service = firstSongService;
+                $scope.loadSong(firstSongObj.song)
+            }
+        }
+        //if footer OR specific song button is clicked and current service exists
+        else {
+          chrome.runtime.sendMessage(request, function (response) {
+          });
+        }
     };
 
     $scope.pauseVideo = function () {
@@ -120,6 +129,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     };
 
     $scope.musicLibrary = theUser.musicLibrary;
+    console.log($scope.musicLibrary);
     $scope.logout = function () {
         LoginFactory.logout()
             .then(function () {
