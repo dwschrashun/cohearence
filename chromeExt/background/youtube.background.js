@@ -27,7 +27,7 @@ function createYouTubeVideo() {
 
     function onPlayerStateChange(event) {
         if (event.data === 0) {
-            var nextSong = autoPlayNextSong();
+            var nextSong = autoPlayNextSong('forward');
             cueSong(nextSong);
         }
     }

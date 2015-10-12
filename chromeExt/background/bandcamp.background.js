@@ -1,7 +1,7 @@
 function createBandcampVideo(trackSrc) {
   var theVideo = bandcampVideo[0];
   theVideo.onended = function () {
-      var nextSong = autoPlayNextSong();
+      var nextSong = autoPlayNextSong('forward');
       console.log('playing next song', nextSong);
       cueSong(nextSong);
   };
