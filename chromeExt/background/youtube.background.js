@@ -9,19 +9,26 @@ function createYouTubeVideo() {
             height: '390',
             width: '640',
             events: {
-                "onReady": onPlayerReady
-                // "onStateChange": onPlayerStateChange
+                "onReady": onPlayerReady,
+                "onStateChange": onPlayerStateChange
             }
         });
     }, 800);
 
     function onPlayerReady(event) {
-      serviceMethods.YouTube = {
-        play: youtubePlayer.playVideo,
-        pause: youtubePlayer.pauseVideo,
-        reference: youtubePlayer,
-        checkTime: youtubePlayer.getCurrentTime,
-        seekTo: youtubePlayer.seekTo
-      };
+        serviceMethods.YouTube = {
+            play: youtubePlayer.playVideo,
+            pause: youtubePlayer.pauseVideo,
+            reference: youtubePlayer,
+            checkTime: youtubePlayer.getCurrentTime,
+            seekTo: youtubePlayer.seekTo
+        };
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data === 0) {
+            var nextSong = autoPlayNextSong();
+            cueSong(nextSong);
+        }
     }
 }

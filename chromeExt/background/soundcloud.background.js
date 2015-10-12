@@ -37,6 +37,13 @@ function createSoundcloudVideo(songUrl) {
 
     SC.resolve(songUrl)
         .then(streamTrack)
+        .then(function () {
+            theVideo.onended = function () {
+                var nextSong = autoPlayNextSong();
+                console.log('playing next song', nextSong);
+                cueSong(nextSong);
+            };
+        })
         .then(null, function (err) {
             console.log(err);
         });

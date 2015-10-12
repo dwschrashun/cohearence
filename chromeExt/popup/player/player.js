@@ -22,12 +22,13 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     $scope.paused = true;
     whoIsPlaying();
 
-    $scope.loadSong = function (song) {
+    $scope.loadSong = function (song, songIndex) {
         $scope.currentSong = song;
         $scope.paused = false;
         var request = {
             message: "cue",
-			      service: $scope.currentService
+			service: $scope.currentService,
+            songIndex: songIndex
         };
         if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
             $scope.currentService = "YouTube";
@@ -65,12 +66,12 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         };
 
         //if footer play button is clicked and no current service is set, set it to service of first song in music library
-        var firstSongObj = $scope.musicLibrary[0]
+        var firstSongObj = $scope.musicLibrary[0];
         if (!request.service && firstSongObj) {
             var firstSongService = firstSongObj.song.source.domain;
             if (firstSongService) {
                 request.service = firstSongService;
-                $scope.loadSong(firstSongObj.song)
+                $scope.loadSong(firstSongObj.song);
             }
         }
         //if footer OR specific song button is clicked and current service exists
@@ -89,6 +90,16 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         };
         chrome.runtime.sendMessage(request, function (response) {
             // console.log('response from router:', response);
+        });
+    };
+
+    $scope.changeSong = function (action) {
+        var request = {
+            message: 'changeSong',
+            direction: action
+        };
+        chrome.runtime.sendMessage(request, function (response) {
+            console.log('changed song response', response);
         });
     };
 
@@ -133,12 +144,12 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         action: "seekTo",
         service: $scope.currentService,
         time: time
-      }
+      };
 
       chrome.runtime.sendMessage(request, function(response) {
 
-      })
-    }
+      });
+    };
 
     $scope.musicLibrary = theUser.musicLibrary;
     console.log($scope.musicLibrary);
