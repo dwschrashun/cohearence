@@ -1,27 +1,17 @@
 app.config(function ($stateProvider) {
-    $stateProvider
-        .state("player", {
-            url: '/player',
-            templateUrl: '/popup/player/player.html',
-            controller: 'playerCtrl',
-            resolve: {
-                theUser: function (LoginFactory) {
-                    return LoginFactory.isLoggedIn();
-                },
-                playlists: function (PlayerFactory) {
-                    return PlayerFactory.getPlaylists();
-                }
+    $stateProvider.state("player", {
+        url: '/player',
+        templateUrl: '/popup/player/player.html',
+        controller: 'playerCtrl',
+        resolve: {
+            theUser: function (LoginFactory) {
+                return LoginFactory.isLoggedIn();
             }
-        }).state('player.musicLibrary', {
-            url: '/musicLibrary',
-            templateUrl: "../popup/musicLibrary/musicLibrary.html"
-        }).state('player.playlists', {
-            url: '/playlists',
-            templateUrl: '../popup/playlists/playlists.html'
-        });
+        }
+    });
 });
 
-app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, playlists, $state) {
+app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, $state) {
     function whoIsPlaying() {
         chrome.runtime.sendMessage('whoIsPlaying', function (response) {
             $scope.currentSong = theUser.musicLibrary[response.currentIndex].song
@@ -34,7 +24,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     // This needs to run everytime the controller loads
     $scope.paused = true;
     whoIsPlaying();
-    console.log('playlists', playlists);
 
     function removePlayingIconFromPreviousSong() {
         if ($scope.currentSong) {
@@ -57,7 +46,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         $scope.paused = false;
         var request = {
             message: "cue",
-            service: $scope.currentService,
+			service: $scope.currentService,
             songIndex: songIndex
         };
         if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
@@ -79,11 +68,12 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         }
         if (song.source.domain === 'Bandcamp') {
             $scope.currentService = 'Bandcamp';
-            request.service = 'Bandcamp';
+            request.service ='Bandcamp';
             request.id = song.source.url;
             console.log('loading bandcamp song', song, request);
         }
-        chrome.runtime.sendMessage(request, function (response) {});
+        chrome.runtime.sendMessage(request, function (response) {
+        });
     };
 
     $scope.playVideo = function () {
@@ -105,7 +95,8 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         }
         //if footer OR specific song button is clicked and current service exists
         else {
-            chrome.runtime.sendMessage(request, function (response) {});
+          chrome.runtime.sendMessage(request, function (response) {
+          });
         }
     };
 
@@ -166,17 +157,17 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         else fastForward = setInterval(ff, 100);
     };
 
-    $scope.seekTo = function (time) {
-        var request = {
-            message: "changeTimeAction",
-            action: "seekTo",
-            service: $scope.currentService,
-            time: time
-        };
+    $scope.seekTo = function(time) {
+      var request = {
+        message: "changeTimeAction",
+        action: "seekTo",
+        service: $scope.currentService,
+        time: time
+      };
 
-        chrome.runtime.sendMessage(request, function (response) {
+      chrome.runtime.sendMessage(request, function(response) {
 
-        });
+      });
     };
 
     $scope.musicLibrary = theUser.musicLibrary;
@@ -184,15 +175,9 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     $scope.logout = function () {
         LoginFactory.logout()
             .then(function () {
-                $scope.pauseVideo();
+				$scope.pauseVideo();
                 $state.go('login');
             });
     };
 
-    $scope.goToPlaylists = function () {
-        $state.go('player.playlists');
-    };
-    $scope.goToMusicLibrary = function () {
-        $state.go('player.musicLibrary');
-    };
 });
