@@ -12,8 +12,8 @@ $background-color-light: #333333;
 }
 
 #song-list {
-	min-height: 700px;
 	float: right;
+
 	library-song {
 		ul {
 			border-bottom: solid 1px $background-color-light;
@@ -23,6 +23,11 @@ $background-color-light: #333333;
 	// box-shadow: 0px 2px 5px black;
 	.panel-heading {
 		background-color: $blue;
+		border-top-right-radius: 0px;
+	}
+	.panel-body {
+		overflow-y: auto;
+		height: 700px;
 	}
 }
 
