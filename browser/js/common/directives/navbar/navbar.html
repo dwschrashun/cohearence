@@ -2,12 +2,13 @@
     <div class="container">
         <!-- <div class="navbar-header"> -->
             <!-- <fullstack-logo></fullstack-logo> -->
-			<p>λ</p>
         <!-- </div> -->
-        <ul class="nav navbar-nav">
-            <!-- <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()"> -->
-                <!-- <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a> -->
-            <!-- </li> -->
+        <ul class="nav navbar-nav list-inline">
+			<li><p>λ</p></li>
+            <li><player></player></li>
+            <li>
+                <progress-bar></progress-bar>
+            </li>
         </ul>
         <div ng-show="user" class="welcome">
             <span>Welcome, {{ user.email }}!</span>
