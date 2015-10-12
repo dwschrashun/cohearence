@@ -33,6 +33,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     }
 
     function loadPlayingIcon(id) {
+        console.log('called again!');
         var thisSong = $('#' + id + ' .status');
         console.log (thisSong);
         thisSong.removeClass('not-playing');
