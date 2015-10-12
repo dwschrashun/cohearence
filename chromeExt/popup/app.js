@@ -19,9 +19,7 @@ app.run(function($rootScope) {
     // } else {
     //     $state.go('login');
     // }
-    console.log("app.run");
     chrome.runtime.sendMessage({message: "getEnv"}, function (environment) {
         $rootScope.environment = environment;
-        console.log("environment set:", $rootScope.environment);
     });
 });

@@ -23,7 +23,6 @@ app.factory("PlayerFactory", function ($http, $rootScope) {
 
     factory.checkSoundcloudStreamable = function (song) {
         if (song.source.url.indexOf('soundcloud') === -1) {
-            // console.log('not streamable', song);
             return false;
         }
         return true;

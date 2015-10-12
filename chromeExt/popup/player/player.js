@@ -22,6 +22,8 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, playlists, $state) {
+    $scope.musicLibrary = theUser.musicLibrary;
+
     function whoIsPlaying() {
         chrome.runtime.sendMessage('whoIsPlaying', function (response) {
             $scope.currentSong = theUser.musicLibrary[response.currentIndex].song
@@ -34,7 +36,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     // This needs to run everytime the controller loads
     $scope.paused = true;
     whoIsPlaying();
-    console.log('playlists', playlists);
 
     function removePlayingIconFromPreviousSong() {
         if ($scope.currentSong) {
@@ -173,14 +174,11 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             service: $scope.currentService,
             time: time
         };
-
         chrome.runtime.sendMessage(request, function (response) {
 
         });
     };
 
-    $scope.musicLibrary = theUser.musicLibrary;
-    console.log($scope.musicLibrary);
     $scope.logout = function () {
         LoginFactory.logout()
             .then(function () {
