@@ -23,7 +23,8 @@ function createSoundcloudVideo(songUrl) {
                     serviceMethods.Soundcloud = {
                         play: theVideo.play,
                         pause: theVideo.pause,
-                        reference: theVideo
+                        reference: theVideo,
+                        seekTo: seek
                     };
                 }).fail(function () {
                     console.log("failed");

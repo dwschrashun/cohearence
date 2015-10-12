@@ -20,7 +20,8 @@ function createYouTubeVideo() {
         play: youtubePlayer.playVideo,
         pause: youtubePlayer.pauseVideo,
         reference: youtubePlayer,
-        checkTime: youtubePlayer.getCurrentTime
+        checkTime: youtubePlayer.getCurrentTime,
+        seekTo: youtubePlayer.seekTo
       };
     }
 }

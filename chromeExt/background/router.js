@@ -85,7 +85,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         duration: currentTime[1]
     });
   }
-  
+  //if changing time in video with slider
+  if (request.message === "changeTimeAction"){
+    var service = request.service;
+    seekTo(request.time, service);
+  }
+
   if (request.message === "ytCall") {
     // console.log('request to youtube', request);
     var q = `${request.artist} - ${request.title}`;
@@ -106,6 +111,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log("getting env:", environment);
     sendResponse(environment);
   }
+
 
   if (request.message === 'checkForStreamable') {
     SC.initialize({

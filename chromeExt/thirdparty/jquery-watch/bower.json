@@ -1,0 +1,16 @@
+{
+  "name": "jquery-watch-dom",
+  "version": "1.16.0",
+  "main": "jquery-watch.js",
+  "license": "MIT",
+  "ignore": [
+    "*.sln",
+    ".*",    
+    "src"   
+  ],
+  "keywords": [
+    "json",
+    "date"    
+  ],
+  "homepage": "https://github.com/RickStrahl/jquery-watch"  
+}

@@ -37,7 +37,7 @@ function getPlayerState() {
 function getCurrentTime (service) {
     var currentTime,
         duration;
-        
+
     if (service === "YouTube") {
       currentTime = youtubePlayer.getCurrentTime();
       duration = youtubePlayer.getDuration();
@@ -51,6 +51,7 @@ function getCurrentTime (service) {
     console.log('getting current time', currentTime, duration);
     return [currentTime, duration];
 }
+
 
 function setIcon (playing, action) {
     var state = `${playing ? "playing" : "paused"}${action}`;
@@ -66,6 +67,17 @@ function setIcon (playing, action) {
         setTimeout(function () {
             state = `${playing ? "playing" : "paused"}player`;
             chrome.browserAction.setIcon({path: iconMap[state]});
-        }, 5000);xs
+        }, 5000);
     }
 }
+
+function seekTo(time, service) {
+    if (service === "YouTube") {
+        youtubePlayer.seekTo(time);
+    } else if (service === 'Soundcloud') {
+        soundCloudVideo[0].seek(time);
+    } else if (service === 'Bandcamp') {
+        bandcampVideo[0].currenetTime = time;
+    }
+}
+
