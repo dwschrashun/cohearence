@@ -47,12 +47,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   // persisting controls on popup close
   if (request === "whoIsPlaying") {
+
     var playerStates = getPlayerState();
 
     sendResponse({
-      response: playerStates
+      response: playerStates,
+      currentIndex: currentSongIndex || null
     });
   }
+
   if (request.message === "ytCall") {
     // console.log('request to youtube', request);
     var q = `${request.artist} - ${request.title}`;
