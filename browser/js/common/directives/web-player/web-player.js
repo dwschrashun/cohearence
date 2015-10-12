@@ -4,6 +4,18 @@ app.directive('player', function () {
 		templateUrl: "/js/common/directives/web-player/web-player.html",
 		controller: function ($scope) {
 
+			$scope.paused = true;
+			$scope.togglePaused = function($event) {
+				console.log("EVENT", $event);
+				if (!$event || !$scope.paused) {
+					$scope.paused = !$scope.paused;
+				}
+				else {
+					console.log("event, paused", $event, $scope.paused);
+				}
+			};
+				
+
 		    // $scope.playVideo = function () {
 		    //     $scope.paused = false;
 		    //     var request = {
