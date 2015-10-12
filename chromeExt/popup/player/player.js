@@ -24,6 +24,9 @@ app.config(function ($stateProvider) {
 app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, playlists, $state) {
     function whoIsPlaying() {
         chrome.runtime.sendMessage('whoIsPlaying', function (response) {
+            $scope.currentSong = theUser.musicLibrary[response.currentIndex].song
+            console.log($scope.currentSong);
+            if ($scope.currentSong) loadPlayingIcon($scope.currentSong._id)
             $scope.currentService = PlayerFactory.setCurrentService(response);
             if ($scope.currentService !== null) $scope.paused = false;
         });
@@ -33,8 +36,24 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     whoIsPlaying();
     console.log('playlists', playlists);
 
+    function removePlayingIconFromPreviousSong() {
+        if ($scope.currentSong) {
+            var prevSong = $('#' + $scope.currentSong._id + ' .status');
+            if (prevSong) prevSong.addClass('not-playing')
+        }
+    }
+
+    function loadPlayingIcon(id) {
+        console.log('called again!');
+        var thisSong = $('#' + id + ' .status');
+        console.log (thisSong);
+        thisSong.removeClass('not-playing');
+    }
+
     $scope.loadSong = function (song, songIndex) {
+        removePlayingIconFromPreviousSong();
         $scope.currentSong = song;
+        loadPlayingIcon(song._id);
         $scope.paused = false;
         var request = {
             message: "cue",
