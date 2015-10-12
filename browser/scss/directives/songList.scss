@@ -9,7 +9,6 @@ $background-color-light: #333333;
 @import url(http://fonts.googleapis.com/css?family=Roboto:100,300,400);
 
 #song-list-container {
-
 }
 
 #song-list {
@@ -17,17 +16,18 @@ $background-color-light: #333333;
 	float: right;
 	library-song {
 		ul {
-			border-bottom: solid 1px $background-color;
+			border-bottom: solid 1px $background-color-light;
 		}
 	}
-	border: solid 1px $background-color;
-	box-shadow: 0px 2px 5px black;
+	// border: solid 1px $background-color;
+	// box-shadow: 0px 2px 5px black;
 	.panel-heading {
 		background-color: $blue;
 	}
 }
 
 .coolPanel {
+	border-bottom: none;
 	margin-top: 20px;
 	width: 100%;
 	border-radius: 20px;
@@ -39,7 +39,7 @@ $background-color-light: #333333;
 		font-size: 1.2em;
 		letter-spacing: .02em;
 	}
-	background: $background-color-light;
+	background: linear-gradient($background-color, $background-color, $background-color-light);
 	color: $blue;
 
 	.panel-heading {

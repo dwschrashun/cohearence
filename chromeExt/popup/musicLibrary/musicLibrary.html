@@ -11,7 +11,7 @@
 </div>
 <div id="header-border"></div>
 <div id="music-library-wrap">
-    <div class="row" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
+    <div class="row" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song, $index)">
         <song></song>
     </div>
 </div>

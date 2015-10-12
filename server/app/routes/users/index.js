@@ -44,7 +44,7 @@ function fuzzySearch(arr, artist, title){
 		el.titleScore = title.score(el.title);
 		el.artistScore = artist.score(el.artist_name);
 		// console.log("hello ",el, el.titleScore, el.artistScore);
-		if ((el.titleScore + el.artistScore) > (titleMax + artistMax ) && el.titleScore > .75 && el.artistScore > .75) {
+		if ((el.titleScore + el.artistScore) > (titleMax + artistMax ) && el.titleScore > 0.75 && el.artistScore > 0.75) {
 			titleMax = el.titleScore;
 			artistMax = el.artistScore;
 			max = el;
