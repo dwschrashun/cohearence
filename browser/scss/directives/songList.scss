@@ -17,7 +17,7 @@ $background-color-light: #333333;
 	float: right;
 	library-song {
 		ul {
-			border-bottom: solid 1px $background-color;
+			border-bottom: solid 1px $background-color-light;
 		}
 	}
 	border: solid 1px $background-color;
@@ -39,7 +39,7 @@ $background-color-light: #333333;
 		font-size: 1.2em;
 		letter-spacing: .02em;
 	}
-	background: $background-color-light;
+	background: $background-color;
 	color: $blue;
 
 	.panel-heading {
