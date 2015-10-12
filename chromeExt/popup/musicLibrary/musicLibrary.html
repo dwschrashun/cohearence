@@ -17,14 +17,14 @@
                 <i ng-if="paused" class="fa fa-play" ng-click="playVideo()"></i>
                 <i ng-if="!paused" class="fa fa-pause" ng-click="pauseVideo()"></i>
             </div>
-            <div class="col-xs-3">
-                <span class="songColumn">{{item.song.artist}}</span>
+            <div class="col-xs-3 songColumn">
+                <span>{{item.song.artist}}</span>
             </div>
-            <div class="col-xs-5">
-                <span class="songColumn">{{item.song.title}}</span>
+            <div class="col-xs-5 songColumn">
+                <span>{{item.song.title}}</span>
             </div>
-            <div class="col-xs-2">
-                <span class="songColumn">{{item.song.duration}}</span>
+            <div class="col-xs-2 songColumn">
+                <span>{{item.song.duration}}</span>
             </div>
         </div>
     </div>
