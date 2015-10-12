@@ -8,26 +8,92 @@ $background-color: #222222;
 $background-color-light: #333333;
 
 #sidebar-container {
-	padding-top: 20px;
-	// width: 400px;
-}
+	padding-right: 0;
 
-#sidebar {
-	background-color: $background-color;
-	playlist-list {
-		div {
-			color: $blue;
-			background-color: $background-color;
+	#sidebar {
+		// min-height: 700px;
+		background-color: $background-color;
+		// playlist-list {
+		// 	div {
+		// 		color: $blue;
+		// 		background-color: $background-color;
+		// 	}
+		// }
+		.panel-heading{
+			background-color: $orange;
 		}
-	}
 
-	#controls {
-		text-align: center;
-		.btn-add {
-			border-radius: 50px;
-			background-color: $blue;
-			color: $background-color;
+		ul {
+			margin: 15px;
+			padding: 0px;
+			#item0 {
+				border-left: solid $blue 5px;
+			}
+			#item1 {
+				border-left: solid $green 5px;
+			}
+			#item2 {
+				border-left: solid $pink 5px;
+			}
+			#item3 {
+				border-left: solid $yellow 5px;
+			}
+			#item4 {
+				border-left: solid $orange 5px;
+			}
+			.active {
+				background-color: $background-color-light;
+			}
+			li {
+				border-bottom: solid $background-color-light 1px;
+				margin: 0px;
+				padding: 10px;
+				color: $blue;
+				&:hover {
+					color: white;
+					background-color: $background-color-light;
+				}
+				&:focus {
+					outline: none;
+				}
+				// &:after {
+				// 	content: '';
+				// 	position: absolute;
+				//
+				// 	bottom: -.2em;
+				// 	left: 50%;
+				// 	right: 50%;
+				// 	height: 1px;
+				//
+				// 	background: currentColor; // system color
+				// 	transition: all ease .1s;
+				// }
+				// &:hover:after {
+				// 	left: 0;
+				// 	right: 0;
+				// 	height: 2px;
+				// }
+				// &:before {
+				// 	position: absolute;
+				// 	transform: translateX(-100%);
+				// 	left: -10px;
+				//
+				// 	color: #eee;
+				// 	opacity: .3;
+				// 	font-weight: 100;
+				// 	font-size: .8em;
+				// }
+			}
 		}
-		margin: 20px;
+
+		#controls {
+			text-align: center;
+			.btn-add {
+				border-radius: 50px;
+				background-color: $blue;
+				color: $background-color;
+			}
+			margin: 20px;
+		}
 	}
 }
