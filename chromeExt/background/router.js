@@ -56,11 +56,18 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     });
   }
 
+  //if changing time in video with slider
+  if (request.message === "changeTimeAction"){
+    var service = request.service;
+    seekTo(request.time, service);
+  }
+
   //if cueing video
   if (request.message === "cue") {
       stopAllVideos();
       cueSong(request);
   }
+
 
   // persisting controls on popup close
   if (request === "whoIsPlaying") {
@@ -90,6 +97,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log("getting env:", environment);
     sendResponse(environment);
   }
+
 
   if (request.message === 'checkForStreamable') {
     SC.initialize({

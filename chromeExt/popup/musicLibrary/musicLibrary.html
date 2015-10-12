@@ -12,20 +12,6 @@
 <div id="header-border"></div>
 <div id="music-library-wrap">
     <div class="row" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
-        <div id="music-library">
-            <div class="col-xs-1 text-center">
-                <i ng-if="paused" class="fa fa-play" ng-click="playVideo()"></i>
-                <i ng-if="!paused" class="fa fa-pause" ng-click="pauseVideo()"></i>
-            </div>
-            <div class="col-xs-3 songColumn">
-                <span>{{item.song.artist}}</span>
-            </div>
-            <div class="col-xs-5 songColumn">
-                <span>{{item.song.title}}</span>
-            </div>
-            <div class="col-xs-2 songColumn">
-                <span>{{item.song.duration}}</span>
-            </div>
-        </div>
+        <song></song>
     </div>
 </div>

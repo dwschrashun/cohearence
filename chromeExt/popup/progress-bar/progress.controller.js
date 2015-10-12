@@ -1,4 +1,4 @@
-app.controller('ProgressCtrl', function ($scope, PlayerFactory) {
+app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
     $scope.duration = 0;
     $scope.timeElapsed = 0;
     //initialize slider
@@ -13,8 +13,13 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory) {
             //seek to new time
             //continue playing video
             //update timeElapsed
+            $interval.cancel(sliderUpdater);
+            sliderUpdater = undefined;
             $scope.pauseVideo();
             var newTime = ui.value;
+            $scope.seekTo(newTime);
+            $scope.playVideo();
+            sliderUpdater = $interval(getTimeFromBackground, 1000)
             console.log(newTime);
         }
     });
@@ -45,7 +50,5 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory) {
         });
     }
 
-    setInterval(function() {
-        if (!$scope.paused) getTimeFromBackground;
-    }, 1000);
+    var sliderUpdater = $interval(getTimeFromBackground, 1000);
 });

@@ -19,8 +19,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         });
     }
     // This needs to run everytime the controller loads
-    // $scope.paused = true;
-    $scope.paused;
+    $scope.paused = true;
     whoIsPlaying();
 
     $scope.loadSong = function (song) {
@@ -127,6 +126,19 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         if (toggle === 'stop') clearInterval(fastForward);
         else fastForward = setInterval(ff, 100);
     };
+
+    $scope.seekTo = function(time) {
+      var request = {
+        message: "changeTimeAction",
+        action: "seekTo",
+        service: $scope.currentService,
+        time: time
+      }
+
+      chrome.runtime.sendMessage(request, function(response) {
+
+      })
+    }
 
     $scope.musicLibrary = theUser.musicLibrary;
     console.log($scope.musicLibrary);
