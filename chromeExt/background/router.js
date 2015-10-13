@@ -41,6 +41,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   //if cueing video
   if (request.message === "cue") {
+      console.log("request in cue", request);
       currentSongIndex = request.songIndex;
       stopAllVideos();
       cueSong(request);
