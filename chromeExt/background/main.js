@@ -12,7 +12,6 @@ var currentSongIndex = 0;
 window.onload = function () {
 	//set "environment" variables
 	var manifest = chrome.runtime.getManifest();
-	console.log(manifest.key);
 	if (manifest.key) {
 		environment.domain = "chrome-extension://jhddmhidckejknknbabaniikacgjhomb/";
 		environment.server = "https://aqueous-gorge-7560.herokuapp.com/";

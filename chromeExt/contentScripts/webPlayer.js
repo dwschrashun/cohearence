@@ -14,7 +14,7 @@ function loadSong (clicked) {
 	});	
 }
 
-$(document).ready(function (){
+function setListeners () {
 
 	setTimeout(function(){
 		var current;
@@ -23,7 +23,7 @@ $(document).ready(function (){
 			request.message = "playerAction";
 			request.action = "pause";
 	        request.service = $(".current").first().find(".track-source").attr("data");
-			console.log("pause request:", request);
+			// console.log("pause request:", request);
 	        chrome.runtime.sendMessage(request, function (response) {
 	            // console.log('response from router:', response);
 	        });
@@ -31,18 +31,18 @@ $(document).ready(function (){
 		$("#nav-play").on("click", function () {
 			request.message = "playerAction";
 			current = $('.current');
-			console.log("click on play:", current);
+			// console.log("click on play:", current);
 			var track;
 			if (!current){
 				track = $('.track-title').first();
-				console.log("loading new song from play button", track);
+				// console.log("loading new song from play button", track);
 				loadSong(track);
 			} else {
 				track = current.first().find(".track-source");
 				request.service = track.attr('data');
 				request.url = track.children('a').attr('href');
 				request.action = "play";
-				console.log('request in play else', request);
+				// console.log('request in play else', request);
 				chrome.runtime.sendMessage(request, function (response) {
 					console.log('GOT THE RESPONSE', response);
 				});
@@ -59,7 +59,6 @@ $(document).ready(function (){
 		$("#nav-forward").on("click", function() {
 			// console.log("nave forward clicke");
 			request.message = "changeSong";
-			request
 			request.direction = "forward";
 			chrome.runtime.sendMessage(request, function (response) {
 
@@ -67,9 +66,20 @@ $(document).ready(function (){
 		});
 
 		$(".song-list-item").on("click", function () {
+			// console.log("songlisitem click");
 			loadSong($(this));
 		});
 
-	}, 1000);
+	}, 2000);
+}
 
+$(document).ready(function () {
+	setListeners();
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.message === 'libLoaded') {
+        // console.log("newSongLoaded in yt cs", request);
+        setListeners();
+    }
 });
