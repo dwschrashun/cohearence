@@ -49,7 +49,7 @@ $(document).ready(function (){
 			}
 		});
 		$("#nav-backward").on("click", function() {
-			console.log("nave forward clicke");
+			// console.log("nave forward clicke");
 			request.message = "changeSong";
 			request.direction = "backward";
 			chrome.runtime.sendMessage(request, function (response) {
@@ -57,8 +57,9 @@ $(document).ready(function (){
 			});
 		});
 		$("#nav-forward").on("click", function() {
-			console.log("nave forward clicke");
+			// console.log("nave forward clicke");
 			request.message = "changeSong";
+			request
 			request.direction = "forward";
 			chrome.runtime.sendMessage(request, function (response) {
 
