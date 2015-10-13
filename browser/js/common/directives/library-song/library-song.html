@@ -1,5 +1,6 @@
 <ul>
-	<li ng-class="{'currentSong': currentSong === song.song._id, 'nextSong': nextSong===song.song._id}" draggable id="{{song.song._id}}">
+	<pre>{{current}}</pre>
+	<li ng-class="{'current': current === song.song._id}" draggable id="{{song.song._id}}">
 		<div class="row" >
 			<div class="col-md-2 track-artist">
 				<a>{{song.song.artist}}</a>

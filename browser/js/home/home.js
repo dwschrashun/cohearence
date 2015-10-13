@@ -34,16 +34,14 @@ app.controller('HomeController', function($rootScope, $scope, AuthService, $stat
 				$scope.hasSongs = true;
 			}
 			$scope.load = function(songId, index){
-				// console.log("in functino", songId, , $scope.view);
-				$rootScope.currentSong = songId;
-				$rootScope.nextSong = $scope.view[parseInt(index) + 1];
-				console.log("CURRENT SONG: ",$rootScope.currentSong);
-				console.log("NEXT SONG: ",$rootScope.nextSong);
+				$scope.current = songId;
+				$scope.next = $scope.view[parseInt(index) + 1];
+				console.log("CURRENT SONG: ",$scope.current);
+				console.log("NEXT SONG: ",$scope.next);
 			};
 		});
 	}
 
-	$scope.sean = "poop";
 
 
 	$scope.removePlaylist = function(id){
