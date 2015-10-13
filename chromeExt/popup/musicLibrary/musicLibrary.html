@@ -1,8 +1,8 @@
-<div class="row" id="music-library-header">
-    <div class="col-xs-3 col-xs-offset-1">
+<div class="row music-library-header">
+    <div class="col-xs-3 col-xs-offset-2">
         Artist
     </div>
-    <div class="col-xs-5">
+    <div class="col-xs-4">
         Title
     </div>
     <div class="col-xs-2">
@@ -11,7 +11,7 @@
 </div>
 <div id="header-border"></div>
 <div id="music-library-wrap">
-    <div class="row" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
+    <div class="row" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song, $index)">
         <song></song>
     </div>
 </div>

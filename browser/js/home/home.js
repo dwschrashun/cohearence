@@ -19,11 +19,16 @@ app.controller('HomeController', function($scope, AuthService, $state, theUser, 
 	else {
 		PlaylistFactory.getPlaylists()
 		.then(function(playlists){
+			$scope.hasSongs = false;
 			$scope.theUser = theUser;
 			$scope.playlists = playlists;
 			$scope.view = $scope.theUser.musicLibrary;
 			$scope.header = "My Library";
 			$scope.playlistView = false;
+
+			if ($scope.view.length) {
+				$scope.hasSongs = true;
+			}
 		});
 	}
 

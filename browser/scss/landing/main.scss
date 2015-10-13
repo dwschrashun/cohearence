@@ -64,10 +64,19 @@ $mint-green: #C5EEBF;
 	}
 
 	#description {
-		margin-top: 130px;
+		margin-top: 90px;
 		margin-left: 60px;
 		margin-right: 60px;
-
+		a {
+			text-decoration: none;
+		}
+		h2 {
+			padding: 20px;
+			color: rgb(193, 193, 193);
+			font-size: 40px;
+			font-family: "Lato", sans-serif;
+			font-weight: 300;
+		}
 		.col-md-3 {
 			&:hover {
 				p {

@@ -24,7 +24,7 @@ function createSoundcloudVideo(songUrl) {
                         play: theVideo.play,
                         pause: theVideo.pause,
                         reference: theVideo,
-                        seekTo: seek
+                        seekTo: undefined
                     };
                 }).fail(function () {
                     console.log("failed");
@@ -37,6 +37,13 @@ function createSoundcloudVideo(songUrl) {
 
     SC.resolve(songUrl)
         .then(streamTrack)
+        .then(function () {
+            theVideo.onended = function () {
+                var nextSong = autoPlayNextSong('forward');
+                console.log('playing next song', nextSong);
+                cueSong(nextSong);
+            };
+        })
         .then(null, function (err) {
             console.log(err);
         });

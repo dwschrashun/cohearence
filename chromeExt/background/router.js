@@ -1,33 +1,3 @@
-function getUser() {
-  return JSON.parse(localStorage.getItem("cohearenceUser"));
-}
-
-function setUser(library) {
-  var theUser = getUser();
-  theUser.musicLibrary = library;
-  var stringifiedUpdatedUser = JSON.stringify(theUser);
-  localStorage.setItem("cohearenceUser", stringifiedUpdatedUser);
-}
-
-function getBackendUserAndUpdateLocalStorage() {
-  var user = getUser();
-  if (user) {
-    $.ajax({
-      url: environment.server + "/api/users/" + user._id + '/library',
-      method: 'GET',
-      dataType: "json"
-    })
-    .done(function (response) {
-      setUser(response);
-    })
-    .fail(function (error) {
-      console.error(error);
-    });
-  } else {
-    console.log('user not logged in probably should do something about that');
-  }
-}
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   
   //on all player or scrobbler messages
@@ -68,12 +38,18 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     // persisting controls on popup close
-    if (request === "whoIsPlaying") {
+    if (request.message === "whoIsPlaying") {
       sendResponse({
         response: playerStates
       });
     }
 
+  }
+
+  // changing songs
+  if (request.message === 'changeSong') {
+    var nextSong = autoPlayNextSong(request.direction);
+    cueSong(nextSong);
   }
 
    //if checking time of video
@@ -112,7 +88,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     sendResponse(environment);
   }
 
-
   if (request.message === 'checkForStreamable') {
     SC.initialize({
         client_id: '68b135c934141190c88c1fb340c4c10a'
@@ -126,23 +101,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             }
         });
   }
+
   return true;
 });
 
-function sendSong(songObj) {
-  var user = getUser();
-  if (user) {
-    $.ajax({
-      url: environment.server + "/api/users/" + user._id + "/library",
-      method: 'PUT',
-      data: songObj,
-      dataType: "json"
-    })
-    .done(function(response) {
-      setUser(response);
-    })
-    .fail(function(error) {
-      console.log(error);
-    });
-  }
-}
