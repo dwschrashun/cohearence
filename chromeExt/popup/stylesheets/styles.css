@@ -161,6 +161,10 @@ hr {
   width: 786px;
 }
 
+.music-library-header {
+  padding-right: 15px;
+}
+
 @-webkit-keyframes sk-stretchdelay {
   0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
   20% { -webkit-transform: scaleY(1.0) }
