@@ -8,8 +8,7 @@ app.directive('sidebar', function() {
 				"Library",
 				"Playlists",
 				"Stats",
-				"Friends",
-				"Settings"
+				"Friends"
 			];
 			$scope.setCurrentItem = function(item){
 				$scope.currentItem = item;
