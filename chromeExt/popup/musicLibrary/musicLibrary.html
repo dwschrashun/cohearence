@@ -10,8 +10,9 @@
     </div>
 </div>
 <div id="header-border"></div>
-<div id="music-library-wrap" ng-scrollbars ng-scrollbars-config="config">
+<div id="actual-library" ng-scrollbars ng-scrollbars-config="config">
     <div class="row library-container" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song, $index)">
         <song></song>
+        <hr class="style14">
     </div>
 </div>

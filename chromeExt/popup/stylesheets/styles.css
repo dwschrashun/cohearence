@@ -1,20 +1,37 @@
-#push {
+
+/*#push {
     height: 60px;
 }
-
+*/
 #main {
     width: 768px;
-    height: 300px;
+    height: 560px;
     border-radius: 2px;
+    background-color: #333333;
 }
 
 .navbar, .navbar > .container {
-  background-color: #222222;
+  background-color: #3CB2D0;
+
 }
 
-#push, #music-library-wrap {
-  background-color: #333333;
+.navbar-brand, .navbar-nav > li > a {
+   color: black;
+}
+
+
+#music-library-wrap {
+  background-color: #222222;
   color: #3CB2D0;
+  height: 405px;
+  width: 768px;
+  font-size: 18px;
+  position: absolute;
+  top: 50px;
+}
+
+#actual-library {
+  height: 350px;
 }
 
 #slider {
@@ -32,8 +49,17 @@
 #popup-container {
     position: absolute;
     bottom: 0;
+    /* height: 105px; */
+    top: 455px;
+    width: 768px;
+    padding: 0;
+    background-color: #222222;
+    color: #3CB2D0;
 }
 
+.player-controls {
+  margin-top: 30px;
+}
 #lambda {
     font-size: 30px;
 }
@@ -52,10 +78,9 @@
     text-align: center;
 }
 
-#music-library-wrap {
-    height: 250px;
-    width: 768px;
-    margin-bottom: 40px;
+.music-library-header {
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 
 #header-border {
@@ -78,13 +103,17 @@ i {
     list-style-type: none;
 }
 
+#player {
+  margin-top: 50px;
+}
 #player i {
     cursor: pointer;
-    color: #2c2c2c;
+    color: #3CB2D0;
 }
 
 .songColumn {
     overflow-x: auto;
+
 }
 
 .popup-nav {
@@ -113,14 +142,14 @@ i {
     height: 5px;
 }
 
-hr {
-    margin-top: 5px;
-    border: 0;
-    height: 1px;
-    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-    background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+hr.style14 {
+  border: 0;
+  height: 1px;
+  margin: 3px;
+  background-image: -webkit-linear-gradient(left, #222222, #8c8b8b, #222222);
+  background-image: -moz-linear-gradient(left, #222222, #8c8b8b, #222222);
+  background-image: -ms-linear-gradient(left, #222222, #8c8b8b, #222222);
+  background-image: -o-linear-gradient(left, #222222, #8c8b8b, #222222);
 }
 
 .not-playing {
