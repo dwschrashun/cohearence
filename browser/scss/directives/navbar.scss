@@ -68,12 +68,20 @@ navbar {
 	.welcome {
 		float: right;
 		margin-top: 12px;
+		font-family: 'roboto', sans-serif;
+		font-weight: 300;
+		font-size: 18px;
 		span {
-			color: white;
+			color: rgb(193, 193, 193);
+			margin-right: 40px;
 		}
 		a {
+			font-size: 18px;
 			color: $blue;
 			cursor: pointer;
+			padding: 7px;
+			border-radius: 5px;
+			border: solid 1px $blue;
 		}
 	}
 

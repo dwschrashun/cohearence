@@ -43,9 +43,46 @@ $background-color-light: #333333;
 			}
 		}
 	}
-	library-song {
+
+	#playlist-header-container{
+		&:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+		#playlist-header {
+			width: 100%;
+			height: 40px;
+			border-bottom: solid 3px $background-color-light;
+			margin-top: 10px;
+			margin-bottom: 0px;
+			.col-md-4 {
+				margin-right: -10px;
+			}
+			.col-md-3 {
+				// margin-right: -15px;
+				// margin-left: 5px;
+			}
+			#duration-label {
+				// margin-left: 5px;
+			}
+			#source-label {
+				// margin-left: 5px;
+			}
+			#header-item {
+				color: white;
+			}
+		}
+	}
+
+	library-song, playlist-song {
 		ul {
 			border-bottom: solid 1px $background-color-light;
+		}
+	}
+	playlist-song {
+		a {
+			color: $green;
 		}
 	}
 	// border: solid 1px $background-color;
@@ -55,6 +92,17 @@ $background-color-light: #333333;
 		border-top-right-radius: 0px;
 		// font-size: 16px;
 	}
+
+	.playlist-panel-heading {
+		background-color: $green;
+		border-top-right-radius: 0px;
+		height: 40px;
+		.panel-title {
+			padding-left: 20px;
+			padding-top: 10px;
+		}
+	}
+
 	.panel-body {
 		padding-top: 0px;
 		ul {
@@ -76,6 +124,12 @@ $background-color-light: #333333;
 			.track-delete {
 				margin-left: 20px;
 			}
+			// .playlist-track-source {
+			// }
+			.playlist-track-delete {
+				margin-left: 40px;
+			}
+
 		}
 		overflow-y: auto;
 		// height: 700px;
@@ -91,7 +145,7 @@ $background-color-light: #333333;
 	border-radius: 20px;
 	display: inline-block;
 	background: linear-gradient($background-color, $background-color, $background-color-light);
-	color: $blue;
+	// color: $blue;
 
 	#empty-message {
 		padding-top: 200px;
@@ -125,7 +179,7 @@ $background-color-light: #333333;
 		letter-spacing: .02em;
 	}
 
-	.panel-heading {
+	.panel-heading, .playlist-panel-heading {
 		color: $background-color;
 		border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
@@ -171,3 +225,17 @@ $background-color-light: #333333;
 	 }
 	}
 }
+
+// &:webkit-scrollbar {
+// 	width: 1em;
+// }
+// scrollbar-face-color: blue;
+//
+// // ::-webkit-scrollbar-track {
+// //     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+// // }
+// //
+// &:-webkit-scrollbar-thumb {
+//   background-color: darkgrey;
+//   outline: 1px solid slategrey;
+// }
