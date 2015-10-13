@@ -122,41 +122,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         });
     };
 
-    $scope.skipForward = function () {
-        var request = {
-            message: "test",
-            service: $scope.currentService
-        };
-        chrome.runtime.sendMessage(request, function (response) {
-            // console.log('response from router:', response);
-        });
-        player.seekTo(player.getCurrentTime() + 15);
-    };
-
-    $scope.unMute = function () {
-        var request = {
-            message: "unMute",
-            service: $scope.currentService
-        };
-        chrome.runtime.sendMessage(request, function (response) {
-            // console.log('response from router:', response);
-        });
-    };
-
-    $scope.startOrStopFastForward = function (toggle) {
-        // console.log('perform on fast forward ', toggle);
-        var ff = () => player.seekTo(player.getCurrentTime() + 1);
-        if (toggle === 'stop') clearInterval(fastForward);
-        else fastForward = setInterval(ff, 100);
-    };
-
-    $scope.startOrStopRewind = function (toggle) {
-        // console.log('perform on fast forward ', toggle);
-        var ff = () => player.seekTo(player.getCurrentTime() - 1);
-        if (toggle === 'stop') clearInterval(fastForward);
-        else fastForward = setInterval(ff, 100);
-    };
-
     $scope.seekTo = function(time) {
       var request = {
         message: "changeTimeAction",
@@ -171,7 +136,16 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     };
 
     $scope.musicLibrary = theUser.musicLibrary;
-    console.log($scope.musicLibrary);
+
+    //style scrollbar
+    $scope.config = {
+        autoHideScrollbar: false,
+        theme: 'rounded-dots-dark',
+        advanced: {
+            updateOnContentResize: true
+        },
+        scrollInertia: 400
+    }
     $scope.logout = function () {
         LoginFactory.logout()
             .then(function () {

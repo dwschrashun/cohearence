@@ -1,0 +1,88 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin bp($point) {
+  @if $point == desktop {
+    @media (min-width: 1200px) { @content ; }
+  }
+  @else if $point == laptop {
+    @media (min-width: 720px) { @content ; }
+  }
+  @else if $point == tablet {
+    @media (min-width: 480px) { @content ; }
+  }
+}
+
+// couldn't find better way to make responsive container without fixed width breakpoints based on panel width
+// total width == # panels * ( panel-width + (2 * padding) )
+$panel-width: 300px;
+$panel-padding: 20px;
+@function panel-max-width($num-panels) {
+  @return ($num-panels * $panel-width) + ($num-panels * ($panel-padding * 2));
+}
+
+.panel-container {
+  padding: $panel-padding;
+  max-width: panel-max-width(1);
+  margin: 0px auto;
+
+  // at most, support 6 panels
+  @for $i from 2 through 6 {
+    @media (min-width: panel-max-width($i)) {
+      max-width: panel-max-width($i);
+    }
+  }
+
+
+
+
+  .panel {
+    width: 250px;
+    height: 200px;
+    margin: 0 20px 20px 0;
+    float: left;
+    @include border-radius(5px);
+
+    overflow: auto;
+    position: relative;
+    padding: 20px;
+    background: #333;
+    margin: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    p, h1 {
+      width: 210px;
+    }
+
+    hr {
+      background-color: transparent;
+      background: none;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      clear: both;
+    }
+
+  }
+
+}
+
+$black-1: #333;
+.light-background {
+  background-color: #ddd !important;
+  color: $black-1 !important;
+
+  h2 {
+    color: $black-1 !important;
+  }
+
+  hr {
+    border-bottom: 1px solid rgba(3,3,3,0.08) !important;
+  }
+
+}
