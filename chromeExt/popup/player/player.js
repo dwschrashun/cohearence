@@ -26,7 +26,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         };
         chrome.runtime.sendMessage(request, function (response) {
             $scope.currentSong = theUser.musicLibrary[response.currentIndex].song;
-            console.log($scope.currentSong);
             if ($scope.currentSong) loadPlayingIcon($scope.currentSong._id);
             $scope.currentService = PlayerFactory.setCurrentService(response);
             if ($scope.currentService !== null) $scope.paused = false;
@@ -145,8 +144,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
       chrome.runtime.sendMessage(request, function(response) {
       });
     };
-
-    $scope.musicLibrary = theUser.musicLibrary;
 
     //style scrollbar
     $scope.config = {
