@@ -15,7 +15,7 @@ app.config(function ($stateProvider) {
         });
 });
 
-app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, $state) {
+app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, $state, $timeout) {
 
     $scope.musicLibrary = theUser.musicLibrary;
 
@@ -25,8 +25,15 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             action: "whoIsPlaying"
         };
         chrome.runtime.sendMessage(request, function (response) {
-            $scope.currentSong = theUser.musicLibrary[response.currentIndex].song;
-            if ($scope.currentSong) loadPlayingIcon($scope.currentSong._id);
+            if(theUser.musicLibrary[response.currentIndex].song) {
+                console.log('in the if statement boi', theUser.musicLibrary[response.currentIndex].song)
+                $scope.currentSong = theUser.musicLibrary[response.currentIndex].song;
+                console.log('THIS IS ZE CURRENT SONG', $scope.currentSong)
+                $timeout(function() {
+                    loadPlayingIcon($scope.currentSong._id);
+                }, 200);
+            }
+
             $scope.currentService = PlayerFactory.setCurrentService(response);
             if ($scope.currentService !== null) $scope.paused = false;
         });
@@ -45,6 +52,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
 
     function loadPlayingIcon(id) {
         var thisSong = $('#' + id + ' .status');
+        console.log('THISSONG', thisSong);
         thisSong.removeClass('not-playing');
     }
 
