@@ -53,6 +53,7 @@ $background-color-light: #333333;
 	.panel-heading {
 		background-color: $blue;
 		border-top-right-radius: 0px;
+		// font-size: 16px;
 	}
 	.panel-body {
 		padding-top: 0px;
@@ -61,11 +62,10 @@ $background-color-light: #333333;
 			a {
 				padding-top: 15px;
 				padding-bottom: 15px;
-				// vertical-align: middle;
 			}
 		}
 		.row {
-			// min-height: 50px;
+			min-height: 50px;
 			div {
 				padding-left: 5px;
 				padding-right: 15px;
@@ -81,7 +81,6 @@ $background-color-light: #333333;
 		// height: 700px;
 		height: 75vh;
 		min-height: 500px;
-		// padding-top: 10px;
 	}
 }
 
@@ -91,6 +90,33 @@ $background-color-light: #333333;
 	width: 100%;
 	border-radius: 20px;
 	display: inline-block;
+	background: linear-gradient($background-color, $background-color, $background-color-light);
+	color: $blue;
+
+	#empty-message {
+		padding-top: 200px;
+		text-align: center;
+		a {
+			display: inline-block;
+			margin: 20px;
+			font-size: 30px;
+			text-align: center;
+			color: white;
+		}
+		#soundcloud {
+			color: $orange;
+		}
+		#youtube {
+			color: #FF7F50;
+		}
+		#spotify {
+			color: $green;
+		}
+		#bandcamp {
+			color: $yellow;
+		}
+	}
+
 	h2, li {
 		list-style-type: none;
 		font-family: 'Roboto', sans-serif;
@@ -98,8 +124,6 @@ $background-color-light: #333333;
 		font-size: 1.2em;
 		letter-spacing: .02em;
 	}
-	background: linear-gradient($background-color, $background-color, $background-color-light);
-	color: $blue;
 
 	.panel-heading {
 		color: $background-color;
