@@ -49,6 +49,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       // changing songs
       if (request.message === 'changeSong') {
           console.log("changing song:", request.direction);
+          stopAllVideos();
           var nextSong = autoPlayNextSong(request.direction);
           cueSong(nextSong);
           sendResponse({

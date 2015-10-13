@@ -17,7 +17,7 @@ function sendSong(songObj) {
 }
 
 function cueSong(request) {
-    console.log('request from autoplay', request);
+    console.log('cue request from autoplay', request);
     if (request.service === 'YouTube') {
         var url = `http://www.youtube.com/v/${request.id}?version=3`;
         console.log('cueing youtube song:', url);
