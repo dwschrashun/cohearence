@@ -13,10 +13,14 @@ app.config(function ($stateProvider) {
 
 app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, $state) {
     function whoIsPlaying() {
-        chrome.runtime.sendMessage('whoIsPlaying', function (response) {
-            $scope.currentSong = theUser.musicLibrary[response.currentIndex].song
+        var request = {
+            message: "whoIsPlaying",
+            action: "whoIsPlaying"
+        };
+        chrome.runtime.sendMessage(request, function (response) {
+            $scope.currentSong = theUser.musicLibrary[response.currentIndex].song;
             console.log($scope.currentSong);
-            if ($scope.currentSong) loadPlayingIcon($scope.currentSong._id)
+            if ($scope.currentSong) loadPlayingIcon($scope.currentSong._id);
             $scope.currentService = PlayerFactory.setCurrentService(response);
             if ($scope.currentService !== null) $scope.paused = false;
         });
@@ -46,6 +50,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         $scope.paused = false;
         var request = {
             message: "cue",
+            action: "cue",
 			service: $scope.currentService,
             songIndex: songIndex
         };
