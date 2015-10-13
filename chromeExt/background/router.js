@@ -1,4 +1,4 @@
-  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       //on all player or scrobbler messages
       if (request.action) {
@@ -29,7 +29,6 @@
               action.call(self);
           }
 
-
           //if cueing video
           if (request.message === "cue") {
               currentSongIndex = request.songIndex;
@@ -44,18 +43,18 @@
                   response: playerStates
               });
           }
-
       }
 
       // changing songs
       if (request.message === 'changeSong') {
+          console.log("changing song:", request.direction);
           var nextSong = autoPlayNextSong(request.direction);
           cueSong(nextSong);
           sendResponse({
             nextSongIndex: currentSongIndex,
             nextSong: nextSong
           });
-      };
+      }
 
       //if checking time of video
       if (request.message === "checkTimeAction") {
@@ -66,6 +65,7 @@
               duration: currentTime[1]
           });
       }
+
       //if changing time in video with slider
       if (request.message === "changeTimeAction") {
           var service = request.service;

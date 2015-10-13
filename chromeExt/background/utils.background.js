@@ -19,8 +19,13 @@ function sendSong(songObj) {
 function cueSong(request) {
     console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
-        console.log('cueing youtube song');
-        youtubePlayer.loadVideoById(request.id);
+        var url = `http://www.youtube.com/v/${request.id}?version=3`;
+        console.log('cueing youtube song:', url);
+        youtubePlayer.cueVideoByUrl({
+            mediaContentUrl: url
+        });
+        youtubePlayer.playVideo();
+        // youtubePlayer.loadVideoById(request.id);
     }
     if (request.service === 'Soundcloud') {
         createSoundcloudVideo(request.id);
@@ -37,7 +42,10 @@ function stopAllVideos() {
 }
 
 function autoPlayNextSong(direction) {
-    var musicLibrary = getUser().musicLibrary;
+    var user = getUser();
+    console.log("user in autoplaynextsong", user);
+    var musicLibrary = user.musicLibrary;
+    console.log("autoplaynextsong musicLibrary", musicLibrary);
     var request = {};
 
     if (direction === 'forward') currentSongIndex += 1;
@@ -46,6 +54,7 @@ function autoPlayNextSong(direction) {
         return;
     }
 
+    console.log("autoplaynextsong currentsongindex", currentSongIndex);
     var song = musicLibrary[currentSongIndex].song;
 
     if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
