@@ -9,12 +9,14 @@ app.factory("LoginFactory", function ($http, $rootScope) {
 
     function onSuccessfulLogin(response) {
       var data = response.data;
+      console.log('onsuccessful', data.user);
       setInLocalStorage(data.user);
       return data.user;
     }
 
     function isLoggedIn() {
       var user = getFromLocalStorage();
+      console.log('user', user);
       return getFromLocalStorage();
     }
 
@@ -25,11 +27,13 @@ app.factory("LoginFactory", function ($http, $rootScope) {
 
     function setInLocalStorage(user) {
       var stringifiedUser = JSON.stringify(user);
+      console.log('STRINGIFIED POPUP USER ABOUT TO BE SET ON LOGIN', stringifiedUser);
       localStorage.setItem("cohearenceUser", stringifiedUser);
     }
 
     function getFromLocalStorage() {
       var stringifiedUser = localStorage.getItem("cohearenceUser");
+      console.log('GETTING FROM LOCAL STORAGE IN POPUP', JSON.parse(stringifiedUser));
       return JSON.parse(stringifiedUser);
     }
 

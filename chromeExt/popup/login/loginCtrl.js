@@ -2,6 +2,7 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
     if (theUser) {
         $state.go('player.musicLibrary');
     }
+
     // $scope.login = {};
     // $scope.error = null;
     $scope.sendLogin = function (loginInfo) {

@@ -1,0 +1,26 @@
+//home page
+$blue: rgba(60, 178, 208, 1);
+$green: #90EE90;
+$yellow: #FFFE8D;
+$pink: #FFB6C1;
+$orange: #FFA07A;
+$background-color: #222222;
+$background-color-light: #333333;
+$mint-green: #C5EEBF;
+
+#playlist {
+	// min-height: 900px;
+	min-height: 100vh;
+	// background: linear-gradient(rgba(60, 178, 208, 0.5), rgba(60, 178, 208, 0.4)), url(http://lemasney.com/consulting/wp-content/uploads/2012/11/open_waveform.png) no-repeat center center fixed transparent;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+
+	// h1 {
+	// 	margin-top: 40px;
+	// 	text-align: center;
+	// }
+
+	background-color: $background-color-light;
+}
