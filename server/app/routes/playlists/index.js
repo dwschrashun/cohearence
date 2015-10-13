@@ -35,7 +35,6 @@ router.put('/', function(req,res,next){
 });
 
 router.delete('/:playlistId', function(req,res,next){
-	console.log(req.params.playlistId);
 	Playlist.remove({_id: req.params.playlistId})
 	.then(function(){
 		res.status(204).end();
@@ -47,7 +46,6 @@ router.get('/:playlistId', function(req,res,next){
 	.then(function(playlist) {
 		return playlist.populate("songs").execPopulate();
 	}).then(function (populated) {
-		console.log("POPULATED", populated);
 		res.json(populated);
 	}).then(null,next);
 });

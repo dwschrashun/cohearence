@@ -28,7 +28,9 @@ app.controller('DragAndDropCtrl', function ($scope, PlaylistFactory) {
             PlaylistFactory.addToPlaylist(songId, playlistId);
 			console.log("song added!");
         });
-        this.style.transform = 'scale(1.0)';
+		// this.style.color('#90EE90');
+		// this.style.transform('color(#90EE90)');
+        // this.style.transform = 'scale(1.0)';
 		// this.style.transition = 'all .5s ease-out-in';
 
     };
@@ -36,14 +38,17 @@ app.controller('DragAndDropCtrl', function ($scope, PlaylistFactory) {
     $scope.handleDragOver = function (e) {
         e.preventDefault(); // Necessary. Allows us to drop.
         e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
-        this.style.transform = 'scale(1.2)';
+        // this.style.transform = 'scale(1.2)';
+		this.style.color = "white";
     	this.style.transition = 'all .5s ease-in-out';
         return false;
     };
     $scope.handleDragLeave = function (e) {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
-        this.style.transform = 'scale(1.0)';
-        this.style.transition = '';
+		console.log('yo', this.style);
+		this.style.transition = 'all .5s ease-in-out';
+		// this.style.transform = 'scale(1.0)';
+        // this.style.transition = '';
     };
 });
