@@ -10,7 +10,6 @@ app.factory('PlaylistFactory', function($http) {
 	function addToPlaylist(songId, playlistId) {
 		return $http.put('/api/playlists', {song: songId, playlist: playlistId})
 		.then(function(response){
-			console.log("in factory",response.data);
 			return response.data;
 		});
 	}
@@ -36,7 +35,6 @@ app.factory('PlaylistFactory', function($http) {
 	}
 
 	function deletePlaylist(id){
-		console.log(id);
 		return $http.delete("/api/playlists/" + id).then(function(response){
 			return response.data;
 		});

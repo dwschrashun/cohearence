@@ -3,8 +3,8 @@
 		<h2>My Playlists</h2>
 	</div>
 	<ul>
-		<li ng-repeat="playlist in playlists | filter:searchText:false">
-			<a ui-sref="playlist({playlistID: playlist._id})" droppable id = "{{playlist._id}}">{{ playlist.name }}</a>
+		<li droppable id = "{{playlist._id}}" ng-repeat="playlist in playlists | filter:searchText:false">
+			<a ui-sref="playlist({playlistID: playlist._id})" id = "{{playlist._id}}">{{ playlist.name }}</a>
 			<button class="btn-remove" ng-click="removePlaylist(playlist)"> x </button>
 		</li>
 	</ul>
