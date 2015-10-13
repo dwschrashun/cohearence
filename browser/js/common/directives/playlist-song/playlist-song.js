@@ -3,7 +3,8 @@ app.directive('playlistSong', function(PlaylistFactory){
 		restrict: 'E',
 		templateUrl: 'js/common/directives/playlist-song/playlist-song.html',
 		scope: {
-			song: '='
+			song: '=',
+			remove: '='
 		},
 		link: function(scope, elem, attrs) {
 			scope.addToPlaylist = function(playlistId) {

@@ -6,9 +6,19 @@ $pink: #FFB6C1;
 $orange: #FFA07A;
 $background-color: #222222;
 $background-color-light: #333333;
+$light-gray: rgb(164,164,164);
 @import url(http://fonts.googleapis.com/css?family=Roboto:100,300,400);
 
 #song-list-container {
+	.btn-remove {
+		width: 33px;
+		margin-top: 10px;
+		// margin-bottom: 5px;
+		border-radius: 30px;
+		background-color: transparent;
+		color: $light-gray;
+		float: right;
+	}
 }
 
 #song-list {
@@ -148,6 +158,10 @@ $background-color-light: #333333;
 	// color: $blue;
 
 	#empty-message {
+		h1 {
+			color: $light-gray;
+
+		}
 		padding-top: 200px;
 		text-align: center;
 		a {
@@ -155,7 +169,7 @@ $background-color-light: #333333;
 			margin: 20px;
 			font-size: 30px;
 			text-align: center;
-			color: white;
+			color: $light-gray;
 		}
 		#soundcloud {
 			color: $orange;
