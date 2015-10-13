@@ -36,6 +36,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     whoIsPlaying();
 
     function removePlayingIconFromPreviousSong() {
+        console.log('scope.current song', $scope.currentSong);
         if ($scope.currentSong) {
             var prevSong = $('#' + $scope.currentSong._id + ' .status');
             if (prevSong) prevSong.addClass('not-playing');
@@ -43,9 +44,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     }
 
     function loadPlayingIcon(id) {
-        console.log('called again!');
         var thisSong = $('#' + id + ' .status');
-        console.log (thisSong);
         thisSong.removeClass('not-playing');
     }
 
@@ -128,8 +127,11 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             message: 'changeSong',
             direction: action
         };
+        removePlayingIconFromPreviousSong();
         chrome.runtime.sendMessage(request, function (response) {
-            console.log('changed song response', response);
+            var newIndex = response.nextSongIndex;
+            $scope.currentSong = $scope.musicLibrary[newIndex].song;
+            loadPlayingIcon($scope.currentSong._id);
         });
     };
 

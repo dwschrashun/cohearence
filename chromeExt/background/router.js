@@ -51,13 +51,16 @@
       if (request.message === 'changeSong') {
           var nextSong = autoPlayNextSong(request.direction);
           cueSong(nextSong);
-      }
+          sendResponse({
+            nextSongIndex: currentSongIndex,
+            nextSong: nextSong
+          });
+      };
 
       //if checking time of video
       if (request.message === "checkTimeAction") {
           var service = request.service;
           var currentTime = getCurrentTime(service);
-          console.log('currenTime', currentTime);
           sendResponse({
               currentTime: currentTime[0],
               duration: currentTime[1]

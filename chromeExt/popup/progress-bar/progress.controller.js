@@ -26,15 +26,12 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
     //send message to background script to get time elapsed
     function getTimeFromBackground() {
         chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function (response) {
-            console.log('inside who is playing');
             var currentService = PlayerFactory.setCurrentService(response);
             var request = {
                 message: "checkTimeAction",
                 service: currentService
             };
-            console.log('making request for time with', request);
             chrome.runtime.sendMessage(request, function (response) {
-                console.log('RESPONSE', response);
                 $scope.duration = response.duration|| $scope.duration ;
                 $scope.timeElapsed = response.currentTime || $scope.timeElapsed;
                 if ($scope.duration !== max) {
