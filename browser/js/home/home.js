@@ -46,10 +46,8 @@ app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthS
 	$scope.removePlaylist = function(playlist){
 		PlaylistFactory.deletePlaylist(playlist._id)
 		.then(function(){
-			console.log("before removing from scope: ",$scope.playlists);
 			$scope.playlists = _.without($scope.playlists, playlist);
 			// $scope.playlists.splice($scope.playlists.indexOf(id));
-			console.log("after removing from scope: ",$scope.playlists);
 			$state.go('home');
 		});
 	};
