@@ -17,6 +17,7 @@ function sendSong(songObj) {
 }
 
 function cueSong(request) {
+    console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
         console.log('cueing youtube song');
         youtubePlayer.loadVideoById(request.id);
