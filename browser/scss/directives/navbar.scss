@@ -6,7 +6,7 @@ $pink: #FFB6C1;
 $orange: #FFA07A;
 $background-color: #222222;
 $background-color-light: #333333;
-
+$light-gray: rgb(194, 194, 194);
 
 navbar {
 	display: block;
@@ -32,7 +32,13 @@ navbar {
 	}
 
 	#currently-playing {
-		color: white;
+		color: $light-gray;
+		margin-top: 12px;
+		margin-left: 40px;
+		font-size: 18px;
+		letter-spacing: .06em;
+		font-family: 'roboto', sans-serif;
+		font-weight: 300;
 	}
 
 	.container {
@@ -75,11 +81,11 @@ navbar {
 
   	.extension-button {
 	    float: right;
-	    border: 1px solid rgb(193, 193, 193);
+	    border: 1px solid;
 		text-decoration: none;
 	    margin-top: 8px;
 	    background: none;
-		color: rgb(193, 193, 193);
+		color: $light-gray;
 		padding: 5px;
 		font-size: 14px;
 		font-family: 'lato', sans-serif;
@@ -92,17 +98,24 @@ navbar {
 		font-family: 'roboto', sans-serif;
 		font-weight: 300;
 		font-size: 18px;
+		letter-spacing: .06em;
+
 		span {
-			color: rgb(193, 193, 193);
+			color: $light-gray;
 			margin-right: 40px;
 		}
 		a {
+			&:hover{
+				background-color: $blue;
+			}
+			transition: background-color 0.7s ease-in-out;
+			text-decoration: none;
 			font-size: 18px;
-			color: $blue;
+			color: $light-gray;
 			cursor: pointer;
-			padding: 7px;
+			padding: 6px;
 			border-radius: 5px;
-			border: solid 1px $blue;
+			border: solid 1px $light-gray;
 		}
 	}
 
