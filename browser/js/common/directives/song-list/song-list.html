@@ -1,12 +1,23 @@
 <div class="col-md-10" id="song-list-container">
 	<div class="panel coolPanel" id="song-list">
-		<div class="panel-heading">
+		<div ng-if="!playlistView" class="panel-heading">
 			<h2 class="panel-title">{{header}}</h2>
 		</div>
+		<div ng-if="playlistView" class="playlist-panel-heading">
+			<h2 class="panel-title">{{header}}</h2>
+		</div>
+		<list-header ng-if="!playlistView" id="list-header-container"></list-header>
 		<div ng-if="!playlistView" class="panel-body">
-			<!-- <h1 ng-if="!hasSongs">Your library is empty.</h1> -->
+			<div id="empty-message" ng-if="!hasSongs">
+				<h1>Your library is empty. What are you waiting for?</h1>
+				<a id="soundcloud" href="https://soundcloud.com">Soundcloud</a>
+				<a id="youtube" href="https://youtube.com">YouTube</a>
+				<a id="spotify" href="https://play.spotify.com">Spotify</a>
+				<a id="bandcamp" href="https://bandcamp.com">Bandcamp</a>
+			</div>
 			<library-song current="current" next="next" load="load" song="item" index="{{$index}}" id="library-song-{{$index}}" ng-repeat="item in view"></library-song>
 		</div>
+		<playlist-header ng-if="playlistView" id="playlist-header-container"></playlist-header>
 		<div ng-if="playlistView"  class="panel-body">
 			<playlist-song song="song" ng-repeat="song in view.songs"></playlist-song>
 		</div>

@@ -1,12 +1,19 @@
-<div class="song">
-    <div class="col-xs-1 text-center">
-        <i ng-if="paused" class="fa fa-play" ng-click="playVideo()"></i>
-        <i ng-if="!paused" class="fa fa-pause" ng-click="pauseVideo()"></i>
+<div class="song" id="{{item.song._id}}">
+    <div class="col-xs-2 text-center playingColumn">
+        <div class="status not-playing">
+            <div class="spinner">
+              <div class="rect1"></div>
+              <div class="rect2"></div>
+              <div class="rect3"></div>
+              <div class="rect4"></div>
+              <div class="rect5"></div>
+            </div>
+        </div>
     </div>
     <div class="col-xs-3 songColumn">
         <span>{{item.song.artist}}</span>
     </div>
-    <div class="col-xs-5 songColumn">
+    <div class="col-xs-4 songColumn">
         <span>{{item.song.title}}</span>
     </div>
     <div class="col-xs-2 songColumn">

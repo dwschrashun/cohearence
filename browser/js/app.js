@@ -40,6 +40,7 @@ app.run(function ($rootScope, AuthService, $state) {
             // (the second time, AuthService.isAuthenticated() will work)
             // otherwise, if no user is logged in, go to "login" state.
             if (user) {
+                console.log(toState.name);
                 $state.go(toState.name, toParams);
             } else {
                 $state.go('login');

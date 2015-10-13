@@ -1,19 +1,32 @@
 app.config(function ($stateProvider) {
-    $stateProvider.state("player", {
-        url: '/player',
-        templateUrl: '/popup/player/player.html',
-        controller: 'playerCtrl',
-        resolve: {
-            theUser: function (LoginFactory) {
-                return LoginFactory.isLoggedIn();
+    $stateProvider
+        .state("player", {
+            url: '/player',
+            templateUrl: '/popup/player/player.html',
+            controller: 'playerCtrl',
+            resolve: {
+                theUser: function (LoginFactory) {
+                    return LoginFactory.isLoggedIn();
+                }
+                // playlists: function (PlayerFactory) {
+                //     return PlayerFactory.getPlaylists();
+                // }
             }
-        }
-    });
+        });
 });
 
 app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, $state) {
+
+    $scope.musicLibrary = theUser.musicLibrary;
+
     function whoIsPlaying() {
-        chrome.runtime.sendMessage('whoIsPlaying', function (response) {
+        var request = {
+            message: "whoIsPlaying",
+            action: "whoIsPlaying"
+        };
+        chrome.runtime.sendMessage(request, function (response) {
+            $scope.currentSong = theUser.musicLibrary[response.currentIndex].song;
+            if ($scope.currentSong) loadPlayingIcon($scope.currentSong._id);
             $scope.currentService = PlayerFactory.setCurrentService(response);
             if ($scope.currentService !== null) $scope.paused = false;
         });
@@ -22,11 +35,27 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     $scope.paused = true;
     whoIsPlaying();
 
+    function removePlayingIconFromPreviousSong() {
+        console.log('scope.current song', $scope.currentSong);
+        if ($scope.currentSong) {
+            var prevSong = $('#' + $scope.currentSong._id + ' .status');
+            if (prevSong) prevSong.addClass('not-playing');
+        }
+    }
+
+    function loadPlayingIcon(id) {
+        var thisSong = $('#' + id + ' .status');
+        thisSong.removeClass('not-playing');
+    }
+
     $scope.loadSong = function (song, songIndex) {
+        removePlayingIconFromPreviousSong();
         $scope.currentSong = song;
+        loadPlayingIcon(song._id);
         $scope.paused = false;
         var request = {
             message: "cue",
+            action: "cue",
 			service: $scope.currentService,
             songIndex: songIndex
         };
@@ -98,44 +127,12 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             message: 'changeSong',
             direction: action
         };
+        removePlayingIconFromPreviousSong();
         chrome.runtime.sendMessage(request, function (response) {
-            console.log('changed song response', response);
+            var newIndex = response.nextSongIndex;
+            $scope.currentSong = $scope.musicLibrary[newIndex].song;
+            loadPlayingIcon($scope.currentSong._id);
         });
-    };
-
-    $scope.skipForward = function () {
-        var request = {
-            message: "test",
-            service: $scope.currentService
-        };
-        chrome.runtime.sendMessage(request, function (response) {
-            // console.log('response from router:', response);
-        });
-        player.seekTo(player.getCurrentTime() + 15);
-    };
-
-    $scope.unMute = function () {
-        var request = {
-            message: "unMute",
-            service: $scope.currentService
-        };
-        chrome.runtime.sendMessage(request, function (response) {
-            // console.log('response from router:', response);
-        });
-    };
-
-    $scope.startOrStopFastForward = function (toggle) {
-        // console.log('perform on fast forward ', toggle);
-        var ff = () => player.seekTo(player.getCurrentTime() + 1);
-        if (toggle === 'stop') clearInterval(fastForward);
-        else fastForward = setInterval(ff, 100);
-    };
-
-    $scope.startOrStopRewind = function (toggle) {
-        // console.log('perform on fast forward ', toggle);
-        var ff = () => player.seekTo(player.getCurrentTime() - 1);
-        if (toggle === 'stop') clearInterval(fastForward);
-        else fastForward = setInterval(ff, 100);
     };
 
     $scope.seekTo = function(time) {
@@ -147,12 +144,19 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
       };
 
       chrome.runtime.sendMessage(request, function(response) {
-
       });
     };
 
-    $scope.musicLibrary = theUser.musicLibrary;
-    console.log($scope.musicLibrary);
+    //style scrollbar
+    $scope.config = {
+        autoHideScrollbar: false,
+        theme: 'rounded-dots-dark',
+        advanced: {
+            updateOnContentResize: true
+        },
+        scrollInertia: 400
+    };
+
     $scope.logout = function () {
         LoginFactory.logout()
             .then(function () {

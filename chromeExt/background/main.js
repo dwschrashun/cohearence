@@ -7,7 +7,7 @@ var environment = {
 	domain: null,
 	server: null
 };
-var currentSongIndex;
+var currentSongIndex = 0;
 
 window.onload = function () {
 	//set "environment" variables

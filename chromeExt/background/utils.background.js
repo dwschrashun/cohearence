@@ -17,6 +17,7 @@ function sendSong(songObj) {
 }
 
 function cueSong(request) {
+    console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
         var url = `http://www.youtube.com/v/${request.id}?version=3`;
         console.log('cueing youtube song:', url);
@@ -117,6 +118,25 @@ function getCurrentTime(service) {
     return [currentTime, duration];
 }
 
+
+function setIcon (playing, action) {
+    var state = `${playing ? "playing" : "paused"}${action}`;
+    console.log("set icon state:", state);
+    var iconMap = {
+        playingscrobble: "/icons/playingscrobble.jpg",
+        playingplayer: "/icons/playingplayer.jpg",
+        pausedscrobble: "/icons/pausedscrobble.jpg",
+        pausedplayer: "/icons/pausedplayer.jpg"
+    };
+    chrome.browserAction.setIcon({path: iconMap[state]});
+    if (action === "scrobble") {
+        setTimeout(function () {
+            state = `${playing ? "playing" : "paused"}player`;
+            chrome.browserAction.setIcon({path: iconMap[state]});
+        }, 5000);
+    }
+}
+
 function seekTo(time, service) {
     console.log('HITTING SEEK TO');
     if (service === "YouTube") {
@@ -157,3 +177,4 @@ function getBackendUserAndUpdateLocalStorage() {
         console.log('user not logged in probably should do something about that');
     }
 }
+

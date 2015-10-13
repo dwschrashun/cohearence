@@ -8,6 +8,19 @@
     border-radius: 2px;
 }
 
+.navbar, .navbar > .container {
+  background-color: #222222;
+}
+
+#push, #music-library-wrap {
+  background-color: #333333;
+  color: #3CB2D0;
+}
+
+.song {
+  height: 30px;
+}
+
 #popup-container {
     position: absolute;
     bottom: 0;
@@ -33,7 +46,8 @@
 
 #music-library-wrap {
     height: 250px;
-    overflow-y: auto;
+    width: 768px;
+    margin-bottom: 40px;
 }
 
 #header-border {
@@ -99,4 +113,69 @@ hr {
     background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
     background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
     background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.not-playing {
+    display: none;
+}
+
+.spinner {
+  margin: 2px auto;
+  width: 60px;
+  height: 20px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #3CB2D0;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+.library-container {
+  width: 786px;
+}
+
+.music-library-header {
+  padding-right: 15px;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
 }

@@ -3,6 +3,7 @@ var request = {message: 'playerAction'};
 
 function loadSong (clicked) {
 	var source = clicked.find(".track-source");
+	request.action = 'cue';
 	request.message = "cue";
 	request.service = source.attr("data");
 	request.id = source.children("a").first().attr("href");

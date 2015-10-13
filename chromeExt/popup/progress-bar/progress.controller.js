@@ -17,24 +17,21 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
             var newTime = ui.value;
             $scope.seekTo(newTime);
             $scope.playVideo();
-            sliderUpdater = $interval(getTimeFromBackground, 1000)
-            console.log(newTime);
+            sliderUpdater = $interval(getTimeFromBackground, 1000);
+            // console.log(newTime);
         }
     });
     var max = theSlider.slider("option", "max");
-    // console.log(sliderMaxTime);
 
     //send message to background script to get time elapsed
     function getTimeFromBackground() {
-        chrome.runtime.sendMessage('whoIsPlaying', function (response) {
+        chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function (response) {
             var currentService = PlayerFactory.setCurrentService(response);
             var request = {
                 message: "checkTimeAction",
                 service: currentService
             };
-            // console.log('making request for time with', request);
             chrome.runtime.sendMessage(request, function (response) {
-                console.log('RESPONSE', response);
                 $scope.duration = response.duration|| $scope.duration ;
                 $scope.timeElapsed = response.currentTime || $scope.timeElapsed;
                 if ($scope.duration !== max) {
@@ -43,19 +40,18 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
                 }
                 theSlider.slider({
                     value: $scope.timeElapsed
-                })
+                });
                 $scope.$digest();
             });
         });
     }
-
     var sliderUpdater = $interval(getTimeFromBackground, 1000);
 });
 
 app.filter('songTime', function() {
     return function(input) {
         input = Math.floor(parseInt(input));
-        console.log(input);
+        // console.log(input);
 
         var hours = Math.floor(input / 60 / 60);
         hours = hours && hours < 10 ? "0" + Math.floor(hours) : Math.floor(hours);
@@ -73,5 +69,5 @@ app.filter('songTime', function() {
         }
         if (hours) return `${hours}:${min}:${seconds}`;
         return min + ":" + seconds;
-    }
-})
+    };
+});

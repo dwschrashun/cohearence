@@ -12,6 +12,7 @@
     },
     "permissions": [
         "activeTab",
+        "identity",
         "tabs",
         "webNavigation",
         "identity",
@@ -22,6 +23,12 @@
         "<all_urls>",
         "storage"
     ],
+    "oauth2": {
+      "client_id": "33880457622-skn9therip23c8kl3df94knjdl600374.apps.googleusercontent.com",
+      "scopes": [
+        "https://www.googleapis.com/auth/plus.login"
+      ]
+    },
     "content_scripts": [{
         "matches": ["http://127.0.0.1:1337/", "http://localhost:1337/", "https://aqueous-gorge-7560.herokuapp.com/"],
         "js": ["thirdparty/jquery-2.1.4.js", "contentScripts/webPlayer.js"]

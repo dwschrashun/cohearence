@@ -25,7 +25,11 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
         if (theUser) $state.go('player');
     };
     $scope.getLoggedInUser();
-
+    // $scope.oauthLogin = function(){
+    //   chrome.identity.getAuthToken( function(token) {
+    //       console.log('did identity');
+    //   });
+    // };
     $scope.login = {};
     $scope.error = null;
     $scope.sendLogin = function (loginInfo) {
