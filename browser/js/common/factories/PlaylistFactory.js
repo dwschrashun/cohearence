@@ -15,6 +15,13 @@ app.factory('PlaylistFactory', function($http) {
 		});
 	}
 
+	function removeFromPlaylist(playlistId, songId){
+		return $http.delete('/api/playlists/' + playlistId + '/' + songId)
+		.then(function(response){
+			return response.data;
+		});
+	}
+
 	function getPlaylists(){
 		return $http.get('/api/playlists/user')
 		.then(function(response){
@@ -40,6 +47,7 @@ app.factory('PlaylistFactory', function($http) {
 		makePlaylist: makePlaylist,
 		getPlaylists: getPlaylists,
 		getPopulatedPlaylist: getPopulatedPlaylist,
-		deletePlaylist: deletePlaylist
+		deletePlaylist: deletePlaylist,
+		removeFromPlaylist: removeFromPlaylist
 	};
 });

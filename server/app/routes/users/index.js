@@ -45,7 +45,7 @@ router.delete('/:userId/library/:songObjId', function(req,res,next){
 			}
 		});
 		user.save().then(function(savedUser){
-			res.status(200).end();
+			res.status(204).end();
 		});
 	});
 });

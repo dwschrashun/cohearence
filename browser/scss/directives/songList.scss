@@ -11,14 +11,14 @@ $light-gray: rgb(164,164,164);
 
 #song-list-container {
 	.btn-remove {
-	width: 33px;
-	margin-top: 10px;
-	// margin-bottom: 5px;
-	border-radius: 30px;
-	background-color: transparent;
-	color: $light-gray;
-	float: right;
-}
+		width: 33px;
+		margin-top: 10px;
+		// margin-bottom: 5px;
+		border-radius: 30px;
+		background-color: transparent;
+		color: $light-gray;
+		float: right;
+	}
 }
 
 #song-list {
@@ -158,6 +158,10 @@ $light-gray: rgb(164,164,164);
 	// color: $blue;
 
 	#empty-message {
+		h1 {
+			color: $light-gray;
+
+		}
 		padding-top: 200px;
 		text-align: center;
 		a {
@@ -165,7 +169,7 @@ $light-gray: rgb(164,164,164);
 			margin: 20px;
 			font-size: 30px;
 			text-align: center;
-			color: white;
+			color: $light-gray;
 		}
 		#soundcloud {
 			color: $orange;
