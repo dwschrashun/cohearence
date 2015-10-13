@@ -17,18 +17,19 @@ app.controller('DragAndDropCtrl', function ($scope, PlaylistFactory) {
     };
 
     $scope.handleDrop = function (e) {
-		console.log("drop");
         e.preventDefault();
         e.stopPropagation();
         var songId = e.dataTransfer.getData('text/html').split(">")[1];
 		var playlistId = e.target.id;
-        console.log("Song id in drop:", songId);
-		console.log("Playlist id in drop:", playlistId);
+        // console.log("Song id in drop:", songId);
+		// console.log("Playlist id in drop:", playlistId);
         $scope.$apply(function () {
             PlaylistFactory.addToPlaylist(songId, playlistId);
-			console.log("song added!");
         });
-        this.style.transform = 'scale(1.0)';
+		// this.style.color = '#90EE90';
+		this.style.backgroundColor = 'transparent';
+		// this.style.transform('color(#90EE90)');
+        // this.style.transform = 'scale(1.0)';
 		// this.style.transition = 'all .5s ease-out-in';
 
     };
@@ -36,14 +37,18 @@ app.controller('DragAndDropCtrl', function ($scope, PlaylistFactory) {
     $scope.handleDragOver = function (e) {
         e.preventDefault(); // Necessary. Allows us to drop.
         e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
-        this.style.transform = 'scale(1.2)';
-    	this.style.transition = 'all .5s ease-in-out';
+		// this.style.color = "white";
+		this.style.backgroundColor = '#333333';
+    	this.style.transition = 'all .3s ease-in-out';
+        // this.style.transform = 'scale(1.2)';
         return false;
     };
     $scope.handleDragLeave = function (e) {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
-        this.style.transform = 'scale(1.0)';
-        this.style.transition = '';
+		this.style.backgroundColor = 'transparent';
+		this.style.transition = 'all .3s ease-in-out';
+		// this.style.transform = 'scale(1.0)';
+        // this.style.transition = '';
     };
 });

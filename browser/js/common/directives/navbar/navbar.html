@@ -7,13 +7,13 @@
 			<li>
                 <p>λ</p>
             </li>
-            <li id="player-container">
+            <li ng-show="user" id="player-container">
                 <player></player>
             </li>
-            <li>
-                <div ng-show="current" id="currently-playing">Currently Playing: {{current.artist}} - {{current.title}}</div>
+            <li ng-show="user">
+                <marquee behavior="scroll" direction="left" ng-show="current" id="currently-playing">{{current.artist}} - {{current.title}}</marquee>
             </li>
-            <li>
+            <li ng-show="user">
                 <progress-bar></progress-bar>
             </li>
         </ul>
