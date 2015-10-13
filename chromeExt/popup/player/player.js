@@ -1,17 +1,24 @@
 app.config(function ($stateProvider) {
-    $stateProvider.state("player", {
-        url: '/player',
-        templateUrl: '/popup/player/player.html',
-        controller: 'playerCtrl',
-        resolve: {
-            theUser: function (LoginFactory) {
-                return LoginFactory.isLoggedIn();
+    $stateProvider
+        .state("player", {
+            url: '/player',
+            templateUrl: '/popup/player/player.html',
+            controller: 'playerCtrl',
+            resolve: {
+                theUser: function (LoginFactory) {
+                    return LoginFactory.isLoggedIn();
+                }
+                // playlists: function (PlayerFactory) {
+                //     return PlayerFactory.getPlaylists();
+                // }
             }
-        }
-    });
+        });
 });
 
 app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, $state) {
+
+    $scope.musicLibrary = theUser.musicLibrary;
+
     function whoIsPlaying() {
         var request = {
             message: "whoIsPlaying",
@@ -32,7 +39,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     function removePlayingIconFromPreviousSong() {
         if ($scope.currentSong) {
             var prevSong = $('#' + $scope.currentSong._id + ' .status');
-            if (prevSong) prevSong.addClass('not-playing')
+            if (prevSong) prevSong.addClass('not-playing');
         }
     }
 
@@ -136,7 +143,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
       };
 
       chrome.runtime.sendMessage(request, function(response) {
-
       });
     };
 
@@ -150,7 +156,8 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             updateOnContentResize: true
         },
         scrollInertia: 400
-    }
+    };
+
     $scope.logout = function () {
         LoginFactory.logout()
             .then(function () {
