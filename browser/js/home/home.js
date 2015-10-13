@@ -35,7 +35,7 @@ app.controller('HomeController', function($rootScope, $scope, AuthService, $stat
 			}
 			$scope.load = function(songId, index){
 				$scope.current = songId;
-				$scope.next = $scope.view[parseInt(index) + 1];
+				$scope.next = $scope.view[parseInt(index) + 1]._id;
 				console.log("CURRENT SONG: ",$scope.current);
 				console.log("NEXT SONG: ",$scope.next);
 			};
