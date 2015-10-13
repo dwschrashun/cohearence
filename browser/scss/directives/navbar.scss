@@ -52,13 +52,18 @@ navbar {
 		}
 	}
 
-  // .login-button {
-  //   float: right;
-  //   border: 1px solid black;
-  //   margin-top: 10px;
-  //   background: none;
-  //   outline: none !important;
-  // }
+  .extension-button {
+    float: right;
+    border: 1px solid rgb(193, 193, 193);
+	text-decoration: none;
+    margin-top: 8px;
+    background: none;
+	color: rgb(193, 193, 193);
+	padding: 5px;
+	font-size: 14px;
+	font-family: 'lato', sans-serif;
+    // outline: none !important;
+  }
 
 	.welcome {
 		float: right;

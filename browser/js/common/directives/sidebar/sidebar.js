@@ -9,7 +9,7 @@ app.directive('sidebar', function() {
 				"Playlists",
 				"Stats",
 				"Friends",
-				"Settings"
+				"Chrome Extension"
 			];
 			$scope.setCurrentItem = function(item){
 				$scope.currentItem = item;
