@@ -15,7 +15,7 @@
 				<a id="spotify" href="https://play.spotify.com">Spotify</a>
 				<a id="bandcamp" href="https://bandcamp.com">Bandcamp</a>
 			</div>
-			<library-song song="item" ng-repeat="item in view"></library-song>
+			<library-song delete="delete" song="item" ng-repeat="item in view"></library-song>
 		</div>
 		<playlist-header ng-if="playlistView" id="playlist-header-container"></playlist-header>
 		<div ng-if="playlistView"  class="panel-body">

@@ -36,6 +36,20 @@ router.get('/:userId/library', function (req, res, next) {
 	});
 });
 
+router.delete('/:userId/library/:songObjId', function(req,res,next){
+	User.findById(req.params.userId)
+	.then(function(user){
+		user.musicLibrary.forEach(function(songObj, i){
+			if (songObj.song.toString() === req.params.songObjId){
+				user.musicLibrary.splice(i, 1);
+			}
+		});
+		user.save().then(function(savedUser){
+			res.status(200).end();
+		});
+	});
+});
+
 function fuzzySearch(arr, artist, title){
 	var artistMax = 0;
 	var titleMax = 0;

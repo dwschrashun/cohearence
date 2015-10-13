@@ -14,7 +14,7 @@ app.config(function ($stateProvider) {
 	});
 });
 
-app.controller('HomeController', function($scope, AuthService, $state, theUser, PlaylistFactory) {
+app.controller('HomeController', function($scope, UserFactory, AuthService, $state, theUser, PlaylistFactory) {
 	if(!theUser) $state.go('landing');
 	else {
 		PlaylistFactory.getPlaylists()
@@ -37,6 +37,12 @@ app.controller('HomeController', function($scope, AuthService, $state, theUser, 
 		.then(function(){
 			$scope.playlists.splice($scope.playlists.indexOf(id));
 			$state.go('home');
+		});
+	};
+	$scope.delete = function(song){
+		UserFactory.deleteSong($scope.theUser._id, song.song._id)
+		.then(function(){
+			$scope.view = _.without($scope.view, $scope.view[$scope.view.indexOf(song)]);
 		});
 	};
 });
