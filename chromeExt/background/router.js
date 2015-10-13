@@ -40,6 +40,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     // persisting controls on popup close
     if (request.message === "whoIsPlaying") {
+      console.log('playerstates', playerStates);
       sendResponse({
         response: playerStates
       });
@@ -57,6 +58,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === "checkTimeAction") {
     var service = request.service;
     var currentTime = getCurrentTime(service);
+    console.log('currenTime', currentTime);
     sendResponse({
         currentTime: currentTime[0],
         duration: currentTime[1]

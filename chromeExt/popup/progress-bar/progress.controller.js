@@ -32,9 +32,9 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
                 message: "checkTimeAction",
                 service: currentService
             };
-            // console.log('making request for time with', request);
+            console.log('making request for time with', request);
             chrome.runtime.sendMessage(request, function (response) {
-                // console.log('RESPONSE', response);
+                console.log('RESPONSE', response);
                 $scope.duration = response.duration|| $scope.duration ;
                 $scope.timeElapsed = response.currentTime || $scope.timeElapsed;
                 if ($scope.duration !== max) {
@@ -48,7 +48,6 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
             });
         });
     }
-
     var sliderUpdater = $interval(getTimeFromBackground, 1000);
 });
 
