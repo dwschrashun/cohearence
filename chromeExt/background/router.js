@@ -40,7 +40,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           // persisting controls on popup close
           if (request.message === "whoIsPlaying") {
               sendResponse({
-                  response: playerStates
+                  response: playerStates,
+                  currentIndex: currentSongIndex
               });
           }
       }
