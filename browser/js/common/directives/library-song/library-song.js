@@ -7,7 +7,8 @@ app.directive('librarySong', function(PlaylistFactory){
 			load: '=',
 			index: '@',
 			current: '=',
-			next: '='
+			next: '=',
+			delete: '='
 		},
 		link: function(scope, elem, attrs) {
 			scope.addToPlaylist = function(playlistId) {

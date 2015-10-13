@@ -31,7 +31,9 @@ app.controller('PlaylistController', function($scope, AuthService, $state, theUs
 		$scope.view = thePlaylist;
 		$scope.header = $scope.view.name;
 		$scope.playlistView = true;
+		$scope.hasSongs = $scope.view.songs.length ? true: false;
 	}
+
 
 	$scope.removePlaylist = function(id){
 		PlaylistFactory.deletePlaylist(id)
@@ -41,6 +43,18 @@ app.controller('PlaylistController', function($scope, AuthService, $state, theUs
 			if (thePlaylist._id === id) {
 				$state.go('home');
 			}
+		});
+	};
+	//removes a song from a playlist
+	$scope.remove = function(song){
+		var songs = $scope.view.songs;
+		console.log($scope.view);
+		PlaylistFactory.removeFromPlaylist($scope.view._id, song._id)
+		.then(function(){
+			console.log("removed!");
+			$scope.view.songs = _.without($scope.view.songs, $scope.view.songs[$scope.view.songs.indexOf(song)]);
+			console.log($scope.view);
+			$scope.hasSongs = $scope.view.songs.length ? true: false;
 		});
 	};
 });
