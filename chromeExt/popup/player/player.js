@@ -7,10 +7,10 @@ app.config(function ($stateProvider) {
             resolve: {
                 theUser: function (LoginFactory) {
                     return LoginFactory.isLoggedIn();
-                },
-                playlists: function (PlayerFactory) {
-                    return PlayerFactory.getPlaylists();
                 }
+                // playlists: function (PlayerFactory) {
+                //     return PlayerFactory.getPlaylists();
+                // }
             }
         }).state('player.musicLibrary', {
             url: '/musicLibrary',
@@ -21,7 +21,7 @@ app.config(function ($stateProvider) {
         });
 });
 
-app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, playlists, $state) {
+app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theUser, $state) {
     $scope.musicLibrary = theUser.musicLibrary;
 
     function whoIsPlaying() {
