@@ -22,11 +22,11 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
         }
     });
     var max = theSlider.slider("option", "max");
-    // console.log(sliderMaxTime);
 
     //send message to background script to get time elapsed
     function getTimeFromBackground() {
-        chrome.runtime.sendMessage('whoIsPlaying', function (response) {
+        chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function (response) {
+            console.log('inside who is playing');
             var currentService = PlayerFactory.setCurrentService(response);
             var request = {
                 message: "checkTimeAction",
@@ -72,5 +72,5 @@ app.filter('songTime', function() {
         }
         if (hours) return `${hours}:${min}:${seconds}`;
         return min + ":" + seconds;
-    }
-})
+    };
+});
