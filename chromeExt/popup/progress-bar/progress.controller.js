@@ -17,7 +17,7 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
             var newTime = ui.value;
             $scope.seekTo(newTime);
             $scope.playVideo();
-            sliderUpdater = $interval(getTimeFromBackground, 1000)
+            sliderUpdater = $interval(getTimeFromBackground, 1000);
             // console.log(newTime);
         }
     });
@@ -43,7 +43,7 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
                 }
                 theSlider.slider({
                     value: $scope.timeElapsed
-                })
+                });
                 $scope.$digest();
             });
         });
