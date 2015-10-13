@@ -19,24 +19,29 @@ $(document).ready(function (){
 		var current;
 
 		$("#nav-pause").on("click", function() {
+			request.message = "playerAction";
 			request.action = "pause";
 	        request.service = $(".current").first().find(".track-source").attr("data");
-			// console.log("pause service:", request.service);
+			console.log("pause request:", request);
 	        chrome.runtime.sendMessage(request, function (response) {
 	            // console.log('response from router:', response);
 	        });
 		});
 		$("#nav-play").on("click", function () {
+			request.message = "playerAction";
 			current = $('.current');
+			console.log("click on play:", current);
 			var track;
 			if (!current){
 				track = $('.track-title').first();
+				console.log("loading new song from play button", track);
 				loadSong(track);
 			} else {
 				track = current.first().find(".track-source");
 				request.service = track.attr('data');
 				request.url = track.children('a').attr('href');
 				request.action = "play";
+				console.log('request in play else', request);
 				chrome.runtime.sendMessage(request, function (response) {
 					console.log('GOT THE RESPONSE', response);
 				});

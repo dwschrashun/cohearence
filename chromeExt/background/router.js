@@ -1,4 +1,5 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log("request in router:", request);
   //if scrobbling
   if (request.action === 'scrobble') {
     sendSong(request);
@@ -9,8 +10,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   //if making player perform some action (play, pause, etc.)
   if (request.message === 'playerAction') {
-	console.log('GOT THE REQUEST', request);
-	console.log("SERVICE METHODS: ",serviceMethods);
+	  console.log('GOT THE REQUEST', request);
+	  console.log("SERVICE METHODS: ",serviceMethods);
     var service = serviceMethods[request.service];
     var self = service.reference;
     var action = service[request.action];

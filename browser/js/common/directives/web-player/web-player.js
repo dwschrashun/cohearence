@@ -6,7 +6,6 @@ app.directive('player', function () {
 
 			$scope.paused = true;
 			$scope.togglePaused = function($event) {
-				console.log("EVENT", $event);
 				if (!$event || !$scope.paused) {
 					$scope.paused = !$scope.paused;
 				}
