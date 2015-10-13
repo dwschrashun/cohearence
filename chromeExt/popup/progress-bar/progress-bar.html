@@ -1,4 +1,9 @@
 
 <div id="slider"></div>
 
-{{timeElapsed | date:':mm:ss'}} / {{duration | date:':mm:ss'}}
+<div ng-if="timeElapsed && duration || paused">{{timeElapsed | songTime}} / {{duration | songTime}}</div>
+<!--
+{{timeElapsed}} AND {{duration}}
+
+{{paused}}
+ -->
