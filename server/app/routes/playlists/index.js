@@ -26,13 +26,11 @@ router.put('/', function(req,res,next){
 	var playlistId = req.body.playlist;
 	Playlist.findById(playlistId)
 	.then(function(playlist){
-		console.log("reqbod", req.body);
 		playlist.songs.push(req.body.song);
-		playlist.save()
-		.then(function(savedPlaylist){
-			console.log(savedPlaylist);
-			res.json(savedPlaylist);
-		});
+		return playlist.save();
+	})
+	.then(function(savedPlaylist){
+		res.json(savedPlaylist);
 	});
 });
 
@@ -40,7 +38,6 @@ router.delete('/:playlistId', function(req,res,next){
 	console.log(req.params.playlistId);
 	Playlist.remove({_id: req.params.playlistId})
 	.then(function(){
-		console.log("removed! in route");
 		res.status(204).end();
 	}).then(null, next);
 });
@@ -53,4 +50,16 @@ router.get('/:playlistId', function(req,res,next){
 		console.log("POPULATED", populated);
 		res.json(populated);
 	}).then(null,next);
+});
+
+router.delete('/:playlistId/:songId', function(req,res,next){
+	Playlist.findById(req.params.playlistId).exec()
+	.then(function(playlist){
+		// playlist.songs = _.without(playlist.songs, req.params.songId);
+		playlist.songs.splice(playlist.songs.indexOf(req.params.songId));
+		return playlist.save();
+	}).then(function(savedPlaylist){
+		console.log("IN ROUTER: ",savedPlaylist);
+		res.status(200).json(savedPlaylist);
+	}).then(null, next);
 });
