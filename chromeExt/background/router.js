@@ -47,6 +47,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       // changing songs
       if (request.message === 'changeSong') {
+          console.log("changing song:", request.direction);
           var nextSong = autoPlayNextSong(request.direction);
           cueSong(nextSong);
           sendResponse({
@@ -64,7 +65,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               duration: currentTime[1]
           });
       }
-      
+
       //if changing time in video with slider
       if (request.message === "changeTimeAction") {
           var service = request.service;
