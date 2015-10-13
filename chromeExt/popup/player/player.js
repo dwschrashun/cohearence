@@ -25,17 +25,17 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             action: "whoIsPlaying"
         };
         chrome.runtime.sendMessage(request, function (response) {
-            if(theUser.musicLibrary[response.currentIndex].song) {
-                console.log('in the if statement boi', theUser.musicLibrary[response.currentIndex].song)
-                $scope.currentSong = theUser.musicLibrary[response.currentIndex].song;
-                console.log('THIS IS ZE CURRENT SONG', $scope.currentSong)
-                $timeout(function() {
-                    loadPlayingIcon($scope.currentSong._id);
-                }, 200);
-            }
 
             $scope.currentService = PlayerFactory.setCurrentService(response);
-            if ($scope.currentService !== null) $scope.paused = false;
+            if ($scope.currentService !== null) {
+                 $scope.paused = false;
+                if(theUser.musicLibrary[response.currentIndex].song) {
+                    $scope.currentSong = theUser.musicLibrary[response.currentIndex].song;
+                    $timeout(function() {
+                        loadPlayingIcon($scope.currentSong._id);
+                    }, 200);
+                }
+            }
         });
     }
     // This needs to run everytime the controller loads
@@ -43,7 +43,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     whoIsPlaying();
 
     function removePlayingIconFromPreviousSong() {
-        console.log('scope.current song', $scope.currentSong);
         if ($scope.currentSong) {
             var prevSong = $('#' + $scope.currentSong._id + ' .status');
             if (prevSong) prevSong.addClass('not-playing');
@@ -52,7 +51,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
 
     function loadPlayingIcon(id) {
         var thisSong = $('#' + id + ' .status');
-        console.log('THISSONG', thisSong);
         thisSong.removeClass('not-playing');
     }
 
@@ -88,7 +86,6 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             $scope.currentService = 'Bandcamp';
             request.service ='Bandcamp';
             request.id = song.source.url;
-            console.log('loading bandcamp song', song, request);
         }
         chrome.runtime.sendMessage(request, function (response) {
         });

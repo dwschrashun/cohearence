@@ -4,19 +4,18 @@
 <div id="music-library-wrap">
     <music-library ></music-library>
 </div>
-<hr>
 <div class="container" id="popup-container">
     <div class="row">
         <div id="player">
             <div class="col-xs-2 text-center">
                 <div class="buttons">
-                    <i class="fa fa-lg fa-step-backward" ng-click="changeSong('backward')"></i>
-                    <i ng-if="paused" class="fa fa-lg fa-play-circle-o" ng-click="playVideo()"></i>
-                    <i ng-if="!paused" class="fa fa-lg fa-pause" ng-click="pauseVideo()"></i>
-                    <i class="fa fa-lg fa-step-forward" ng-click="changeSong('forward')"></i>
+                    <i class="fa fa-2x fa-step-backward" ng-click="changeSong('backward')"></i>
+                    <i ng-if="paused" class="fa fa-2x fa-play-circle-o" ng-click="playVideo()"></i>
+                    <i ng-if="!paused" class="fa fa-2x fa-pause" ng-click="pauseVideo()"></i>
+                    <i class="fa fa-2x fa-step-forward" ng-click="changeSong('forward')"></i>
                 </div>
             </div>
-            <div class="col-xs-10">
+            <div class="col-xs-10 text-center">
                 <progress-bar></progress-bar>
             </div>
         </div>
