@@ -3,12 +3,15 @@ app.directive('librarySong', function(PlaylistFactory){
 		restrict: 'E',
 		templateUrl: 'js/common/directives/library-song/library-song.html',
 		scope: {
-			song: '='
+			song: '=',
+			load: '=',
+			index: '@'
 		},
 		link: function(scope, elem, attrs) {
 			scope.addToPlaylist = function(playlistId) {
 				PlaylistFactory.addToPlaylist(scope.song._id, playlistId);
 			};
+
 		}
 	};
 });

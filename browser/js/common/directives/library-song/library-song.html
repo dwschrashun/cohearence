@@ -1,24 +1,24 @@
 <ul>
-	<li draggable id="{{song.song._id}}">
-		<div  class="row" >
-				<div class="col-md-2 track-artist">
-					<a href="#">{{song.song.artist}}</a>
-				</div>
-				<div class="col-md-2 track-title">
-					<a href="#">{{song.song.title}}</a>
-				</div>
-				<div class="col-md-2 track-duration">
-					{{song.song.duration}}
-				</div>
-				<div class="col-md-2 track-last-played">
-					 Last played: {{song.plays[song.plays.length-1] | date}}
-				</div>
-				<div class="col-md-2 track-source">
-					<a target="_blank" href="{{song.song.source.url}}">Visit Source</a>
-				</div>
-				<div class="col-md-2 track-delete">
-					<a ng-click="">Delete</a>
-				</div>
+	<li ng-class="{'currentSong': currentSong === song.song._id, 'nextSong': nextSong===song.song._id}" draggable id="{{song.song._id}}">
+		<div class="row" >
+			<div class="col-md-2 track-artist">
+				<a>{{song.song.artist}}</a>
+			</div>
+			<div ng-click="load(song.song._id, index)" class="col-md-2 track-title">
+				<a>{{song.song.title}}</a>
+			</div>
+			<div class="col-md-2 track-duration">
+				{{song.song.duration}}
+			</div>
+			<div class="col-md-2 track-last-played">
+				 Last played: {{song.plays[song.plays.length-1] | date}}
+			</div>
+			<div data="{{song.song.source.domain}}"class="col-md-2 track-source">
+				<a target="_blank" href="{{song.song.source.url}}">Visit Source</a>
+			</div>
+			<div class="col-md-2 track-delete">
+				<a ng-click="">Delete</a>
+			</div>
 		</div>
 	<li>
 </ul>

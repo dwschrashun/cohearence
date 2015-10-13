@@ -24,7 +24,7 @@
     ],
     "content_scripts": [{
         "matches": ["http://127.0.0.1:1337/", "http://localhost:1337/", "https://aqueous-gorge-7560.herokuapp.com/"],
-        "js": ["contentScripts/webPlayer.js"]
+        "js": ["thirdparty/jquery-2.1.4.js", "contentScripts/webPlayer.js"]
     }, {
         "matches": ["https://www.youtube.com/*"],
         "js": ["thirdparty/jquery-2.1.4.js", "thirdparty/lodash.js", "contentScripts/youtube.js"]
