@@ -9,19 +9,19 @@ $background-color-light: #333333;
 
 
 navbar {
-  display: block;
-  background-color: $background-color;
-  // opacity: 0.7;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 14px -3px black;
+	display: block;
+	background-color: $background-color;
+	// opacity: 0.7;
+	border-bottom: 1px solid black;
+	box-shadow: 1px 1px 14px -3px black;
 	height: 50px;
 
-  .container {
-    width: 91%;
-    max-width: 1340px;
-	padding: none;
-    // padding-top: 20px;
-  }
+	.container {
+		width: 91%;
+		max-width: 1340px;
+		padding: none;
+		// padding-top: 20px;
+	}
 
 	p {
 		color: $blue;
@@ -32,25 +32,25 @@ navbar {
  //  height: 50px;
  // }
 
-  a {
-    color: black;
-    font-size: 16px;
-  }
+	a {
+		color: black;
+		font-size: 16px;
+	}
 
-  .nav > li > a {
-    cursor: pointer;
-    transition: color 0.2s;
-    &.active {
-      color: darken(#f31214, 10%);
-    }
-    &:hover {
-      background: none;
-      color: #f31214;
-    }
-    &:focus {
-      background: none;
-    }
-  }
+	.nav > li > a {
+		cursor: pointer;
+		transition: color 0.2s;
+		&.active {
+			color: darken(#f31214, 10%);
+		}
+		&:hover {
+			background: none;
+			color: #f31214;
+		}
+		&:focus {
+			background: none;
+		}
+	}
 
   // .login-button {
   //   float: right;
@@ -60,16 +60,16 @@ navbar {
   //   outline: none !important;
   // }
 
-  .welcome {
-    float: right;
-    margin-top: 12px;
-    span {
-      color: white;
-    }
-    a {
-      color: $blue;
-      cursor: pointer;
-    }
-  }
+	.welcome {
+		float: right;
+		margin-top: 12px;
+		span {
+			color: white;
+		}
+		a {
+			color: $blue;
+			cursor: pointer;
+		}
+	}
 
 }
