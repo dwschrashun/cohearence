@@ -1,5 +1,5 @@
 <ul>
-	<li draggable id="{{song.song._id}}">
+	<li ng-click="load(song.song, index)" ng-class="{'current': current._id === song.song._id}" draggable id="{{song.song._id}}" class="song-list-item">
 		<div  class="row" >
 				<div class="col-md-3 track-artist">
 					<a href="#">{{song.song.artist}}</a>
@@ -13,12 +13,13 @@
 				<div class="col-md-2 track-last-played">
 					 <a href="#">{{song.plays[song.plays.length-1] | date}}</a>
 				</div>
-				<div class="col-md-1 track-source">
+				<div data="{{song.song.source.domain}}" class="col-md-1 track-source">
 					<a href="{{song.song.source.url}}">{{song.song.source.domain}}</a>
 				</div>
 				<div class="col-md-1 track-delete">
 					<button class="btn-remove" ng-click="delete(song)"> x </button>
 				</div>
 		</div>
-	<li>
+	</li>
 </ul>
+

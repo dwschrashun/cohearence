@@ -1,4 +1,4 @@
-  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       //on all player or scrobbler messages
       if (request.action) {
@@ -29,7 +29,6 @@
               action.call(self);
           }
 
-
           //if cueing video
           if (request.message === "cue") {
               currentSongIndex = request.songIndex;
@@ -45,18 +44,18 @@
                   currentIndex: currentSongIndex
               });
           }
-
       }
 
       // changing songs
       if (request.message === 'changeSong') {
+          console.log("changing song:", request.direction);
           var nextSong = autoPlayNextSong(request.direction);
           cueSong(nextSong);
           sendResponse({
             nextSongIndex: currentSongIndex,
             nextSong: nextSong
           });
-      };
+      }
 
       //if checking time of video
       if (request.message === "checkTimeAction") {
@@ -67,6 +66,7 @@
               duration: currentTime[1]
           });
       }
+
       //if changing time in video with slider
       if (request.message === "changeTimeAction") {
           var service = request.service;
@@ -110,3 +110,17 @@
 
       return true;
   });
+
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    //console.log("tab updateed", tab.url);
+
+    var isLibrary = ["http://localhost:1337/library", "http://127.0.0.1:1337/library", "http://aqueous-gorge-7560/library"].some(function (el) {
+        return el === tab.url;
+    });
+    if (tab.url.indexOf('https://www.youtube.com/watch') !== -1 && changeInfo && changeInfo.status == "complete") {
+        scrobbleYouTube(tabId);
+    }
+    if (isLibrary && changeInfo && changeInfo.status == "complete") {
+        setLibraryHandlers(tabId);
+    }
+});

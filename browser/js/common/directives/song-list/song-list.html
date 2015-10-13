@@ -10,13 +10,13 @@
 		<div ng-if="!playlistView" class="panel-body">
 			<div id="empty-message" ng-if="!hasSongs">
 				<h1>This is where your songs would be, if you had any. Download our extension to start scrobbling!</h1>
-				<a id="cohearence" href="https://chrome.google.com/webstore/detail/blueberry-scrobbler/jhddmhidckejknknbabaniikacgjhomb/related">Cohearance Scrobler</a>
+				<a id="cohearence" href="https://chrome.google.com/webstore/detail/blueberry-scrobbler/jhddmhidckejknknbabaniikacgjhomb/related">Cohearence Scrobler</a>
 				<a id="soundcloud" href="https://soundcloud.com">Soundcloud</a>
 				<a id="youtube" href="https://youtube.com">YouTube</a>
 				<a id="spotify" href="https://play.spotify.com">Spotify</a>
 				<a id="bandcamp" href="https://bandcamp.com">Bandcamp</a>
 			</div>
-			<library-song delete="delete" song="item" ng-repeat="item in view"></library-song>
+			<library-song current="current" delete="delete" next="next" load="load" song="item" index="{{$index}}" id="library-song-{{$index}}" ng-repeat="item in view"></library-song>
 		</div>
 		<playlist-header ng-if="playlistView" id="playlist-header-container"></playlist-header>
 		<div ng-if="playlistView"  class="panel-body">
