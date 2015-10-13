@@ -13,9 +13,9 @@ app.config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider.otherwise('/');
 });
 
-app.run(function($rootScope) {
+app.run(function ($rootScope) {
     // if (LoginFactory.isLoggedIn()) {
-    //     $state.go('player');
+    //     $state.go('player.musicLibrary');
     // } else {
     //     $state.go('login');
     // }
