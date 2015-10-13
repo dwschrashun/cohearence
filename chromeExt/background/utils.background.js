@@ -41,7 +41,10 @@ function stopAllVideos() {
 }
 
 function autoPlayNextSong(direction) {
-    var musicLibrary = getUser().musicLibrary;
+    var user = getUser();
+    console.log("user in autoplaynextsong", user);
+    var musicLibrary = user.musicLibrary;
+    console.log("autoplaynextsong musicLibrary", musicLibrary);
     var request = {};
 
     if (direction === 'forward') currentSongIndex += 1;
@@ -50,6 +53,7 @@ function autoPlayNextSong(direction) {
         return;
     }
 
+    console.log("autoplaynextsong currentsongindex", currentSongIndex);
     var song = musicLibrary[currentSongIndex].song;
 
     if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {

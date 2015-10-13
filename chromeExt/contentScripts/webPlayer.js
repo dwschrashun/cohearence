@@ -6,7 +6,7 @@ function loadSong (clicked) {
 	request.message = "cue";
 	request.service = source.attr("data");
 	request.id = source.children("a").first().attr("href");
-	request.songIndex = clicked.parent().parent().attr("id").split("-")[2];
+	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	console.log("Load request", request);
 	chrome.runtime.sendMessage(request, function (response) {
 
@@ -48,11 +48,15 @@ $(document).ready(function (){
 			}
 		});
 		$("#nav-backward").on("click", function() {
+			request.message = "changeSong";
+			request.direction = "backward";
 			chrome.runtime.sendMessage(request, function (response) {
 
 			});
 		});
 		$("#nav-forward").on("click", function() {
+			request.message = "changeSong";
+			request.direction = "forward";
 			chrome.runtime.sendMessage(request, function (response) {
 
 			});
