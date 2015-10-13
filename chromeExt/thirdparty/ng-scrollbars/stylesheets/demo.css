@@ -1,0 +1,54 @@
+.panel-container {
+  padding: 20px;
+  max-width: 340px;
+  margin: 0px auto; }
+  @media (min-width: 680px) {
+    .panel-container {
+      max-width: 680px; } }
+  @media (min-width: 1020px) {
+    .panel-container {
+      max-width: 1020px; } }
+  @media (min-width: 1360px) {
+    .panel-container {
+      max-width: 1360px; } }
+  @media (min-width: 1700px) {
+    .panel-container {
+      max-width: 1700px; } }
+  @media (min-width: 2040px) {
+    .panel-container {
+      max-width: 2040px; } }
+  .panel-container .panel {
+    width: 250px;
+    height: 200px;
+    margin: 0 20px 20px 0;
+    float: left;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    overflow: auto;
+    position: relative;
+    padding: 20px;
+    background: #333;
+    margin: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    .panel-container .panel p, .panel-container .panel h1 {
+      width: 210px; }
+    .panel-container .panel hr {
+      background-color: transparent;
+      background: none;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      clear: both; }
+
+.light-background {
+  background-color: #ddd !important;
+  color: #333 !important; }
+  .light-background h2 {
+    color: #333 !important; }
+  .light-background hr {
+    border-bottom: 1px solid rgba(3, 3, 3, 0.08) !important; }
+
+/*# sourceMappingURL=demo.css.map */
