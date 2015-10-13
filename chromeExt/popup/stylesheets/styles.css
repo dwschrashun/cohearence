@@ -17,6 +17,14 @@
   color: #3CB2D0;
 }
 
+#slider {
+  margin-left: 17px;
+}
+
+.time-status {
+  margin-bottom: 3px;
+}
+
 .song {
   height: 30px;
 }
