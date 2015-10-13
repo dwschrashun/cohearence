@@ -1,18 +1,49 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  //if scrobbling
-  if (request.action === 'scrobble') {
-    sendSong(request);
-    sendResponse({
-        response: "hey we got your song at the router from:" + request.message
-    });
-  }
+  
+  //on all player or scrobbler messages
+  if (request.action) {
 
-  //if making player perform some action (play, pause, etc.)
-  if (request.message === 'playerAction') {
-    var service = serviceMethods[request.service];
-    var self = service.reference;
-    var action = service[request.action];
-    action.call(self);
+    var playerStates = getPlayerState();
+    var playing;
+    for (var key in playerStates) {
+        if (playerStates[key]) {
+            playing = true;
+        }
+    } 
+
+    //if scrobbling
+    if (request.action === 'scrobble') {
+      sendSong(request);
+      setIcon(playing, "scrobble");
+      sendResponse({
+          response: "hey we got your song at the router from:" + request.message
+      });
+    }
+
+    //if making player perform some action (play, pause, etc.)
+    if (request.message === 'playerAction') {
+      setIcon(request.action !== "pause", "player");
+      var service = serviceMethods[request.service];
+      var self = service.reference;
+      var action = service[request.action];
+      action.call(self);
+    }
+
+
+    //if cueing video
+    if (request.message === "cue") {
+        stopAllVideos();
+        cueSong(request);
+        setIcon(true, "player");
+    }
+
+    // persisting controls on popup close
+    if (request.message === "whoIsPlaying") {
+      sendResponse({
+        response: playerStates
+      });
+    }
+
   }
 
   // changing songs
@@ -30,30 +61,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         duration: currentTime[1]
     });
   }
-
   //if changing time in video with slider
   if (request.message === "changeTimeAction"){
     var service = request.service;
     seekTo(request.time, service);
-  }
-
-  //if cueing video
-  if (request.message === "cue") {
-      currentSongIndex = request.songIndex;
-      stopAllVideos();
-      cueSong(request);
-  }
-
-
-  // persisting controls on popup close
-  if (request === "whoIsPlaying") {
-
-    var playerStates = getPlayerState();
-
-    sendResponse({
-      response: playerStates,
-      currentIndex: currentSongIndex || null
-    });
   }
 
   if (request.message === "ytCall") {
