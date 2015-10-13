@@ -1,7 +1,7 @@
 <ul>
 	<li draggable id="{{song.song._id}}">
 		<div  class="row" >
-				<div class="col-md-3 track-artist">
+				<div class="col-md-2 track-artist">
 					<a href="#">{{song.song.artist}}</a>
 				</div>
 				<div class="col-md-4 track-title">
@@ -9,6 +9,9 @@
 				</div>
 				<div class="col-md-1 track-duration">
 					<a href="#">{{song.song.duration}}</a>
+				</div>
+				<div class="col-md-1 track-plays">
+					<a href="#">{{song.plays.length}}</a>
 				</div>
 				<div class="col-md-2 track-last-played">
 					 <a href="#">{{song.plays[song.plays.length-1] | date}}</a>

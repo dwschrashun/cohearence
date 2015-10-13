@@ -32,8 +32,11 @@ $background-color-light: #333333;
 				margin-right: -15px;
 				margin-left: 5px;
 			}
-			#duration-label {
+			#plays-label {
 				margin-left: 5px;
+			}
+			#last-played-label {
+				// margin-left: -5px;
 			}
 			#source-label {
 				margin-left: -40px;
@@ -120,6 +123,9 @@ $background-color-light: #333333;
 			}
 			.track-source {
 				margin-left: -30px;
+			}
+			.track-plays {
+				margin-left: 10px;
 			}
 			.track-delete {
 				margin-left: 20px;
