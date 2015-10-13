@@ -38,8 +38,8 @@ app.controller('DragAndDropCtrl', function ($scope, PlaylistFactory) {
         e.preventDefault(); // Necessary. Allows us to drop.
         e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
 		// this.style.color = "white";
-		this.style.backgroundColor = 'rgb(194, 194, 194)';
-    	this.style.transition = 'all .5s ease-in-out';
+		this.style.backgroundColor = '#333333';
+    	this.style.transition = 'all .3s ease-in-out';
         // this.style.transform = 'scale(1.2)';
         return false;
     };
@@ -47,7 +47,7 @@ app.controller('DragAndDropCtrl', function ($scope, PlaylistFactory) {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
 		this.style.backgroundColor = 'transparent';
-		this.style.transition = 'all .5s ease-in-out';
+		this.style.transition = 'all .3s ease-in-out';
 		// this.style.transform = 'scale(1.0)';
         // this.style.transition = '';
     };
