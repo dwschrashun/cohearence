@@ -8,6 +8,19 @@
     border-radius: 2px;
 }
 
+.navbar, .navbar > .container {
+  background-color: #222222;
+}
+
+#push, #music-library-wrap {
+  background-color: #333333;
+  color: #3CB2D0;
+}
+
+.song {
+  height: 30px;
+}
+
 #popup-container {
     position: absolute;
     bottom: 0;
@@ -33,7 +46,7 @@
 
 #music-library-wrap {
     height: 250px;
-    overflow-y: auto;
+    width: 768px;
 }
 
 #header-border {
@@ -114,7 +127,7 @@ hr {
 }
 
 .spinner > div {
-  background-color: #333;
+  background-color: #3CB2D0;
   height: 100%;
   width: 6px;
   display: inline-block;
