@@ -1,6 +1,6 @@
 app.config(function ($stateProvider) {
     $stateProvider.state('home', {
-        url: '/',
+        url: '/library',
         templateUrl: 'js/home/home.html',
         controller: 'HomeController',
         resolve: {
@@ -43,10 +43,11 @@ app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthS
 
 
 
-	$scope.removePlaylist = function(id){
-		PlaylistFactory.deletePlaylist(id)
+	$scope.removePlaylist = function(playlist){
+		PlaylistFactory.deletePlaylist(playlist._id)
 		.then(function(){
-			$scope.playlists.splice($scope.playlists.indexOf(id));
+			$scope.playlists = _.without($scope.playlists, playlist);
+			// $scope.playlists.splice($scope.playlists.indexOf(id));
 			$state.go('home');
 		});
 	};

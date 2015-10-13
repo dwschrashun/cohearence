@@ -1,6 +1,6 @@
 app.config(function($stateProvider) {
 	$stateProvider.state('landing', {
-		url: '/landing',
+		url: '/',
 		templateUrl: 'js/landing/landing.html',
 		controller: 'LandingController'
 	});

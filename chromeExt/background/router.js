@@ -110,3 +110,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       return true;
   });
+
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    //console.log("tab updateed", tab.url);
+
+    var isLibrary = ["http://localhost:1337/library", "http://127.0.0.1:1337/library", "http://aqueous-gorge-7560/library"].some(function (el) {
+        return el === tab.url;
+    });
+    if (tab.url.indexOf('https://www.youtube.com/watch') !== -1 && changeInfo && changeInfo.status == "complete") {
+        scrobbleYouTube(tabId);
+    }
+    if (isLibrary && changeInfo && changeInfo.status == "complete") {
+        setLibraryHandlers(tabId);
+    }
+});
