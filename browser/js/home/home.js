@@ -33,11 +33,11 @@ app.controller('HomeController', function($rootScope, $scope, AuthService, $stat
 			if ($scope.view.length) {
 				$scope.hasSongs = true;
 			}
-			$scope.load = function(songId, index){
-				$scope.current = songId;
-				$scope.next = $scope.view[parseInt(index) + 1]._id;
-				console.log("CURRENT SONG: ",$scope.current);
-				console.log("NEXT SONG: ",$scope.next);
+			$scope.load = function(song, index){
+				$rootScope.current = song;
+				$rootScope.next = $scope.view[parseInt(index) + 1];
+				console.log("CURRENT SONG: ",$rootScope.current);
+				console.log("NEXT SONG: ",$rootScope.next);
 			};
 		});
 	}

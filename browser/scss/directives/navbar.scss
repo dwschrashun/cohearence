@@ -16,7 +16,7 @@ navbar {
   box-shadow: 1px 1px 14px -3px black;
 	height: 50px;
 
- ul {
+  ul {
     li {
         p {
             margin: 0px;
@@ -29,13 +29,16 @@ navbar {
             margin: 0px;
         }
     }
- }
- 
+  }
+
+  #currently-playing {
+    color: white;
+  }
 
   .container {
     width: 91%;
     max-width: 1340px;
-	padding: none;
+	  padding: none;
     // padding-top: 20px;
   }
 
@@ -49,7 +52,7 @@ navbar {
  // }
 
   a {
-    color: black;
+    color: green;
     font-size: 16px;
   }
 

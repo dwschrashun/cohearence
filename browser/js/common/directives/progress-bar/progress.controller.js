@@ -26,7 +26,7 @@ app.controller('ProgressCtrl', function ($scope, WebPlayerFactory, $interval) {
     // var max = theSlider.slider("option", "max");
     // console.log(sliderMaxTime);
 
-    //send message to background script to get time elapsed
+    // //send message to background script to get time elapsed
     // function getTimeFromBackground() {
     //     chrome.runtime.sendMessage('whoIsPlaying', function (response) {
     //         var currentService = PlayerFactory.setCurrentService(response);

@@ -1,5 +1,5 @@
 <ul>
-	<li ng-click="load(song.song._id, index)" ng-class="{'current': current === song.song._id}" draggable id="{{song.song._id}}" class="song-list-item">
+	<li ng-click="load(song.song, index)" ng-class="{'current': current._id === song.song._id}" draggable id="{{song.song._id}}" class="song-list-item">
 		<div class="row" >
 			<div class="col-md-2 track-artist">
 				<a>{{song.song.artist}}</a>
