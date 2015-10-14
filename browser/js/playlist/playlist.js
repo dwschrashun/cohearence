@@ -37,7 +37,7 @@ app.controller('PlaylistController', function($scope, SongFactory, AuthService, 
 			$scope.view.songs.forEach(function(song){
 				SongFactory.setSourceIcons(song);
 			})
-			// setSourceIcons($scope.view.songs);
+			setSourceIcons($scope.view.songs);
 		}
 	}
 
