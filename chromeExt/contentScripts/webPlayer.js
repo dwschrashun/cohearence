@@ -1,6 +1,6 @@
 var request = {message: 'playerAction'};
 
-
+//clicked should be a .song-list-item element
 function loadSong (clicked) {
 	var source = clicked.find(".track-source");
 	request.action = 'cue';
@@ -31,18 +31,18 @@ function setListeners () {
 		$("#nav-play").on("click", function () {
 			request.message = "playerAction";
 			current = $('.current');
-			// console.log("click on play:", current);
+			//console.log("click on play:", current);
 			var track;
-			if (!current){
-				track = $('.track-title').first();
-				// console.log("loading new song from play button", track);
+			if (!current.length){
+				track = $(".song-list-item").first();
+				//console.log("loading new song from play button", track);
 				loadSong(track);
 			} else {
 				track = current.first().find(".track-source");
 				request.service = track.attr('data');
 				request.url = track.children('a').attr('href');
 				request.action = "play";
-				// console.log('request in play else', request);
+				//console.log('request in play else', request);
 				chrome.runtime.sendMessage(request, function (response) {
 					console.log('GOT THE RESPONSE', response);
 				});

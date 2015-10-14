@@ -2,15 +2,22 @@ app.directive('player', function () {
 	return {
 		restrict: "E",
 		templateUrl: "/js/common/directives/web-player/web-player.html",
-		controller: function ($scope) {
-
-			$scope.paused = true;
+		controller: function ($scope, $rootScope) {
+			$scope.$on("sendFirstSong", function (event, song) {
+				//console.log("recieved first song", song);
+				$rootScope.current = song;
+			});
+			$rootScope.paused = true;
 			$scope.togglePaused = function($event) {
-				if (!$event || !$scope.paused) {
-					$scope.paused = !$scope.paused;
+				if (!$event || !$rootScope.paused) {
+					$rootScope.paused = !$rootScope.paused;
 				}
 				else {
-					console.log("event, paused", $event, $scope.paused);
+					console.log("event, paused", $event, $rootScope.paused);
+				}
+				if (!$rootScope.current) {
+					//console.log("broadcasting");
+					$scope.$broadcast("getFirstSong");
 				}
 			};
 				

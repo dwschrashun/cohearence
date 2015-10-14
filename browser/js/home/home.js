@@ -33,6 +33,7 @@ app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthS
 				$scope.hasSongs = true;
 			}
 			$scope.load = function(song, index){
+				$rootScope.paused = false;
 				$rootScope.current = song;
 				$rootScope.next = $scope.view[parseInt(index) + 1];
 				console.log("CURRENT SONG: ",$rootScope.current);
