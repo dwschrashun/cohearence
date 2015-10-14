@@ -4,9 +4,15 @@ $green: #90EE90;
 $yellow: #FFFE8D;
 $pink: #FFB6C1;
 $orange: #FFA07A;
-$background-color: #222222;
-$background-color-light: #333333;
 $light-gray: rgb(194, 194, 194);
+
+//original theme
+// $background-color: #222222;
+// $background-color-light: #333333;
+
+//for presentation
+$background-color: #333333;
+$background-color-light: rgb(104,104,104);
 
 navbar {
 	display: block;
@@ -38,7 +44,7 @@ navbar {
 		font-size: 18px;
 		letter-spacing: .06em;
 		font-family: 'roboto', sans-serif;
-		font-weight: 300;
+		font-weight: 400;
 	}
 
 	.container {
@@ -100,7 +106,7 @@ navbar {
 		float: right;
 		margin-top: 12px;
 		font-family: 'roboto', sans-serif;
-		font-weight: 300;
+		font-weight: 400;
 		font-size: 18px;
 		letter-spacing: .06em;
 

@@ -4,9 +4,17 @@ $green: #90EE90;
 $yellow: #FFFE8D;
 $pink: #FFB6C1;
 $orange: #FFA07A;
-$background-color: #222222;
-$background-color-light: #333333;
+$ocean-blue: #5F9EA0;
 $light-gray: rgb(164,164,164);
+
+//original theme
+// $background-color: #222222;
+// $background-color-light: #333333;
+
+//for presentation
+$background-color: #333333;
+$background-color-light: rgb(104,104,104);
+
 @import url(http://fonts.googleapis.com/css?family=Roboto:100,300,400);
 
 #song-list-container {
@@ -35,18 +43,24 @@ $light-gray: rgb(164,164,164);
 			border-bottom: solid 3px $background-color-light;
 			margin-top: 10px;
 			margin-bottom: 0px;
-			.col-md-4 {
-				margin-right: -20px;
-			}
-			.col-md-3 {
-				margin-right: -15px;
+			#artist-label {
+				// margin-right: -15px;
 				margin-left: 5px;
+			}
+			#title-label {
+				margin-left: 5px;
+				padding-left: 0px;
+				padding-right: 0px;
 			}
 			#duration-label {
-				margin-left: 5px;
+				padding-left: 0px;
+				margin-left: -10px;
+			}
+			#last-played-label {
+				padding-left: 0px;
 			}
 			#source-label {
-				margin-left: -40px;
+				margin-left: -50px;
 			}
 			#header-item {
 				color: white;
@@ -99,13 +113,15 @@ $light-gray: rgb(164,164,164);
 	// box-shadow: 0px 2px 5px black;
 	.panel-heading {
 		background-color: $blue;
-		border-top-right-radius: 0px;
+		border-top-right-radius: 2px;
+		border-top-left-radius: 20px;
 		// font-size: 16px;
 	}
 
 	.playlist-panel-heading {
 		background-color: $green;
-		border-top-right-radius: 0px;
+		border-top-right-radius: 2px;
+		border-top-left-radius: 20px;
 		height: 40px;
 		.panel-title {
 			padding-left: 20px;
@@ -149,6 +165,11 @@ $light-gray: rgb(164,164,164);
 }
 
 .coolPanel {
+	.panel-heading {
+		// font-size: 16px;
+	}
+
+	border: none;
 	border-bottom: none;
 	margin-top: 20px;
 	width: 100%;
@@ -158,11 +179,11 @@ $light-gray: rgb(164,164,164);
 	// color: $blue;
 
 	#empty-message {
-		h1 {
+		h1, h2 {
 			color: $light-gray;
-
+			display: block;
 		}
-		padding-top: 200px;
+		padding-top: 120px;
 		text-align: center;
 		a {
 			display: inline-block;
@@ -170,6 +191,9 @@ $light-gray: rgb(164,164,164);
 			font-size: 30px;
 			text-align: center;
 			color: $light-gray;
+			img {
+				width: 100px;
+			}
 		}
 		#soundcloud {
 			color: $orange;
@@ -188,14 +212,14 @@ $light-gray: rgb(164,164,164);
 	h2, li {
 		list-style-type: none;
 		font-family: 'Roboto', sans-serif;
-		font-weight: 300;
-		font-size: 1.2em;
+		font-weight: 400;
+		font-size: 1.3em;
 		letter-spacing: .02em;
 	}
 
 	.panel-heading, .playlist-panel-heading {
 		color: $background-color;
-		border-top-left-radius: 20px;
+		// border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
 	}
 
