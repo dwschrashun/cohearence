@@ -56,6 +56,7 @@ app.controller('HomeController', function($rootScope, SongFactory, UserFactory, 
 		UserFactory.deleteSong($scope.theUser._id, song.song._id)
 		.then(function(){
 			$scope.view = _.without($scope.view, $scope.view[$scope.view.indexOf(song)]);
+			$scope.hasSongs = $scope.view.length ? true: false;
 		});
 	};
 });
