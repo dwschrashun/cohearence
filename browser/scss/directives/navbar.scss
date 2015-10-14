@@ -39,6 +39,7 @@ navbar {
 		letter-spacing: .06em;
 		font-family: 'roboto', sans-serif;
 		font-weight: 300;
+		width: 200px;
 	}
 
 	.container {
@@ -46,6 +47,12 @@ navbar {
 	    max-width: 1340px;
 		  padding: none;
 	    // padding-top: 20px;
+	}
+
+	#progress {
+		width: 200px;
+		margin-top: 20px;
+		margin-left: 10px;
 	}
 
 	p {

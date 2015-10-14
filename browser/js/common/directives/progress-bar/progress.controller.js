@@ -1,4 +1,14 @@
 app.controller('ProgressCtrl', function ($scope, WebPlayerFactory, $interval) {
+    console.log($);
+    var theSlider = $('#slider');
+    console.log(theSlider);
+    theSlider.slider({
+        min: 0,
+        max: 100
+
+    })
+
+
     // $scope.duration = 0;
     // $scope.timeElapsed = 0;
     // //initialize slider
