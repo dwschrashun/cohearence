@@ -14,12 +14,7 @@ app.run(function ($rootScope, AuthService, $state) {
     var destinationStateRequiresAuth = function (state) {
         return state.data && state.data.authenticate;
     };
-    
-    function redirectToLibrary () {
-        var user = AuthService.getLoggedInUser();
-        if (user) $state.go('home');
-    }
-    redirectToLibrary();
+
     // $stateChangeStart is an event fired
     // whenever the process of changing a state begins.
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
