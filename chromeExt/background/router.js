@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                   playing = true;
               }
           }
-
+          if (request.action === 'killPlayers') stopAllVideos();
           //if scrobbling
           if (request.action === 'scrobble') {
               sendSong(request);
