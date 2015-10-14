@@ -34,7 +34,7 @@ app.controller('PlaylistController', function($scope, SongFactory, AuthService, 
 		$scope.hasSongs = $scope.view.songs.length ? true: false;
 
 		if ($scope.hasSongs) {
-			console.log('in forEach')
+		
 			$scope.view.songs.forEach(function(song){
 				SongFactory.setSourceIcons(song);
 			});
