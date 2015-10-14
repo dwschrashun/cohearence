@@ -2,7 +2,7 @@
 <div id="push">
 </div>
 <div id="music-library-wrap">
-    <music-library ></music-library>
+    <music-library></music-library>
 </div>
 <div class="container" id="popup-container">
     <div class="row">
@@ -15,7 +15,10 @@
                     <i class="fa fa-2x fa-step-forward" ng-click="changeSong('forward')"></i>
                 </div>
             </div>
-            <div class="col-xs-10 text-center">
+            <div class="col-xs-2 text-center">
+                <marquee id="song-marquee" ng-if="currentSong">{{currentSong.artist}} - {{currentSong.title}}</marquee>
+            </div>
+            <div class="col-xs-8 text-center">
                 <progress-bar></progress-bar>
             </div>
         </div>
