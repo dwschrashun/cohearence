@@ -118,22 +118,39 @@ function getCurrentTime(service) {
     return [currentTime, duration];
 }
 
+var iconMap = {
+    playingscrobble: "/icons/playingscrobble.png",
+    playingplayer: "/icons/playingplayer.png",
+    pausedscrobble: "/icons/pausedscrobble.png",
+    pausedplayer: "/icons/pausedplayer.png"
+};
+
+function switchIcon (playing, action) {
+    // console.log("playing, action", playing, action);
+    var state = `${playing ? "playing" : "paused"}${action}`;
+    console.log("switch", state);
+    chrome.browserAction.setIcon({path: {"38": iconMap[state]}});
+}
 
 function setIcon (playing, action) {
+    var counter = 0;
     var state = `${playing ? "playing" : "paused"}${action}`;
     console.log("set icon state:", state);
-    var iconMap = {
-        playingscrobble: "/icons/playingscrobble.jpg",
-        playingplayer: "/icons/playingplayer.jpg",
-        pausedscrobble: "/icons/pausedscrobble.jpg",
-        pausedplayer: "/icons/pausedplayer.jpg"
-    };
-    chrome.browserAction.setIcon({path: iconMap[state]});
+    chrome.browserAction.setIcon({path: {"38": iconMap[state]}});
     if (action === "scrobble") {
-        setTimeout(function () {
-            state = `${playing ? "playing" : "paused"}player`;
-            chrome.browserAction.setIcon({path: iconMap[state]});
-        }, 5000);
+        var id = setInterval(function () {
+            if (action === "player") action = "scrobble";
+            else action = "player";
+            console.log("playing, action", playing, action);
+            switchIcon(playing, action);
+            counter++;
+            if (counter === 5) clearInterval(id);
+        }, 1000);
+        // var counter = 0;
+        // while (counter < 5) {
+            // console.log("counter in icon flip", counter);
+            // counter++;
+        // }
     }
 }
 

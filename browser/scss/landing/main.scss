@@ -4,13 +4,24 @@ $green: #90EE90;
 $yellow: #FFFE8D;
 $pink: #FFB6C1;
 $orange: #FFA07A;
-$background-color: #222222;
-$background-color-light: #333333;
 $mint-green: #C5EEBF;
 
+//original theme
+// $background-color: #222222;
+// $background-color-light: #333333;
+
+//for presentation
+$background-color: #333333;
+$background-color-light: rgb(104,104,104);
+
+body {
+	overflow-y: hidden;
+}
+
 #landing {
+
 	font-family: "Lato", sans-serif;
-	font-weight: 300;
+	// font-weight: 400;
 	width: 100%;
 	height: 100vh;
 	background-color: $background-color-light;
@@ -29,13 +40,22 @@ $mint-green: #C5EEBF;
 	opacity: 0.7;
 	// background-image: url('http://img10.deviantart.net/635c/i/2013/009/e/a/cyan_clean_bg_2560x1200_by_markwester-d5qxcu6.png');
 	// transition: opacity 0.3s ease-in-out;
-	transition: background-color 0.7s ease-in-out;
+	// transition: background-color 0.7s ease-in-out;
+	transition: all 0.7s ease-in-out;
 	border-radius: 5px;
 	// color: $background-color;
+		label, .btn {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
 		.panel-title {
 			color: white;
 			font-size: 50px;
 			font-weight: 300;
+
+		}
+		.panel-heading {
+			padding-bottom: 0px;
 		}
 		.description {
 			font-size: 26px;
@@ -43,8 +63,14 @@ $mint-green: #C5EEBF;
 		.landing-button {
 			font-weight: 400;
 			background-color: transparent;
-			transition: background-color 0.7s ease-in-out;
+			transition: all 0.7s ease-in-out;
+			// transition: color 0.7s ease-in-out;
 			// background-color: rgba(60, 178, 208, 1);
+		}
+		.btn-google, .btn-facebook {
+			// transition: background-color 0.7s ease-in-out;
+			transition: color 0.7s ease-in-out;
+			color: white;
 		}
 		margin: 0 auto;
 		width: 50%;
@@ -54,8 +80,12 @@ $mint-green: #C5EEBF;
 		&:hover {
 			background-color: $blue;
 			.landing-button {
-				background-color: rgba(60, 178, 208, 1);
-				background-color: $green;
+				// background-color: $blue;
+				background-color: white;
+				color: black;
+			}
+			.btn-google, .btn-facebook {
+				color: white;
 			}
 			// transition: background-color 1s;
 			// opacity: 1;
@@ -64,7 +94,7 @@ $mint-green: #C5EEBF;
 	}
 
 	#description {
-		margin-top: 90px;
+		margin-top: 30px;
 		margin-left: 60px;
 		margin-right: 60px;
 		a {

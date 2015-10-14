@@ -27,14 +27,14 @@ app.directive('playlistList', function(PlaylistFactory, $state) {
 });
 
 app.controller('PlaylistListCtrl', function($scope, $state, PlaylistFactory){
-	$scope.namePlaylist = function() {
-		$scope.namingPlaylist = true;
-	};
+	// $scope.namePlaylist = function() {
+	// 	$scope.namingPlaylist = true;
+	// };
 	$scope.makePlaylist = function(){
 			PlaylistFactory.makePlaylist($scope.playlistName)
 			.then(function(playlist){
 				$scope.playlists.push(playlist);
-				$scope.namingPlaylist = false;
+				$scope.playlistName = "";
 			});
 	};
 });

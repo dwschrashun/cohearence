@@ -23,16 +23,17 @@ app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthS
 			$scope.theUser = theUser;
 			$scope.playlists = playlists;
 			$scope.view = $scope.theUser.musicLibrary;
-			$rootScope.nextSong = $scope.view[0]._id || null;
-			$rootScope.currentSong = null;
 			$scope.header = "My Library";
 			$scope.playlistView = false;
 
 
 			if ($scope.view.length) {
 				$scope.hasSongs = true;
+				$rootScope.nextSong = $scope.view[0]._id || null;
+				$rootScope.currentSong = null;
 			}
 			$scope.load = function(song, index){
+				$rootScope.paused = false;
 				$rootScope.current = song;
 				$rootScope.next = $scope.view[parseInt(index) + 1];
 				console.log("CURRENT SONG: ",$rootScope.current);

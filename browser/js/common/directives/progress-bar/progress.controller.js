@@ -1,12 +1,28 @@
 app.controller('ProgressCtrl', function ($scope, WebPlayerFactory, $interval) {
-    console.log($);
-    var theSlider = $('#slider');
-    console.log(theSlider);
-    theSlider.slider({
-        min: 0,
-        max: 100
 
-    })
+    // //initiate slider
+
+    // var theSlider = $('#slider');
+    // theSlider.slider({
+    //     min: 0
+    // })
+    // var max = theSlider.slider("option", "max");
+    // $interval(function() {
+    //         $scope.val = theSlider.slider("option", "value")
+
+    //     console.log($scope.val)
+    // }, 2000)
+
+    // $scope.val = 0;
+    // $interval(function() {
+    //     // $scope.$digest();
+    //     $scope.val = $('#slider').slider("option", "value");
+    //     console.log('IM A PRETTY SLIDER SHJRT AND STOUT', $scope.val)
+    //     // $scope.$digest();
+    // }, 3000)
+    // $interval(function() {
+    //     $('#slider').slider("option", "value");
+    // }, 1000)
 
 
     // $scope.duration = 0;

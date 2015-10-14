@@ -4,8 +4,13 @@ $green: #90EE90;
 $yellow: #FFFE8D;
 $pink: #FFB6C1;
 $orange: #FFA07A;
-$background-color: #222222;
-$background-color-light: #333333;
+//original theme
+// $background-color: #222222;
+// $background-color-light: #333333;
+
+//for presentation
+$background-color: #333333;
+$background-color-light: rgb(104,104,104);
 
 #sidebar-container {
 	padding-right: 0;
@@ -25,23 +30,10 @@ $background-color-light: #333333;
 			}
 			h2 {
 				font-family: 'Roboto', sans-serif;
-				font-weight: 300;
+				font-weight: 400;
 				font-size: 1.2em;
 				letter-spacing: .02em;
 				color: $green;
-			}
-			.search {
-				// margin-right: 0px;
-				// width: 70px;
-				float: left;
-				.form-control {
-					width: 100px;
-					margin-bottom: 5px;
-				}
-			}
-
-			.form-add {
-				margin-top: 5px;
 			}
 
 			.btn-remove {
@@ -132,21 +124,31 @@ $background-color-light: #333333;
 		}
 
 		#controls {
+			margin: 20px;
+			form {
+				margin-right: 0px;
+				width: 100%;
+				// padding: 10px;
+				padding-bottom: 10px;
+				padding-top: 10px;
+				// margin-right: 20px;
+				float: left;
+				.form-control {
+					width: 120px;
+					float: left;
+				}
+			}
 			text-align: center;
 			.btn-add {
 				float: right;
 				background-color: transparent;
-				font-weight: 300;
+				font-weight: 400;
 				color: white;
 				margin-bottom: 25px;
 				width: 33px;
 				font-size: 18px;
 				border-radius: 30px;
 				margin-right: 5px;
-			}
-			margin: 20px;
-			#confirm {
-				margin-bottom: 0px;
 			}
 		}
 	}
