@@ -120,7 +120,8 @@ $background-color-light: rgb(104,104,104);
 
 	.playlist-panel-heading {
 		background-color: $green;
-		border-top-right-radius: 0px;
+		border-top-right-radius: 2px;
+		border-top-left-radius: 20px;
 		height: 40px;
 		.panel-title {
 			padding-left: 20px;
@@ -167,6 +168,7 @@ $background-color-light: rgb(104,104,104);
 	.panel-heading {
 		font-size: 16px;
 	}
+
 	border: none;
 	border-bottom: none;
 	margin-top: 20px;
@@ -177,11 +179,11 @@ $background-color-light: rgb(104,104,104);
 	// color: $blue;
 
 	#empty-message {
-		h1 {
+		h1, h2 {
 			color: $light-gray;
-
+			display: block;
 		}
-		padding-top: 200px;
+		padding-top: 120px;
 		text-align: center;
 		a {
 			display: inline-block;
@@ -189,6 +191,9 @@ $background-color-light: rgb(104,104,104);
 			font-size: 30px;
 			text-align: center;
 			color: $light-gray;
+			img {
+				width: 100px;
+			}
 		}
 		#soundcloud {
 			color: $orange;
