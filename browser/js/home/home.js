@@ -14,7 +14,7 @@ app.config(function ($stateProvider) {
 	});
 });
 
-app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthService, $state, theUser, PlaylistFactory) {
+app.controller('HomeController', function($rootScope, SongFactory, UserFactory, $scope, AuthService, $state, theUser, PlaylistFactory) {
 	if(!theUser) $state.go('landing');
 	else {
 		PlaylistFactory.getPlaylists()
@@ -31,7 +31,9 @@ app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthS
 				$scope.hasSongs = true;
 				$rootScope.nextSong = $scope.view[0]._id || null;
 				$rootScope.currentSong = null;
-				setSourceIcons();
+				$scope.view.forEach(function(song){
+					SongFactory.setSourceIcons(song.song);
+				});
 			}
 			$scope.load = function(song, index){
 				$rootScope.paused = false;
@@ -42,36 +44,12 @@ app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthS
 			};
 		});
 	}
-
-	function setSourceIcons(){
-		$scope.view.forEach(function(song){
-			console.log("SONG: ",song);
-			switch (song.song.source.domain) {
-				case "Soundcloud":
-					song.sourceImage = "soundcloud-landing.png";
-					break;
-				case "YouTube":
-					song.sourceImage = "youtube-landing.png";
-					break;
-				case "Spotify":
-					song.sourceImage = "spotify-landing.png";
-					break;
-				case "Bandcamp":
-				song.sourceImage = "bandcamp-landing.png";
-					break;
-				default:
-				song.sourceImage = null;
-			}
-			console.log(song.sourceImage);
-		});
-	}
-
 	$scope.removePlaylist = function(playlist){
 		PlaylistFactory.deletePlaylist(playlist._id)
 		.then(function(){
 			$scope.playlists = _.without($scope.playlists, playlist);
 			// $scope.playlists.splice($scope.playlists.indexOf(id));
-			$state.go('home');
+			// $state.go('home');
 		});
 	};
 	$scope.delete = function(song){
