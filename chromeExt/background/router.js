@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       if (request.action) {
 
           var playerStates = getPlayerState();
-          var playing;
+          var playing = false;
           for (var key in playerStates) {
               if (playerStates[key]) {
                   playing = true;
