@@ -10,8 +10,8 @@ function loadSong (clicked) {
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	console.log("Load request", request);
 	chrome.runtime.sendMessage(request, function (response) {
-
-	});	
+		console.log('WEBPLAYER RESPONSE', response)
+	});
 }
 
 function setListeners () {
