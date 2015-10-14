@@ -21,6 +21,7 @@ function getSongInfo(trackSrc) {
         },
         duration: duration,
     };
+    console.log("BC songObj:", songObj);
     sendSongToRouter(songObj);
 }
 
@@ -37,6 +38,10 @@ function watchAudioTag() {
         properties: 'attr_src',
         callback: function (data, i) {
             var newValue = data.vals[i];
+            if (newValue.indexOf("http:") < 0) {
+                newValue = "http:".concat(newValue);
+            }
+            console.log("new new value", newValue);
             getSongInfo(newValue);
         }
     });
