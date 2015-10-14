@@ -16,7 +16,7 @@ app.config(function ($stateProvider) {
                 return LoginFactory.isLoggedIn();
             }
         }
-    })
+    });
 });
 
 app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
