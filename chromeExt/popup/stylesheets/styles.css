@@ -111,9 +111,8 @@ i {
     color: #3CB2D0;
 }
 
-.songColumn {
-    overflow-x: auto;
-
+.songColumn > span {
+    overflow-x: hidden;
 }
 
 .popup-nav {

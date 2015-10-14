@@ -170,4 +170,8 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             });
     };
 
+    $scope.goToWebApp = function () {
+        chrome.tabs.create({url: 'http://localhost:1337'});   
+    };
+
 });

@@ -28,5 +28,9 @@ app.factory("PlayerFactory", function($http) {
         return true;
     };
 
+    factory.getUserPlaylists = function () {
+        
+    };
+
 	return factory;
 });
