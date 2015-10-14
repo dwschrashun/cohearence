@@ -32,10 +32,8 @@ function initiateSlider(service) {
 
 	chrome.runtime.sendMessage(request, function(response) {
 		max = response.duration;
-		// console.log()
 		if (theSlider.slider) {
-			console.log('theslider.slider', theSlider.slider)
-			theSlider.slider("option", "max", max);
+			theSlider.slider("option", "max", 300);
 			setInterval(function() {
 				checkTimeRegularly(request.service);
 			}, 1000);
@@ -50,10 +48,9 @@ function checkTimeRegularly(service) {
 	}
 	chrome.runtime.sendMessage(request, function(response) {
 		var currentTime = response.currentTime;
-		$('#slider').slider("option", "value", currentTime)
-    console.log('checktimeregularly', currentTime);
-    console.log('ze current time', $('#slider').slider("option", "value"))
-
+		$('#slider').slider({
+			value: currentTime
+		})
 	})
 }
 
