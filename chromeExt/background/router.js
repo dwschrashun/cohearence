@@ -35,6 +35,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               stopAllVideos();
               cueSong(request);
               setIcon(true, "player");
+              // sendResponse({
+              //   time:
+              // })
           }
 
           // persisting controls on popup close
@@ -61,10 +64,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       if (request.message === "checkTimeAction") {
           var service = request.service;
           var currentTime = getCurrentTime(service);
-          sendResponse({
+          console.log('currentTime', currentTime)
+          setTimeout(function() {
+            sendResponse({
               currentTime: currentTime[0],
               duration: currentTime[1]
-          });
+            })
+          }, 4000)
+
       }
 
       //if changing time in video with slider
