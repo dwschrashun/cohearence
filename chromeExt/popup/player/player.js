@@ -31,6 +31,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
                  $scope.paused = false;
                 if(theUser.musicLibrary[response.currentIndex].song) {
                     $scope.currentSong = theUser.musicLibrary[response.currentIndex].song;
+                    console.log('current song playing', $scope.currentSong);
                     $timeout(function() {
                         loadPlayingIcon($scope.currentSong._id);
                     }, 200);
