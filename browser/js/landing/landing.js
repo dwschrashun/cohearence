@@ -9,8 +9,10 @@ app.config(function ($stateProvider) {
 app.controller('LandingController', function ($scope, AuthService, $state) {
 
     function redirectToLibrary() {
-        var user = AuthService.getLoggedInUser();
-        if (user) $state.go('home');
+        var user = AuthService.getLoggedInUser()
+		.then(function(user){
+        	if (user) $state.go('home');
+		});
     }
     redirectToLibrary();
     $scope.toggleLogin = function () {
