@@ -4,6 +4,7 @@
 
 body {
   background: #fdfdfd;
+  overflow-y: hidden;
 }
 
 @mixin clearfix {
