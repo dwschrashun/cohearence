@@ -32,6 +32,11 @@ app.controller('PlaylistController', function($scope, AuthService, $state, theUs
 		$scope.header = $scope.view.name;
 		$scope.playlistView = true;
 		$scope.hasSongs = $scope.view.songs.length ? true: false;
+
+		if ($scope.hasSongs) {
+			console.log($scope.view);
+			setSourceIcons();
+		}
 	}
 
 
@@ -56,4 +61,28 @@ app.controller('PlaylistController', function($scope, AuthService, $state, theUs
 			$scope.hasSongs = $scope.view.songs.length ? true: false;
 		});
 	};
+
+	function setSourceIcons(){
+		$scope.view.songs.forEach(function(song){
+			console.log("SONG: ",song);
+			switch (song.source.domain) {
+				case "Soundcloud":
+					song.sourceImage = "soundcloud-landing.png";
+					break;
+				case "YouTube":
+					song.sourceImage = "youtube-landing.png";
+					break;
+				case "Spotify":
+					song.sourceImage = "spotify-landing.png";
+					break;
+				case "Bandcamp":
+				song.sourceImage = "bandcamp-landing.png";
+					break;
+				default:
+				song.sourceImage = null;
+			}
+			console.log(song.sourceImage);
+		});
+	}
+
 });

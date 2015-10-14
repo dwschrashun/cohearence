@@ -91,7 +91,7 @@ $background-color-light: rgb(104,104,104);
 				// margin-left: 5px;
 			}
 			#source-label {
-				// margin-left: 5px;
+				margin-left: 35px;
 			}
 			#header-item {
 				color: white;
@@ -165,6 +165,17 @@ $background-color-light: rgb(104,104,104);
 			// }
 			.playlist-track-delete {
 				margin-left: 40px;
+			}
+
+			.playlist-track-source {
+				#image-container {
+					margin-left: 45px;
+					padding-top: 10px;
+					#inline-image {
+						height: 33px;
+						color: white;
+					}
+				}
 			}
 
 		}

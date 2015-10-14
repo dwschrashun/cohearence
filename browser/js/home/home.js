@@ -65,6 +65,7 @@ app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthS
 			console.log(song.sourceImage);
 		});
 	}
+
 	$scope.removePlaylist = function(playlist){
 		PlaylistFactory.deletePlaylist(playlist._id)
 		.then(function(){
