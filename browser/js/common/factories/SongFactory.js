@@ -1,7 +1,6 @@
 app.factory("SongFactory", function(){
 
 	function setSourceIcons(song){
-		console.log(song);
 		switch (song.source.domain) {
 			case "Soundcloud":
 				song.sourceImage = "soundcloud-landing.png";
