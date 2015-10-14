@@ -63,6 +63,10 @@ function setListeners () {
 	setTimeout(function(){
 		var current;
 
+		$('#web-app-logout').on("click", function(){
+			chrome.runtime.sendMessage({action: "killPlayers"});
+		});
+
 		$("#nav-pause").on("click", function() {
 			request.message = "playerAction";
 			request.action = "pause";
