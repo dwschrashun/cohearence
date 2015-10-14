@@ -1,8 +1,8 @@
-
 /*#push {
     height: 60px;
 }
 */
+
 #main {
     width: 768px;
     height: 560px;
@@ -10,56 +10,68 @@
     background-color: #333333;
 }
 
-.navbar, .navbar > .container {
-  background-color: #3CB2D0;
-
+.navbar,
+.navbar > .container {
+    background-color: #3CB2D0;
 }
 
-.navbar-brand, .navbar-nav > li > a {
-   color: black;
+.navbar-brand,
+.navbar-nav > li > a {
+    color: black;
 }
-
 
 #music-library-wrap {
-  background-color: #222222;
-  color: #3CB2D0;
-  height: 405px;
-  width: 768px;
-  font-size: 18px;
-  position: absolute;
-  top: 50px;
+    background-color: #222222;
+    color: #3CB2D0;
+    height: 423px;
+    width: 768px;
+    font-size: 18px;
+    position: absolute;
+    top: 50px;
 }
 
 #actual-library {
-  height: 350px;
+    height: 386px;
 }
 
 #slider {
-  margin-left: 17px;
+    margin-left: 17px;
+    margin-top: 8px;
+    margin-right: -20px;
+}
+
+#song-marquee {
+    margin-top: 4px;
+    margin-left: -29px;
+    margin-right: -20px;
+}
+
+.time-marker {
+    margin-top: 1px;
+    font-size: 18px;
 }
 
 .time-status {
-  margin-bottom: 3px;
+    margin-bottom: 3px;
 }
 
 .song {
-  height: 30px;
+    height: 30px;
 }
 
 #popup-container {
     position: absolute;
     bottom: 0;
-    /* height: 105px; */
     top: 455px;
     width: 768px;
     padding: 0;
-    background-color: #222222;
     color: #3CB2D0;
 }
 
 .player-controls {
-  margin-top: 30px;
+    margin-top: 30px;
 }
+
 #lambda {
     font-size: 30px;
 }
@@ -79,8 +91,8 @@
 }
 
 .music-library-header {
-  margin-bottom: 10px;
-  font-size: 20px;
+    margin-bottom: 10px;
+    font-size: 20px;
 }
 
 #header-border {
@@ -104,8 +116,10 @@ i {
 }
 
 #player {
-  margin-top: 50px;
+    margin-top: 47px;
+    margin-left: 24px;
 }
+
 #player i {
     cursor: pointer;
     color: #3CB2D0;
@@ -142,13 +156,13 @@ i {
 }
 
 hr.style14 {
-  border: 0;
-  height: 1px;
-  margin: 3px;
-  background-image: -webkit-linear-gradient(left, #222222, #8c8b8b, #222222);
-  background-image: -moz-linear-gradient(left, #222222, #8c8b8b, #222222);
-  background-image: -ms-linear-gradient(left, #222222, #8c8b8b, #222222);
-  background-image: -o-linear-gradient(left, #222222, #8c8b8b, #222222);
+    border: 0;
+    height: 1px;
+    margin: 3px;
+    background-image: -webkit-linear-gradient(left, #222222, #8c8b8b, #222222);
+    background-image: -moz-linear-gradient(left, #222222, #8c8b8b, #222222);
+    background-image: -ms-linear-gradient(left, #222222, #8c8b8b, #222222);
+    background-image: -o-linear-gradient(left, #222222, #8c8b8b, #222222);
 }
 
 .not-playing {
@@ -156,62 +170,70 @@ hr.style14 {
 }
 
 .spinner {
-  margin: 2px auto;
-  width: 60px;
-  height: 20px;
-  text-align: center;
-  font-size: 10px;
+    margin: 2px auto;
+    width: 60px;
+    height: 20px;
+    text-align: center;
+    font-size: 10px;
 }
 
 .spinner > div {
-  background-color: #3CB2D0;
-  height: 100%;
-  width: 6px;
-  display: inline-block;
-
-  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    background-color: #3CB2D0;
+    height: 100%;
+    width: 6px;
+    display: inline-block;
+    -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
 
 .spinner .rect2 {
-  -webkit-animation-delay: -1.1s;
-  animation-delay: -1.1s;
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
 }
 
 .spinner .rect3 {
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
 }
 
 .spinner .rect4 {
-  -webkit-animation-delay: -0.9s;
-  animation-delay: -0.9s;
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
 }
 
 .spinner .rect5 {
-  -webkit-animation-delay: -0.8s;
-  animation-delay: -0.8s;
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
 }
 
 .library-container {
-  width: 786px;
+    width: 786px;
 }
 
 .music-library-header {
-  padding-right: 15px;
+    padding-right: 15px;
 }
 
 @-webkit-keyframes sk-stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
-  20% { -webkit-transform: scaleY(1.0) }
+    0%,
+    40%,
+    100% {
+        -webkit-transform: scaleY(0.4)
+    }
+    20% {
+        -webkit-transform: scaleY(1.0)
+    }
 }
 
 @keyframes sk-stretchdelay {
-  0%, 40%, 100% {
-    transform: scaleY(0.4);
-    -webkit-transform: scaleY(0.4);
-  }  20% {
-    transform: scaleY(1.0);
-    -webkit-transform: scaleY(1.0);
-  }
+    0%,
+    40%,
+    100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+    }
+    20% {
+        transform: scaleY(1.0);
+        -webkit-transform: scaleY(1.0);
+    }
 }

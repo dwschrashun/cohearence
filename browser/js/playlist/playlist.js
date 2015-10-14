@@ -23,7 +23,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('PlaylistController', function($scope, AuthService, $state, theUser, thePlaylists, thePlaylist, PlaylistFactory, $stateParams) {
+app.controller('PlaylistController', function($scope, SongFactory, AuthService, $state, theUser, thePlaylists, thePlaylist, PlaylistFactory, $stateParams) {
 	if(!theUser) $state.go('landing');
 	else {
 		$scope.theUser = theUser;
@@ -32,6 +32,13 @@ app.controller('PlaylistController', function($scope, AuthService, $state, theUs
 		$scope.header = $scope.view.name;
 		$scope.playlistView = true;
 		$scope.hasSongs = $scope.view.songs.length ? true: false;
+
+		if ($scope.hasSongs) {
+			$scope.view.songs.forEach(function(song){
+				SongFactory.setSourceIcons(song);
+			})
+			// setSourceIcons($scope.view.songs);
+		}
 	}
 
 
@@ -47,12 +54,9 @@ app.controller('PlaylistController', function($scope, AuthService, $state, theUs
 	//removes a song from a playlist
 	$scope.remove = function(song){
 		var songs = $scope.view.songs;
-		console.log($scope.view);
 		PlaylistFactory.removeFromPlaylist($scope.view._id, song._id)
 		.then(function(){
-			console.log("removed!");
 			$scope.view.songs = _.without($scope.view.songs, $scope.view.songs[$scope.view.songs.indexOf(song)]);
-			console.log($scope.view);
 			$scope.hasSongs = $scope.view.songs.length ? true: false;
 		});
 	};
