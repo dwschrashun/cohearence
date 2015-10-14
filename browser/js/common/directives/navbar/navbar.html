@@ -14,7 +14,7 @@
             <li ng-show="user">
                 <marquee behavior="scroll" direction="left" ng-show="current" id="currently-playing">{{current.artist}} - {{current.title}}</marquee>
             </li>
-            <li ng-show="user">
+            <li id="progress" ng-show="user">
                 <progress-bar></progress-bar>
             </li>
         </ul>

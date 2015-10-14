@@ -9,9 +9,53 @@ function loadSong (clicked) {
 	request.id = source.children("a").first().attr("href");
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	console.log("Load request", request);
+	console.log('dat clicked song', clicked);
+	var theService = request.service;
+	initiateSlider(theService);
 	chrome.runtime.sendMessage(request, function (response) {
+		console.log('WEBPLAYER RESPONSE', response)
+	});
+}
 
-	});	
+function initiateSlider(service) {
+	var request = {
+		message: "checkTimeAction",
+		service: service
+	}
+
+  var theSlider = $('#slider');
+  console.log(theSlider);
+  theSlider.slider({
+      min: 0,
+  });
+  var max = theSlider.slider("option", "max");
+
+	chrome.runtime.sendMessage(request, function(response) {
+		max = response.duration;
+		if (theSlider.slider) {
+			theSlider.slider("option", "max", 300);
+			setInterval(function() {
+				checkTimeRegularly(request.service);
+			}, 1000);
+		}
+	})
+}
+
+function checkTimeRegularly(service) {
+	var request = {
+		message: "checkTimeAction",
+		service: service
+	}
+	chrome.runtime.sendMessage(request, function(response) {
+		var currentTime = response.currentTime;
+		$('#slider').slider({
+			value: currentTime
+		})
+	})
+}
+
+function pauseCheckTime() {
+	clearInterval();
 }
 
 function setListeners () {

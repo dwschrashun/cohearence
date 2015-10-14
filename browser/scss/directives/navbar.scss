@@ -44,6 +44,7 @@ navbar {
 		font-size: 18px;
 		letter-spacing: .06em;
 		font-family: 'roboto', sans-serif;
+		width: 200px;
 		font-weight: 400;
 	}
 
@@ -54,6 +55,12 @@ navbar {
 	    // padding-top: 20px;
 	}
 
+	#progress {
+		width: 200px;
+		margin-top: 20px;
+		margin-left: 10px;
+	}
+
 	p {
 		color: $blue;
 		display: inline-block;
@@ -61,7 +68,7 @@ navbar {
 	}
 
 	#superscript {
-		
+
 	}
 
  // .navbar-header {
