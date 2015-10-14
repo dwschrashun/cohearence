@@ -46,6 +46,7 @@ function checkTimeRegularly(service) {
 		message: "checkTimeAction",
 		service: service
 	}
+	console.log('checking time regularly');
 	chrome.runtime.sendMessage(request, function(response) {
 		var currentTime = response.currentTime;
 		$('#slider').slider({
