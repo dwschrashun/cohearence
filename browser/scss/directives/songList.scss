@@ -57,10 +57,10 @@ $background-color-light: rgb(104,104,104);
 				margin-left: -10px;
 			}
 			#last-played-label {
-				padding-left: 0px;
+				padding-left: 15px;
 			}
 			#source-label {
-				margin-left: -50px;
+				margin-left: -32px;
 			}
 			#header-item {
 				color: white;
@@ -145,10 +145,21 @@ $background-color-light: rgb(104,104,104);
 				padding-right: 15px;
 			}
 			.track-source {
-				margin-left: -30px;
+				#image-container {
+					margin: 0px;
+					#inline-image {
+						height: 33px;
+						color: white;
+					}
+				}
+			}
+			.track-last-played {
+				padding-left: 20px;
 			}
 			.track-delete {
-				margin-left: 20px;
+				padding-top: 4px;
+				padding-right: 40px;
+				// margin-right: 20px;
 			}
 			// .playlist-track-source {
 			// }

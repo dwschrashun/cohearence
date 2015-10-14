@@ -31,6 +31,7 @@ app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthS
 				$scope.hasSongs = true;
 				$rootScope.nextSong = $scope.view[0]._id || null;
 				$rootScope.currentSong = null;
+				setSourceIcons();
 			}
 			$scope.load = function(song, index){
 				$rootScope.paused = false;
@@ -42,8 +43,28 @@ app.controller('HomeController', function($rootScope, UserFactory, $scope, AuthS
 		});
 	}
 
-
-
+	function setSourceIcons(){
+		$scope.view.forEach(function(song){
+			console.log("SONG: ",song);
+			switch (song.song.source.domain) {
+				case "Soundcloud":
+					song.sourceImage = "soundcloud-landing.png";
+					break;
+				case "YouTube":
+					song.sourceImage = "youtube-landing.png";
+					break;
+				case "Spotify":
+					song.sourceImage = "spotify-landing.png";
+					break;
+				case "Bandcamp":
+				song.sourceImage = "bandcamp-landing.png";
+					break;
+				default:
+				song.sourceImage = null;
+			}
+			console.log(song.sourceImage);
+		});
+	}
 	$scope.removePlaylist = function(playlist){
 		PlaylistFactory.deletePlaylist(playlist._id)
 		.then(function(){
