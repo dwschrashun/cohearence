@@ -1,9 +1,15 @@
 var request = {message: 'playerAction'};
 var theSlider;
 var currentTime = $('#current-time');
+var theDuration = $("#duration");
+var currentSong = $('#current-song');
+var welcome = $("#welcome-message");
 var checkTime;
 
 $(document).ready(function () {
+	var playButton = $("#nav-play");
+	var pauseButton = $("#nav-pause");
+	console.log(playButton, pauseButton);
 	setTimeout(setListeners, 700); //TODO: check this length on deployed version
 	theSlider = $('#slider');
 	theSlider.slider({
@@ -12,54 +18,56 @@ $(document).ready(function () {
     });
 
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
-		console.log("RESPONSE FROM CHROME: ",response);
-		var service = setCurrentService(response.response);
-		if (service){
-			checkTimeRegularly(service);
+		if (response.currentService){
+			updateCurrentSong(response.currentSong);
+			checkTimeRegularly(response.currentService);
+			playButton.attr('hidden');
+			pauseButton.removeAttr('hidden');
+		} else {
+			pauseButton.attr('hidden');
+			playButton.removeAttr('hidden');
 		}
 	});
 });
 
 //clicked should be a .song-list-item element
-function loadSong (clicked) {
-	var source = clicked.find(".track-source");
-	request.action = 'cue';
+function loadSong (songToPlay) {
+	var request = {};
 	request.message = "cue";
-	request.service = source.attr("data");
-	request.id = source.children("a").first().attr("href");
-	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
-	// console.log("Load request", request);
-	// var theService = request.service;
-	// console.log('dat clicked song', clicked);
+	request.action = 'cue';
+	request.service = songToPlay.currentSong.source.domain;
+	request.id = songToPlay.currentSong.source.url;
+	request.songIndex = songToPlay.currentIndex;
+
+	
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");
 	clearInterval(checkTime);
 	checkTimeRegularly(request.service);
-	chrome.runtime.sendMessage(request, function (response) {
-		console.log('WEBPLAYER RESPONSE', response)
-	});
+
+	return request;
 }
 
+function loadSongFromClicked (clicked) {
+	var request = {};
+	var source = clicked.find(".track-source");
 
-var setCurrentService = function (playerStates) {
-	var playing = [];
-	var playerStates = playerStates.response;
-	for (var key in playerStates) {
-		if (playerStates[key]) {
-			playing.push(key);
-		}
-	}
-	if (playing.length > 1) {
-		chrome.runtime.sendMessage('killPlayers', function (response) {
-			console.log(response);
-			return null;
-		});
-	} else if (playing.length === 0) {
-		return null;
-	} else {
-		return playing[0];
-	}
-};
+	request.message = "cue";
+	request.action = 'cue';
+
+	request.id = source.children("a").first().attr("href");
+	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
+	request.service = source.attr('data');
+
+	theSlider.slider("option", "min", 0);
+	currentTime.text("0:00");
+	clearInterval(checkTime);
+	checkTimeRegularly(request.service);
+
+	chrome.runtime.sendMessage(request, function (response) {
+		console.log('WEBPLAYER RESPONSE', response);
+	});
+}
 
 function checkTimeRegularly(service) {
 	var request = {
@@ -68,12 +76,13 @@ function checkTimeRegularly(service) {
 	};
 
 	checkTime = setInterval(function(){
-		console.log('checking time regularly');
 		chrome.runtime.sendMessage(request, function(response) {
 			theSlider.slider({
-				value: response.currentTime
+				value: response.currentTime,
+				max: response.duration
 			});
 			currentTime.text(convertTime(response.currentTime));
+			theDuration.text(convertTime(response.duration));
 		});
 	}, 1000);
 }
@@ -83,6 +92,7 @@ function pauseCheckTime() {
 }
 
 function setListeners () {
+
 
 	var current;
 
@@ -94,50 +104,72 @@ function setListeners () {
 		request.message = "playerAction";
 		request.action = "pause";
         request.service = $(".current").first().find(".track-source").attr("data");
-		// console.log("pause request:", request);
         chrome.runtime.sendMessage(request, function (response) {
-            // console.log('response from router:', response);
+        	pauseButton.attr('hidden');
+        	playButton.removeAttr('hidden');
         });
 	});
-	$("#nav-play").on("click", function () {
+	$("#nav-play").on("click", function (event) {
+		var request = {};
 		request.message = "playerAction";
 		current = $('.current');
-		//console.log("click on play:", current);
-		var track;
-		if (!current.length){
-			track = $(".song-list-item").first();
-			//console.log("loading new song from play button", track);
-			loadSong(track);
-		} else {
-			track = current.first().find(".track-source");
-			request.service = track.attr('data');
-			request.url = track.children('a').attr('href');
-			request.action = "play";
-			//console.log('request in play else', request);
+		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function (songToPlay) {
+			console.log('this is the who is playing resposne,', songToPlay);
+			if (songToPlay.currentService) {
+				request = {message: 'playerAction'};
+				request.action = 'play';
+				request.service = songToPlay.currentService;
+			} else {
+				request = loadSong(songToPlay);
+			}
 			chrome.runtime.sendMessage(request, function (response) {
+				console.log('WEBPLAYER RESPONSE', response);
+				playButton.attr('hidden');
+				pauseButton.removeAttr('hidden');
 			});
-		}
+			// console.log('this is the request we are sending', request);
+			// chrome.runtime.sendMessage(request, function (response) {
+
+			// });
+		});
+		// var track;
+		// if (!current.length){
+		// 	track = $(".song-list-item").first();
+		// 	console.log("loading new song from play button", track);
+		// 	loadSong(track);
+		// } else {
+		// 	track = current.first().find(".track-source");
+		// 	request.service = track.attr('data');
+		// 	request.url = track.children('a').attr('href');
+		// 	request.action = "play";
+		// 	console.log('request in play else', request);
+		// }
 	});
 	$("#nav-backward").on("click", function() {
-		// console.log("nave forward clicke");
 		request.message = "changeSong";
 		request.direction = "backward";
 		chrome.runtime.sendMessage(request, function (response) {
-
+			updateCurrentSong(response.nextSongObj);
 		});
 	});
 	$("#nav-forward").on("click", function() {
 		request.message = "changeSong";
 		request.direction = "forward";
 		chrome.runtime.sendMessage(request, function (response) {
-
+			updateCurrentSong(response.nextSongObj);
 		});
 	});
 
 	$(".song-list-item").on("click", function () {
-		// console.log("songlisitem click");
-		loadSong($(this));
+		loadSongFromClicked($(this));
 	});
+}
+
+function updateCurrentSong (newSongObj) {
+	console.log('updating marquee', newSongObj);
+	welcome.attr('hidden');
+	currentSong.text(`${newSongObj.artist} - ${newSongObj.title}`)
+	currentSong.removeAttr('hidden');
 }
 
 function convertTime(input) {

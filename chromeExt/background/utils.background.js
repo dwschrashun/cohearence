@@ -42,6 +42,11 @@ function stopAllVideos() {
     if (bandcampVideo[0]) bandcampVideo[0].pause();
 }
 
+function getCurrentSong (songIndex) {
+    var user = getUser();
+    return user.musicLibrary[songIndex].song;
+}
+
 function autoPlayNextSong(direction) {
     var user = getUser();
     var musicLibrary = user.musicLibrary;

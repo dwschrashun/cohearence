@@ -2,30 +2,30 @@ app.directive('player', function () {
 	return {
 		restrict: "E",
 		templateUrl: "/js/common/directives/web-player/web-player.html",
-		controller: 'WebPlayerCtrl'
+		// controller: 'WebPlayerCtrl'
 	};
 });
 
-app.controller('WebPlayerCtrl', function ($scope, $rootScope) {
-			$rootScope.paused = true;
+// app.controller('WebPlayerCtrl', function ($scope, $rootScope) {
+// 			// $rootScope.paused = true;
 
-			// $rootScope.current = null;
+// 			// $rootScope.current = null;
 
-			//1. Runs on click of play or pause button
-			//2.Toggles pause mode
-			//3. Sets current to the first song in the current list if there is none
-			$scope.togglePaused = function() {
-				$rootScope.paused = !$rootScope.paused;
-				if (!$rootScope.current) {
-					console.log("broadcasting");
-					$scope.$broadcast("getFirstSong");
-				}
-			};
-			//Gets called after broadcast of getFirstSong
-			$scope.$on("sendFirstSong", function (event, song) {
-				$rootScope.current = song;
-			});
-});
+// 			//1. Runs on click of play or pause button
+// 			//2.Toggles pause mode
+// 			// //3. Sets current to the first song in the current list if there is none
+// 			// $scope.togglePaused = function() {
+// 			// 	$rootScope.paused = !$rootScope.paused;
+// 			// 	if (!$rootScope.current) {
+// 			// 		console.log("broadcasting");
+// 			// 		$scope.$broadcast("getFirstSong");
+// 			// 	}
+// 			// };
+// 			// //Gets called after broadcast of getFirstSong
+// 			// $scope.$on("sendFirstSong", function (event, song) {
+// 			// 	$rootScope.current = song;
+// 			// });
+// });
 
 		    // $scope.playVideo = function () {
 		    //     $scope.paused = false;

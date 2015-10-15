@@ -22,6 +22,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
           //if making player perform some action (play, pause, etc.)
           if (request.message === 'playerAction') {
+              currentService = request.service;
               setIcon(request.action !== "pause", "player");
               var service = serviceMethods[request.service];
               var self = service.reference;
@@ -31,6 +32,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
           //if cueing video
           if (request.message === "cue") {
+              currentService = request.service;
               currentSongIndex = request.songIndex;
               stopAllVideos();
               cueSong(request);
@@ -42,9 +44,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
           // persisting controls on popup close
           if (request.message === "whoIsPlaying") {
+            var currentSong = getCurrentSong(currentSongIndex);
               sendResponse({
                   response: playerStates,
-                  currentIndex: currentSongIndex
+                  currentIndex: currentSongIndex,
+                  currentSong: currentSong,
+                  currentService: currentService
               });
           }
       }
@@ -54,9 +59,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           console.log("changing song:", request.direction);
           var nextSong = autoPlayNextSong(request.direction);
           cueSong(nextSong);
+          var nextSongObj = getCurrentSong(currentSongIndex);
           sendResponse({
             nextSongIndex: currentSongIndex,
-            nextSong: nextSong
+            nextSong: nextSong,
+            nextSongObj: nextSongObj
           });
       }
 

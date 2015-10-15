@@ -18,8 +18,8 @@
 			</li>
             <li ng-show="user">
                 <marquee behavior="scroll" direction="left"  id="currently-playing">
-					<span ng-show="current">{{current.artist}} - {{current.title}}</span>
-					<span ng-show="!current">Welcome, {{user.email}}</span>
+					<span id="current-song" hidden></span>
+					<span id="welcome-message">Welcome, {{user.email}}</span>
 
 				</marquee>
             </li>
