@@ -8,12 +8,10 @@ function loadSong (clicked) {
 	request.service = source.attr("data");
 	request.id = source.children("a").first().attr("href");
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
-	console.log("Load request", request);
-	console.log('dat clicked song', clicked);
-	var theService = request.service;
-	initiateSlider(theService);
+
 	chrome.runtime.sendMessage(request, function (response) {
-		console.log('WEBPLAYER RESPONSE', response)
+			var theService = request.service;
+			initiateSlider(theService);
 	});
 }
 
@@ -24,18 +22,20 @@ function initiateSlider(service) {
 	}
 
   var theSlider = $('#slider');
-  console.log(theSlider);
+  // console.log(theSlider);
   theSlider.slider({
       min: 0,
   });
   var max = theSlider.slider("option", "max");
 
 	chrome.runtime.sendMessage(request, function(response) {
+		console.log ('current time', response.currentTime);
 		max = response.duration;
 		console.log('maxytime', max)
 		if (theSlider.slider) {
 			theSlider.slider("option", "max", max);
 			setInterval(function() {
+				console.log('max inside setInterval', max)
 				checkTimeRegularly(request.service);
 			}, 1000);
 		}
@@ -47,7 +47,6 @@ function checkTimeRegularly(service) {
 		message: "checkTimeAction",
 		service: service
 	}
-	console.log('checking time regularly');
 	chrome.runtime.sendMessage(request, function(response) {
 		var currentTime = response.currentTime;
 		$('#slider').slider({

@@ -35,9 +35,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               stopAllVideos();
               cueSong(request);
               setIcon(true, "player");
-              // sendResponse({
-              //   time:
-              // })
+              sendResponse({
+                message: 'time 2 play dat song'
+              })
           }
 
           // persisting controls on popup close
@@ -64,13 +64,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       if (request.message === "checkTimeAction") {
           var service = request.service;
           var currentTime = getCurrentTime(service);
-          console.log(currentTime)
-          setTimeout(function() {
+          console.log('CURRENTTIME', currentTime)
+          // setTimeout(function() {
             sendResponse({
               currentTime: currentTime[0],
               duration: currentTime[1]
             })
-          }, 3000)
+          // }, 3000)
 
       }
 
