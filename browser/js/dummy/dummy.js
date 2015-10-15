@@ -3,8 +3,9 @@ var socket;
 var doc = $(document);
 doc.ready(function () {
   createYouTubeVideo();
-  socket = io.connect("https://localhost:1337/");
+  socket = io.connect("http://localhost:1337/");
   socket.on("loadBackground", function (data) {
+    alert(data);
     cueSong(data);
     socket.emit("songLoaded", data);
   });
