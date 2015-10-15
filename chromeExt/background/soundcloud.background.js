@@ -42,6 +42,7 @@ function createSoundcloudVideo(songUrl) {
                 var nextSong = autoPlayNextSong('forward');
                 console.log('playing next song', nextSong);
                 cueSong(nextSong);
+                chrome.runtime.sendMessage('songEnded');
             };
         })
         .then(null, function (err) {

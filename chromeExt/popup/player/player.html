@@ -15,11 +15,11 @@
                     <i class="fa fa-2x fa-step-forward" ng-click="changeSong('forward')"></i>
                 </div>
             </div>
-            <div class="col-xs-2 text-center">
-                <marquee id="song-marquee" ng-if="currentSong">{{currentSong.artist}} - {{currentSong.title}}</marquee>
-            </div>
             <div class="col-xs-8 text-center">
                 <progress-bar></progress-bar>
+            </div>
+            <div class="col-xs-2 text-center">
+                <marquee id="song-marquee" ng-if="currentSong">{{currentSong.artist}} - {{currentSong.title}}</marquee>
             </div>
         </div>
     </div>

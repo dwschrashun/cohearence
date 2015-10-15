@@ -7,9 +7,6 @@ var welcome = $("#welcome-message");
 var checkTime;
 
 $(document).ready(function () {
-	var playButton = $("#nav-play");
-	var pauseButton = $("#nav-pause");
-	console.log(playButton, pauseButton);
 	setTimeout(setListeners, 700); //TODO: check this length on deployed version
 	theSlider = $('#slider');
 	theSlider.slider({
@@ -18,16 +15,22 @@ $(document).ready(function () {
     });
 
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
+		console.log("RESPONSE FROM CHROME: ",response);
 		if (response.currentService){
 			updateCurrentSong(response.currentSong);
 			checkTimeRegularly(response.currentService);
-			playButton.attr('hidden');
-			pauseButton.removeAttr('hidden');
-		} else {
-			pauseButton.attr('hidden');
-			playButton.removeAttr('hidden');
 		}
 	});
+
+	chrome.runtime.onMessage.addListener(function (reqest, sender, sendResponse) {
+		if (request === 'songEnded') {
+			chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
+				console.log('getting that song');
+				updateCurrentSong(response.currentSong);
+				checkTimeRegularly(response.currentService);
+			});
+		}
+	});	
 });
 
 //clicked should be a .song-list-item element
@@ -51,6 +54,10 @@ function loadSong (songToPlay) {
 function loadSongFromClicked (clicked) {
 	var request = {};
 	var source = clicked.find(".track-source");
+	var updateMarquee = {
+		artist: clicked.find('.track-artist').text(),
+		title: clicked.find('.track-title').text()
+	};
 
 	request.message = "cue";
 	request.action = 'cue';
@@ -63,6 +70,8 @@ function loadSongFromClicked (clicked) {
 	currentTime.text("0:00");
 	clearInterval(checkTime);
 	checkTimeRegularly(request.service);
+
+	updateCurrentSong(updateMarquee);
 
 	chrome.runtime.sendMessage(request, function (response) {
 		console.log('WEBPLAYER RESPONSE', response);
@@ -93,7 +102,6 @@ function pauseCheckTime() {
 
 function setListeners () {
 
-
 	var current;
 
 	$('#web-app-logout').on("click", function(){
@@ -105,16 +113,13 @@ function setListeners () {
 		request.action = "pause";
         request.service = $(".current").first().find(".track-source").attr("data");
         chrome.runtime.sendMessage(request, function (response) {
-        	pauseButton.attr('hidden');
-        	playButton.removeAttr('hidden');
         });
 	});
-	$("#nav-play").on("click", function (event) {
+	$("#nav-play").on("click", function () {
 		var request = {};
 		request.message = "playerAction";
 		current = $('.current');
 		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function (songToPlay) {
-			console.log('this is the who is playing resposne,', songToPlay);
 			if (songToPlay.currentService) {
 				request = {message: 'playerAction'};
 				request.action = 'play';
@@ -122,10 +127,10 @@ function setListeners () {
 			} else {
 				request = loadSong(songToPlay);
 			}
+
+			updateCurrentSong(songToPlay.currentSong);
 			chrome.runtime.sendMessage(request, function (response) {
 				console.log('WEBPLAYER RESPONSE', response);
-				playButton.attr('hidden');
-				pauseButton.removeAttr('hidden');
 			});
 			// console.log('this is the request we are sending', request);
 			// chrome.runtime.sendMessage(request, function (response) {
