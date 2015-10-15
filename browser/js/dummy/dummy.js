@@ -1,19 +1,18 @@
-window.onload = function () {
-	createYouTubeVideo();
-};
+$(document).ready(createYouTubeVideo);
 
 
 function createYouTubeVideo() {
+	console.log('ran the onload');
     var tag = $('<script></script>');
     tag.attr('src', "https://www.youtube.com/iframe_api");
-    var firstScriptTag = $(backgroundDoc.find('script')[0]);
+    var firstScriptTag = $('script')[0];
     tag.insertBefore(firstScriptTag);
-    youtubePlayer = backgroundDoc.find("#youtubePlayer");
+    youtubePlayer = $("#youtubePlayer");
     setTimeout(() => {
         youtubePlayer = new YT.Player(youtubePlayer[0], {
             height: '390',
             width: '640',
-						videoId: 'M7lc1UVf-VE',
+						videoId: 'if-UzXIQ5vw',
             events: {
                 "onReady": onPlayerReady,
                 "onError": logYtError
