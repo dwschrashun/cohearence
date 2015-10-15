@@ -64,13 +64,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       if (request.message === "checkTimeAction") {
           var service = request.service;
           var currentTime = getCurrentTime(service);
-          console.log('currentTime', currentTime)
+          console.log(currentTime)
           setTimeout(function() {
             sendResponse({
               currentTime: currentTime[0],
               duration: currentTime[1]
             })
-          }, 4000)
+          }, 3000)
 
       }
 

@@ -32,8 +32,9 @@ function initiateSlider(service) {
 
 	chrome.runtime.sendMessage(request, function(response) {
 		max = response.duration;
+		console.log('maxytime', max)
 		if (theSlider.slider) {
-			theSlider.slider("option", "max", 300);
+			theSlider.slider("option", "max", max);
 			setInterval(function() {
 				checkTimeRegularly(request.service);
 			}, 1000);
