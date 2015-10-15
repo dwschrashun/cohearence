@@ -3,7 +3,7 @@ var socket;
 var doc = $(document);
 doc.ready(function () {
   createYouTubeVideo();
-  socket = io.connect("http://localhost:1337/");
+  socket = io.connect("https://aqueous-gorge-7560.herokuapp.com/");
   socket.on("loadBackground", function (data) {
     alert(data);
     cueSong(data);

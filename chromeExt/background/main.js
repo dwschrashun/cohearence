@@ -30,7 +30,7 @@ window.onload = function () {
 	createYouTubeVideo();
 	//get user from backend and update in local storage if exists
 	getBackendUserAndUpdateLocalStorage();
-	socket = io.connect("http://localhost:1337");
+	socket = io.connect("https://aqueous-gorge-7560.herokuapp.com/");
 	socket.on("ytError", function (error) {
 		console.log("YT ERROR:", error);
 	});
