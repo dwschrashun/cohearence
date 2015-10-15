@@ -1,60 +1,139 @@
+//navbar
+$blue: rgba(60, 178, 208, 1);
+$green: #90EE90;
+$yellow: #FFFE8D;
+$pink: #FFB6C1;
+$orange: #FFA07A;
+$light-gray: rgb(194, 194, 194);
+
+//original theme
+// $background-color: #222222;
+// $background-color-light: #333333;
+
+//for presentation
+$background-color: #333333;
+$background-color-light: rgb(104,104,104);
+
 navbar {
+	display: block;
+	background-color: $background-color;
+	// opacity: 0.7;
+	border-bottom: 1px solid black;
+	box-shadow: 1px 1px 14px -3px black;
+	height: 50px;
 
-  display: block;
-  background: white;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 14px -3px black;
+	ul {
+	    li {
+	        p {
+	            margin: 0px;
+	        }
+	    }
+	    #player-container {
+	        padding-top: 15px;
+	        padding-left: 20px;
+	        #player {
+	            margin: 0px;
+	        }
+	    }
+	}
 
-  .container {
-    width: 91%;
-    max-width: 1340px;
-    padding-top: 20px;
-  }
+	#currently-playing {
+		color: $light-gray;
+		margin-top: 12px;
+		margin-left: 40px;
+		font-size: 18px;
+		letter-spacing: .06em;
+		font-family: 'roboto', sans-serif;
+		width: 200px;
+		font-weight: 400;
+	}
 
-  fullstack-logo {
-    margin-top: 5px;
-    margin-right: 20px;
-    width: 40px;
-  }
+	.container {
+	    width: 91%;
+	    max-width: 1340px;
+		  padding: none;
+	    // padding-top: 20px;
+	}
 
-  a {
-    color: black;
-    font-size: 16px;
-  }
+	#progress {
+		width: 200px;
+		margin-top: 20px;
+		margin-left: 10px;
+	}
 
-  .nav > li > a {
-    cursor: pointer;
-    transition: color 0.2s;
-    &.active {
-      color: darken(#f31214, 10%);
-    }
-    &:hover {
-      background: none;
-      color: #f31214;
-    }
-    &:focus {
-      background: none;
-    }
-  }
+	p {
+		color: $blue;
+		display: inline-block;
+		font-size: 35px;
+	}
 
-  .login-button {
-    float: right;
-    border: 1px solid black;
-    margin-top: 10px;
-    background: none;
-    outline: none !important;
-  }
+	#superscript {
 
-  .welcome {
-    float: right;
-    margin-top: 12px;
-    span {
-      color: white;
-    }
-    a {
-      color: #f30046;
-      cursor: pointer;
-    }
-  }
+	}
+
+ // .navbar-header {
+ //  height: 50px;
+ // }
+
+
+	a {
+	    color: green;
+	    font-size: 16px;
+	}
+
+    .nav > li > a {
+	    cursor: pointer;
+	    transition: color 0.2s;
+	    &.active {
+	      color: darken(#f31214, 10%);
+	    }
+	    &:hover {
+	      background: none;
+	      color: #f31214;
+	    }
+	    &:focus {
+	      background: none;
+	    }
+	}
+
+  	.extension-button {
+	    float: right;
+	    border: 1px solid;
+		text-decoration: none;
+	    margin-top: 8px;
+	    background: none;
+		color: $light-gray;
+		padding: 5px;
+		font-size: 14px;
+		font-family: 'lato', sans-serif;
+	    // outline: none !important;
+  	}
+
+	.welcome {
+		float: right;
+		margin-top: 12px;
+		font-family: 'roboto', sans-serif;
+		font-weight: 400;
+		font-size: 18px;
+		letter-spacing: .06em;
+
+		span {
+			color: $light-gray;
+			margin-right: 40px;
+		}
+		a {
+			&:hover{
+				background-color: $blue;
+			}
+			transition: background-color 0.7s ease-in-out;
+			text-decoration: none;
+			font-size: 18px;
+			color: $light-gray;
+			cursor: pointer;
+			padding: 6px;
+			border-radius: 5px;
+			border: solid 1px $light-gray;
+		}
+	}
 
 }

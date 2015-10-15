@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div id="music-library">
 	<ul>
 		<li ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
@@ -15,3 +16,31 @@
 
 <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
 
+=======
+<navbar-popup></navbar-popup>
+<div id="push">
+</div>
+<div id="music-library-wrap">
+    <music-library></music-library>
+</div>
+<div class="container" id="popup-container">
+    <div class="row">
+        <div id="player">
+            <div class="col-xs-2 text-center">
+                <div class="buttons">
+                    <i class="fa fa-2x fa-step-backward" ng-click="changeSong('backward')"></i>
+                    <i ng-if="paused" class="fa fa-2x fa-play" ng-click="playVideo()"></i>
+                    <i ng-if="!paused" class="fa fa-2x fa-pause" ng-click="pauseVideo()"></i>
+                    <i class="fa fa-2x fa-step-forward" ng-click="changeSong('forward')"></i>
+                </div>
+            </div>
+            <div class="col-xs-2 text-center">
+                <marquee id="song-marquee" ng-if="currentSong">{{currentSong.artist}} - {{currentSong.title}}</marquee>
+            </div>
+            <div class="col-xs-8 text-center">
+                <progress-bar></progress-bar>
+            </div>
+        </div>
+    </div>
+</div>
+>>>>>>> d950c616fb9e7010a24ccd2c3c46dde110b660d1

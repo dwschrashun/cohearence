@@ -1,0 +1,18 @@
+<div class="row music-library-header">
+    <div class="col-xs-4 col-xs-offset-1">
+        Artist
+    </div>
+    <div class="col-xs-4">
+        Title
+    </div>
+    <div class="col-xs-2">
+        Duration
+    </div>
+</div>
+<div id="header-border"></div>
+<div id="actual-library" ng-scrollbars ng-scrollbars-config="config">
+    <div class="row library-container" ng-repeat="item in musicLibrary" ng-click="loadSong(item.song, $index)">
+        <song></song>
+        <hr class="style14">
+    </div>
+</div>

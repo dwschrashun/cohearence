@@ -4,4 +4,4 @@ npm-debug.log
 public
 .DS_Store
 coverage
-chromeExt/thirdparty/**/**/**
+chromeExt/secrets.json

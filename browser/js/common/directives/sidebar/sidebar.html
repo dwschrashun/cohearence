@@ -1,0 +1,14 @@
+<div ng-cloak class="col-md-2" id="sidebar-container">
+	<div class="panel coolPanel" id="sidebar">
+		<div class="panel-heading">
+			<h2 class="panel-title">Menu</h2>
+		</div>
+		<div class="sidebar-body">
+			<ul>
+				<li ng-repeat="item in items" class="item-button" ng-click=setCurrentItem(item) ng-class="{ active: item === currentItem }" id = "item{{$index}}">{{ item }}</li>
+				<li class="item-button" id="item4"> <a href="https://chrome.google.com/webstore/detail/blueberry-scrobbler/jhddmhidckejknknbabaniikacgjhomb/related">Chrome Extension</a></li>
+			</ul>
+			<playlist-list ng-if="showingPlaylists"></playlist-list>
+		</div>
+	</div>
+</div>

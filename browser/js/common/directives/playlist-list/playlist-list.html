@@ -1,0 +1,22 @@
+<div ng-cloak id="list-container">
+	<div id="list-header">
+		<h2>My Playlists</h2>
+	</div>
+	<ul>
+		<li droppable id = "{{playlist._id}}" ng-repeat="playlist in playlists | filter:searchText:false">
+			<a ui-sref="playlist({playlistID: playlist._id})" id = "{{playlist._id}}">{{ playlist.name }}</a>
+			<button class="btn-remove" ng-click="removePlaylist(playlist)"> x </button>
+		</li>
+	</ul>
+	<div id="controls">
+		<!-- <div class="search">
+			<input class="form-control" placeholder="Search" ng-model="searchText">
+		</div> -->
+		<!-- <button ng-hide="namingPlaylist" ng-click="namePlaylist()" class="btn-add">+</button> -->
+		<form name="playlistForm" ng-submit="playlistForm.name.$valid && makePlaylist()">
+			<input name="name" id="add-playlist" class="form-control form-add" placeholder="New Playlist" ng-model="playlistName" required></input>
+			<button ng-show="!playlistForm.name.$valid" class="btn-add">+</button>
+			<button type="submit" id="confirm" class="btn-add" ng-show="playlistForm.name.$valid">✓</button>
+		</form>
+	</div>
+</div>

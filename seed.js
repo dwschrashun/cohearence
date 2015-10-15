@@ -21,6 +21,7 @@ var mongoose = require('mongoose');
 var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
+var Promise = require("bluebird");
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Song = Promise.promisifyAll(mongoose.model('Song'));
 
@@ -30,12 +31,8 @@ var seedUsers = function () {
 
     var users = [
         {
-            email: 'testing@fsa.com',
-            password: 'password'
-        },
-        {
-            email: 'obama@gmail.com',
-            password: 'potus'
+            email: 'test@test.com',
+            password: '123'
         }
     ];
 

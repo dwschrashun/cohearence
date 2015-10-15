@@ -23,6 +23,9 @@ var schema = new mongoose.Schema({
 		},
 		bandcampId: {
 			type: String
+		},
+		sourceUrl: {
+			type: String
 		}
 	},
 	echoNestId: {
@@ -30,6 +33,6 @@ var schema = new mongoose.Schema({
 	},
 	duration: {
 		type: String
-	}
+	},
 });
 mongoose.model('Song', schema);

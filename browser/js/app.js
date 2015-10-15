@@ -1,5 +1,5 @@
 'use strict';
-window.app = angular.module('FullstackGeneratedApp', ['ui.router', 'ui.bootstrap', 'fsaPreBuilt']);
+window.app = angular.module('FullstackGeneratedApp', ['ui.router', 'ui.bootstrap', 'fsaPreBuilt', 'ngMaterial']);
 
 app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
@@ -10,7 +10,6 @@ app.config(function ($urlRouterProvider, $locationProvider) {
 
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state) {
-
     // The given state requires an authenticated user.
     var destinationStateRequiresAuth = function (state) {
         return state.data && state.data.authenticate;
@@ -40,6 +39,7 @@ app.run(function ($rootScope, AuthService, $state) {
             // (the second time, AuthService.isAuthenticated() will work)
             // otherwise, if no user is logged in, go to "login" state.
             if (user) {
+                console.log(toState.name);
                 $state.go(toState.name, toParams);
             } else {
                 $state.go('login');

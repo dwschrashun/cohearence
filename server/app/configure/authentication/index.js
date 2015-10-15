@@ -9,9 +9,9 @@ var UserModel = mongoose.model('User');
 
 var ENABLED_AUTH_STRATEGIES = [
     'local',
-    'twitter',
+    // 'twitter',
     //'facebook',
-    'google'
+    //'google'
 ];
 
 module.exports = function (app) {
@@ -39,13 +39,18 @@ module.exports = function (app) {
     // When we receive a cookie from the browser, we use that id to set our req.user
     // to a user found in the database.
     passport.deserializeUser(function (id, done) {
-        UserModel.findById(id, done);
+        UserModel.findById(id).populate('musicLibrary.song')
+		.exec(function(err, populatedUser){
+			done(err, populatedUser);
+		});
+
     });
 
     // We provide a simple GET /session in order to get session information directly.
     // This is used by the browser application (Angular) to determine if a user is
     // logged in already.
     app.get('/session', function (req, res) {
+	
         if (req.user) {
             res.send({ user: _.omit(req.user.toJSON(), ['salt', 'password']) });
         } else {

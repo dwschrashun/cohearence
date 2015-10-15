@@ -2,7 +2,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
     return {
         restrict: 'E',
-        scope: {},
+        // scope: {},
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function (scope) {
 
@@ -22,7 +22,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
             scope.logout = function () {
                 AuthService.logout().then(function () {
-                   $state.go('home');
+                   $state.go('landing');
                 });
             };
 
@@ -38,10 +38,10 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
             setUser();
 
-            $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
-            $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
-            $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
-
+			$rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
+			$rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
+			$rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
+			$rootScope.$on(AUTH_EVENTS.signupSuccess, setUser);
         }
 
     };

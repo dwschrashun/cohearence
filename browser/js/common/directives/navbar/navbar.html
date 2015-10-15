@@ -1,17 +1,27 @@
 <nav class="navbar navbar-static-top">
     <div class="container">
-        <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
-        </div>
-        <ul class="nav navbar-nav">
-            <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
+        <!-- <div class="navbar-header"> -->
+            <!-- <fullstack-logo></fullstack-logo> -->
+        <!-- </div> -->
+        <ul class="nav navbar-nav list-inline">
+			<li>
+                <!-- <p>λ</p> -->
+                <p>C<sup>o</sup></p>
+            </li>
+            <li ng-show="user" id="player-container">
+                <player></player>
+            </li>
+            <li ng-show="user">
+                <marquee behavior="scroll" direction="left" ng-show="current" id="currently-playing">{{current.artist}} - {{current.title}}</marquee>
+            </li>
+            <li id="progress" ng-show="user">
+                <progress-bar></progress-bar>
             </li>
         </ul>
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
         <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
+            <span>{{ user.email }}</span>
             <a ng-click="logout()">Logout</a>
         </div>
+		<a ng-show="!user" href="https://chrome.google.com/webstore/detail/blueberry-scrobbler/jhddmhidckejknknbabaniikacgjhomb/related" class="extension-button">Download The Chrome Extension</a>
     </div>
 </nav>

@@ -1,16 +1,36 @@
 app.factory("PlayerFactory", function($http) {
-
 	var factory = {};
-	factory.getVideoId = function(songObj){
-		var indexOfBeginning;
-		//TODO add other services
-		console.log('songObj', songObj);
-		if (songObj.source.domain === 'YouTube') {
-			indexOfBeginning = songObj.source.url.indexOf("v=");
-			return songObj.source.url.slice(indexOfBeginning+2);
-		}
-		else if (songObj.soundCloud.url) console.log('fix this l8r');
-	}
+
+	factory.setCurrentService = function (playerStates) {
+        var playing = [];
+        var playerStates = playerStates.response;
+        for (var key in playerStates) {
+            if (playerStates[key]) {
+                playing.push(key);
+            }
+        }
+        if (playing.length > 1) {
+            chrome.runtime.sendMessage('killPlayers', function (response) {
+                console.log(response);
+                return null;
+            });
+        } else if (playing.length === 0) {
+            return null;
+        } else {
+            return playing[0];
+        }
+    };
+
+    factory.checkSoundcloudStreamable = function (song) {
+        if (song.source.url.indexOf('soundcloud') === -1) {
+            return false;
+        }
+        return true;
+    };
+
+    factory.getUserPlaylists = function () {
+        
+    };
 
 	return factory;
-})
+});

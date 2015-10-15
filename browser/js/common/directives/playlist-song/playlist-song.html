@@ -1,0 +1,26 @@
+<ul>
+	<li draggable id="{{song._id}}">
+		<div  class="row" >
+				<div class="col-md-4 track-artist">
+					<a href="#">{{song.artist}}</a>
+				</div>
+				<div class="col-md-4 track-title">
+					<a href="#">{{song.title}}</a>
+				</div>
+				<div class="col-md-1 playlist-track-duration">
+					<a href="#">{{song.duration}}</a>
+				</div>
+				<!-- <div class="col-md-1 playlist-track-source">
+					<a href="{{song.source.url}}">{{song.source.domain}}</a>
+				</div> -->
+				<div class="col-md-1 playlist-track-source">
+					<a id="image-container" href="{{song.source.url}}" target="_blank">
+						<img id="inline-image" ng-src="{{song.sourceImage}}"></img>
+					</a>
+				</div>
+				<div class="col-md-1 playlist-track-delete">
+					<button class="btn-remove" ng-click="remove(song)"> x </button>
+				</div>
+		</div>
+	<li>
+</ul>

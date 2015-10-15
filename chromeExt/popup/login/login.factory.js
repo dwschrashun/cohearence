@@ -1,6 +1,6 @@
-app.factory("LoginFactory", function ($http) {
+app.factory("LoginFactory", function ($http, $rootScope) {
     function login(credentials) {
-      return $http.post('http://localhost:1337/login', credentials)
+      return $http.post($rootScope.environment.server + '/login', credentials)
         .then(onSuccessfulLogin)
         .catch(function () {
           //return $q.reject({ message: 'Invalid login credentials.' });
@@ -9,28 +9,32 @@ app.factory("LoginFactory", function ($http) {
 
     function onSuccessfulLogin(response) {
       var data = response.data;
-      console.log("onSuccessfulLogin res data:", response.data);
-      // Session.create(data.id, data.user);
-      // $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+      setInLocalStorage(data.user);
       return data.user;
     }
 
     function isLoggedIn() {
-      var user = new Promise(function(resolve) {
-        chrome.storage.sync.get('user', function(user) {
-            if (user.user) return resolve(user.user);
-            else resolve();
-        })
-      })
-      return user;
+      var user = getFromLocalStorage();
+      return getFromLocalStorage();
     }
 
     function logout() {
-      return new Promise(function(resolve) {
-        chrome.storage.sync.remove('user', function() {
-          resolve()
-        });
-      })
+      return $http.get($rootScope.environment.server + '/logout')
+      .then(removeFromLocalStorage);
+    }
+
+    function setInLocalStorage(user) {
+      var stringifiedUser = JSON.stringify(user);
+      localStorage.setItem("cohearenceUser", stringifiedUser);
+    }
+
+    function getFromLocalStorage() {
+      var stringifiedUser = localStorage.getItem("cohearenceUser");
+      return JSON.parse(stringifiedUser);
+    }
+
+    function removeFromLocalStorage() {
+      localStorage.removeItem("cohearenceUser");
     }
 
     return {
