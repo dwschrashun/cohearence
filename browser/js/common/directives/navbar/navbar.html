@@ -1,25 +1,31 @@
 <nav class="navbar navbar-static-top">
     <div class="container">
-        <!-- <div class="navbar-header"> -->
-            <!-- <fullstack-logo></fullstack-logo> -->
-        <!-- </div> -->
         <ul class="nav navbar-nav list-inline">
 			<li>
-                <!-- <p>λ</p> -->
                 <p>C<sup>o</sup></p>
             </li>
             <li ng-show="user" id="player-container">
                 <player></player>
             </li>
-            <li ng-show="user">
-                <marquee behavior="scroll" direction="left" ng-show="current" id="currently-playing">{{current.artist}} - {{current.title}}</marquee>
-            </li>
+			<li>
+				<p id="current-time"></p>
+			</li>
             <li id="progress" ng-show="user">
                 <progress-bar></progress-bar>
             </li>
+			<li>
+				<p id="duration">{{current.duration}}</p>
+			</li>
+            <li ng-show="user">
+                <marquee behavior="scroll" direction="left"  id="currently-playing">
+					<span ng-show="current">{{current.artist}} - {{current.title}}</span>
+					<span ng-show="!current">Welcome, {{user.email}}</span>
+
+				</marquee>
+            </li>
         </ul>
         <div ng-show="user" class="welcome">
-            <span>{{ user.email }}</span>
+            <!-- <span>{{ user.email }}</span> -->
             <a ng-click="logout()">Logout</a>
         </div>
 		<a ng-show="!user" href="https://chrome.google.com/webstore/detail/blueberry-scrobbler/jhddmhidckejknknbabaniikacgjhomb/related" class="extension-button">Download The Chrome Extension</a>

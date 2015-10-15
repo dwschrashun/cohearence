@@ -8,6 +8,7 @@ function sendSong(songObj) {
                 dataType: "json"
             })
             .done(function (response) {
+				console.log("RESPONSE: ",response);
                 setUser(response);
             })
             .fail(function (error) {
@@ -173,6 +174,7 @@ function setUser(library) {
     var theUser = getUser();
     theUser.musicLibrary = library;
     var stringifiedUpdatedUser = JSON.stringify(theUser);
+	console.log(stringifiedUpdatedUser);
     localStorage.setItem("cohearenceUser", stringifiedUpdatedUser);
 }
 
@@ -194,4 +196,3 @@ function getBackendUserAndUpdateLocalStorage() {
         console.log('user not logged in probably should do something about that');
     }
 }
-

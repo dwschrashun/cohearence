@@ -127,7 +127,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (tab.url.indexOf('https://www.youtube.com/watch') !== -1 && changeInfo && changeInfo.status == "complete") {
         scrobbleYouTube(tabId);
     }
-    if (isLibrary && changeInfo && changeInfo.status == "complete") {
-        setLibraryHandlers(tabId);
-    }
+    // if (isLibrary && changeInfo && changeInfo.status == "complete") {
+    //     setLibraryHandlers(tabId);
+    // }
 });

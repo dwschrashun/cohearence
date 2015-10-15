@@ -37,15 +37,18 @@ navbar {
 	    }
 	}
 
+
 	#currently-playing {
 		color: $light-gray;
 		margin-top: 12px;
 		margin-left: 40px;
+		margin-right: 40px;
 		font-size: 18px;
 		letter-spacing: .06em;
 		font-family: 'roboto', sans-serif;
-		width: 200px;
+		width: 300px;
 		font-weight: 400;
+		width: 300px;
 	}
 
 	.container {
@@ -56,9 +59,16 @@ navbar {
 	}
 
 	#progress {
-		width: 200px;
+		// width: 500px;
 		margin-top: 20px;
-		margin-left: 10px;
+		margin-left: 20px;
+		#slider {
+			width: 400px;
+		}
+	}
+	#duration {
+		margin-top: 7px;
+		font-size: 24px;
 	}
 
 	p {

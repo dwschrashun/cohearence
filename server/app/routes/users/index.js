@@ -31,7 +31,7 @@ router.get('/:userId/library', function (req, res, next) {
 	User.deepPopulate(req.foundUser, 'musicLibrary.song', function (err, populated) {
 		if (err) next(err);
 		else {
-			res.json(populated);
+			res.json(populated.musicLibrary);
 		}
 	});
 });

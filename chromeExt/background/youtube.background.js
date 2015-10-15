@@ -10,7 +10,8 @@ function createYouTubeVideo() {
             width: '640',
             events: {
                 "onReady": onPlayerReady,
-                "onError": logYtError
+                "onError": logYtError,
+				"onStateChange": onPlayerStateChange
             }
         });
     }, 800);
