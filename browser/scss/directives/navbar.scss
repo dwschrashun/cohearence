@@ -61,14 +61,20 @@ navbar {
 	#progress {
 		// width: 500px;
 		margin-top: 20px;
-		margin-left: 20px;
+		margin-left: 5px;
 		#slider {
 			width: 400px;
 		}
 	}
+	#duration, #current-time {
+		margin-top: 10px;
+		font-size: 22px;
+	}
+	#current-time {
+		margin-left: 15px;
+	}
 	#duration {
-		margin-top: 7px;
-		font-size: 24px;
+		margin-left: 5px;
 	}
 
 	p {

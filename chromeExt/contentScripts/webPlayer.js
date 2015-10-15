@@ -28,12 +28,11 @@ function loadSong (clicked) {
 	request.id = source.children("a").first().attr("href");
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	// console.log("Load request", request);
-	// console.log('dat clicked song', clicked);
 	// var theService = request.service;
 	// initiateSlider(theService);
-
+	// console.log('dat clicked song', clicked);
 	theSlider.slider("option", "min", 0);
-	currentTime.text("00:00");
+	currentTime.text("0:00");
 	checkTimeRegularly(request.service);
 	chrome.runtime.sendMessage(request, function (response) {
 		console.log('WEBPLAYER RESPONSE', response)
@@ -171,7 +170,6 @@ function convertTime(input) {
 
 	input = input - hours*60*60;
 	var min = Math.floor(input / 60);
-	min = min < 10 ? "0" + min : min;
 
 	var seconds = input;
 	if (seconds > 60) {

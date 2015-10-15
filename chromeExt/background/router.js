@@ -62,16 +62,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       //if checking time of video
       if (request.message === "checkTimeAction") {
-          var service = request.service;
-          var currentTime = getCurrentTime(service);
-          console.log('currentTime', currentTime)
-          setTimeout(function() {
-            sendResponse({
-              currentTime: currentTime[0],
-              duration: currentTime[1]
-            })
-          }, 4000)
-
+			var service = request.service;
+			var currentTime = getCurrentTime(service);
+			console.log('currentTime', currentTime)
+			sendResponse({
+				currentTime: currentTime[0],
+				duration: currentTime[1]
+			});
       }
 
       //if changing time in video with slider
