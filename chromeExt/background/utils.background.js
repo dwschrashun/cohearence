@@ -17,17 +17,11 @@ function sendSong(songObj) {
 }
 
 function cueSong(request) {
-  var event = new CustomEvent('test', {'detail': 'testDetail'});
-  document.dispatchEvent(event);
     console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
         var url = `http://www.youtube.com/v/${request.id}?version=3`;
-        console.log('cueing youtube song:', url);
-        youtubePlayer.cueVideoByUrl({
-            mediaContentUrl: url
-        });
-        youtubePlayer.playVideo();
-        // youtubePlayer.loadVideoById(request.id);
+        console.log('cueing youtube song:', request);
+        socket.emit("load", {ytUrl: url, service: request.service});
     }
     if (request.service === 'Soundcloud') {
         createSoundcloudVideo(request.id);

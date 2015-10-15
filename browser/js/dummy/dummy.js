@@ -1,12 +1,38 @@
-doc = $(document);
-doc.ready(createYouTubeVideo);
-window.parent.document.addEventListener('test', function(){
-	var event2 = new CustomEvent('test2', {'detail': 'testDetail'});
-	window.parent.document.dispatchEvent(event2);
+var socket;
+
+var doc = $(document);
+doc.ready(function () {
+  createYouTubeVideo();
+  socket = io.connect("https://localhost:1337/");
+  socket.on("loadBackground", function (data) {
+    cueSong(data);
+    socket.emit("songLoaded", data);
+  });
 });
 
+
+function cueSong(request) {
+    alert(request);
+    console.log('request from autoplay', request);
+    if (request.service === 'YouTube') {
+        var url = request.ytUrl;
+        youtubePlayer.cueVideoByUrl({
+            mediaContentUrl: url
+        });
+        youtubePlayer.playVideo();
+        // youtubePlayer.loadVideoById(request.id);
+    }
+    if (request.service === 'Soundcloud') {
+        createSoundcloudVideo(request.id);
+    }
+    if (request.service === 'Bandcamp') {
+        createBandcampVideo(request.id);
+    }
+}
+
+
 function createYouTubeVideo() {
-	console.log('ran the onload');
+	  console.log('ran the onload');
     var tag = $('<script></script>');
     tag.attr('src', "https://www.youtube.com/iframe_api");
     var firstScriptTag = $('script')[0];
@@ -44,5 +70,6 @@ function createYouTubeVideo() {
 }
 
 function logYtError (event) {
+    socket.emit("ytError", event);
     console.log("logYtError event:", event);
 }

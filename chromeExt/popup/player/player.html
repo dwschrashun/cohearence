@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+<div id="music-library">
+	<ul>
+		<li ng-repeat="item in musicLibrary" ng-click="loadSong(item.song)">
+			<span ng-if="item.song.youtube.url">{{item.song.youtube.videoTitle}}</span>
+			<span ng-if="!item.song.youtube.url">{{item.song.artist}} - {{item.song.title}}</span>
+		</li>
+	</ul>
+</div>
+
+<button ng-click="playVideo()">Play</button>
+<button ng-click="pauseVideo()">Pause</button>
+<button ng-click="skipForward()">Skip Forward</button>
+<button ng-mousedown="startOrStopFastForward('start')" ng-mouseup="startOrStopFastForward('stop')">>></button>
+<button ng-mousedown="startOrStopRewind('start')" ng-mouseup="startOrStopRewind('stop')"></button>
+
+<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+
+=======
 <navbar-popup></navbar-popup>
 <div id="push">
 </div>
@@ -24,3 +43,4 @@
         </div>
     </div>
 </div>
+>>>>>>> d950c616fb9e7010a24ccd2c3c46dde110b660d1

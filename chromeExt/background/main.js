@@ -8,6 +8,7 @@ var environment = {
 	server: null
 };
 var currentSongIndex = 0;
+var socket;
 
 window.onload = function () {
 	//set "environment" variables
@@ -29,6 +30,10 @@ window.onload = function () {
 	createYouTubeVideo();
 	//get user from backend and update in local storage if exists
 	getBackendUserAndUpdateLocalStorage();
-
-
+	socket = io.connect("http://localhost:1337");
+	socket.on("ytError", function (error) {
+		console.log("YT ERROR:", error);
+	});
 };
+
+
