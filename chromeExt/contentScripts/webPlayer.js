@@ -1,6 +1,7 @@
 var request = {message: 'playerAction'};
 var theSlider;
 var currentTime = $('#current-time');
+var checkTime;
 
 $(document).ready(function () {
 	setTimeout(setListeners, 700); //TODO: check this length on deployed version
@@ -29,10 +30,10 @@ function loadSong (clicked) {
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	// console.log("Load request", request);
 	// var theService = request.service;
-	// initiateSlider(theService);
 	// console.log('dat clicked song', clicked);
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");
+	clearInterval(checkTime);
 	checkTimeRegularly(request.service);
 	chrome.runtime.sendMessage(request, function (response) {
 		console.log('WEBPLAYER RESPONSE', response)
@@ -60,35 +61,13 @@ var setCurrentService = function (playerStates) {
 	}
 };
 
-
-// function initiateSlider(service) {
-	// var request = {
-	// 	message: "checkTimeAction",
-	// 	service: service
-	// }
-
-  // var theSlider = $('#slider');
-  // theSlider.slider({
-  //     min: 0,
-  // });
-  // var max = theSlider.slider("option", "max");
-	// chrome.runtime.sendMessage(request, function(response) {
-	// 	max = response.duration;
-	// 	if (theSlider.slider) {
-	// 		theSlider.slider("option", "max", 300);
-			// setInterval(function() {
-			// }, 1000);
-	// 	}
-	// })
-// }
-
 function checkTimeRegularly(service) {
 	var request = {
 		message: "checkTimeAction",
 		service: service
 	};
 
-	setInterval(function(){
+	checkTime = setInterval(function(){
 		console.log('checking time regularly');
 		chrome.runtime.sendMessage(request, function(response) {
 			theSlider.slider({
@@ -178,13 +157,7 @@ function convertTime(input) {
 	} else {
 	    seconds = seconds < 10 ? "0" + Math.floor(seconds) : Math.floor(seconds);
 	}
+	if (isNaN(min)) return '--:--';
 	if (hours) return `${hours}:${min}:${seconds}`;
 	return min + ":" + seconds;
 }
-
-// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//     if (request.message === 'libLoaded') {
-//         // console.log("newSongLoaded in yt cs", request);
-//         setListeners();
-//     }
-// });
