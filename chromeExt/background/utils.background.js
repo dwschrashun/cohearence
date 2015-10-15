@@ -17,6 +17,8 @@ function sendSong(songObj) {
 }
 
 function cueSong(request) {
+  var event = new CustomEvent('test', {'detail': 'testDetail'});
+  document.dispatchEvent(event);
     console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
         var url = `http://www.youtube.com/v/${request.id}?version=3`;
@@ -194,4 +196,3 @@ function getBackendUserAndUpdateLocalStorage() {
         console.log('user not logged in probably should do something about that');
     }
 }
-

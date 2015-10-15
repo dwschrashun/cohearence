@@ -29,15 +29,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               action.call(self);
           }
 
-          //if cueing video
           if (request.message === "cue") {
               currentSongIndex = request.songIndex;
               stopAllVideos();
               cueSong(request);
               setIcon(true, "player");
-              // sendResponse({
-              //   time:
-              // })
           }
 
           // persisting controls on popup close
