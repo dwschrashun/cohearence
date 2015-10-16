@@ -10,7 +10,6 @@
     background-color: #333333;
 }
 
-/* navbar */
 .navbar,
 .navbar > .container {
     background-color: #3CB2D0;
@@ -21,7 +20,6 @@
     color: black;
 }
 
-/* player + music library */
 #music-library-wrap {
     background-color: #222222;
     color: #3CB2D0;

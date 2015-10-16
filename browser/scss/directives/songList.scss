@@ -30,6 +30,19 @@ $background-color-light: rgb(104,104,104);
 }
 
 #song-list {
+
+	input{
+		width: 200px;
+		margin-top: 7px;
+		margin-right: 20px;
+		float: right;
+		// padding-left: 5px;
+		text-align: center;
+		color: $light-gray;
+		background-color: $background-color;
+		border: 1px solid $light-gray;
+		border-radius: 5px;
+	}
 	#list-header-container {
 
 		&:after {
