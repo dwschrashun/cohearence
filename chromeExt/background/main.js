@@ -9,6 +9,7 @@ var environment = {
 };
 var currentSongIndex = 0;
 var socket;
+var currentService = null;
 
 window.onload = function () {
 	//set "environment" variables
@@ -27,10 +28,13 @@ window.onload = function () {
 	backgroundDoc = $(chrome.extension.getBackgroundPage().document);
 	soundcloudVideo = backgroundDoc.find('#soundcloudPlayer');
 	bandcampVideo = backgroundDoc.find('#bandcampPlayer');
-	createYouTubeVideo();
+
 	//get user from backend and update in local storage if exists
 	getBackendUserAndUpdateLocalStorage();
 	socket = io.connect("https://aqueous-gorge-7560.herokuapp.com/");
+	
+	//do sockets
+	console.log("socket instantiated:", socket);
 	socket.on("ytError", function (error) {
 		console.log("YT ERROR:", error);
 	});

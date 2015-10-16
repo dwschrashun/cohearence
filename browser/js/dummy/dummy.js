@@ -5,7 +5,6 @@ doc.ready(function () {
   createYouTubeVideo();
   socket = io.connect("https://aqueous-gorge-7560.herokuapp.com/");
   socket.on("loadBackground", function (data) {
-    alert(data);
     cueSong(data);
     socket.emit("songLoaded", data);
   });
@@ -13,7 +12,6 @@ doc.ready(function () {
 
 
 function cueSong(request) {
-    alert(request);
     console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
         var url = request.ytUrl;
@@ -33,7 +31,7 @@ function cueSong(request) {
 
 
 function createYouTubeVideo() {
-	  console.log('ran the onload');
+	  console.log('ran the onload in dummy js');
     var tag = $('<script></script>');
     tag.attr('src', "https://www.youtube.com/iframe_api");
     var firstScriptTag = $('script')[0];

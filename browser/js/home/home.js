@@ -29,18 +29,18 @@ app.controller('HomeController', function($rootScope, SongFactory, UserFactory, 
 
 			if ($scope.view.length) {
 				$scope.hasSongs = true;
-				$rootScope.nextSong = $scope.view[0]._id || null;
-				$rootScope.currentSong = null;
+				// $rootScope.next = $scope.view[0]._id || null;
+				$rootScope.current = null;
 				$scope.view.forEach(function(song){
 					SongFactory.setSourceIcons(song.song);
 				});
 			}
-			$scope.load = function(song, index){
+			$rootScope.load = function(song, index){
 				$rootScope.paused = false;
 				$rootScope.current = song;
-				$rootScope.next = $scope.view[parseInt(index) + 1];
-				console.log("CURRENT SONG: ",$rootScope.current);
-				console.log("NEXT SONG: ",$rootScope.next);
+				// $rootScope.next = $scope.view[parseInt(index) + 1];
+				// console.log("CURRENT SONG: ",$rootScope.current);
+				// console.log("NEXT SONG: ",$rootScope.next);
 			};
 		});
 	}
