@@ -8,6 +8,7 @@ var environment = {
 	server: null
 };
 var currentSongIndex = 0;
+var currentService = null;
 
 window.onload = function () {
 	//set "environment" variables

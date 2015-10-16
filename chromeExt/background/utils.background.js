@@ -17,7 +17,6 @@ function sendSong(songObj) {
 }
 
 function cueSong(request) {
-    console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
         var url = `http://www.youtube.com/v/${request.id}?version=3`;
         console.log('cueing youtube song:', url);
@@ -41,11 +40,14 @@ function stopAllVideos() {
     if (bandcampVideo[0]) bandcampVideo[0].pause();
 }
 
+function getCurrentSong (songIndex) {
+    var user = getUser();
+    return user.musicLibrary[songIndex].song;
+}
+
 function autoPlayNextSong(direction) {
     var user = getUser();
-    console.log("user in autoplaynextsong", user);
     var musicLibrary = user.musicLibrary;
-    console.log("autoplaynextsong musicLibrary", musicLibrary);
     var request = {};
 
     if (direction === 'forward') currentSongIndex += 1;
@@ -54,7 +56,6 @@ function autoPlayNextSong(direction) {
         return;
     }
 
-    console.log("autoplaynextsong currentsongindex", currentSongIndex);
     var song = musicLibrary[currentSongIndex].song;
 
     if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
@@ -194,4 +195,3 @@ function getBackendUserAndUpdateLocalStorage() {
         console.log('user not logged in probably should do something about that');
     }
 }
-
