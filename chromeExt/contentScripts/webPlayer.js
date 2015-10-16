@@ -33,10 +33,10 @@ function loadSong (songToPlay) {
 	request.songIndex = songToPlay.currentIndex;
 
 
-	// theSlider.slider("option", "min", 0);
-	// currentTime.text("0:00");
-	// clearInterval(checkTime);
-	// checkTimeRegularly(request.service);
+	theSlider.slider("option", "min", 0);
+	currentTime.text("0:00");
+	clearInterval(checkTime);
+	checkTimeRegularly(request.service);
 
 	return request;
 }
@@ -56,10 +56,10 @@ function loadSongFromClicked (clicked) {
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	request.service = source.attr('data');
 
-	// theSlider.slider("option", "min", 0);
-	// currentTime.text("0:00");
-	// clearInterval(checkTime);
-	// checkTimeRegularly(request.service);
+	theSlider.slider("option", "min", 0);
+	currentTime.text("0:00");
+	clearInterval(checkTime);
+	checkTimeRegularly(request.service);
 
 	updateCurrentSong(updateMarquee);
 
@@ -100,7 +100,6 @@ function checkTimeRegularly(service) {
 					checkTimeRegularly(request.service);
 				});
 			}
-
 		});
 	}, 1000);
 }
