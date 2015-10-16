@@ -10,7 +10,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                   playing = true;
               }
           }
-          if (request.action === 'killPlayers') stopAllVideos();
+          if (request.action === 'killPlayers') {
+			  stopAllVideos();
+			  sendResponse({
+				  response: "killed the videos"
+			  });
+		  }
           //if scrobbling
           if (request.action === 'scrobble') {
               sendSong(request);
@@ -37,9 +42,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               stopAllVideos();
               cueSong(request);
               setIcon(true, "player");
-              // sendResponse({
-              //   time:
-              // })
           }
 
           // persisting controls on popup close
@@ -56,7 +58,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       // changing songs
       if (request.message === 'changeSong') {
-          console.log("changing song:", request.direction);
           var nextSong = autoPlayNextSong(request.direction);
           cueSong(nextSong);
           var nextSongObj = getCurrentSong(currentSongIndex);
@@ -71,7 +72,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       if (request.message === "checkTimeAction") {
 			var service = request.service;
 			var currentTime = getCurrentTime(service);
-			console.log('currentTime', currentTime)
 			sendResponse({
 				currentTime: currentTime[0],
 				duration: currentTime[1]
@@ -123,7 +123,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    //console.log("tab updateed", tab.url);
 
     var isLibrary = ["http://localhost:1337/library", "http://127.0.0.1:1337/library", "http://aqueous-gorge-7560/library"].some(function (el) {
         return el === tab.url;
@@ -131,7 +130,4 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (tab.url.indexOf('https://www.youtube.com/watch') !== -1 && changeInfo && changeInfo.status == "complete") {
         scrobbleYouTube(tabId);
     }
-    // if (isLibrary && changeInfo && changeInfo.status == "complete") {
-    //     setLibraryHandlers(tabId);
-    // }
 });
