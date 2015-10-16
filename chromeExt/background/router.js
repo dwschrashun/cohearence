@@ -3,6 +3,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       //on all player or scrobbler messages
       if (request.action) {
 
+          //get rid of this you asshole
           var playerStates = getPlayerState();
           var playing = false;
           for (var key in playerStates) {
