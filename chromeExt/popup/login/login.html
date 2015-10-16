@@ -1,15 +1,34 @@
-<form id="login-form" name="loginForm" ng-submit="sendLogin(login)">
-        <alert type="danger" ng-if="error">
-            {{ error }}
-        </alert>
-        <!-- <pre>{{ theUser | json }}</pre> -->
-        <md-input-container>
-            <label for="email">Email address</label>
-            <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Enter email">
-        </md-input-container>
-        <md-input-container>
-            <label for="login-password">Password</label>
-            <input type="password" ng-model="login.password" class="form-control" id="login-password" placeholder="Password">
-        </md-input-container>
-        <md-button class="md-raised md-primary" type="submit" class="btn btn-default">Submit</md-button>
-    </form>
+<div id="login">
+    <div class="col-xs-12" id="login-popup">
+        <div id="login-header">
+            <img src="icon.png"></img>
+        </div>
+        <!-- <div class="col-xs-" -->
+        <form id="login-form" name="loginForm" ng-submit="sendLogin(login)">
+ <!--          <div class="col-xs-6">
+            <span class="input input--minoru">
+              <input class="input__field input__field--yoko" type="text" id="input-16" id="email" ng-model="login.email" />
+              <label class="input__label input__label--yoko" for="input-16">
+
+              <span class="input__label-content input__label-content--yoko">Email</span>
+              </label>
+            </span>
+          </div> -->
+          <section class="content bgcolor-4">
+          <span class="input input--hoshi">
+            <input class="input__field input__field--hoshi" ng-model="login.email" type="text" id="input-4" />
+            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+              <span class="input__label-content input__label-content--hoshi">Email</span>
+            </label>
+          </span>
+          <span class="input input--hoshi">
+            <input class="input__field input__field--hoshi" ng-model="login.password" type="password" id="input-5" />
+            <label class="input__label input__label--hoshi input__label--hoshi-color-2" for="input-5">
+              <span class="input__label-content input__label-content--hoshi">Password</span>
+            </label>
+          </span>
+            <md-button id="login-submit" class="md-raised md-primary" type="submit">Submit</md-button>
+        </section>
+        </form>
+    </div>
+</div>
