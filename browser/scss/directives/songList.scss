@@ -116,6 +116,9 @@ $background-color-light: rgb(104,104,104);
 		ul {
 			border-bottom: solid 1px $background-color-light;
 		}
+		:focus {
+			outline: none;
+		}
 	}
 	playlist-song {
 		a {
