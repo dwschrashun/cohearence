@@ -3,6 +3,9 @@
         <div  id="login-header">
             <img ng-click="goToWebApp()" src="icon.png"></img>
         </div>
+        <div >
+            <h4 id="login-error" ng-show="loginError">LOGIN ERROR: {{loginError}}</h4>
+        </div>
         <form id="login-form" name="loginForm" ng-submit="sendLogin(login)">
           <section class="content bgcolor-4">
           <span class="input input--hoshi">
