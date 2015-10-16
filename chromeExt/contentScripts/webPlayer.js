@@ -49,14 +49,36 @@ function seekTo(time) {
 	});
 }
 
-//clicked should be a .song-list-item element
+function checkSoundcloudStreamable(id) {
+	if (id.indexOf('soundcloud') === -1) {
+		return false;
+	}
+	return true;
+};
+
+function confirmCorrectService(request){
+
+	if (request.service === "Spotify") {
+		request.service = "Youtube";
+	}
+	else if (request.service === "Soundcloud") {
+		request.service = checkSoundcloudStreamable(request.id) ? "Soundcloud" : "YouTube";
+	}
+}
+
 function loadSong (songToPlay) {
 	var request = {};
 	request.message = "cue";
 	request.action = 'cue';
+
 	request.service = songToPlay.currentSong.source.domain;
+
 	request.id = songToPlay.currentSong.source.url;
 	request.songIndex = songToPlay.currentIndex;
+
+	console.log('service before correcting', request.service);
+	confirmCorrectService(request);
+	console.log('service after correcting', request.service);
 
 
 	theSlider.slider("option", "min", 0);
@@ -81,6 +103,8 @@ function loadSongFromClicked (clicked) {
 	request.id = source.children("a").first().attr("href");
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	request.service = source.attr('data');
+
+	confirmCorrectService(request);
 
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");
