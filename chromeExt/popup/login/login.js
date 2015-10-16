@@ -33,12 +33,17 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
     $scope.login = {};
     $scope.error = null;
     $scope.sendLogin = function (loginInfo) {
-        $scope.error = null;
+        $scope.loginError = null;
         LoginFactory.login(loginInfo)
         .then(function (user) {
-            if (user) $state.go('player');
-        }).catch(function () {
-            $scope.error = 'Invalid login credentials.';
+            console.log("User?", user);
+            if (user.status) {
+                $scope.loginError = "Invalid login credentials";
+                console.log("ERR", $scope.loginError);
+            }
+            else if (user.musicLibrary) $state.go('player');
+        // }).catch(function () {
+        //     $scope.error = 'Invalid login credentials.';
         });
     };
 
