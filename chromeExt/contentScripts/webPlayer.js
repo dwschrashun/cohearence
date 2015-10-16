@@ -8,19 +8,46 @@ var checkTime;
 
 $(document).ready(function () {
 	setTimeout(setListeners, 700); //TODO: check this length on deployed version
+	$('#nav-pause').addClass('hidden');
 	theSlider = $('#slider');
 	theSlider.slider({
         min: 0,
-		max: 210
+		max: 210,
+		stop: function(event, ui) {
+			sliderUpdater = undefined;
+			var newTime = ui.value;
+			seekTo(newTime);
+		}
     });
+
 
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
 		if (response.currentService){
 			updateCurrentSong(response.currentSong);
 			checkTimeRegularly(response.currentService);
+			$('#nav-play').addClass('hidden');
+			$("#nav-pause").removeClass('hidden');
+		} else{
+			$('#nav-pause').addClass('hidden');
+			$("#nav-play").removeClass('hidden');
 		}
 	});
 });
+
+function seekTo(time) {
+	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
+
+		var request = {
+			message: "changeTimeAction",
+			action: "seekTo",
+			service: response.currentService,
+			time: time
+		};
+
+		chrome.runtime.sendMessage(request, function(response) {
+		});
+	});
+}
 
 //clicked should be a .song-list-item element
 function loadSong (songToPlay) {
@@ -81,6 +108,9 @@ function checkTimeRegularly(service) {
 	});
 
 	checkTime = setInterval(function(){
+		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
+			checkIfPlaying(response.response);
+		});
 		chrome.runtime.sendMessage(request, function(response) {
 			theSlider.slider({
 				value: response.currentTime
@@ -113,23 +143,28 @@ function setListeners () {
 	});
 
 	$("#nav-pause").on("click", function() {
-		console.log('clicked');
+
+		$(this).addClass('hidden');
+		$("#nav-play").removeClass('hidden');
+
 		request.message = "playerAction";
 		request.action = "pause";
         request.service = $(".current").first().find(".track-source").attr("data");
 
 		chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
 			request.service = response.currentService;
-			console.log('request: ', request);
 
 	        chrome.runtime.sendMessage(request, function (response) {
-				console.log('response: ', response);
 
 	        });
 		});
 
 	});
 	$("#nav-play").on("click", function () {
+
+		$(this).addClass('hidden');
+		$("#nav-pause").removeClass('hidden');
+
 		var request = {};
 		request.message = "playerAction";
 		current = $('.current');
@@ -141,7 +176,6 @@ function setListeners () {
 			} else {
 				request = loadSong(songToPlay);
 			}
-
 			updateCurrentSong(songToPlay.currentSong);
 			chrome.runtime.sendMessage(request, function (response) {
 			});
@@ -179,7 +213,6 @@ function updateCurrentSong (newSongObj) {
 
 function convertTime(input) {
 	input = Math.floor(parseInt(input));
-	// console.log(input);
 
 	var hours = Math.floor(input / 60 / 60);
 	hours = hours && hours < 10 ? "0" + Math.floor(hours) : Math.floor(hours);
@@ -197,4 +230,20 @@ function convertTime(input) {
 	if (isNaN(min)) return '--:--';
 	if (hours) return `${hours}:${min}:${seconds}`;
 	return min + ":" + seconds;
+}
+
+function checkIfPlaying(response){
+	var playing = false;
+	for (var key in response){
+		if (response[key]){
+			playing = true;
+		}
+	}
+	if (playing) {
+		$('#nav-play').addClass('hidden');
+		$("#nav-pause").removeClass('hidden');
+	} else {
+		$('#nav-pause').addClass('hidden');
+		$("#nav-play").removeClass('hidden');
+	}
 }
