@@ -93,6 +93,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     };
 
     $scope.playVideo = function () {
+        console.log('THIS IS THE CURRENT SONG', $scope.currentSong);
         $scope.paused = false;
         var request = {
             message: "playerAction",
@@ -105,6 +106,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         if (!request.service && firstSongObj) {
             var firstSongService = firstSongObj.song.source.domain;
             if (firstSongService) {
+                // console.log('that random shit varun did', $scope.currentService)
                 request.service = firstSongService;
                 $scope.loadSong(firstSongObj.song);
             }
@@ -172,7 +174,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     };
 
     $scope.goToWebApp = function () {
-        chrome.tabs.create({url: 'http://localhost:1337'});   
+        chrome.tabs.create({url: 'http://localhost:1337'});
     };
 
 });
