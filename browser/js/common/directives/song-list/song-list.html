@@ -12,7 +12,7 @@
 		<list-header ng-if="!playlistView" id="list-header-container"></list-header>
 		<div ng-if="!playlistView" class="panel-body">
 			<empty-message></empty-message>
-			<library-song current="current" delete="delete" next="next" load="load" song="item" index="{{$index}}" id="library-song-{{$index}}" ng-repeat="item in view  | filter: searchLibrary | orderBy: sortBy"></library-song>
+			<library-song current="current" delete="delete" next="next" load="load" song="item" index="{{$index}}" id="library-song-{{$index}}" ng-repeat="item in view  | filter: searchLibrary"></library-song>
 		</div>
 		<playlist-header ng-if="playlistView" id="playlist-header-container"></playlist-header>
 		<div ng-if="playlistView"  class="panel-body">
