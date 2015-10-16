@@ -26,6 +26,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               var service = serviceMethods[request.service];
               var self = service.reference;
               var action = service[request.action];
+              if (service === 'YouTube') {
+                socket.emit(action, {service: 'YouTube'});
+                return;
+              }
               action.call(self);
           }
 

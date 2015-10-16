@@ -4,16 +4,32 @@ var doc = $(document);
 doc.ready(function () {
   createYouTubeVideo();
   socket = io.connect("https://aqueous-gorge-7560.herokuapp.com/");
+
+  //load song
   socket.on("loadBackground", function (data) {
-    alert(data);
     cueSong(data);
     socket.emit("songLoaded", data);
   });
+
+  //pause song
+  socket.on('pauseBackground', function(data) {
+    if (data.service === 'YouTube') {
+        youtubePlayer.pauseVideo();
+        socket.emit("songPaused", data.service);
+    }
+  });
+
+  socket.on('playBackground', function(data) {
+    if (data.service === 'YouTube') {
+        youtubePlayer.playVideo();
+        socket.emit("songPlayed", data.service);
+    }
+  });
+
 });
 
 
 function cueSong(request) {
-    alert(request);
     console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
         var url = request.ytUrl;
