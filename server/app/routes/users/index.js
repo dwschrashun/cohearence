@@ -175,7 +175,7 @@ router.put('/:userId/Library', function(req, res, next){
 		// console.log("NEW SONG", req.songToSave);
 		Song.create(req.songToSave)		//must create song
 		.then(function(newSong){
-			// console.log("created the new song in main library");
+			console.log("created the new song in main library: ", newSong);
 			req.songToSave = newSong; //reassign songToSave
 			req.index = -1;
 			next();
