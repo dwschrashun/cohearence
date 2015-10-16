@@ -14,7 +14,7 @@
 					 <a href="#">{{song.plays[song.plays.length-1] | date}}</a>
 				</div>
 				<div data="{{song.song.source.domain}}" class="col-md-1 track-source">
-					<a id="image-container" href="{{song.song.source.sourceUrl}}" target="_blank">
+					<a id="image-container" href="{{song.song.source.sourceUrl}}" data-url="{{song.song.source.url}}" target="_blank">
 						<img id="inline-image" ng-src="{{song.song.sourceImage}}"></img>
 					</a>
 				</div>
