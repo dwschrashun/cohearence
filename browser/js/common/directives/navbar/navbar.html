@@ -7,13 +7,13 @@
             <li ng-show="user" id="player-container">
                 <player></player>
             </li>
-			<li>
+			<li ng-show="user">
 				<p id="current-time"></p>
 			</li>
-            <li id="progress" ng-show="user">
+            <li ng-show="user" id="progress">
                 <progress-bar></progress-bar>
             </li>
-			<li>
+			<li ng-show="user">
 				<p id="duration">{{current.duration}}</p>
 			</li>
             <li ng-show="user">
