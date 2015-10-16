@@ -27,6 +27,7 @@ function cueSong(request) {
         // youtubePlayer.loadVideoById(request.id);
     }
     if (request.service === 'Soundcloud') {
+        console.log("cueing soundcloud:", request);
         createSoundcloudVideo(request.id);
     }
     if (request.service === 'Bandcamp') {
