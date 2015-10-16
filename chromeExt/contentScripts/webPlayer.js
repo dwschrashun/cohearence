@@ -56,13 +56,6 @@ function checkSoundcloudStreamable(id) {
 	return true;
 };
 
-// factory.checkSoundcloudStreamable = function (song) {
-// 	if (song.source.url.indexOf('soundcloud') === -1) {
-// 		// console.log('not streamable', song);
-// 		return false;
-// 	}
-// 	return true;
-// };
 
 function confirmCorrectService(request){
 	console.log("REQUEST: ", request)
