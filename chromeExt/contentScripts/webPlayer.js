@@ -56,8 +56,16 @@ function checkSoundcloudStreamable(id) {
 	return true;
 };
 
-function confirmCorrectService(request){
+// factory.checkSoundcloudStreamable = function (song) {
+// 	if (song.source.url.indexOf('soundcloud') === -1) {
+// 		// console.log('not streamable', song);
+// 		return false;
+// 	}
+// 	return true;
+// };
 
+function confirmCorrectService(request){
+	console.log("REQUEST: ", request)
 	if (request.service === "Spotify") {
 		request.service = "Youtube";
 	}
@@ -76,10 +84,7 @@ function loadSong (songToPlay) {
 	request.id = songToPlay.currentSong.source.url;
 	request.songIndex = songToPlay.currentIndex;
 
-	console.log('service before correcting', request.service);
 	confirmCorrectService(request);
-	console.log('service after correcting', request.service);
-
 
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");
@@ -100,11 +105,12 @@ function loadSongFromClicked (clicked) {
 	request.message = "cue";
 	request.action = 'cue';
 
-	request.id = source.children("a").first().attr("href");
+	request.id = source.children("a").first().attr("data-url");
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	request.service = source.attr('data');
 
 	confirmCorrectService(request);
+
 
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");
