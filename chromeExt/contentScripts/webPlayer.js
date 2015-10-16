@@ -21,16 +21,6 @@ $(document).ready(function () {
 			checkTimeRegularly(response.currentService);
 		}
 	});
-
-	chrome.runtime.onMessage.addListener(function (reqest, sender, sendResponse) {
-		if (request === 'songEnded') {
-			chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
-				console.log('getting that song');
-				updateCurrentSong(response.currentSong);
-				checkTimeRegularly(response.currentService);
-			});
-		}
-	});	
 });
 
 //clicked should be a .song-list-item element
@@ -42,11 +32,11 @@ function loadSong (songToPlay) {
 	request.id = songToPlay.currentSong.source.url;
 	request.songIndex = songToPlay.currentIndex;
 
-	
-	theSlider.slider("option", "min", 0);
-	currentTime.text("0:00");
-	clearInterval(checkTime);
-	checkTimeRegularly(request.service);
+
+	// theSlider.slider("option", "min", 0);
+	// currentTime.text("0:00");
+	// clearInterval(checkTime);
+	// checkTimeRegularly(request.service);
 
 	return request;
 }
@@ -66,10 +56,10 @@ function loadSongFromClicked (clicked) {
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	request.service = source.attr('data');
 
-	theSlider.slider("option", "min", 0);
-	currentTime.text("0:00");
-	clearInterval(checkTime);
-	checkTimeRegularly(request.service);
+	// theSlider.slider("option", "min", 0);
+	// currentTime.text("0:00");
+	// clearInterval(checkTime);
+	// checkTimeRegularly(request.service);
 
 	updateCurrentSong(updateMarquee);
 
@@ -84,14 +74,33 @@ function checkTimeRegularly(service) {
 		service: service
 	};
 
+	var max;
+
+	chrome.runtime.sendMessage(request, function(response){
+		max = response.duration;
+		theSlider.slider({max: response.duration});
+		theDuration.text(convertTime(response.duration));
+		console.log('max originally set at ', max);
+	});
+
 	checkTime = setInterval(function(){
 		chrome.runtime.sendMessage(request, function(response) {
 			theSlider.slider({
-				value: response.currentTime,
-				max: response.duration
+				value: response.currentTime
 			});
 			currentTime.text(convertTime(response.currentTime));
-			theDuration.text(convertTime(response.duration));
+
+			if (response.duration !== max) {
+				console.log('better change that marquee');
+				chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
+					updateCurrentSong(response.currentSong);
+					theSlider.slider("option", "min", 0);
+					currentTime.text("0:00");
+					clearInterval(checkTime);
+					checkTimeRegularly(request.service);
+				});
+			}
+
 		});
 	}, 1000);
 }
