@@ -23,13 +23,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           //if making player perform some action (play, pause, etc.)
           if (request.message === 'playerAction') {
               setIcon(request.action !== "pause", "player");
+              if (request.service === 'YouTube') {
+                console.log('about2pause', request);
+                socket.emit(request.action, {service: 'YouTube'});
+                return;
+              }
               var service = serviceMethods[request.service];
               var self = service.reference;
               var action = service[request.action];
-              if (service === 'YouTube') {
-                socket.emit(action, {service: 'YouTube'});
-                return;
-              }
+              console.log(request);
               action.call(self);
           }
 

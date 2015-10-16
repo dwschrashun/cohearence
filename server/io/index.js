@@ -17,7 +17,7 @@ module.exports = function (server) {
             io.sockets.emit("playBackground", data)
         });
         socket.on("pause", function (data) {
-            io.sockets.emit('pauseBackground', data.service);
+            io.sockets.emit('pauseBackground', data);
         });
         socket.on("seek", function (data) {
 

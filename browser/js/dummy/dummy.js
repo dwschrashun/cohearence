@@ -14,6 +14,7 @@ doc.ready(function () {
   //pause song
   socket.on('pauseBackground', function(data) {
     if (data.service === 'YouTube') {
+        alert('PAUSING!')
         youtubePlayer.pauseVideo();
         socket.emit("songPaused", data.service);
     }
