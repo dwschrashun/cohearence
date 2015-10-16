@@ -14,4 +14,5 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
             $scope.error = 'Invalid login credentials.';
         });
     };
+
 });
