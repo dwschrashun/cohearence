@@ -5,6 +5,7 @@ app.config(function ($stateProvider) {
         controller: 'HomeController',
         resolve: {
         	theUser: function(AuthService) {
+				console.log('getting user');
 				return AuthService.getLoggedInUser()
 				.then(function(user){
 					return user;
@@ -17,6 +18,7 @@ app.config(function ($stateProvider) {
 app.controller('HomeController', function($rootScope, SongFactory, UserFactory, $scope, AuthService, $state, theUser, PlaylistFactory) {
 	if(!theUser) $state.go('landing');
 	else {
+	console.log('theUser music library', theUser.musicLibrary);
 		PlaylistFactory.getPlaylists()
 		.then(function(playlists){
 			$scope.hasSongs = false;
@@ -55,8 +57,9 @@ app.controller('HomeController', function($rootScope, SongFactory, UserFactory, 
 	$scope.delete = function(song){
 		UserFactory.deleteSong($scope.theUser._id, song.song._id)
 		.then(function(){
+			console.log('deleted');
 			$scope.view = _.without($scope.view, $scope.view[$scope.view.indexOf(song)]);
-			$scope.hasSongs = $scope.view.length ? true: false;
+			$scope.hasSongs = $scope.view.length ? true : false;
 		});
 	};
 });
