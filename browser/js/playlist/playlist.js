@@ -10,10 +10,8 @@ app.config(function ($stateProvider) {
 					return user;
 				});
         	},
-			thePlaylists: function(PlaylistFactory) {
-				return PlaylistFactory.getPlaylists();
-			},
-			thePlaylist: function ($stateParams, PlaylistFactory) {
+			thePlaylists: PlaylistFactory => PlaylistFactory.getPlaylists(),
+			thePlaylist: ($stateParams, PlaylistFactory) => {
 				if ($stateParams.playlistID) {
 					return PlaylistFactory.getPopulatedPlaylist($stateParams.playlistID);
 				}
@@ -23,7 +21,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('PlaylistController', function($scope, SongFactory, AuthService, $state, theUser, thePlaylists, thePlaylist, PlaylistFactory, $stateParams) {
+app.controller('PlaylistController', function($scope, SongFactory, AuthService, $state, theUser, thePlaylists, thePlaylist, PlaylistFactory) {
 	if(!theUser) $state.go('landing');
 	else {
 		$scope.theUser = theUser;
@@ -34,11 +32,7 @@ app.controller('PlaylistController', function($scope, SongFactory, AuthService, 
 		$scope.hasSongs = $scope.view.songs.length ? true: false;
 
 		if ($scope.hasSongs) {
-		
-			$scope.view.songs.forEach(function(song){
-				SongFactory.setSourceIcons(song);
-			});
-			// SongFactory.setSourceIcons($scope.view.songs);
+			$scope.view.songs.forEach(song => SongFactory.setSourceIcons(song));
 		}
 	}
 
@@ -52,7 +46,7 @@ app.controller('PlaylistController', function($scope, SongFactory, AuthService, 
 			}
 		});
 	};
-	//removes a song from a playlist
+
 	$scope.remove = function(song){
 		var songs = $scope.view.songs;
 		PlaylistFactory.removeFromPlaylist($scope.view._id, song._id)
