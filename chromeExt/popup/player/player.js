@@ -1,3 +1,5 @@
+'use strict'
+
 app.config(function ($stateProvider) {
     $stateProvider
         .state("player", {
@@ -8,9 +10,6 @@ app.config(function ($stateProvider) {
                 theUser: function (LoginFactory) {
                     return LoginFactory.isLoggedIn();
                 }
-                // playlists: function (PlayerFactory) {
-                //     return PlayerFactory.getPlaylists();
-                // }
             }
         });
 });
@@ -40,6 +39,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
         });
     }
     // This needs to run everytime the controller loads
+
     $scope.paused = true;
     whoIsPlaying();
 
@@ -172,7 +172,14 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
     };
 
     $scope.goToWebApp = function () {
-        chrome.tabs.create({url: 'http://localhost:1337'});   
-    };
+        let request = {
+            message: 'environmentAction'
+        };
+
+        chrome.runtime.sendMessage(request, response => {
+            console.log('RESPONSE', response);
+            chrome.tabs.create({url: response.environment.domain});
+        });
+    }
 
 });
