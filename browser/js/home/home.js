@@ -5,7 +5,6 @@ app.config(function ($stateProvider) {
         controller: 'HomeController',
         resolve: {
         	theUser: function(AuthService) {
-				console.log('getting user');
 				return AuthService.getLoggedInUser()
 				.then(function(user){
 					return user;
@@ -18,9 +17,6 @@ app.config(function ($stateProvider) {
 app.controller('HomeController', function(Session, $rootScope, SongFactory, UserFactory, $scope, AuthService, $state, theUser, PlaylistFactory) {
 	if(!theUser) $state.go('landing');
 	else {
-	console.log('theUser music library', theUser.musicLibrary.length);
-	console.log('theUser music library', Session.user.musicLibrary.length);
-
 		PlaylistFactory.getPlaylists()
 		.then(function(playlists){
 			$scope.hasSongs = false;
