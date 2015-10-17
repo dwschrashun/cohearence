@@ -92,9 +92,9 @@ function getPlayerState() {
     var playerStates = {};
     if (youtubePlayer) {
         var youtubeState = youtubePlayer.getPlayerState();
-        console.log('YOUTUBE STATE!', youtubeState)
+        // console.log('YOUTUBE STATE!', youtubeState)
         // youtube has 5 states. We are only concerned with playing and not playing
-        playerStates.YouTube = (youtubeState === 1 || youtubeState === 2) ? true : false;
+        playerStates.YouTube = (youtubeState === 1) ? true : false;
     }
     if (soundcloudVideo[0]) {
         playerStates.Soundcloud = !soundcloudVideo[0].paused;
@@ -105,17 +105,21 @@ function getPlayerState() {
     return playerStates;
 }
 
-function checkIfPaused() {
-    if (youtubePlayer) {
+function checkIfPaused(currentService) {
+    if (currentService === "YouTube") {
         let youtubeState = youtubePlayer.getPlayerState();
+        console.log('YOUTUBE STATE!', youtubeState);
         return youtubeState === 2 ? true : false;
     }
-    if (soundcloudVideo[0]) {
-        return soundCloudVideo[0].paused ? true : false;
+    if (currentService === "Soundcloud") {
+        console.log('in ze soundcloud pause check');
+        return soundcloudVideo[0].paused ? true : false;
     }
-    if (bandcampVideo[0]) {
+    if (currentService === "Bandcamp") {
+        console.log('in ze bandcamp pause check');
         return bandcampVideo[0].paused ? true : false;
     }
+
 }
 
 function getCurrentTime(service) {

@@ -32,7 +32,7 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
                 service: currentService
             };
             chrome.runtime.sendMessage(request, function (response) {
-                $scope.duration = response.duration|| $scope.duration ;
+                $scope.duration = response.duration || $scope.duration ;
                 $scope.timeElapsed = response.currentTime || $scope.timeElapsed;
                 if ($scope.duration !== max) {
                     max = $scope.duration;
@@ -45,7 +45,7 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
             });
         });
     }
-    var sliderUpdater = $interval(getTimeFromBackground, 1000);
+    var sliderUpdater = $interval(getTimeFromBackground, 100);
 });
 
 app.filter('songTime', function() {
