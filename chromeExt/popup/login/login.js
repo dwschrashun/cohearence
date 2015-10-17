@@ -1,3 +1,4 @@
+'use strict';
 
 // app.config(function ($urlRouterProvider, $locationProvider) {
 //     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
@@ -14,15 +15,16 @@ app.config(function ($stateProvider) {
         resolve: {
             theUser: function(LoginFactory) {
                 return LoginFactory.isLoggedIn();
-            }
+            },
         }
     });
 });
 
 app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
-    console.log('theUser in LoginCtrl', theUser);
+
     $scope.getLoggedInUser = function() {
         if (theUser) $state.go('player');
+        //if user isn't logged in, retrieve environment vars
     };
     $scope.getLoggedInUser();
     // $scope.oauthLogin = function(){
@@ -49,7 +51,14 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
 
 
     $scope.goToWebApp = function () {
-        chrome.tabs.create({url: 'http://localhost:1337'});
+        let request = {
+            message: 'environmentAction'
+        };
+
+        chrome.runtime.sendMessage(request, response => {
+            console.log('RESPONSE', response);
+            chrome.tabs.create({url: response.environment.domain});
+        });
     };
 });
 

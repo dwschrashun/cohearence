@@ -11,11 +11,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               }
           }
           if (request.action === 'killPlayers') {
-			  stopAllVideos();
-			  sendResponse({
-				  response: "killed the videos"
-			  });
-		  }
+    			  stopAllVideos();
+    			  sendResponse({
+    				  response: "killed the videos"
+    			  });
+		      }
           //if scrobbling
           if (request.action === 'scrobble') {
               sendSong(request);
@@ -44,16 +44,25 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               setIcon(true, "player");
           }
 
-          // persisting controls on popup close
+          // persisting controls on popup close and retrieving environment vars
           if (request.message === "whoIsPlaying") {
             var currentSong = getCurrentSong(currentSongIndex);
               sendResponse({
                   response: playerStates,
                   currentIndex: currentSongIndex,
                   currentSong: currentSong,
-                  currentService: currentService
+                  currentService: currentService,
+                  environment: environment
               });
           }
+      }
+
+      //retrieving environment variables
+      if (request.message === 'environmentAction') {
+        console.log('environment!', environment);
+        sendResponse({
+          environment: environment
+        })
       }
 
       // changing songs
