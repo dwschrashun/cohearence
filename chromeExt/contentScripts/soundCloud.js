@@ -7,7 +7,7 @@ function getSongInfo() {
 	if (playingFrom.indexOf('profile') > -1 || playingFrom.indexOf('playlists') > -1){
 		channelName = playingFrom.split("Playing from ")[1].split("\'")[0];
 	} else if (playingFrom === "Playing track") {
-		channelName = $(".soundTitle__usernameHeroContainer").children().first().text().trim();
+		channelName = $(".soundTitle__usernameHeroContainer").children().first().text().trim() || $(".soundTitle__usernameText").text().trim();
 	}
 
     // var channelName = songInfoArr.first().text().split("Playing from ")[1].split("\'")[0];
@@ -40,7 +40,7 @@ function getSongInfo() {
         title: title,
         artist: artist
     };
-	console.log("final artist adn title", songObj.artist, songObj.title);
+	console.log("final artist and title", songObj.artist, songObj.title);
     return songObj;
 }
 

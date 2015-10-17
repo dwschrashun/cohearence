@@ -35,10 +35,6 @@ var seedUsers = function () {
             password: '123'
         },
 		{
-			email: 'obama@gmail.com',
-			password: 'potus'
-		},
-		{
 			email: 'ringo@starr.com',
 			password: '123',
 			musicLibrary: []
@@ -53,17 +49,17 @@ var seedSongs = function () {
 
     var songs = [
 		{
-		  "duration": "13:42",
-		  "echoNestId": "SOKYVNQ13D66C7C450",
+		  "duration": "10:00",
+		  "echoNestId": "SOIFNAX144AD11923D",
 		  "source": {
-		    "url": "sOnqjkJTMaA",
-		    "videoTitle": "Michael Jackson - Thriller",
+		    "url": "poXvMBhjSWk",
+		    "videoTitle": "The Rolling Stones - (I Can't Get No) Satisfaction - Glastonbury 2013 (HD)",
 		    "domain": "YouTube",
-		    "sourceUrl": "https://www.youtube.com/watch?v=sOnqjkJTMaA"
+		    "sourceUrl": "https://www.youtube.com/watch?v=poXvMBhjSWk"
 		  },
-		  "artist": "Michael Jackson",
-		  "title": "Thriller",
-	  },
+		  "artist": "The Rolling Stones",
+		  "title": "(I Can't Get No) Satisfaction",
+		},
 		{
 		  "duration": "5:34",
 		  "source": {
@@ -87,6 +83,19 @@ var seedSongs = function () {
 		  "artist": "Aretha Franklin",
 		  "title": "Respect",
 	  },
+	  {
+		  "duration": "3:23",
+		  "echoNestId": "SOWVGAI1474557A5AE",
+		  "source": {
+		    "url": "https://soundcloud.com/dukedumont/wont-look-back",
+		    "videoTitle": "Won't Look Back",
+		    "domain": "Soundcloud",
+		    "bandcampId": "",
+		    "sourceUrl": "https://soundcloud.com/dukedumont/wont-look-back"
+		  },
+		  "artist": "Duke Dumont",
+		  "title": "Won't Look Back",
+		},
 		{
 		  "duration": "4:56",
 		  "source": {
@@ -116,18 +125,6 @@ var seedSongs = function () {
 		  "duration": "03:37",
 		  "source": {
 		    "domain": "Bandcamp",
-		    "url": "http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=d96e73221ba767641799a400c6549920&id=2193158644&stream=1&ts=1445021001.0",
-		    "videoTitle": "TipperIts Like",
-		    "sourceUrl": "https://tipper.bandcamp.com/album/its-like?from=discover-top",
-		    "bandcampId": "2193158644"
-		  },
-		  "artist": "Tipper",
-		  "title": "Its Like",
-	  },
-		{
-		  "duration": "03:37",
-		  "source": {
-		    "domain": "Bandcamp",
 		    "url": "http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=9735b4b11daa2868904185d3750114b0&id=2193158644&stream=1&ts=1444949711.0",
 		    "videoTitle": "TipperIts Like",
 		    "sourceUrl": "/track/its-like",
@@ -136,6 +133,18 @@ var seedSongs = function () {
 		  "artist": "Tipper",
 		  "title": "Its Like",
 	  },
+	  {
+		  "duration": "3:54",
+		  "echoNestId": "SOYOZZH12AB017D44E",
+		  "source": {
+		    "url": "pdG1oRvoQv4",
+		    "videoTitle": "Dispatch - Passerby",
+		    "domain": "YouTube",
+		    "sourceUrl": "https://www.youtube.com/watch?v=pdG1oRvoQv4"
+		  },
+		  "artist": "Dispatch",
+		  "title": "Passerby",
+		},
 		{
 		  "duration": "04:20",
 		  "source": {
@@ -149,65 +158,30 @@ var seedSongs = function () {
 		  "title": "THE FRONT (FEAT. TORO Y MOI & AMAZE 88) (PROD. TORO Y MOI)",
 	  },
 		{
-		  "duration": "4:21",
-		  "echoNestId": "SOJDJMU1445759030B",
-		  "source": {
-		    "url": "bDktBZzQIiU",
-		    "videoTitle": "Johnny Cash - Folsom Prison Blues (Live)",
-		    "domain": "YouTube",
-		    "sourceUrl": "https://www.youtube.com/watch?v=bDktBZzQIiU"
-		  },
-		  "artist": "Johnny Cash",
-		  "title": "Folsom Prison Blues (Live)",
-	  },
+			"duration": "3:25",
+			"echoNestId": "SOJAWKP13F851465B7",
+			"source": {
+			  "url": "dw6qJWime_Y",
+			  "videoTitle": "Miniboone - I Could, I Could",
+			  "domain": "YouTube",
+			  "sourceUrl": "https://www.youtube.com/watch?v=dw6qJWime_Y"
+			},
+			"artist": "Miniboone",
+			"title": "I Could, I Could",
+		},
 		{
-		  "duration": "3:59",
-		  "echoNestId": "SOVMGEX12AC9070FF2",
+		  "duration": "4:02",
+		  "echoNestId": "SODGMGX1444FF662D3",
 		  "source": {
-		    "url": "S7q_12tYZdA",
-		    "videoTitle": "Van Halen - Jump",
+		    "url": "tCnBrrnOefs",
+		    "videoTitle": "Justice - D.A.N.C.E. - †",
 		    "domain": "YouTube",
-		    "sourceUrl": "https://www.youtube.com/watch?v=S7q_12tYZdA"
+		    "sourceUrl": "https://www.youtube.com/watch?v=tCnBrrnOefs"
 		  },
-		  "artist": "Van Halen",
-		  "title": "Jump",
-	  },
-		{
-		  "duration": "3:47",
-		  "source": {
-		    "url": "djV11Xbc914",
-		    "videoTitle": "a-ha - Take On Me (Official Video)",
-		    "domain": "YouTube",
-		    "sourceUrl": "https://www.youtube.com/watch?v=djV11Xbc914"
-		  },
-		  "artist": "a-ha",
-		  "title": "Take On Me (Official Video)",
-	  },
-		{
-		  "duration": "3:00",
-		  "echoNestId": "SODJFHB1312A8A74DE",
-		  "source": {
-		    "url": "QHpU0ZfXZ_g",
-		    "videoTitle": "Reel Big Fish - Take On Me",
-		    "domain": "YouTube",
-		    "sourceUrl": "https://www.youtube.com/watch?v=QHpU0ZfXZ_g"
-		  },
-		  "artist": "Reel Big Fish",
-		  "title": "Take On Me",
-	  },
-		{
-		  "duration": "3:38",
-		  "echoNestId": "SOPCVAI1461525F5ED",
-		  "source": {
-		    "url": "p-qfzH0vnOs",
-		    "videoTitle": "Goldfinger - 99 Red Balloons",
-		    "domain": "YouTube",
-		    "sourceUrl": "https://www.youtube.com/watch?v=p-qfzH0vnOs"
-		  },
-		  "artist": "Goldfinger",
-		  "title": "99 Red Balloons",
-	  }
-	]
+		  "artist": "Justice",
+		  "title": "D.A.N.C.E.",
+		}
+	];
 
 
     return Song.createAsync(songs);
@@ -217,25 +191,19 @@ var seedSongs = function () {
 connectToDb.then(function () {
     User.remove({})
     .then(function () {
-		console.log('user removed');
         return seedUsers();
     }).then(function (users) {
-		console.log('users seeded', users);
         return Song.remove({});
 	}).then(function(){
-		console.log('song removed');
-
-		seedSongs();
+		return seedSongs();
 	}).then(function(songs){
-		console.log("songs seeded:", songs);
-		return User.find({email:"ringo@fsa.com"}).exec();
-		// .then(function(user){
-				// console.log("USER:", user);
-			// songs.forEach(function(theSong){
-				// console.log("SONG:", theSong);
-				// user.musicLibrary.push({song: theSong._id, plays: [new Date()]});
-			// })
-			// return user.save();
+		return User.findOne({email:"ringo@starr.com"}).exec()
+		.then(function(user){
+			songs.forEach(function(theSong){
+				user.musicLibrary.push({song: theSong._id, plays: [new Date()]});
+			});
+			return user.save();
+		});
     }).then(function () {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
