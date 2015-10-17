@@ -1,3 +1,5 @@
+'use strict';
+
 function sendSong(songObj) {
     var user = getUser();
     if (user) {
@@ -90,8 +92,9 @@ function getPlayerState() {
     var playerStates = {};
     if (youtubePlayer) {
         var youtubeState = youtubePlayer.getPlayerState();
+        console.log('YOUTUBE STATE!', youtubeState)
         // youtube has 5 states. We are only concerned with playing and not playing
-        playerStates.YouTube = (youtubeState === 1) ? true : false;
+        playerStates.YouTube = (youtubeState === 1 || youtubeState === 2) ? true : false;
     }
     if (soundcloudVideo[0]) {
         playerStates.Soundcloud = !soundcloudVideo[0].paused;
@@ -100,6 +103,19 @@ function getPlayerState() {
         playerStates.Bandcamp = !bandcampVideo[0].paused;
     }
     return playerStates;
+}
+
+function checkIfPaused() {
+    if (youtubePlayer) {
+        let youtubeState = youtubePlayer.getPlayerState();
+        return youtubeState === 2 ? true : false;
+    }
+    if (soundcloudVideo[0]) {
+        return soundCloudVideo[0].paused ? true : false;
+    }
+    if (bandcampVideo[0]) {
+        return bandcampVideo[0].paused ? true : false;
+    }
 }
 
 function getCurrentTime(service) {

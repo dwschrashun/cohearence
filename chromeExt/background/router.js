@@ -10,6 +10,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                   playing = true;
               }
           }
+          var isPaused = checkIfPaused();
           if (request.action === 'killPlayers') {
     			  stopAllVideos();
     			  sendResponse({
@@ -47,13 +48,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           // persisting controls on popup close and retrieving environment vars
           if (request.message === "whoIsPlaying") {
             var currentSong = getCurrentSong(currentSongIndex);
-              sendResponse({
-                  response: playerStates,
-                  currentIndex: currentSongIndex,
-                  currentSong: currentSong,
-                  currentService: currentService,
-                  environment: environment
-              });
+            console.log('playerSTates', playerStates);
+            sendResponse({
+                response: playerStates,
+                currentIndex: currentSongIndex,
+                currentSong: currentSong,
+                currentService: currentService,
+                environment: environment,
+                isPaused: isPaused
+            });
           }
       }
 

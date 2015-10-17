@@ -24,10 +24,10 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
             action: "whoIsPlaying"
         };
         chrome.runtime.sendMessage(request, function (response) {
-
             $scope.currentService = PlayerFactory.setCurrentService(response);
+            console.log("$scope.currentService", $scope.currentService);
             if ($scope.currentService !== null) {
-                 $scope.paused = false;
+                 if (!response.isPaused) $scope.paused = false;
                 if(theUser.musicLibrary[response.currentIndex].song) {
                     $scope.currentSong = theUser.musicLibrary[response.currentIndex].song;
                     console.log('current song playing', $scope.currentSong);
