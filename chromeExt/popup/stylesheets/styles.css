@@ -99,15 +99,21 @@
 
 .music-library-header {
     margin-bottom: 10px;
+	margin-top: 10px;
     font-size: 20px;
 }
 
 #header-border {
     border-bottom: 1px solid lightgray;
+	margin-bottom: 20px;
 }
 
 i {
     margin-left: 5px;
+}
+
+i:focus {
+	outline: none;
 }
 
 .song {
@@ -116,6 +122,10 @@ i {
 
 .song li {
     margin-bottom: 4px;
+}
+
+.row:focus{
+	outline: none;
 }
 
 .popup-song {
@@ -448,4 +458,3 @@ hr.style14 {
         transform: translate3d(0, -40%, 0);
     }
 }*/
-
