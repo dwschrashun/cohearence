@@ -15,10 +15,12 @@ app.config(function ($stateProvider) {
 	});
 });
 
-app.controller('HomeController', function($rootScope, SongFactory, UserFactory, $scope, AuthService, $state, theUser, PlaylistFactory) {
+app.controller('HomeController', function(Session, $rootScope, SongFactory, UserFactory, $scope, AuthService, $state, theUser, PlaylistFactory) {
 	if(!theUser) $state.go('landing');
 	else {
-	console.log('theUser music library', theUser.musicLibrary);
+	console.log('theUser music library', theUser.musicLibrary.length);
+	console.log('theUser music library', Session.user.musicLibrary.length);
+
 		PlaylistFactory.getPlaylists()
 		.then(function(playlists){
 			$scope.hasSongs = false;
@@ -27,7 +29,6 @@ app.controller('HomeController', function($rootScope, SongFactory, UserFactory, 
 			$scope.view = $scope.theUser.musicLibrary;
 			$scope.header = "My Library";
 			$scope.playlistView = false;
-
 
 			if ($scope.view.length) {
 				$scope.hasSongs = true;
@@ -56,10 +57,11 @@ app.controller('HomeController', function($rootScope, SongFactory, UserFactory, 
 	};
 	$scope.delete = function(song){
 		UserFactory.deleteSong($scope.theUser._id, song.song._id)
-		.then(function(){
+		.then(function(user){
 			console.log('deleted');
 			$scope.view = _.without($scope.view, $scope.view[$scope.view.indexOf(song)]);
 			$scope.hasSongs = $scope.view.length ? true : false;
+			Session.update(user);
 		});
 	};
 });

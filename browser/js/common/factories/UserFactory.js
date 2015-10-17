@@ -15,8 +15,11 @@ app.factory('UserFactory', function($http){
 	};
 
 	var deleteSong = function(userId, songId) {
-		return $http.delete('/api/users/' + userId + '/library/' + songId);
-	};
+		return $http.delete('/api/users/' + userId + '/library/' + songId)
+		.then(function(response){
+			return response.data;
+	});
+};
 
 	return {
 		getAll: getAll,

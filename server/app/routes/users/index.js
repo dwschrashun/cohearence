@@ -44,10 +44,7 @@ router.delete('/:userId/library/:songObjId', function(req,res,next){
 		}
 	});
 
-	req.foundUser.save()
-	.then(function(savedUser){
-		return Playlist.find({user: req.foundUser, songs: req.params.songObjId}).exec();
-	})
+	Playlist.find({user: req.foundUser, songs: req.params.songObjId}).exec()
 	.then(function(playlists){
 		var obj = mongoose.Types.ObjectId(req.params.songObjId);
 		return playlists.forEach(function(playlist){
@@ -56,7 +53,9 @@ router.delete('/:userId/library/:songObjId', function(req,res,next){
 		});
 	})
 	.then(function(playlists){
-		res.status(204).end();
+		return req.foundUser.save();
+	}).then(function(savedUser){
+		res.status(204).json(savedUser);
 	});
 });
 
