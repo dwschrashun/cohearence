@@ -81,6 +81,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       if (request.message === "checkTimeAction") {
 			var service = request.service;
 			var currentTime = getCurrentTime(service);
+			console.log('checkTimeAction called, service is', service);
+			console.log('...and  currentTime is', currentTime);
+
 			sendResponse({
 				currentTime: currentTime[0],
 				duration: currentTime[1]

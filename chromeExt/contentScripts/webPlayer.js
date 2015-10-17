@@ -22,6 +22,7 @@ $(document).ready(function () {
 
 
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
+		console.log("RESPONSE ON LOAD: ", response);
 		if (response.currentService){
 			updateCurrentSong(response.currentSong);
 			checkTimeRegularly(response.currentService);
@@ -126,6 +127,7 @@ function checkTimeRegularly(service) {
 
 	chrome.runtime.sendMessage(request, function(response){
 		max = response.duration;
+		console.log('getting new duration:', response.duration);
 		theSlider.slider({max: response.duration});
 		theDuration.text(convertTime(response.duration));
 	});
@@ -133,22 +135,26 @@ function checkTimeRegularly(service) {
 	checkTime = setInterval(function(){
 		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
 			checkIfPlaying(response.response);
-		});
-		chrome.runtime.sendMessage(request, function(response) {
-			theSlider.slider({
-				value: response.currentTime
-			});
-			currentTime.text(convertTime(response.currentTime));
+			request.service = response.currentSong.source.domain;
+			console.log("currently playing song: ",response.currentSong);
 
-			if (response.duration !== max) {
-				chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
-					updateCurrentSong(response.currentSong);
-					theSlider.slider("option", "min", 0);
-					currentTime.text("0:00");
-					clearInterval(checkTime);
-					checkTimeRegularly(request.service);
+			console.log("that song's service, getting sent to checkTimeAction: ",response.currentSong.source.domain);
+			chrome.runtime.sendMessage(request, function(timeResponse) {
+				theSlider.slider({
+					value: timeResponse.currentTime
 				});
-			}
+				currentTime.text(convertTime(timeResponse.currentTime));
+				console.log("duration of currently playing song and max",timeResponse.duration, max);
+				if (Math.round(timeResponse.duration*1000)/1000 !== Math.round(max*1000)/1000) {
+					chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
+						updateCurrentSong(response.currentSong);
+						theSlider.slider("option", "min", 0);
+						currentTime.text("0:00");
+						clearInterval(checkTime);
+						checkTimeRegularly(request.service);
+					});
+				}
+			});
 		});
 	}, 1000);
 }
