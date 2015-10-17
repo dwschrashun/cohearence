@@ -32,10 +32,7 @@ app.controller('PlaylistController', function($scope, SongFactory, AuthService, 
 		$scope.hasSongs = $scope.view.songs.length ? true: false;
 
 		if ($scope.hasSongs) {
-
-			$scope.view.songs.forEach(function(song){
-				SongFactory.setSourceIcons(song);
-			});
+			$scope.view.songs.forEach(song => SongFactory.setSourceIcons(song));
 		}
 	}
 
