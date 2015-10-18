@@ -127,7 +127,7 @@ var seedSongs = function () {
 		    "domain": "Bandcamp",
 		    "url": "http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=9735b4b11daa2868904185d3750114b0&id=2193158644&stream=1&ts=1444949711.0",
 		    "videoTitle": "TipperIts Like",
-		    "sourceUrl": "/track/its-like",
+		    "sourceUrl": "http://tipper.bandcamp.com/album/its-like",
 		    "bandcampId": "2193158644"
 		  },
 		  "artist": "Tipper",
@@ -151,7 +151,7 @@ var seedSongs = function () {
 		    "domain": "Bandcamp",
 		    "url": "http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a2d327a580dc8b272e3343a7fc45b737&id=3155740019&stream=1&ts=1444867607.0",
 		    "videoTitle": "KOOL A.D.THE FRONT (FEAT. TORO Y MOI & AMAZE 88) (PROD. TORO Y MOI)",
-		    "sourceUrl": "/track/the-front-feat-toro-y-moi-amaze-88-prod-toro-y-moi",
+		    "sourceUrl": "http://koolad.bandcamp.com/track/the-front-feat-toro-y-moi-amaze-88-prod-toro-y-moi",
 		    "bandcampId": "3155740019"
 		  },
 		  "artist": "KOOL A.D.",

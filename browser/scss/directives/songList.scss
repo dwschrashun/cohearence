@@ -44,7 +44,6 @@ $background-color-light: rgb(104,104,104);
 		border-radius: 5px;
 	}
 	#list-header-container {
-
 		&:after {
 	      content: "";
 	      display: table;
@@ -128,14 +127,15 @@ $background-color-light: rgb(104,104,104);
 	// border: solid 1px $background-color;
 	// box-shadow: 0px 2px 5px black;
 	.panel-heading {
-		background-color: $blue;
+		background: linear-gradient(200deg, $green -20%, $blue 80%);
+		// background: linear-gradient($blue 60%, white 200%);
 		border-top-right-radius: 2px;
 		border-top-left-radius: 20px;
 		// font-size: 16px;
 	}
 
 	.playlist-panel-heading {
-		background-color: $green;
+		background: linear-gradient($green 50%, white 150%);
 		border-top-right-radius: 2px;
 		border-top-left-radius: 20px;
 		height: 40px;

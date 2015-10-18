@@ -7,7 +7,8 @@
     width: 768px;
     height: 560px;
     border-radius: 2px;
-    background-color: #333333;
+    /*background-color: #333333;*/
+	background: linear-gradient(rgb(104,104,104) -50%, #333333 75%);
 }
 
 .navbar,
@@ -41,14 +42,16 @@
 }
 
 #slider {
-    margin-left: 13px;
+    margin-left: 22px;
     margin-top: 8px;
-    margin-right: -20px;
+    /*margin-right: -20px;*/
+	width: 220px;
 }
 
 #song-marquee {
-    margin-top: 4px;
-    margin-left: -70px;
+	font-size: 18px;
+    margin-top: 0px;
+    margin-left: -60px;
     margin-right: 10px;
 }
 
@@ -59,6 +62,11 @@
 
 .time-status {
     margin-bottom: 3px;
+}
+
+
+.time-status-right {
+	margin-left: -15px;
 }
 
 .song {
@@ -72,7 +80,8 @@
     width: 768px;
     padding: 0;
     color: #3CB2D0;
-    background-color: #333333;
+    /*background-color: #333333;*/
+	background: linear-gradient(#222222, rgb(104,104,104));
 }
 
 .player-controls {
@@ -275,12 +284,15 @@ hr.style14 {
     background-color: #3CB2D0;
     position: absolute;
     left: 0;
+	margin-left: 15px;
+	margin-top: 15px;
+	box-shadow: 0px 2px 10px 0px black
 }
 
 #login-form {
     position: absolute;
     top: 180px;
-    left: 39%;
+    left: 27%;
 }
 
 .content {
@@ -291,7 +303,7 @@ hr.style14 {
 }
 
 #login input{
-    background-color: #333333;
+    background-color: transparent;
 }
 
 #login .input {
