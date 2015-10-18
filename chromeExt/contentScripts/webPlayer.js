@@ -95,10 +95,14 @@ function loadSongFromClicked (clicked) {
 
 	request.message = "cue";
 	request.action = 'cue';
+
 	request.service = source.attr('data');
 	request.id = source.children("a").first().attr("data-url");
 	confirmCorrectService(request);
-	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
+	//Changed because clicked now points to a div two steps further down,
+	//so that clicking on the delete button doesn't also play the song
+	request.songIndex = parseInt(clicked.parent().parent().parent().parent().attr("id").split("-")[2]);
+	// request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");

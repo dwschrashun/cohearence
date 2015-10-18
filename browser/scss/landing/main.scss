@@ -26,7 +26,8 @@ body {
 	width: 100%;
 	height: 100vh;
 	background-color: $background-color-light;
-	/*background: radial-gradient(white, $background-color-light);*/
+	// background: radial-gradient(white, $background-color-light, white);
+	background: radial-gradient(white -25%, $background-color-light);
 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -176,7 +177,7 @@ body {
 
 	/* description */
 	#description {
-		margin-top: 30px;
+		margin-top: 50px;
 		margin-left: 60px;
 		margin-right: 60px;
 		a {
@@ -184,7 +185,7 @@ body {
 		}
 		h2 {
 			padding: 20px;
-			color: rgb(193, 193, 193);
+			color: $background-color;
 			font-size: 40px;
 			font-family: "Lato", sans-serif;
 			font-weight: 300;
