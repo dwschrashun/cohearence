@@ -84,8 +84,8 @@ function loadSong (songToPlay) {
 
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");
-	// clearInterval(checkTime);
-	// checkTimeRegularly(request.service);
+	clearInterval(checkTime);
+	checkTimeRegularly(request.service);
 
 	return request;
 }
