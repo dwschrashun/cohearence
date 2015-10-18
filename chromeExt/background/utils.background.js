@@ -114,7 +114,8 @@ function getPlayerState() {
 function checkIfPaused(currentService) {
     if (currentService === "YouTube") {
         let youtubeState = youtubePlayer.getPlayerState();
-        return youtubeState === 2 ? true : false;
+		console.log("Youtube state: ", youtubeState);
+        return (youtubeState === 2 || youtubeState === 5) ? true : false;
     }
     if (currentService === "Soundcloud") {
         return soundcloudVideo[0].paused ? true : false;
