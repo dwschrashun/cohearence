@@ -57,7 +57,7 @@ app.controller('LoginCtrl', function ($scope, LoginFactory, $state, theUser) {
 
         chrome.runtime.sendMessage(request, response => {
             console.log('RESPONSE', response);
-            chrome.tabs.create({url: response.environment.domain});
+            chrome.tabs.create({url: response.environment.server});
         });
     };
 });
