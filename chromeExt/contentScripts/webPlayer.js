@@ -99,7 +99,7 @@ function loadSongFromClicked (clicked) {
 	request.action = 'cue';
 
 	request.id = source.children("a").first().attr("data-url");
-	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
+	request.songIndex = parseInt(clicked.parent().parent().parent().parent().attr("id").split("-")[2]);
 	request.service = source.attr('data');
 
 	confirmCorrectService(request);

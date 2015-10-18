@@ -146,7 +146,7 @@ var seedSongs = function () {
 		  "title": "Passerby",
 		},
 		{
-		  "duration": "04:20",
+		  "duration": "4:20",
 		  "source": {
 		    "domain": "Bandcamp",
 		    "url": "http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a2d327a580dc8b272e3343a7fc45b737&id=3155740019&stream=1&ts=1444867607.0",
