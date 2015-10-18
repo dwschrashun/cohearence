@@ -22,6 +22,13 @@ navbar {
 	box-shadow: 1px 1px 14px -3px black;
 	height: 50px;
 
+	#nav-logo {
+		background-color: $blue;
+		height: 40px;
+		margin-top: 5px;
+		box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+	}
+
 	ul {
 	    li {
 	        p {
@@ -69,7 +76,7 @@ navbar {
 		}
 
 		#blur-right {
-			margin-left: 400px;
+			margin-left: 300px;
 			margin-top: -40px;
 			background: linear-gradient(to left, rgba(104,104,104,0), rgba(104,104,104,1) 25%);
 		}
@@ -86,7 +93,7 @@ navbar {
 		font-size: 18px;
 		letter-spacing: .06em;
 		font-family: 'roboto', sans-serif;
-		width: 100%;
+		width: 200px;
 		font-weight: 400;
 		#current-song {
 			border-radius: 100px;
