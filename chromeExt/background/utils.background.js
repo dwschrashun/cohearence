@@ -19,6 +19,7 @@ function sendSong(songObj) {
 }
 
 function cueSong(request) {
+	stopAllVideos();
     if (request.service === 'YouTube') {
         var url = `http://www.youtube.com/v/${request.id}?version=3`;
         console.log('cueing youtube song:', url);
