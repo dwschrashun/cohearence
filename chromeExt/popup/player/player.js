@@ -179,7 +179,7 @@ app.controller('playerCtrl', function ($scope, LoginFactory, PlayerFactory, theU
 
         chrome.runtime.sendMessage(request, response => {
             console.log('RESPONSE', response);
-            chrome.tabs.create({url: response.environment.domain});
+            chrome.tabs.create({url: response.environment.server});
         });
     }
 
