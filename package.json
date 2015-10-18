@@ -1,7 +1,7 @@
 {
-  "name": "FullstackGeneratedApp",
+  "name": "CohearenceApp",
   "version": "1.0.0",
-  "description": "A generated project at Fullstack Academy",
+  "description": "A web scrobbler made at Fullstack Academy",
   "main": "server/start.js",
   "scripts": {
     "start": "nodemon --watch server -e js,html server/start.js",
