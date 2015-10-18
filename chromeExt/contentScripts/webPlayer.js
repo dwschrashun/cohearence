@@ -22,7 +22,6 @@ $(document).ready(function () {
 
 
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
-		console.log("RESPONSE ON LOAD: ", response);
 		if (response.currentService){
 			updateCurrentSong(response.currentSong);
 			checkTimeRegularly(response.currentService);
@@ -127,7 +126,6 @@ function checkTimeRegularly(service) {
 
 	chrome.runtime.sendMessage(request, function(response){
 		max = response.duration;
-		console.log('getting new duration:', response.duration);
 		theSlider.slider({max: response.duration});
 		theDuration.text(convertTime(response.duration));
 	});
