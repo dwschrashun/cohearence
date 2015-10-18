@@ -133,22 +133,23 @@ function checkTimeRegularly(service) {
 	checkTime = setInterval(function(){
 		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
 			checkIfPlaying(response.response);
-		});
-		chrome.runtime.sendMessage(request, function(response) {
-			theSlider.slider({
-				value: response.currentTime
-			});
-			currentTime.text(convertTime(response.currentTime));
+			request.service = response.currentSong.source.domain;
 
-			if (response.duration !== max) {
-				chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
-					updateCurrentSong(response.currentSong);
-					theSlider.slider("option", "min", 0);
-					currentTime.text("0:00");
-					clearInterval(checkTime);
-					checkTimeRegularly(request.service);
+			chrome.runtime.sendMessage(request, function(timeResponse) {
+				theSlider.slider({
+					value: timeResponse.currentTime
 				});
-			}
+				currentTime.text(convertTime(timeResponse.currentTime));
+				if (Math.round(timeResponse.duration*1000)/1000 !== Math.round(max*1000)/1000) {
+					chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
+						updateCurrentSong(response.currentSong);
+						theSlider.slider("option", "min", 0);
+						currentTime.text("0:00");
+						clearInterval(checkTime);
+						checkTimeRegularly(request.service);
+					});
+				}
+			});
 		});
 	}, 1000);
 }

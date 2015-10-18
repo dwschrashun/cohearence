@@ -49,10 +49,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           if (request.message === "whoIsPlaying") {
             var currentSong = getCurrentSong(currentSongIndex);
             var isPaused = checkIfPaused(currentService);
-            console.log(currentService, "is paused?: ", isPaused);
-            // console.log('currentSong', currentSong);
-            // console.log('currentService', currentService);
-            // console.log('playerSTates', playerStates);
+
             sendResponse({
                 response: playerStates,
                 currentIndex: currentSongIndex,
@@ -66,7 +63,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       //retrieving environment variables
       if (request.message === 'environmentAction') {
-        console.log('environment!', environment);
         sendResponse({
           environment: environment
         })
@@ -88,6 +84,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       if (request.message === "checkTimeAction") {
 			var service = request.service;
 			var currentTime = getCurrentTime(service);
+
 			sendResponse({
 				currentTime: currentTime[0],
 				duration: currentTime[1]
@@ -117,7 +114,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       }
 
       if (request.message === "getEnv") {
-          console.log("getting env:", environment);
           sendResponse(environment);
       }
 
