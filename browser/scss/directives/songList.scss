@@ -44,7 +44,6 @@ $background-color-light: rgb(104,104,104);
 		border-radius: 5px;
 	}
 	#list-header-container {
-
 		&:after {
 	      content: "";
 	      display: table;
@@ -128,7 +127,7 @@ $background-color-light: rgb(104,104,104);
 	// border: solid 1px $background-color;
 	// box-shadow: 0px 2px 5px black;
 	.panel-heading {
-		background-color: $blue;
+		background: linear-gradient(200deg, $green, $blue);
 		border-top-right-radius: 2px;
 		border-top-left-radius: 20px;
 		// font-size: 16px;
