@@ -22,6 +22,7 @@ app.factory("WebPlayerFactory", function($http) {
     };
 
     factory.checkSoundcloudStreamable = function (song) {
+		console.log('checking soundcloudStreamable');
         if (song.source.url.indexOf('soundcloud') === -1) {
             // console.log('not streamable', song);
             return false;

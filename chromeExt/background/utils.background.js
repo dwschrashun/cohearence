@@ -19,6 +19,7 @@ function sendSong(songObj) {
 }
 
 function cueSong(request) {
+	console.log("request in cueSong: ", request);
 	stopAllVideos();
     if (request.service === 'YouTube') {
         var url = `http://www.youtube.com/v/${request.id}?version=3`;
@@ -47,6 +48,23 @@ function getCurrentSong (songIndex) {
     return user.musicLibrary[songIndex].song;
 }
 
+function setCorrectService(song){
+	if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
+		return "YouTube";
+	}
+	if (song.source.domain === 'Soundcloud') {
+		var streamable = checkSoundcloudStreamable(song);
+		if (streamable) {
+			return 'Soundcloud';
+		} else {
+			return 'YouTube';
+		}
+	}
+	if (song.source.domain === 'Bandcamp') {
+		return 'Bandcamp';
+	}
+}
+
 function autoPlayNextSong(direction) {
     var user = getUser();
     var musicLibrary = user.musicLibrary;
@@ -59,23 +77,12 @@ function autoPlayNextSong(direction) {
     }
 
     var song = musicLibrary[currentSongIndex].song;
+	var correctService = setCorrectService(song);
+	request.service = correctService;
+	// $scope.currentService = correctService;
 
-    if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
-        request.service = "YouTube";
-    }
-    if (song.source.domain === 'Soundcloud') {
-        var streamable = checkSoundcloudStreamable(song);
-        if (streamable) {
-            request.service = 'Soundcloud';
-        } else {
-            $scope.currentService = "YouTube";
-            request.service = 'YouTube';
-        }
-    }
-    if (song.source.domain === 'Bandcamp') {
-        request.service = 'Bandcamp';
-    }
     request.id = song.source.url;
+	console.log('request returned from autoplaynextsong', request);
     return request;
 }
 
