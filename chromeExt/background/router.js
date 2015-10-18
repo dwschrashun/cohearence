@@ -10,6 +10,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                   playing = true;
               }
           }
+
           if (request.action === 'killPlayers') {
     			  stopAllVideos();
     			  sendResponse({
@@ -47,13 +48,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           // persisting controls on popup close and retrieving environment vars
           if (request.message === "whoIsPlaying") {
             var currentSong = getCurrentSong(currentSongIndex);
-              sendResponse({
-                  response: playerStates,
-                  currentIndex: currentSongIndex,
-                  currentSong: currentSong,
-                  currentService: currentService,
-                  environment: environment
-              });
+            var isPaused = checkIfPaused(currentService);
+            console.log(currentService, "is paused?: ", isPaused);
+            // console.log('currentSong', currentSong);
+            // console.log('currentService', currentService);
+            // console.log('playerSTates', playerStates);
+            sendResponse({
+                response: playerStates,
+                currentIndex: currentSongIndex,
+                currentSong: currentSong,
+                currentService: currentService,
+                environment: environment,
+                isPaused: isPaused
+            });
           }
       }
 
