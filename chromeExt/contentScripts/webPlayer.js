@@ -75,7 +75,6 @@ function loadSong (songToPlay) {
 
 	request.id = songToPlay.currentSong.source.url;
 	request.songIndex = songToPlay.currentIndex;
-
 	confirmCorrectService(request);
 
 	theSlider.slider("option", "min", 0);
@@ -97,10 +96,8 @@ function loadSongFromClicked (clicked) {
 	request.message = "cue";
 	request.action = 'cue';
 	request.service = source.attr('data');
-
-	confirmCorrectService(request);
-
 	request.id = source.children("a").first().attr("data-url");
+	confirmCorrectService(request);
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 
 	theSlider.slider("option", "min", 0);
