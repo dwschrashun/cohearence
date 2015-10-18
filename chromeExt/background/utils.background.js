@@ -22,7 +22,6 @@ function cueSong(request) {
 	stopAllVideos();
     if (request.service === 'YouTube') {
         var url = `http://www.youtube.com/v/${request.id}?version=3`;
-        console.log('cueing youtube song:', url);
         youtubePlayer.cueVideoByUrl({
             mediaContentUrl: url
         });
@@ -30,7 +29,6 @@ function cueSong(request) {
         // youtubePlayer.loadVideoById(request.id);
     }
     if (request.service === 'Soundcloud') {
-        console.log("cueing soundcloud:", request);
         createSoundcloudVideo(request.id);
     }
     if (request.service === 'Bandcamp') {
@@ -109,15 +107,12 @@ function getPlayerState() {
 function checkIfPaused(currentService) {
     if (currentService === "YouTube") {
         let youtubeState = youtubePlayer.getPlayerState();
-        console.log('YOUTUBE STATE!', youtubeState);
         return youtubeState === 2 ? true : false;
     }
     if (currentService === "Soundcloud") {
-        console.log('in ze soundcloud pause check');
         return soundcloudVideo[0].paused ? true : false;
     }
     if (currentService === "Bandcamp") {
-        console.log('in ze bandcamp pause check');
         return bandcampVideo[0].paused ? true : false;
     }
 
@@ -151,20 +146,17 @@ var iconMap = {
 function switchIcon (playing, action) {
     // console.log("playing, action", playing, action);
     var state = `${playing ? "playing" : "paused"}${action}`;
-    console.log("switch", state);
     chrome.browserAction.setIcon({path: {"38": iconMap[state]}});
 }
 
 function setIcon (playing, action) {
     var counter = 0;
     var state = `${playing ? "playing" : "paused"}${action}`;
-    console.log("set icon state:", state);
     chrome.browserAction.setIcon({path: {"38": iconMap[state]}});
     if (action === "scrobble") {
         var id = setInterval(function () {
             if (action === "player") action = "scrobble";
             else action = "player";
-            console.log("playing, action", playing, action);
             switchIcon(playing, action);
             counter++;
             if (counter === 5) clearInterval(id);
@@ -178,7 +170,6 @@ function setIcon (playing, action) {
 }
 
 function seekTo(time, service) {
-    console.log('HITTING SEEK TO');
     if (service === "YouTube") {
         youtubePlayer.seekTo(time);
     } else if (service === 'Soundcloud') {
