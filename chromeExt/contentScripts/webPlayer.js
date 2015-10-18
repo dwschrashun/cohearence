@@ -136,15 +136,12 @@ function checkTimeRegularly(service) {
 		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
 			checkIfPlaying(response.response);
 			request.service = response.currentSong.source.domain;
-			console.log("currently playing song: ",response.currentSong);
 
-			console.log("that song's service, getting sent to checkTimeAction: ",response.currentSong.source.domain);
 			chrome.runtime.sendMessage(request, function(timeResponse) {
 				theSlider.slider({
 					value: timeResponse.currentTime
 				});
 				currentTime.text(convertTime(timeResponse.currentTime));
-				console.log("duration of currently playing song and max",timeResponse.duration, max);
 				if (Math.round(timeResponse.duration*1000)/1000 !== Math.round(max*1000)/1000) {
 					chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
 						updateCurrentSong(response.currentSong);
