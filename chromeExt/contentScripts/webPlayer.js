@@ -58,9 +58,8 @@ function checkSoundcloudStreamable(id) {
 
 
 function confirmCorrectService(request){
-	console.log("REQUEST: ", request)
 	if (request.service === "Spotify") {
-		request.service = "Youtube";
+		request.service = "YouTube";
 	}
 	else if (request.service === "Soundcloud") {
 		request.service = checkSoundcloudStreamable(request.id) ? "Soundcloud" : "YouTube";
@@ -97,13 +96,12 @@ function loadSongFromClicked (clicked) {
 
 	request.message = "cue";
 	request.action = 'cue';
-
-	request.id = source.children("a").first().attr("data-url");
-	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 	request.service = source.attr('data');
 
 	confirmCorrectService(request);
 
+	request.id = source.children("a").first().attr("data-url");
+	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");
@@ -133,7 +131,7 @@ function checkTimeRegularly(service) {
 	checkTime = setInterval(function(){
 		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
 			checkIfPlaying(response.response);
-			request.service = response.currentSong.source.domain;
+			request.service = response.currentService;
 
 			chrome.runtime.sendMessage(request, function(timeResponse) {
 				theSlider.slider({
