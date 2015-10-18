@@ -26,7 +26,7 @@ body {
 	height: 100vh;
 	background-color: $background-color-light;
 	// background: radial-gradient(white, $background-color-light, white);
-	background: radial-gradient(white, $background-color-light);
+	background: radial-gradient(white -25%, $background-color-light);
 
 	// background: radial-gradient(white 10%, $blue 80%);
 	// background: linear-gradient(rgba(60, 178, 208, 0.5), rgba(60, 178, 208, 0.4)), url(http://lemasney.com/consulting/wp-content/uploads/2012/11/open_waveform.png) no-repeat center center fixed transparent;
@@ -102,7 +102,7 @@ body {
 	}
 
 	#description {
-		margin-top: 30px;
+		margin-top: 50px;
 		margin-left: 60px;
 		margin-right: 60px;
 		a {
@@ -110,7 +110,7 @@ body {
 		}
 		h2 {
 			padding: 20px;
-			color: rgb(193, 193, 193);
+			color: $background-color;
 			font-size: 40px;
 			font-family: "Lato", sans-serif;
 			font-weight: 300;
