@@ -10,6 +10,7 @@ $mint-green: #C5EEBF;
 // $background-color: #222222;
 */
 $background-color-light: #444444;
+$background-color: #333333;
 
 /*for presentation
 $background-color: #333333;
@@ -17,30 +18,43 @@ $background-color-light: rgb(104,104,104);
 */
 
 body {
-	overflow-y: hidden;
+	/*overflow-y: hidden;*/
+	background-color: $background-color !important;
+	overflow: auto;
 }
 
 #landing {
 
+	background-color: $background-color !important;
+	color: white;
+	h4 {
+		color: #999999;
+	}
+	#landing-logo {
+		background-color: $blue;
+		margin-top: 50px;
+		width: 120px;
+		height: 120px;
+		box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+	}
+
 	font-family: "Lato", sans-serif;
-	width: 100%;
-	height: 100vh;
-	background-color: $background-color-light;
-	// background: radial-gradient(white, $background-color-light, white);
-	background: radial-gradient(white -25%, $background-color-light);
 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	padding-top: 50px;
-	text-align: center;
+	#landing-header {
+		font-size: 60px;
+		margin-top: 70px;
+	}
+	/*height: 100vh;*/
 
+	.landing-submit {
+		margin: 0 !important;
+		margin-left: 69px !important;
+	}
 	.button {
 		float: left;
 		min-width: 150px;
 		max-width: 250px;
-		display: block;
+		display: inline;
 		margin: 1em;
 		padding: 1em 2em;
 		border: none;
@@ -177,6 +191,14 @@ body {
 	}
 
 
+	/* currently supporting */
+
+	.supporting {
+		height: 120px;
+		width: 120px;
+		margin-bottom: 50px;
+
+	}
 
 	/* description */
 	#description {
