@@ -37,18 +37,38 @@ navbar {
 	    }
 	}
 
+	#marquee-container {
+		width: 390px;
+		border-radius: 100px;
+		// #blur-left {
+		// 	// padding-left: 20px;
+		// 	width: 50px;
+		// 	position: fixed;
+		// 	height: 50px;
+		// 	color: green;
+		// 	z-index: 10;
+		// 	// background-color: black;
+		// 	background: linear-gradient(90deg, $background-color-light, transparent);
+		// 	// position: absolute;
+		// }
+	}
+
 
 	#currently-playing {
-		color: $light-gray;
+		// background: radial-gradient($background-color 10%, $blue 70%);
+		border-radius: 100px;
+		color: white;
 		margin-top: 12px;
 		margin-left: 40px;
-		margin-right: 40px;
+		margin-right: 0px;
 		font-size: 18px;
 		letter-spacing: .06em;
 		font-family: 'roboto', sans-serif;
-		width: 300px;
+		width: 100%;
 		font-weight: 400;
-		width: 300px;
+		#current-song {
+			border-radius: 100px;
+		}
 	}
 
 	.container {
@@ -144,11 +164,11 @@ navbar {
 			transition: background-color 0.7s ease-in-out;
 			text-decoration: none;
 			font-size: 18px;
-			color: $light-gray;
+			color: $background-color;
 			cursor: pointer;
 			padding: 6px;
 			border-radius: 5px;
-			border: solid 1px $light-gray;
+			border: solid 1px $background-color;
 		}
 	}
 
