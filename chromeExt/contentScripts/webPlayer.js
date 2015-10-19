@@ -8,17 +8,19 @@ var checkTime;
 
 $(document).ready(function () {
 	setTimeout(setListeners, 700); //TODO: check this length on deployed version
-	$('#nav-pause').addClass('hidden');
-	theSlider = $('#slider');
-	theSlider.slider({
-        min: 0,
-		max: 210,
-		stop: function(event, ui) {
-			sliderUpdater = undefined;
-			var newTime = ui.value;
-			seekTo(newTime);
-		}
-    });
+	setTimeout(function() {
+		$('#nav-pause').addClass('hidden');
+		theSlider = $('#slider');
+		theSlider.slider({
+	        min: 0,
+			max: 210,
+			stop: function(event, ui) {
+				sliderUpdater = undefined;
+				var newTime = ui.value;
+				seekTo(newTime);
+			}
+	   });
+	}, 2000)
 
 
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
@@ -222,7 +224,7 @@ function setListeners () {
 		request.direction = "forward";
 		chrome.runtime.sendMessage({action: "killPlayers"}, function(response){
 			chrome.runtime.sendMessage(request, function (response) {
-		
+
 				updateCurrentSong(response.nextSongObj);
 				theSlider.slider("option", "min", 0);
 				currentTime.text("0:00");
