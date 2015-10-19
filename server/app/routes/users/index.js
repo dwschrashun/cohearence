@@ -80,7 +80,7 @@ function checkEchoNest(artist, title){
 		echo("song/search").get({artist: artist, title: title}, function(err, json){
 			if (err) console.log("ERROR: ",err);
 			else if (json.response.status.message === "Success" && json.response.songs.length > 0){
-				// console.log('Matches from echonest: ' , json.response.songs);
+				console.log('Matches from echonest: ' , json.response.songs);
 				var bestMatch = fuzzySearch(json.response.songs, artist, title);
 				// console.log('best match: ', bestMatch);
 				return resolve(bestMatch);
@@ -127,11 +127,11 @@ function createSongFromReqBody(reqBody){
 }
 //#1 Search in EchoNest
 router.put('/:userId/library', function(req, res, next){
-	//console.log('hit route 1', req.body);
+	console.log('hit route 1', req.body);
 	checkEchoNest(req.body.artist, req.body.title)
 	.then(function(match){
 		if (match){
-			// console.log("EN MATCH:", match);
+			console.log("EN MATCH:", match);
 			req.echoNestId = match.id;
 			req.body.title = match.title;
 			req.body.artist = match.artist_name;

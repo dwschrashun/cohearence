@@ -114,16 +114,23 @@ body {
 	}
 
 	.landing-panel {
-		background: linear-gradient($background-color-light 60%, $light-gray 110%);
+	// background-color: $background-color-light;
+	// background: linear-gradient($background-color-light 60%, $light-gray 110%);
+	background-color: transparent;
+	// background-color: $background-color;
 
-
-		opacity: 0.7;
-		transition: all 0.7s ease-in-out;
-		border-radius: 5px;
-			label, .btn {
-				margin-top: 10px;
-				margin-bottom: 10px;
-			}
+	// background-color: $blue;
+	opacity: 0.7;
+	// background-image: url('http://img10.deviantart.net/635c/i/2013/009/e/a/cyan_clean_bg_2560x1200_by_markwester-d5qxcu6.png');
+	// transition: opacity 0.3s ease-in-out;
+	// transition: background-color 0.7s ease-in-out;
+	transition: all 0.7s ease-in-out;
+	border-radius: 5px;
+	// color: $background-color;
+		label, .btn {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
 		.panel-title {
 			color: white;
 			font-size: 50px;
@@ -146,9 +153,9 @@ body {
 		width: 50%;
 		height: auto;
 		border: none;
-		box-shadow: 0 0px 0px 5px rgba(0, 0, 0, 0.2), inset 0 -2px 2px 2px rgba(0, 0, 0, 0.2);
+		// box-shadow: 0 0px 0px 5px rgba(0, 0, 0, 0.2), inset 0 -2px 2px 2px rgba(0, 0, 0, 0.2);
 		&:hover {
-			background-color: $blue;
+			// background-color: $blue;
 			.landing-button {
 				// background-color: $blue;
 				background-color: white;
@@ -193,7 +200,7 @@ body {
 			font-family: "Lato", sans-serif;
 			font-weight: 300;
 		}
-		.col-md-3 {
+		.col-md-2 {
 			&:hover {
 				p {
 					color: black;
@@ -201,11 +208,11 @@ body {
 			}
 		}
 		img {
-			height: 200px;
+			height: 130px;
 		}
 		p {
 			color: transparent;
-			font-size: 36px;
+			font-size: 28px;
 			transition: color .5s ease-in-out;
 		}
 	}
