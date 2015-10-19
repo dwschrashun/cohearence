@@ -143,6 +143,10 @@
             this.user = null;
         };
 
+		this.update = function(user){
+			this.user = user;
+		};
+
     });
 
 })();

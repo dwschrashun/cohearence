@@ -11,7 +11,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                   playing = true;
               }
           }
-          if (request.action === 'killPlayers') stopAllVideos();
+
+          if (request.action === 'killPlayers') {
+    			  stopAllVideos();
+    			  sendResponse({
+    				  response: "killed the videos"
+    			  });
+		      }
           //if scrobbling
           if (request.action === 'scrobble') {
               sendSong(request);
@@ -23,6 +29,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
           //if making player perform some action (play, pause, etc.)
           if (request.message === 'playerAction') {
+              currentService = request.service;
               setIcon(request.action !== "pause", "player");
               if (request.service === 'YouTube') {
                 console.log('about2pause', request);
@@ -37,47 +44,61 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           }
 
           if (request.message === "cue") {
+              currentService = request.service;
               currentSongIndex = request.songIndex;
               stopAllVideos();
               cueSong(request);
               setIcon(true, "player");
               sendResponse({
                 message: 'time 2 play dat song'
-              })
-          }
-
-          // persisting controls on popup close
-          if (request.message === "whoIsPlaying") {
-              sendResponse({
-                  response: playerStates,
-                  currentIndex: currentSongIndex
               });
           }
+
+          // persisting controls on popup close and retrieving environment vars
+          if (request.message === "whoIsPlaying") {
+            var currentSong = getCurrentSong(currentSongIndex);
+			      currentService = setCorrectService(currentSong);
+            var isPaused = checkIfPaused(currentService);
+
+            sendResponse({
+                response: playerStates,
+                currentIndex: currentSongIndex,
+                currentSong: currentSong,
+                currentService: currentService,
+                environment: environment,
+                isPaused: isPaused
+            });
+          }
+      }
+
+      //retrieving environment variables
+      if (request.message === 'environmentAction') {
+        sendResponse({
+          environment: environment
+	      });
       }
 
       // changing songs
       if (request.message === 'changeSong') {
-          console.log("changing song:", request.direction);
           var nextSong = autoPlayNextSong(request.direction);
           cueSong(nextSong);
+          var nextSongObj = getCurrentSong(currentSongIndex);
+
           sendResponse({
             nextSongIndex: currentSongIndex,
-            nextSong: nextSong
+            nextSong: nextSong,
+            nextSongObj: nextSongObj
           });
       }
 
       //if checking time of video
       if (request.message === "checkTimeAction") {
-          var service = request.service;
-          var currentTime = getCurrentTime(service);
-          console.log('CURRENTTIME', currentTime)
-          // setTimeout(function() {
-            sendResponse({
-              currentTime: currentTime[0],
-              duration: currentTime[1]
-            })
-          // }, 3000)
-
+  			var service = request.service;
+  			var currentTime = getCurrentTime(service);
+  			sendResponse({
+  				currentTime: currentTime[0],
+  				duration: currentTime[1]
+  			});
       }
 
       //if changing time in video with slider
@@ -103,7 +124,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       }
 
       if (request.message === "getEnv") {
-          console.log("getting env:", environment);
           sendResponse(environment);
       }
 
@@ -125,15 +145,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    //console.log("tab updateed", tab.url);
 
     var isLibrary = ["http://localhost:1337/library", "http://127.0.0.1:1337/library", "http://aqueous-gorge-7560/library"].some(function (el) {
         return el === tab.url;
     });
     if (tab.url.indexOf('https://www.youtube.com/watch') !== -1 && changeInfo && changeInfo.status == "complete") {
         scrobbleYouTube(tabId);
-    }
-    if (isLibrary && changeInfo && changeInfo.status == "complete") {
-        setLibraryHandlers(tabId);
     }
 });

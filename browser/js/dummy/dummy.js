@@ -28,7 +28,6 @@ doc.ready(function () {
 
 });
 
-
 function cueDummySong(request) {
     console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
@@ -49,7 +48,7 @@ function cueDummySong(request) {
 
 
 function createYouTubeVideo() {
-	  console.log('ran the onload');
+	  console.log('ran the onload in dummy js');
     var tag = $('<script></script>');
     tag.attr('src', "https://www.youtube.com/iframe_api");
     var firstScriptTag = $('script')[0];

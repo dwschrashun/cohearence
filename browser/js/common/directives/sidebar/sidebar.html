@@ -6,7 +6,7 @@
 		<div class="sidebar-body">
 			<ul>
 				<li ng-repeat="item in items" class="item-button" ng-click=setCurrentItem(item) ng-class="{ active: item === currentItem }" id = "item{{$index}}">{{ item }}</li>
-				<li class="item-button" id="item4"> <a href="https://chrome.google.com/webstore/detail/blueberry-scrobbler/jhddmhidckejknknbabaniikacgjhomb/related">Chrome Extension</a></li>
+				<li class="item-button" id="item4"> <a target="_blank" href="https://chrome.google.com/webstore/detail/blueberry-scrobbler/jhddmhidckejknknbabaniikacgjhomb/related">C<sup>o</sup> for Chrome</a></li>
 			</ul>
 			<playlist-list ng-if="showingPlaylists"></playlist-list>
 		</div>

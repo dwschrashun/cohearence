@@ -14,7 +14,7 @@ app.config(function ($stateProvider) {
 	});
 });
 
-app.controller('HomeController', function($rootScope, SongFactory, UserFactory, $scope, AuthService, $state, theUser, PlaylistFactory) {
+app.controller('HomeController', function(Session, $rootScope, SongFactory, UserFactory, $scope, AuthService, $state, theUser, PlaylistFactory) {
 	if(!theUser) $state.go('landing');
 	else {
 		PlaylistFactory.getPlaylists()
@@ -26,21 +26,20 @@ app.controller('HomeController', function($rootScope, SongFactory, UserFactory, 
 			$scope.header = "My Library";
 			$scope.playlistView = false;
 
-
 			if ($scope.view.length) {
 				$scope.hasSongs = true;
-				$rootScope.nextSong = $scope.view[0]._id || null;
-				$rootScope.currentSong = null;
+				// $rootScope.next = $scope.view[0]._id || null;
+				$rootScope.current = null;
 				$scope.view.forEach(function(song){
 					SongFactory.setSourceIcons(song.song);
 				});
 			}
-			$scope.load = function(song, index){
+			$rootScope.load = function(song, index){
 				$rootScope.paused = false;
 				$rootScope.current = song;
-				$rootScope.next = $scope.view[parseInt(index) + 1];
-				console.log("CURRENT SONG: ",$rootScope.current);
-				console.log("NEXT SONG: ",$rootScope.next);
+				// $rootScope.next = $scope.view[parseInt(index) + 1];
+				// console.log("CURRENT SONG: ",$rootScope.current);
+				// console.log("NEXT SONG: ",$rootScope.next);
 			};
 		});
 	}
@@ -54,9 +53,11 @@ app.controller('HomeController', function($rootScope, SongFactory, UserFactory, 
 	};
 	$scope.delete = function(song){
 		UserFactory.deleteSong($scope.theUser._id, song.song._id)
-		.then(function(){
+		.then(function(user){
+			console.log('deleted');
 			$scope.view = _.without($scope.view, $scope.view[$scope.view.indexOf(song)]);
-			$scope.hasSongs = $scope.view.length ? true: false;
+			$scope.hasSongs = $scope.view.length ? true : false;
+			Session.update(user);
 		});
 	};
 });

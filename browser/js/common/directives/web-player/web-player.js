@@ -2,25 +2,30 @@ app.directive('player', function () {
 	return {
 		restrict: "E",
 		templateUrl: "/js/common/directives/web-player/web-player.html",
-		controller: function ($scope, $rootScope) {
-			$scope.$on("sendFirstSong", function (event, song) {
-				//console.log("recieved first song", song);
-				$rootScope.current = song;
-			});
-			$rootScope.paused = true;
-			$scope.togglePaused = function($event) {
-				if (!$event || !$rootScope.paused) {
-					$rootScope.paused = !$rootScope.paused;
-				}
-				else {
-					console.log("event, paused", $event, $rootScope.paused);
-				}
-				if (!$rootScope.current) {
-					//console.log("broadcasting");
-					$scope.$broadcast("getFirstSong");
-				}
-			};
-				
+		// controller: 'WebPlayerCtrl'
+	};
+});
+
+// app.controller('WebPlayerCtrl', function ($scope, $rootScope) {
+// 			// $rootScope.paused = true;
+
+// 			// $rootScope.current = null;
+
+// 			//1. Runs on click of play or pause button
+// 			//2.Toggles pause mode
+// 			// //3. Sets current to the first song in the current list if there is none
+// 			// $scope.togglePaused = function() {
+// 			// 	$rootScope.paused = !$rootScope.paused;
+// 			// 	if (!$rootScope.current) {
+// 			// 		console.log("broadcasting");
+// 			// 		$scope.$broadcast("getFirstSong");
+// 			// 	}
+// 			// };
+// 			// //Gets called after broadcast of getFirstSong
+// 			// $scope.$on("sendFirstSong", function (event, song) {
+// 			// 	$rootScope.current = song;
+// 			// });
+// });
 
 		    // $scope.playVideo = function () {
 		    //     $scope.paused = false;
@@ -56,10 +61,6 @@ app.directive('player', function () {
 		    //         // console.log('response from router:', response);
 		    //     });
 		    // };
-		}
-	};
-
-});
 		    // function whoIsPlaying() {
 		    //     chrome.runtime.sendMessage('whoIsPlaying', function (response) {
 		    //         $scope.currentService = PlayerFactory.setCurrentService(response);
