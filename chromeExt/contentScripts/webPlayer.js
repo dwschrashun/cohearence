@@ -116,8 +116,6 @@ function loadSongFromClicked (clicked) {
 	updateCurrentSong(updateMarquee);
 
 	chrome.runtime.sendMessage(request, function (response) {
-			var theService = request.service;
-			initiateSlider(theService);
 	});
 }
 

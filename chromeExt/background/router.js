@@ -2,6 +2,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       //on all player or scrobbler messages
       if (request.action) {
+          if (request.service === "YouTube") {
+
+          }
 
           //get rid of this you asshole
           var playerStates = getPlayerState();
@@ -32,7 +35,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               currentService = request.service;
               setIcon(request.action !== "pause", "player");
               if (request.service === 'YouTube') {
-                console.log('about2pause', request);
+                // console.log('about2pause', request);
                 socket.emit(request.action, {service: 'YouTube'});
                 return;
               }
