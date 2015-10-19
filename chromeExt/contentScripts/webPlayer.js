@@ -23,15 +23,12 @@ $(document).ready(function () {
 
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
 		if (response.currentService){
-			console.log('something is playing!');
 			updateCurrentSong(response.currentSong);
 			clearInterval(checkTime);
 			checkTimeRegularly(response.currentService);
 			$('#nav-play').addClass('hidden');
 			$("#nav-pause").removeClass('hidden');
 		} else{
-			console.log('nothing is playing!');
-
 			$('#nav-pause').addClass('hidden');
 			$("#nav-play").removeClass('hidden');
 		}
@@ -66,7 +63,6 @@ function confirmCorrectService(request){
 		request.service = "YouTube";
 	}
 	else if (request.service === "Soundcloud") {
-		console.log('REQUEST: ', request);
 		request.service = checkSoundcloudStreamable(request.id) ? "Soundcloud" : "YouTube";
 	}
 }
@@ -103,7 +99,6 @@ function loadSongFromClicked (clicked) {
 
 	request.service = source.attr('data');
 	request.id = source.children("a").first().attr("data-url");
-	console.log("correct request in loadsongfromClicked:,", request);
 	confirmCorrectService(request);
 	//Changed because clicked now points to a div two steps further down,
 	//so that clicking on the delete button doesn't also play the song
@@ -122,7 +117,6 @@ function loadSongFromClicked (clicked) {
 }
 
 function checkTimeRegularly(service) {
-	console.log('checking time regularly with', service)
 	var request = {
 		message: "checkTimeAction",
 		service: service
@@ -138,7 +132,6 @@ function checkTimeRegularly(service) {
 
 	checkTime = setInterval(function(){
 		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
-			console.log('whoisplaying says this is playing: ', response)
 			checkIfPlaying(response.response);
 			request.service = response.currentService;
 
@@ -229,7 +222,7 @@ function setListeners () {
 		request.direction = "forward";
 		chrome.runtime.sendMessage({action: "killPlayers"}, function(response){
 			chrome.runtime.sendMessage(request, function (response) {
-				console.log("REsponse from on click:", response);
+		
 				updateCurrentSong(response.nextSongObj);
 				theSlider.slider("option", "min", 0);
 				currentTime.text("0:00");
