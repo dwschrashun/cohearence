@@ -1,9 +1,8 @@
 {
     "manifest_version": 2,
     "name": "Cohearence",
-    "description": "Cohearence remembers what users listen to on YouTube, Spotify, Soundcloud, and Bandcamp, and then lets them play back any song they've previously listened to from a source-agnostic player built into a Chrome Extension.
-
-Users can also playback or manage their playlists and music library from Cohearence.io.",
+    "description": "Cohearence remembers what you listen to on YouTube, Spotify, Soundcloud, and Bandcamp, so you can play the music back from a source-agnostic player built into a Chrome Extension.
+ You can also play back or manage your playlists and music library from Cohearence.io.",
     "version": "1.0",
     "browser_action": {
         "default_icon": "icon.png",
