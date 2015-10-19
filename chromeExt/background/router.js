@@ -47,7 +47,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
           // persisting controls on popup close and retrieving environment vars
           if (request.message === "whoIsPlaying") {
-			//   console.log("inside whoisplaying, currentSong index is: ",currentSongIndex);
             var currentSong = getCurrentSong(currentSongIndex);
 			currentService = setCorrectService(currentSong);
             var isPaused = checkIfPaused(currentService);
@@ -73,11 +72,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       // changing songs
       if (request.message === 'changeSong') {
           var nextSong = autoPlayNextSong(request.direction);
-		  console.log('nextSong is', nextSong);
           cueSong(nextSong);
           var nextSongObj = getCurrentSong(currentSongIndex);
-		  console.log('nextSongObj is:', nextSongObj);
-		  console.log('currentSongIndex is:', currentSongIndex);
 
           sendResponse({
             nextSongIndex: currentSongIndex,
