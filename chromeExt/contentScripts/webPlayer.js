@@ -97,12 +97,9 @@ function loadSongFromClicked (clicked) {
 	request.message = "cue";
 	request.action = 'cue';
 
-<<<<<<< HEAD
 	request.id = source.children("a").first().attr("href");
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 
-=======
->>>>>>> master
 	request.service = source.attr('data');
 	request.id = source.children("a").first().attr("data-url");
 	confirmCorrectService(request);
@@ -173,7 +170,6 @@ function checkTimeRegularly(service) {
 			});
 		});
 	}, 1000);
-}
 
 function pauseCheckTime() {
 	clearInterval();
@@ -243,7 +239,7 @@ function setListeners () {
 		request.direction = "forward";
 		chrome.runtime.sendMessage({action: "killPlayers"}, function(response){
 			chrome.runtime.sendMessage(request, function (response) {
-		
+
 				updateCurrentSong(response.nextSongObj);
 				theSlider.slider("option", "min", 0);
 				currentTime.text("0:00");
