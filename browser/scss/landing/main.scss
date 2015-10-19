@@ -99,7 +99,7 @@ body {
 		left: 0;
 		width: 100%;
 		height: 100%;
-		border: 2px solid #3f51b5;
+		border: 2px solid $blue;
 		z-index: -1;
 		border-radius: inherit;
 		opacity: 0;
@@ -111,15 +111,15 @@ body {
 		transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
 	}
 	.button--wapasha.button--inverted::before {
-		border-color: #7986cb;
+		border-color: $blue;
 	}
 	.button--wapasha:hover {
 		background-color: #fff;
-		color: #3f51b5;
+		color: $blue;
 	}
 	.button--wapasha.button--inverted:hover {
-		background-color: #3CB2D0;
-		color: #333333;
+		background-color: $blue;
+		color: $background-color;
 	}
 	.button--wapasha:hover::before {
 		-webkit-transform: scale3d(1, 1, 1);
