@@ -118,10 +118,9 @@ describe('User route', function () {
         .expect(200)
         .end(function(err, response){
           if (err) return done(err);
-          expect(response.body.musicLibrary.length).to.equal(2);
-          expect(response.body.musicLibrary[0].song.title).to.equal('King of the South');
-          expect(response.body.musicLibrary[0].plays.length).to.equal(1);
-          expect(response.body.musicLibrary[1].song.title).to.equal('Stairway To Heaven');
+          expect(response.body.length).to.equal(2);
+          expect(response.body[0].song.title).to.equal('King of the South');
+          expect(response.body[1].song.title).to.equal('Stairway To Heaven');
           done();
         });
       });
@@ -237,26 +236,6 @@ describe('User route', function () {
 			});
 		});
 
-		// var oldBandCampSong = {
-		// 	title: 'Stairway to Heaven', //AS IF
-		// 	artist: 'Led Zeppelin',
-		// 	source: {
-		// 		domain: 'Bandcamp',
-		// 		url: 'oldBandCampSongUrl'
-		// 	}
-		// };
-		//
-		// xit('returns an updated play count when adding a song already in their library, even from another source', function(done){
-		// 	guest.put(`/api/users/${user1._id}/library`)
-		// 	.send(oldBandCampSong)
-		// 	.expect(201)
-		// 	.end(function(err, response){
-		// 		if (err) return done(err);
-		// 		expect(response.body.length).to.equal(2);
-		// 		expect(response.body[response.body.length-1].plays.length).to.equal(2);
-		// 		done();
-		// 	});
-		// });
 
 		var nonEchoNestSong = {
 			title: 'King of the South',
@@ -281,82 +260,5 @@ describe('User route', function () {
 			});
 		});
 
-		// //test for misspelled song names
-		// var misspelledOldSong = {
-		// 	title: 'stairway to heaven',
-		// 	artist: 'Led Zepelin',
-		// 	source: {
-		// 	  domain: 'YouTube',
-		// 	  url: 'anywhere'
-		// 	}
-		// }
-		//
-		// it('recognizes misspelled song names in the library', function(done){
-		// 	guest.put(`/api/users/${user1._id}/library`)
-		// 	.send(misspelledOldSong)
-		// 	.expect(201)
-		// 	.end(function(err, response){
-		// 		if (err) return done(err);
-		// 		expect(response.body.length).to.equal(2);
-		// 		var test = _.findIndex(response.body, element => element.song.title === 'Stairway To Heaven');
-		// 		expect(test).to.be.above(-1);
-		// 		expect(response.body[test].plays.length).to.equal(2);
-		// 		done();
-		// 	});
-		// });
-
-		// //test for misspelled song names
-		// var misspelledNewSong = {
-		// 	title: 'getting jiggy with it',
-		// 	artist: 'Will Smith',
-		// 	source: {
-		// 	  domain: 'YouTube',
-		// 	  url: 'anywhereelse'
-		// 	}
-		// }
-		//
-		// it('recognizes misspelled song names not in the library', function(done){
-		// 	guest.put(`/api/users/${user1._id}/library`)
-		// 	.send(misspelledNewSong)
-		// 	.expect(201)
-		// 	.end(function(err, response){
-		// 		if (err) return done(err);
-		// 		expect(response.body.length).to.equal(3);
-		// 		var test = _.findIndex(response.body, element => element.song.title === 'getting jiggy with it');
-		// 		expect(test).to.be.above(-1);
-		// 		expect(response.body[test].plays.length).to.equal(1);
-		// 		done();
-		// 	});
-		// });
 	});
 });
-// - song comes in with artist, title, url
-//
-// route 1: check against our library
-//
-// - check echonest
-// 	- if in echo nest
-// 		- return song from our database
-// 	- if a match exists in our database on artist and title
-// 		- return song from our database
-// 	- if not in our library
-// 		- add to our library
-// 		- add "new" flag to request
-//
-//
-// route 2: check against user's library
-// 	- if song is new
-// 		- call next()
-// 	- if song is not new
-// 		- see if it's in user's library
-// 		- if song is in user's library
-// 			- add index of song in library to request
-// 		- else call next ()
-//
-// route 3: update user
-// 	- if song is new
-// 		- add to user's library
-// 	- if in user's library
-// 		- add to user's library
-// 	- if not in user's library
-// 		- push new timestamp
