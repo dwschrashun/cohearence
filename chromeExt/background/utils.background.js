@@ -87,7 +87,7 @@ function autoPlayNextSong(direction) {
 
 function checkSoundcloudStreamable(song) {
     if (song.source.url.indexOf('soundcloud') === -1) {
-        // console.log('not streamable', song);
+
         return false;
     }
     return true;
@@ -97,7 +97,7 @@ function getPlayerState() {
     var playerStates = {};
     if (youtubePlayer) {
         var youtubeState = youtubePlayer.getPlayerState();
-        // console.log('YOUTUBE STATE!', youtubeState)
+
         // youtube has 5 states. We are only concerned with playing and not playing
         playerStates.YouTube = (youtubeState === 1) ? true : false;
     }
@@ -113,7 +113,6 @@ function getPlayerState() {
 function checkIfPaused(currentService) {
     if (currentService === "YouTube") {
         let youtubeState = youtubePlayer.getPlayerState();
-		console.log("Youtube state: ", youtubeState);
         return (youtubeState === 2 || youtubeState === 5) ? true : false;
     }
     if (currentService === "Soundcloud") {
@@ -151,7 +150,6 @@ var iconMap = {
 };
 
 function switchIcon (playing, action) {
-    // console.log("playing, action", playing, action);
     var state = `${playing ? "playing" : "paused"}${action}`;
     chrome.browserAction.setIcon({path: {"38": iconMap[state]}});
 }
