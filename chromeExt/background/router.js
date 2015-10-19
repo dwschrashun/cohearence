@@ -51,9 +51,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             var currentSong = getCurrentSong(currentSongIndex);
 			currentService = setCorrectService(currentSong);
             var isPaused = checkIfPaused(currentService);
-			console.log('is it paused?', isPaused);
-			console.log("inside whoisplaying, currentSong is: ",currentSong);
-			console.log("inside whoisplaying, currentService is: ",currentService);
 
             sendResponse({
                 response: playerStates,
