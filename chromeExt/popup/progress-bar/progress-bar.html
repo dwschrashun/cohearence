@@ -1,12 +1,12 @@
 <div id="bar-container" class="row">
     <div class="col-xs-1 text-center time-marker">
-        <span class="time-status">{{timeElapsed | songTime}}</span>
+        <span class="time-status time-status-left">{{timeElapsed | songTime}}</span>
     </div>
     <div class="col-xs-8 text-center">
         <div id="slider"></div>
     </div>
     <div class="col-xs-1 text-center time-marker">
-        <span class="time-status">{{duration | songTime}}</span>
+        <span class="time-status time-status-right">{{duration | songTime}}</span>
     </div>
 </div>
 <!-- <div ng-if="timeElapsed && duration"> / </div> -->

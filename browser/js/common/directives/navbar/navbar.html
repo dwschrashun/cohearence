@@ -2,32 +2,35 @@
     <div class="container">
         <ul class="nav navbar-nav list-inline">
 			<li>
-                <p>C<sup>o</sup></p>
+                <!-- <p>C<sup>o</sup></p> -->
+                <img id ="nav-logo" src="images/icon.png"></li>
             </li>
             <li ng-show="user" id="player-container">
                 <player></player>
             </li>
-			<li>
+			<li ng-show="user">
 				<p id="current-time"></p>
 			</li>
-            <li id="progress" ng-show="user">
+            <li ng-show="user" id="progress">
                 <progress-bar></progress-bar>
             </li>
-			<li>
+			<li ng-show="user">
 				<p id="duration">{{current.duration}}</p>
 			</li>
-            <li ng-show="user">
+			<li></li>
+            <li ng-show="user" id="marquee-container">
+				<div id="blur-left"></div>
                 <marquee behavior="scroll" direction="left"  id="currently-playing">
 					<span id="current-song" hidden></span>
 					<!-- <span id="welcome-message">Welcome, {{user.email}}</span> -->
-
 				</marquee>
+				<div id="blur-right"></div>
             </li>
         </ul>
         <div ng-show="user" class="welcome">
             <!-- <span>{{ user.email }}</span> -->
             <a ng-click="logout()">Logout</a>
         </div>
-		<a ng-show="!user" href="https://chrome.google.com/webstore/detail/blueberry-scrobbler/jhddmhidckejknknbabaniikacgjhomb/related" class="extension-button">Download The Chrome Extension</a>
+		<a ng-show="!user" href="https://chrome.google.com/webstore/detail/blueberry-scrobbler/jhddmhidckejknknbabaniikacgjhomb/related" class="extension-button" target="_blank">Download The Chrome Extension</a>
     </div>
 </nav>

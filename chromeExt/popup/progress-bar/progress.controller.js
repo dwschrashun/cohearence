@@ -26,14 +26,17 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
     //send message to background script to get time elapsed
     function getTimeFromBackground() {
         chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function (response) {
-            var currentService = PlayerFactory.setCurrentService(response);
+            var currentService = PlayerFactory.setCurrentService(response) || response.currentService;
+            console.log('progressbar current service', currentService)
             var request = {
                 message: "checkTimeAction",
                 service: currentService
             };
             chrome.runtime.sendMessage(request, function (response) {
-                $scope.duration = response.duration|| $scope.duration ;
+                $scope.duration = response.duration || $scope.duration ;
                 $scope.timeElapsed = response.currentTime || $scope.timeElapsed;
+                // console.log('scope time elapsed and duration', $scope.timeElapsed, $scope.duration);
+                // console.log('response time elapsed and duration', response.currentTime, response.duration);
                 if ($scope.duration !== max) {
                     max = $scope.duration;
                     theSlider.slider("option", "max", max);
@@ -45,7 +48,7 @@ app.controller('ProgressCtrl', function ($scope, PlayerFactory, $interval) {
             });
         });
     }
-    var sliderUpdater = $interval(getTimeFromBackground, 1000);
+    var sliderUpdater = $interval(getTimeFromBackground, 100);
 });
 
 app.filter('songTime', function() {

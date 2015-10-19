@@ -18,10 +18,3 @@ app.directive('librarySong', function(PlaylistFactory){
 		}
 	};
 });
-
-// app.controller('SongCtrl', function($scope, PlaylistFactory) {
-// 	console.log('im a song controller');
-
-
-// 	}
-// });

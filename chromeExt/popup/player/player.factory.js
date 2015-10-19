@@ -29,7 +29,7 @@ app.factory("PlayerFactory", function($http) {
     };
 
     factory.getUserPlaylists = function () {
-        
+
     };
 
 	return factory;

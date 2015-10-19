@@ -4,6 +4,7 @@ var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Song = mongoose.model('Song');
+var Playlist = mongoose.model('Playlist');
 require("string_score");
 var echojs = require('echojs');
 var echo = echojs({
@@ -37,16 +38,24 @@ router.get('/:userId/library', function (req, res, next) {
 });
 
 router.delete('/:userId/library/:songObjId', function(req,res,next){
-	User.findById(req.params.userId)
-	.then(function(user){
-		user.musicLibrary.forEach(function(songObj, i){
-			if (songObj.song.toString() === req.params.songObjId){
-				user.musicLibrary.splice(i, 1);
-			}
+	req.foundUser.musicLibrary.forEach(function(songObj, i){
+		if (songObj.song._id.toString() === req.params.songObjId){
+			req.foundUser.musicLibrary.splice(i, 1);
+		}
+	});
+
+	Playlist.find({user: req.foundUser, songs: req.params.songObjId}).exec()
+	.then(function(playlists){
+		var obj = mongoose.Types.ObjectId(req.params.songObjId);
+		return playlists.forEach(function(playlist){
+			playlist.songs.splice(playlist.songs.indexOf(obj), 1);
+			playlist.save();
 		});
-		user.save().then(function(savedUser){
-			res.status(204).end();
-		});
+	})
+	.then(function(playlists){
+		return req.foundUser.save();
+	}).then(function(savedUser){
+		res.status(204).json(savedUser);
 	});
 });
 
@@ -92,7 +101,8 @@ function createSongFromReqBody(reqBody){
 		url: null,
 		videoTitle: null,
 		bandcampId: null,
-		spotifyUrl: null
+		spotifyUrl: null,
+		sourceUrl: null
 	};
 
 	// if (source.domain === "Spotify") {
@@ -111,6 +121,7 @@ function createSongFromReqBody(reqBody){
 			duration: duration,
 			source: source
 		};
+		// console.log("NEW SONG OBJ", newSongObj);
 		return newSongObj;
 	// }
 }
@@ -175,7 +186,7 @@ router.put('/:userId/Library', function(req, res, next){
 		// console.log("NEW SONG", req.songToSave);
 		Song.create(req.songToSave)		//must create song
 		.then(function(newSong){
-			// console.log("created the new song in main library");
+			// console.log("created the new song in main library: ", newSong);
 			req.songToSave = newSong; //reassign songToSave
 			req.index = -1;
 			next();

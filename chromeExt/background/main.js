@@ -15,8 +15,8 @@ window.onload = function () {
 	//set "environment" variables
 	var manifest = chrome.runtime.getManifest();
 	if (manifest.key) {
-		environment.domain = "chrome-extension://jhddmhidckejknknbabaniikacgjhomb/";
-		environment.server = "https://aqueous-gorge-7560.herokuapp.com/";
+		environment.domain = "chrome-extension://jhddmhidckejknknbabaniikacgjhomb";
+		environment.server = "https://aqueous-gorge-7560.herokuapp.com";
 	}
 	else {
 		environment.domain = "http://localhost:1337";

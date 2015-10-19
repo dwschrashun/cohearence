@@ -24,6 +24,7 @@ $(document).ready(function () {
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
 		if (response.currentService){
 			updateCurrentSong(response.currentSong);
+			clearInterval(checkTime);
 			checkTimeRegularly(response.currentService);
 			$('#nav-play').addClass('hidden');
 			$("#nav-pause").removeClass('hidden');
@@ -49,15 +50,33 @@ function seekTo(time) {
 	});
 }
 
-//clicked should be a .song-list-item element
+function checkSoundcloudStreamable(id) {
+	if (id.indexOf('soundcloud') === -1) {
+		return false;
+	}
+	return true;
+};
+
+
+function confirmCorrectService(request){
+	if (request.service === "Spotify") {
+		request.service = "YouTube";
+	}
+	else if (request.service === "Soundcloud") {
+		request.service = checkSoundcloudStreamable(request.id) ? "Soundcloud" : "YouTube";
+	}
+}
+
 function loadSong (songToPlay) {
 	var request = {};
 	request.message = "cue";
 	request.action = 'cue';
+
 	request.service = songToPlay.currentSong.source.domain;
+
 	request.id = songToPlay.currentSong.source.url;
 	request.songIndex = songToPlay.currentIndex;
-
+	confirmCorrectService(request);
 
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");
@@ -78,10 +97,19 @@ function loadSongFromClicked (clicked) {
 	request.message = "cue";
 	request.action = 'cue';
 
+<<<<<<< HEAD
 	request.id = source.children("a").first().attr("href");
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 
+=======
+>>>>>>> master
 	request.service = source.attr('data');
+	request.id = source.children("a").first().attr("data-url");
+	confirmCorrectService(request);
+	//Changed because clicked now points to a div two steps further down,
+	//so that clicking on the delete button doesn't also play the song
+	request.songIndex = parseInt(clicked.parent().parent().parent().parent().attr("id").split("-")[2]);
+	// request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
 
 	theSlider.slider("option", "min", 0);
 	currentTime.text("0:00");
@@ -102,15 +130,6 @@ function checkTimeRegularly(service) {
 		service: service
 	};
 
-<<<<<<< HEAD
-	var max;
-
-	chrome.runtime.sendMessage(request, function(response){
-		max = response.duration;
-		theSlider.slider({max: response.duration});
-		theDuration.text(convertTime(response.duration));
-	});
-=======
   var theSlider = $('#slider');
   // console.log(theSlider);
   theSlider.slider({
@@ -129,29 +148,29 @@ function checkTimeRegularly(service) {
 				checkTimeRegularly(request.service);
 			}, 1000);
 		}
-	})
+	});
 }
->>>>>>> b7e36727b2b71954ffd53753817b2d7e7cd10694
 
 	checkTime = setInterval(function(){
 		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
 			checkIfPlaying(response.response);
-		});
-		chrome.runtime.sendMessage(request, function(response) {
-			theSlider.slider({
-				value: response.currentTime
-			});
-			currentTime.text(convertTime(response.currentTime));
+			request.service = response.currentService;
 
-			if (response.duration !== max) {
-				chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
-					updateCurrentSong(response.currentSong);
-					theSlider.slider("option", "min", 0);
-					currentTime.text("0:00");
-					clearInterval(checkTime);
-					checkTimeRegularly(request.service);
+			chrome.runtime.sendMessage(request, function(timeResponse) {
+				theSlider.slider({
+					value: timeResponse.currentTime
 				});
-			}
+				currentTime.text(convertTime(timeResponse.currentTime));
+				if (Math.round(timeResponse.duration*1000)/1000 !== Math.round(max*1000)/1000) {
+					chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){
+						updateCurrentSong(response.currentSong);
+						theSlider.slider("option", "min", 0);
+						currentTime.text("0:00");
+						clearInterval(checkTime);
+						checkTimeRegularly(request.service);
+					});
+				}
+			});
 		});
 	}, 1000);
 }
@@ -213,6 +232,9 @@ function setListeners () {
 		chrome.runtime.sendMessage({action: "killPlayers"}, function(response){
 			chrome.runtime.sendMessage(request, function (response) {
 				updateCurrentSong(response.nextSongObj);
+				theSlider.slider("option", "min", 0);
+				currentTime.text("0:00");
+				clearInterval(checkTime);
 			});
 		});
 	});
@@ -221,7 +243,12 @@ function setListeners () {
 		request.direction = "forward";
 		chrome.runtime.sendMessage({action: "killPlayers"}, function(response){
 			chrome.runtime.sendMessage(request, function (response) {
+		
 				updateCurrentSong(response.nextSongObj);
+				theSlider.slider("option", "min", 0);
+				currentTime.text("0:00");
+				clearInterval(checkTime);
+				// checkTimeRegularly(response.nextSong.service);
 			});
 		});
 	});

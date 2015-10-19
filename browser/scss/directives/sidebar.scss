@@ -19,7 +19,7 @@ $background-color-light: rgb(104,104,104);
 		// min-height: 700px;
 		background-color: $background-color;
 		.panel-heading{
-			background-color: $orange;
+			background: linear-gradient($orange, $pink);
 		}
 		playlist-list {
 			min-height: 50px;
