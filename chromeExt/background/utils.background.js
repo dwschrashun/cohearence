@@ -81,7 +81,7 @@ function autoPlayNextSong(direction) {
 	// $scope.currentService = correctService;
 
     request.id = song.source.url;
-	console.log('request returned from autoplaynextsong', request);
+
     return request;
 }
 
