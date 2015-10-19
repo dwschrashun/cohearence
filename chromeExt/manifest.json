@@ -30,7 +30,7 @@
       ]
     },
     "content_scripts": [{
-        "matches": ["http://127.0.0.1:1337/*", "http://localhost:1337/*", "https://aqueous-gorge-7560.herokuapp.com/*"],
+        "matches": ["http://127.0.0.1:1337/*", "http://localhost:1337/*", "https://aqueous-gorge-7560.herokuapp.com/*", "*://cohearence.io"],
         "js": ["thirdparty/jquery-ui/external/jquery/jquery.js", "thirdparty/jquery-ui/jquery-ui.js", "contentScripts/webPlayer.js"]
     }, {
         "matches": ["https://www.youtube.com/*"],
