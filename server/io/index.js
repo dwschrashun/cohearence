@@ -14,10 +14,10 @@ module.exports = function (server) {
         	io.sockets.emit("loadBackground", data);
         });
         socket.on("play", function (data) {
-
+            io.sockets.emit("playBackground", data)
         });
         socket.on("pause", function (data) {
-
+            io.sockets.emit('pauseBackground', data);
         });
         socket.on("seek", function (data) {
 
@@ -28,9 +28,9 @@ module.exports = function (server) {
         socket.on("ytError", function (data) {
         	console.log("ytError", data);
         	io.sockets.emit("ytError", data);
-        }) 
+        })
     });
-    
+
     return io;
 
 };

@@ -29,9 +29,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           if (request.message === 'playerAction') {
               currentService = request.service;
               setIcon(request.action !== "pause", "player");
+              if (request.service === 'YouTube') {
+                console.log('about2pause', request);
+                socket.emit(request.action, {service: 'YouTube'});
+                return;
+              }
               var service = serviceMethods[request.service];
               var self = service.reference;
               var action = service[request.action];
+              console.log(request);
               action.call(self);
           }
 
@@ -41,6 +47,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               stopAllVideos();
               cueSong(request);
               setIcon(true, "player");
+              sendResponse({
+                message: 'time 2 play dat song'
+              })
           }
 
           // persisting controls on popup close
@@ -69,12 +78,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       //if checking time of video
       if (request.message === "checkTimeAction") {
-			var service = request.service;
-			var currentTime = getCurrentTime(service);
-			sendResponse({
-				currentTime: currentTime[0],
-				duration: currentTime[1]
-			});
+  			var service = request.service;
+  			var currentTime = getCurrentTime(service);
+  			sendResponse({
+  				currentTime: currentTime[0],
+  				duration: currentTime[1]
+  			});
       }
 
       //if changing time in video with slider

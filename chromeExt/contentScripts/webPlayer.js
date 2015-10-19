@@ -80,6 +80,7 @@ function loadSongFromClicked (clicked) {
 
 	request.id = source.children("a").first().attr("href");
 	request.songIndex = parseInt(clicked.parent().parent().attr("id").split("-")[2]);
+
 	request.service = source.attr('data');
 
 	theSlider.slider("option", "min", 0);
@@ -90,6 +91,8 @@ function loadSongFromClicked (clicked) {
 	updateCurrentSong(updateMarquee);
 
 	chrome.runtime.sendMessage(request, function (response) {
+			var theService = request.service;
+			initiateSlider(theService);
 	});
 }
 
@@ -99,6 +102,7 @@ function checkTimeRegularly(service) {
 		service: service
 	};
 
+<<<<<<< HEAD
 	var max;
 
 	chrome.runtime.sendMessage(request, function(response){
@@ -106,6 +110,28 @@ function checkTimeRegularly(service) {
 		theSlider.slider({max: response.duration});
 		theDuration.text(convertTime(response.duration));
 	});
+=======
+  var theSlider = $('#slider');
+  // console.log(theSlider);
+  theSlider.slider({
+      min: 0,
+  });
+  var max = theSlider.slider("option", "max");
+
+	chrome.runtime.sendMessage(request, function(response) {
+		console.log ('current time', response.currentTime);
+		max = response.duration;
+		console.log('maxytime', max)
+		if (theSlider.slider) {
+			theSlider.slider("option", "max", max);
+			setInterval(function() {
+				console.log('max inside setInterval', max)
+				checkTimeRegularly(request.service);
+			}, 1000);
+		}
+	})
+}
+>>>>>>> b7e36727b2b71954ffd53753817b2d7e7cd10694
 
 	checkTime = setInterval(function(){
 		chrome.runtime.sendMessage({message: 'whoIsPlaying', action: true}, function(response){

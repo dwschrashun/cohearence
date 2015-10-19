@@ -4,14 +4,31 @@ var doc = $(document);
 doc.ready(function () {
   createYouTubeVideo();
   socket = io.connect("https://aqueous-gorge-7560.herokuapp.com/");
+
+  //load song
   socket.on("loadBackground", function (data) {
-    cueSong(data);
+    cueDummySong(data);
     socket.emit("songLoaded", data);
   });
+
+  //pause song
+  socket.on('pauseBackground', function(data) {
+    if (data.service === 'YouTube') {
+        youtubePlayer.pauseVideo();
+        socket.emit("songPaused", data.service);
+    }
+  });
+
+  socket.on('playBackground', function(data) {
+    if (data.service === 'YouTube') {
+        youtubePlayer.playVideo();
+        socket.emit("songPlayed", data.service);
+    }
+  });
+
 });
 
-
-function cueSong(request) {
+function cueDummySong(request) {
     console.log('request from autoplay', request);
     if (request.service === 'YouTube') {
         var url = request.ytUrl;
@@ -63,7 +80,7 @@ function createYouTubeVideo() {
 		function onPlayerStateChange(event) {
         // if (event.data === 0) {
         //     var nextSong = autoPlayNextSong('forward');
-        //     cueSong(nextSong);
+        //     cueDummySong(nextSong);
         // }
     }
 }
