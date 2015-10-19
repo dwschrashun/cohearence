@@ -24,6 +24,7 @@ $(document).ready(function () {
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
 		if (response.currentService){
 			updateCurrentSong(response.currentSong);
+			clearInterval(checkTime);
 			checkTimeRegularly(response.currentService);
 			$('#nav-play').addClass('hidden');
 			$("#nav-pause").removeClass('hidden');
@@ -210,6 +211,9 @@ function setListeners () {
 		chrome.runtime.sendMessage({action: "killPlayers"}, function(response){
 			chrome.runtime.sendMessage(request, function (response) {
 				updateCurrentSong(response.nextSongObj);
+				theSlider.slider("option", "min", 0);
+				currentTime.text("0:00");
+				clearInterval(checkTime);
 			});
 		});
 	});
@@ -218,7 +222,12 @@ function setListeners () {
 		request.direction = "forward";
 		chrome.runtime.sendMessage({action: "killPlayers"}, function(response){
 			chrome.runtime.sendMessage(request, function (response) {
+		
 				updateCurrentSong(response.nextSongObj);
+				theSlider.slider("option", "min", 0);
+				currentTime.text("0:00");
+				clearInterval(checkTime);
+				// checkTimeRegularly(response.nextSong.service);
 			});
 		});
 	});

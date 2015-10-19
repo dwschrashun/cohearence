@@ -47,6 +47,23 @@ function getCurrentSong (songIndex) {
     return user.musicLibrary[songIndex].song;
 }
 
+function setCorrectService(song){
+	if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
+		return "YouTube";
+	}
+	if (song.source.domain === 'Soundcloud') {
+		var streamable = checkSoundcloudStreamable(song);
+		if (streamable) {
+			return 'Soundcloud';
+		} else {
+			return 'YouTube';
+		}
+	}
+	if (song.source.domain === 'Bandcamp') {
+		return 'Bandcamp';
+	}
+}
+
 function autoPlayNextSong(direction) {
     var user = getUser();
     var musicLibrary = user.musicLibrary;
@@ -59,29 +76,18 @@ function autoPlayNextSong(direction) {
     }
 
     var song = musicLibrary[currentSongIndex].song;
+	var correctService = setCorrectService(song);
+	request.service = correctService;
+	// $scope.currentService = correctService;
 
-    if (song.source.domain === 'YouTube' || song.source.domain === "Spotify") {
-        request.service = "YouTube";
-    }
-    if (song.source.domain === 'Soundcloud') {
-        var streamable = checkSoundcloudStreamable(song);
-        if (streamable) {
-            request.service = 'Soundcloud';
-        } else {
-            $scope.currentService = "YouTube";
-            request.service = 'YouTube';
-        }
-    }
-    if (song.source.domain === 'Bandcamp') {
-        request.service = 'Bandcamp';
-    }
     request.id = song.source.url;
+
     return request;
 }
 
 function checkSoundcloudStreamable(song) {
     if (song.source.url.indexOf('soundcloud') === -1) {
-        // console.log('not streamable', song);
+
         return false;
     }
     return true;
@@ -91,7 +97,7 @@ function getPlayerState() {
     var playerStates = {};
     if (youtubePlayer) {
         var youtubeState = youtubePlayer.getPlayerState();
-        // console.log('YOUTUBE STATE!', youtubeState)
+
         // youtube has 5 states. We are only concerned with playing and not playing
         playerStates.YouTube = (youtubeState === 1) ? true : false;
     }
@@ -107,7 +113,7 @@ function getPlayerState() {
 function checkIfPaused(currentService) {
     if (currentService === "YouTube") {
         let youtubeState = youtubePlayer.getPlayerState();
-        return youtubeState === 2 ? true : false;
+        return (youtubeState === 2 || youtubeState === 5) ? true : false;
     }
     if (currentService === "Soundcloud") {
         return soundcloudVideo[0].paused ? true : false;
@@ -144,7 +150,6 @@ var iconMap = {
 };
 
 function switchIcon (playing, action) {
-    // console.log("playing, action", playing, action);
     var state = `${playing ? "playing" : "paused"}${action}`;
     chrome.browserAction.setIcon({path: {"38": iconMap[state]}});
 }

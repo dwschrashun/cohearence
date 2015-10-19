@@ -7,8 +7,8 @@
     width: 768px;
     height: 560px;
     border-radius: 2px;
-    /*background-color: #333333;*/
-	background: linear-gradient(rgb(104,104,104) -50%, #333333 75%);
+    background-color: #333333;
+	/*background: linear-gradient(rgb(104,104,104) -50%, #333333 75%);*/
 }
 
 .navbar,
@@ -38,7 +38,7 @@
 }
 
 #actual-library {
-    height: 386px;
+    height: 325px;
 }
 
 #slider {
@@ -80,8 +80,8 @@
     width: 768px;
     padding: 0;
     color: #3CB2D0;
-    /*background-color: #333333;*/
-	background: linear-gradient(#222222, rgb(104,104,104));
+    background-color: #333333;
+	/*background: linear-gradient(#222222, rgb(104,104,104));*/
 }
 
 .player-controls {
@@ -142,7 +142,7 @@ i:focus {
 }
 
 #player {
-    margin-top: 47px;
+    margin-top: 38px;
     margin-left: 24px;
 }
 
