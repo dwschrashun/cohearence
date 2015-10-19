@@ -115,7 +115,7 @@ body {
 			font-family: "Lato", sans-serif;
 			font-weight: 300;
 		}
-		.col-md-3 {
+		.col-md-2 {
 			&:hover {
 				p {
 					color: black;
@@ -123,11 +123,11 @@ body {
 			}
 		}
 		img {
-			height: 200px;
+			height: 130px;
 		}
 		p {
 			color: transparent;
-			font-size: 36px;
+			font-size: 28px;
 			transition: color .5s ease-in-out;
 		}
 	}
