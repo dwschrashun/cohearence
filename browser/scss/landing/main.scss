@@ -40,8 +40,8 @@ body {
 
 	.landing-panel {
 	// background-color: $background-color-light;
-	background: linear-gradient($background-color-light 60%, $light-gray 110%);
-
+	// background: linear-gradient($background-color-light 60%, $light-gray 110%);
+	background-color: transparent;
 	// background-color: $background-color;
 
 	// background-color: $blue;
@@ -84,9 +84,9 @@ body {
 		width: 50%;
 		height: auto;
 		border: none;
-		box-shadow: 0 0px 0px 5px rgba(0, 0, 0, 0.2), inset 0 -2px 2px 2px rgba(0, 0, 0, 0.2);
+		// box-shadow: 0 0px 0px 5px rgba(0, 0, 0, 0.2), inset 0 -2px 2px 2px rgba(0, 0, 0, 0.2);
 		&:hover {
-			background-color: $blue;
+			// background-color: $blue;
 			.landing-button {
 				// background-color: $blue;
 				background-color: white;
