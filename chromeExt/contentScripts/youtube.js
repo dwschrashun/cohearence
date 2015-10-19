@@ -35,7 +35,7 @@ function findTitleAndArtistAndVidTitle() {
         var artist = byArtist.substring(3).trim();
         return [songTitle, artist, videoTitle];
     }
-    return ["unknown title", "unknown artist", videoTitle];
+    return [videoTitle, "unknown artist", videoTitle];
 }
 
 function sendSong() {
