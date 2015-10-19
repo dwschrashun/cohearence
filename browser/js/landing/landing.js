@@ -7,7 +7,6 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('LandingController', function ($scope, AuthService, $state) {
-
     function redirectToLibrary() {
         var user = AuthService.getLoggedInUser()
 		.then(function(user){

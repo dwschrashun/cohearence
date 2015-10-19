@@ -1,12 +1,15 @@
 #landing-login {
+	button {
+		margin-right: 40px;
+	}
 	.input {
-	position: relative;
-	z-index: 1;
-	display: inline-block;
-	margin: 1em;
-	max-width: 350px;
-	width: calc(100% - 2em);
-	vertical-align: top;
+		position: relative;
+		z-index: 1;
+		display: inline-block;
+		margin: 1em;
+		max-width: 350px;
+		width: calc(100% - 2em);
+		vertical-align: top;
 	}
 
 	.input__field {

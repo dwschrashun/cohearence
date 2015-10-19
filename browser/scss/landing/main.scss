@@ -10,6 +10,7 @@ $mint-green: #C5EEBF;
 // $background-color: #222222;
 */
 $background-color-light: #444444;
+$background-color: #333333;
 
 /*for presentation
 $background-color: #333333;
@@ -17,30 +18,48 @@ $background-color-light: rgb(104,104,104);
 */
 
 body {
-	overflow-y: hidden;
+	/*overflow-y: hidden;*/
+	background-color: $background-color !important;
+	overflow: auto;
+}
+
+md-tooltip {
+	margin-top: 20px !important;
+	font-size: 22px;
 }
 
 #landing {
 
+	background-color: $background-color !important;
+	color: white;
+	h4 {
+		color: #999999;
+	}
+	#landing-logo {
+		background-color: $blue;
+		margin-top: 50px;
+		width: 120px;
+		height: 120px;
+		box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+	}
+
 	font-family: "Lato", sans-serif;
-	width: 100%;
-	height: 100vh;
-	background-color: $background-color-light;
-	// background: radial-gradient(white, $background-color-light, white);
-	background: radial-gradient(white -25%, $background-color-light);
 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	padding-top: 50px;
-	text-align: center;
+	#landing-header {
+		font-size: 60px;
+		margin-top: 70px;
+	}
+	/*height: 100vh;*/
 
+	.landing-submit {
+		margin: 0 !important;
+		margin-left: 69px !important;
+	}
 	.button {
 		float: left;
 		min-width: 150px;
 		max-width: 250px;
-		display: block;
+		display: inline;
 		margin: 1em;
 		padding: 1em 2em;
 		border: none;
@@ -85,7 +104,7 @@ body {
 		left: 0;
 		width: 100%;
 		height: 100%;
-		border: 2px solid #3f51b5;
+		border: 2px solid $blue;
 		z-index: -1;
 		border-radius: inherit;
 		opacity: 0;
@@ -97,15 +116,15 @@ body {
 		transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
 	}
 	.button--wapasha.button--inverted::before {
-		border-color: #7986cb;
+		border-color: $blue;
 	}
 	.button--wapasha:hover {
 		background-color: #fff;
-		color: #3f51b5;
+		color: $blue;
 	}
 	.button--wapasha.button--inverted:hover {
-		background-color: #3CB2D0;
-		color: #333333;
+		background-color: $blue;
+		color: $background-color;
 	}
 	.button--wapasha:hover::before {
 		-webkit-transform: scale3d(1, 1, 1);
@@ -177,6 +196,14 @@ body {
 	}
 
 
+	/* currently supporting */
+
+	.supporting {
+		height: 120px;
+		width: 120px;
+		margin-bottom: 50px;
+
+	}
 
 	/* description */
 	#description {

@@ -33,7 +33,7 @@
 		float: right;
 		padding: 0 1em;
 		width: 40%;
-		color: #3CB2D0;
+		color: $blue;
 		font-weight: bold;
 		font-size: 90%;
 		-webkit-font-smoothing: antialiased;
@@ -67,7 +67,7 @@
 		width: 60%;
 		height: 100%;
 		background: #fff;
-		color: #9DABBA;
+		color: $blue;
 		-webkit-transition: -webkit-transform 0.5s;
 		transition: transform 0.5s;
 		-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
