@@ -5,5 +5,7 @@ Cohearence remembers what users listen to on YouTube, Spotify, Soundcloud, and B
 Users can also playback or manage their playlists and music library from the Cohearence web application, which is synchronized with the extension.
 
 #### 1. Download the [Cohearence Scrobbler](https://chrome.google.com/webstore/detail/cohearence/jhddmhidckejknknbabaniikacgjhomb/related) from the Chome Web Store</str>
-#### 2. Start listening to music!
-#### 3. Check out your library, play music back, and make playlists, either by clicking on the extension icon or by visiting [Cohearence.io](https://www.cohearence.io).
+#### 2. Go to [Cohearence.io](https://www.cohearence.io) and create an account.
+#### 3. Log in to the chrome extension with you new account information.
+#### 4. Start listening to music!
+#### 5. Check out your library, play music back, and make playlists, either by clicking on the extension icon or by visiting [Cohearence.io](https://www.cohearence.io).
