@@ -8,7 +8,7 @@ var checkTime;
 
 $(document).ready(function () {
 	setTimeout(setListeners, 700); //TODO: check this length on deployed version
-	$setTimeout(function() {
+	setTimeout(function() {
 		('#nav-pause').addClass('hidden');
 	theSlider = $('#slider');
 	theSlider.slider({
