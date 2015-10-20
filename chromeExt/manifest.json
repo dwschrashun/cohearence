@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
     "name": "Cohearence",
-    "description": "Cohearence remembers what users listen to on YouTube, Spotify, Soundcloud, and Bandcamp, and then lets them play music back from a source-agnostic player.",
-    "version": "1.1",
+    "description": "Cohearence remembers what users listen to on YouTube, Spotify, Soundcloud, and Bandcamp with playback from a source-agnostic player",
+    "version": "1.3",
     "browser_action": {
         "default_icon": "icon.png",
         "default_popup": "popup/index.html"
@@ -30,7 +30,7 @@
       ]
     },
     "content_scripts": [{
-        "matches": ["http://127.0.0.1:1337/*", "http://localhost:1337/*", "https://aqueous-gorge-7560.herokuapp.com/*", "*://cohearence.io"],
+        "matches": ["http://127.0.0.1:1337/*", "http://localhost:1337/*", "https://aqueous-gorge-7560.herokuapp.com/*", "*://cohearence.io/"],
         "js": ["thirdparty/jquery-ui/external/jquery/jquery.js", "thirdparty/jquery-ui/jquery-ui.js", "contentScripts/webPlayer.js"]
     }, {
         "matches": ["https://www.youtube.com/*"],

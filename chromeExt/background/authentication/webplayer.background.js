@@ -1,6 +1,6 @@
 var webAppUrls = [
 	"http://localhost:1337",
-	"http://cohearence.lol",
+	"http://cohearence.io",
 	"https://aqueous-gorge-7560.herokuapp.com/"
 ];
 
