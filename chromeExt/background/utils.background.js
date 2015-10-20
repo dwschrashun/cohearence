@@ -22,11 +22,15 @@ function cueSong(request) {
 	stopAllVideos();
     if (request.service === 'YouTube') {
         var url = `http://www.youtube.com/v/${request.id}?version=3`;
-        youtubePlayer.cueVideoByUrl({
-            mediaContentUrl: url
-        });
-        youtubePlayer.playVideo();
-        // youtubePlayer.loadVideoById(request.id);
+        console.log('cueing youtube song:', request);
+        socket.emit("load", {ytUrl: url, service: request.service});
+
+        //from pre-socket master
+        // youtubePlayer.cueVideoByUrl({
+        //     mediaContentUrl: url
+        // });
+        // youtubePlayer.playVideo();
+        // // youtubePlayer.loadVideoById(request.id);
     }
     if (request.service === 'Soundcloud') {
         createSoundcloudVideo(request.id);

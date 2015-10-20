@@ -2,7 +2,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       //on all player or scrobbler messages
       if (request.action) {
+          if (request.service === "YouTube") {
 
+          }
+
+          //get rid of this you asshole
           var playerStates = getPlayerState();
           var playing = false;
           for (var key in playerStates) {
@@ -30,25 +34,33 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           if (request.message === 'playerAction') {
               currentService = request.service;
               setIcon(request.action !== "pause", "player");
+              if (request.service === 'YouTube') {
+                // console.log('about2pause', request);
+                socket.emit(request.action, {service: 'YouTube'});
+                return;
+              }
               var service = serviceMethods[request.service];
               var self = service.reference;
               var action = service[request.action];
+              console.log(request);
               action.call(self);
           }
 
-          //if cueing video
           if (request.message === "cue") {
               currentService = request.service;
               currentSongIndex = request.songIndex;
               stopAllVideos();
               cueSong(request);
               setIcon(true, "player");
+              sendResponse({
+                message: 'time 2 play dat song'
+              });
           }
 
           // persisting controls on popup close and retrieving environment vars
           if (request.message === "whoIsPlaying") {
             var currentSong = getCurrentSong(currentSongIndex);
-			currentService = setCorrectService(currentSong);
+			      currentService = setCorrectService(currentSong);
             var isPaused = checkIfPaused(currentService);
 
             sendResponse({
@@ -66,7 +78,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       if (request.message === 'environmentAction') {
         sendResponse({
           environment: environment
-	  });
+	      });
       }
 
       // changing songs
@@ -84,13 +96,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       //if checking time of video
       if (request.message === "checkTimeAction") {
-			var service = request.service;
-			var currentTime = getCurrentTime(service);
-
-			sendResponse({
-				currentTime: currentTime[0],
-				duration: currentTime[1]
-			});
+  			var service = request.service;
+  			var currentTime = getCurrentTime(service);
+  			sendResponse({
+  				currentTime: currentTime[0],
+  				duration: currentTime[1]
+  			});
       }
 
       //if changing time in video with slider
