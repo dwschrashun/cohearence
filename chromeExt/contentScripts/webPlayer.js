@@ -7,18 +7,23 @@ var welcome = $("#welcome-message");
 var checkTime;
 
 $(document).ready(function () {
-	setTimeout(setListeners, 700); //TODO: check this length on deployed version
-	$('#nav-pause').addClass('hidden');
-	theSlider = $('#slider');
-	theSlider.slider({
-        min: 0,
-		max: 210,
-		stop: function(event, ui) {
-			sliderUpdater = undefined;
-			var newTime = ui.value;
-			seekTo(newTime);
-		}
-    });
+	// setTimeout(, 700); //TODO: check this length on deployed version
+	setTimeout(function () {
+		setListeners();
+	    $('#nav-pause').addClass('hidden');
+	    theSlider = $('#slider');
+	    theSlider.slider({
+	        min: 0,
+	        max: 210,
+	        stop: function (event, ui) {
+	            sliderUpdater = undefined;
+	            var newTime = ui.value;
+	            seekTo(newTime);
+	        }
+	    });
+	}, 1000);
+
+
 
 
 	chrome.runtime.sendMessage({message: "whoIsPlaying", action: true}, function(response){
@@ -99,6 +104,7 @@ function loadSongFromClicked (clicked) {
 
 	request.service = source.attr('data');
 	request.id = source.children("a").first().attr("data-url");
+
 	confirmCorrectService(request);
 	//Changed because clicked now points to a div two steps further down,
 	//so that clicking on the delete button doesn't also play the song
@@ -185,7 +191,6 @@ function setListeners () {
 
 	});
 	$("#nav-play").on("click", function () {
-
 		$(this).addClass('hidden');
 		$("#nav-pause").removeClass('hidden');
 
