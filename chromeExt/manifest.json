@@ -25,13 +25,13 @@
         "storage"
     ],
     "oauth2": {
-        "client_id": "33880457622-skn9therip23c8kl3df94knjdl600374.apps.googleusercontent.com",
-        "scopes": [
-            "https://www.googleapis.com/auth/plus.login"
-        ]
+      "client_id": "33880457622-skn9therip23c8kl3df94knjdl600374.apps.googleusercontent.com",
+      "scopes": [
+        "https://www.googleapis.com/auth/plus.login"
+      ]
     },
     "content_scripts": [{
-        "matches": ["http://127.0.0.1:1337/*", "http://localhost:1337/*", "https://aqueous-gorge-7560.herokuapp.com/*", "​*://cohearence.io/*​", "​*://www.cohearence.io/*​"],
+        "matches": ["http://127.0.0.1:1337/*", "http://localhost:1337/*", "https://aqueous-gorge-7560.herokuapp.com/*", "*://cohearence.io/*", "*://www.cohearence.io/*"],
         "js": ["thirdparty/jquery-ui/external/jquery/jquery.js", "thirdparty/jquery-ui/jquery-ui.js", "contentScripts/webPlayer.js"]
     }, {
         "matches": ["https://www.youtube.com/*"],
